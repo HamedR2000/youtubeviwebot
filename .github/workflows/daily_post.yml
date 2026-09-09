@@ -1,10 +1,12 @@
 name: Daily Instagram Post
 
 on:
-  schedule:
-    # 15:00 UTC every day -- edit to match when your audience is active.
-    - cron: "0 15 * * *"
-  workflow_dispatch: {}   # lets you trigger a run manually from the Actions tab
+  # Cron is intentionally disabled for now -- we're still in the
+  # review-before-posting phase. Uncomment once you're happy publishing
+  # without a manual look first:
+  # schedule:
+  #   - cron: "0 15 * * *"   # 15:00 UTC every day
+  workflow_dispatch: {}   # lets you (or me, via the API) trigger a run manually
 
 permissions:
   contents: write   # needed to create the Release asset and commit state.json
