@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.env
+instagram_bot/_build/

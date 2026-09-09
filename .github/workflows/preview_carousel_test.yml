@@ -1,0 +1,36 @@
+name: Preview Carousel Test
+
+# Manual-only test workflow: renders ONE carousel slide with a real Pexels
+# photo and uploads it as a build artifact for review. Does not touch
+# Instagram at all -- purely for validating carousel_composer.py's visual
+# output before it's wired into the daily pipeline.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install pillow requests
+
+      - name: Render preview slide
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: python instagram_bot/preview_carousel.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: carousel-preview
+          path: instagram_bot/_preview_output/*.jpg
+          retention-days: 7

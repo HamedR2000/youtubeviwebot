@@ -1,0 +1,47 @@
+name: Daily Instagram Post
+
+on:
+  # Cron is intentionally disabled for now -- we're still in the
+  # review-before-posting phase. Uncomment once you're happy publishing
+  # without a manual look first:
+  # schedule:
+  #   - cron: "0 15 * * *"   # 15:00 UTC every day
+  workflow_dispatch: {}   # lets you (or me, via the API) trigger a run manually
+
+permissions:
+  contents: write   # needed to create the Release asset and commit state.json
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies (ffmpeg + fonts)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+
+      - name: Install Python dependencies
+        run: pip install -r instagram_bot/requirements.txt
+
+      - name: Run daily posting job
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python instagram_bot/main.py
+
+      - name: Commit updated state.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add instagram_bot/state.json
+          git diff --cached --quiet || git commit -m "chore: update daily post state [skip ci]"
+          git push
