@@ -97,6 +97,39 @@ def publish_story(version: str, ig_user_id: str, access_token: str, *,
                                  media_type="STORIES", image_url=image_url, video_url=video_url)
 
 
+def publish_carousel(version: str, ig_user_id: str, access_token: str,
+                      image_urls: list, caption: str) -> str:
+    """Publish a multi-image swipeable carousel (album) post: each image
+    becomes an `is_carousel_item` child container, then a parent CAROUSEL
+    container ties them together and carries the single shared caption."""
+    child_ids = []
+    for image_url in image_urls:
+        resp = requests.post(
+            _graph_url(version, f"{ig_user_id}/media"),
+            data={"image_url": image_url, "is_carousel_item": "true", "access_token": access_token},
+            timeout=60,
+        )
+        _raise_for_graph_error(resp)
+        child_id = resp.json()["id"]
+        wait_until_ready(version, child_id, access_token)
+        child_ids.append(child_id)
+
+    resp = requests.post(
+        _graph_url(version, f"{ig_user_id}/media"),
+        data={
+            "media_type": "CAROUSEL",
+            "children": ",".join(child_ids),
+            "caption": caption,
+            "access_token": access_token,
+        },
+        timeout=60,
+    )
+    _raise_for_graph_error(resp)
+    parent_id = resp.json()["id"]
+    wait_until_ready(version, parent_id, access_token)
+    return publish_container(version, ig_user_id, access_token, parent_id)
+
+
 def _raise_for_graph_error(resp: requests.Response) -> None:
     if resp.status_code >= 400:
         raise PublishError(f"Graph API error {resp.status_code}: {resp.text}")

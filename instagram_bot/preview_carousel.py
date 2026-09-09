@@ -1,10 +1,11 @@
 """Standalone script used only by .github/workflows/preview_carousel_test.yml
-to render ONE real carousel slide (real Pexels photo + real content) and
-publish it as a GitHub Release asset, so it can be reviewed before the full
-content bank / daily pipeline integration is built. Not part of the daily
-posting pipeline. (Uses a Release instead of an Actions artifact because
-Actions artifacts are served from a blob-storage host the reviewing agent
-cannot reach; Release assets are served from github.com's own domain.)
+to render one full 3-slide carousel topic (real Pexels photos + real
+content) and publish each slide as a GitHub Release asset, so it can be
+reviewed before the full daily pipeline integration is built. Not part of
+the daily posting pipeline. (Uses a Release instead of an Actions artifact
+because Actions artifacts are served from a blob-storage host the
+reviewing agent cannot reach; Release assets are served from github.com's
+own domain.)
 """
 import datetime
 import os
@@ -13,12 +14,15 @@ import random
 import requests
 
 from carousel_composer import build_slide
+from carousel_content import BRAND_CORNER_LEFT, BRAND_CORNER_RIGHT, CAROUSELS
 from github_host import upload_release_asset
 
 PEXELS_API_KEY = os.environ["PEXELS_API_KEY"]
 GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 OUT_DIR = os.path.join(os.path.dirname(__file__), "_preview_output")
+
+TOPIC_ID = os.environ.get("PREVIEW_TOPIC_ID")  # optional override
 
 
 def fetch_photo(query: str, dest_path: str) -> None:
@@ -32,11 +36,8 @@ def fetch_photo(query: str, dest_path: str) -> None:
     photos = resp.json().get("photos", [])
     if not photos:
         raise RuntimeError(f"No Pexels photos found for query: {query}")
-    # Pick from the top few results rather than the full page -- Pexels
-    # ranks by relevance, and results past the first handful drift off-topic.
     photo = random.choice(photos[:3])
-    img_url = photo["src"]["large2x"]
-    img_resp = requests.get(img_url, timeout=60)
+    img_resp = requests.get(photo["src"]["large2x"], timeout=60)
     img_resp.raise_for_status()
     with open(dest_path, "wb") as f:
         f.write(img_resp.content)
@@ -44,35 +45,45 @@ def fetch_photo(query: str, dest_path: str) -> None:
 
 def main() -> None:
     os.makedirs(OUT_DIR, exist_ok=True)
-    photo_path = os.path.join(OUT_DIR, "hero_photo.jpg")
-    fetch_photo("gold bullion bars stacked", photo_path)
 
-    build_slide(
-        photo_path=photo_path,
-        output_path=os.path.join(OUT_DIR, "slide_1of5.jpg"),
-        category_label="XAUUSD | GOLD TRADING",
-        page_num=1,
-        page_total=5,
-        headline_lines=[("SMART TRADING", "white"), ("STARTS BEFORE THE ENTRY", "gold")],
-        body_text="Before you enter any gold trade, check the bigger trend, key levels, and market structure. Good entries are prepared, not guessed.",
-        panels=[
-            ("trend_up", "Trend", "Follow the bigger picture"),
-            ("bar_chart", "Key Levels", "Find opportunities at key zones"),
-            ("target", "Structure", "Understand the market flow"),
-        ],
-        takeaway_text="Better analysis, a brighter tomorrow.",
-        cta_text="Follow for daily XAUUSD insights",
-        top_left_tagline=("PLAN", "ANALYZE"),
-        top_right_words=["BETTER", "ANALYSIS", "A BRIGHTER", "TOMORROW"],
-        corner_left_words=["PLAN", "ANALYZE", "TRADE", "GROW"],
-        corner_right_words=["GOLD", "DISCIPLINE", "PATIENCE", "FREEDOM"],
-    )
-    output_path = os.path.join(OUT_DIR, "slide_1of5.jpg")
-    print("Rendered", output_path)
+    topic = next((t for t in CAROUSELS if t["id"] == TOPIC_ID), None) or random.choice(CAROUSELS)
+    print(f"Topic: {topic['id']}")
 
     tag = "carousel-preview-" + datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
-    url = upload_release_asset(GITHUB_REPOSITORY, GITHUB_TOKEN, tag, output_path)
-    print("Uploaded to:", url)
+    urls = []
+
+    for i, slide in enumerate(topic["slides"]):
+        page_num = i + 1
+        page_total = len(topic["slides"])
+        query = topic["search_terms"][i % len(topic["search_terms"])]
+
+        photo_path = os.path.join(OUT_DIR, f"photo_{page_num}.jpg")
+        fetch_photo(query, photo_path)
+
+        output_path = os.path.join(OUT_DIR, f"slide_{page_num}of{page_total}.jpg")
+        build_slide(
+            photo_path=photo_path,
+            output_path=output_path,
+            category_label=topic["category"],
+            page_num=page_num,
+            page_total=page_total,
+            headline_lines=slide["headline_lines"],
+            body_text=slide["body_text"],
+            panels=slide["panels"],
+            takeaway_text=slide["takeaway_text"],
+            cta_text=slide["cta_text"],
+            top_left_tagline=slide.get("top_left_tagline"),
+            top_right_words=slide.get("top_right_words"),
+            corner_left_words=BRAND_CORNER_LEFT,
+            corner_right_words=BRAND_CORNER_RIGHT,
+        )
+        print(f"Rendered slide {page_num}/{page_total}")
+
+        url = upload_release_asset(GITHUB_REPOSITORY, GITHUB_TOKEN, tag, output_path)
+        print(f"Uploaded slide {page_num}: {url}")
+        urls.append(url)
+
+    print("ALL_URLS:", " ".join(urls))
 
 
 if __name__ == "__main__":

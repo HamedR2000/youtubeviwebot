@@ -1,0 +1,480 @@
+"""Content bank for the multi-slide educational carousels (matching the
+reference template style the account owner supplied). Each topic is a
+short 3-slide carousel: a cover/hook, a content slide with 3 panels, and a
+closing slide with a CTA toward the Telegram channel / DMs.
+
+main.py (once carousel posting is wired in) picks one topic per scheduled
+carousel post, renders each slide with carousel_composer.build_slide, and
+publishes them as a single Instagram carousel (album) post.
+"""
+
+BRAND_CORNER_LEFT = ["PLAN", "ANALYZE", "TRADE", "GROW"]
+BRAND_CORNER_RIGHT = ["GOLD", "DISCIPLINE", "PATIENCE", "FREEDOM"]
+
+CTA_TELEGRAM = "Follow -- Telegram channel in bio"
+CTA_TELEGRAM_ALT = "Telegram in bio for full access"
+CTA_FOLLOW = "Follow for daily XAUUSD insights"
+
+
+def _panel(icon, title, desc):
+    return (icon, title, desc)
+
+
+CAROUSELS = [
+    {
+        "id": "know-when-to-stay-out",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["candlestick chart screen", "gold bars", "trading desk"],
+        "slides": [
+            {
+                "headline_lines": [("KNOW WHEN", "white"), ("TO STAY OUT", "gold")],
+                "body_text": "A low-quality setup can cost more than a missed opportunity. Some days the right trade is no trade at all.",
+                "panels": [],
+                "takeaway_text": "Swipe for the 3 warning signs.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("DISCIPLINE TODAY", "A STRONGER TOMORROW"),
+                "top_right_words": ["SAME", "MARKETS", "HIGHER", "STANDARDS"],
+            },
+            {
+                "headline_lines": [("THREE SIGNS", "white"), ("TO STAY FLAT", "gold")],
+                "body_text": "If direction is unclear, volatility is random, or price is trapped in noise, staying flat is a professional decision.",
+                "panels": [
+                    _panel("arrows_swap", "No Clear Bias", "Higher-timeframe direction is mixed"),
+                    _panel("bar_chart", "Messy Structure", "Levels are crowded or weak"),
+                    _panel("document", "News Noise", "Price becomes too reactive to trust"),
+                ],
+                "takeaway_text": "No trade is better than a forced trade.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("DISCIPLINE TODAY", "A STRONGER TOMORROW"),
+                "top_right_words": ["SAME", "MARKETS", "HIGHER", "STANDARDS"],
+            },
+            {
+                "headline_lines": [("PATIENCE IS", "white"), ("A POSITION TOO", "gold")],
+                "body_text": "Waiting for a clean setup protects your capital the same way a good stop-loss does.",
+                "panels": [],
+                "takeaway_text": "Clarity protects capital.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("DISCIPLINE TODAY", "A STRONGER TOMORROW"),
+                "top_right_words": ["SAME", "MARKETS", "HIGHER", "STANDARDS"],
+            },
+        ],
+    },
+    {
+        "id": "after-a-loss",
+        "category": "XAUUSD | TRADING PSYCHOLOGY",
+        "search_terms": ["hourglass", "gold bars", "focused trader desk"],
+        "slides": [
+            {
+                "headline_lines": [("AFTER A LOSS,", "white"), ("DON'T RUSH BACK IN", "gold")],
+                "body_text": "Emotional re-entry usually creates a second mistake. The market will still be there in ten minutes.",
+                "panels": [],
+                "takeaway_text": "Swipe for the 3-step reset.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["CLEARER", "TRADERS", "STRONGER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("PAUSE.", "white"), ("REVIEW. RE-ENTER.", "gold")],
+                "body_text": "Pause for a moment, review what actually happened, and only return once your plan is clear again.",
+                "panels": [
+                    _panel("clock", "Pause", "Step away for a moment"),
+                    _panel("search", "Review", "Look at the setup, not the feeling"),
+                    _panel("target", "Re-enter", "Only with a clear mind"),
+                ],
+                "takeaway_text": "Emotional control is part of the strategy.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["CLEARER", "TRADERS", "STRONGER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("ONE LOSS", "white"), ("ISN'T A CRISIS", "gold")],
+                "body_text": "It's data. Log it, learn from it, and let your plan -- not your ego -- decide the next trade.",
+                "panels": [],
+                "takeaway_text": "A calmer mind, a sharper trader.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["CLEARER", "TRADERS", "STRONGER", "TOMORROW"],
+            },
+        ],
+    },
+    {
+        "id": "trading-journal",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["leather journal pen", "gold bars", "candlestick chart screen"],
+        "slides": [
+            {
+                "headline_lines": [("A TRADING JOURNAL", "white"), ("BUILDS CONSISTENCY", "gold")],
+                "body_text": "If you don't record your trades, the same mistakes repeat. A journal shows what works and what doesn't.",
+                "panels": [],
+                "takeaway_text": "Swipe for what to log.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["DISCIPLINE", "TURNS", "TRADES", "INTO", "FREEDOM"],
+            },
+            {
+                "headline_lines": [("LOG.", "white"), ("TRACK. LEARN.", "gold")],
+                "body_text": "Every entry deserves three lines: why you took it, what happened, and what you'd do differently.",
+                "panels": [
+                    _panel("document", "Entry Reason", "Clarity creates better trades"),
+                    _panel("bar_chart", "Result", "See what works and what doesn't"),
+                    _panel("gear", "Pattern", "Turn experience into progress"),
+                ],
+                "takeaway_text": "Professional traders don't just trade -- they review.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["DISCIPLINE", "TURNS", "TRADES", "INTO", "FREEDOM"],
+            },
+            {
+                "headline_lines": [("YOUR JOURNAL", "white"), ("IS YOUR EDGE", "gold")],
+                "body_text": "Over time it tells you more about your trading than any indicator ever will.",
+                "panels": [],
+                "takeaway_text": "Better trades, a brighter tomorrow.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["DISCIPLINE", "TURNS", "TRADES", "INTO", "FREEDOM"],
+            },
+        ],
+    },
+    {
+        "id": "real-breakout-or-fakeout",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["candlestick chart screen", "gold bars", "financial graph"],
+        "slides": [
+            {
+                "headline_lines": [("REAL BREAKOUT", "white"), ("OR FAKEOUT?", "gold")],
+                "body_text": "Not every move through a level is a true breakout. Wait for confirmation before you follow price.",
+                "panels": [],
+                "takeaway_text": "Swipe for the 3-step check.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("BETTER", "ANALYSIS"),
+                "top_right_words": ["A", "BRIGHTER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("CONFIRMATION", "white"), ("BEATS SPEED", "gold")],
+                "body_text": "A real breakout closes beyond the level, retests it, and keeps going in the same direction.",
+                "panels": [
+                    _panel("bar_chart", "Candle Close", "Beyond the level, not just a wick"),
+                    _panel("arrows_swap", "Retest Holds", "As new support or resistance"),
+                    _panel("trend_up", "Momentum", "Continues in the same direction"),
+                ],
+                "takeaway_text": "Confirmation matters more than speed.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("BETTER", "ANALYSIS"),
+                "top_right_words": ["A", "BRIGHTER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("CHASING A", "white"), ("FAKEOUT COSTS MORE", "gold")],
+                "body_text": "One extra candle of patience is cheaper than one bad entry.",
+                "panels": [],
+                "takeaway_text": "Follow for smarter XAUUSD setups.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("BETTER", "ANALYSIS"),
+                "top_right_words": ["A", "BRIGHTER", "TOMORROW"],
+            },
+        ],
+    },
+    {
+        "id": "protect-your-capital",
+        "category": "XAUUSD | RISK MANAGEMENT",
+        "search_terms": ["gold bars", "financial graph", "calculator desk"],
+        "slides": [
+            {
+                "headline_lines": [("PROTECT", "white"), ("YOUR CAPITAL", "gold")],
+                "body_text": "Successful traders manage risk, not just trades.",
+                "panels": [],
+                "takeaway_text": "Swipe for the 3 rules.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("TRADE SMARTER", "A BRIGHTER TOMORROW"),
+                "top_right_words": ["RISK", "FIRST", "PROFIT", "SECOND"],
+            },
+            {
+                "headline_lines": [("STOP-LOSS.", "white"), ("SIZE. RATIO.", "gold")],
+                "body_text": "Define your risk before you enter, keep position size reasonable, and aim for at least 1:2 reward.",
+                "panels": [
+                    _panel("shield", "Use Stop-Loss", "Always define your risk before entry"),
+                    _panel("scale", "Risk 1-2%", "Keep your position size reasonable"),
+                    _panel("target", "Reward Ratio", "Aim for at least 1:2 on every setup"),
+                ],
+                "takeaway_text": "Small risks protect bigger opportunities.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("TRADE SMARTER", "A BRIGHTER TOMORROW"),
+                "top_right_words": ["RISK", "FIRST", "PROFIT", "SECOND"],
+            },
+            {
+                "headline_lines": [("A GOOD PLAN", "white"), ("KEEPS YOU IN THE GAME", "gold")],
+                "body_text": "It won't guarantee profits, but it will keep you around long enough to get good.",
+                "panels": [],
+                "takeaway_text": "Follow for disciplined XAUUSD content.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("TRADE SMARTER", "A BRIGHTER TOMORROW"),
+                "top_right_words": ["RISK", "FIRST", "PROFIT", "SECOND"],
+            },
+        ],
+    },
+    {
+        "id": "patience-pays",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["chess pieces", "gold bars", "candlestick chart screen"],
+        "slides": [
+            {
+                "headline_lines": [("PATIENCE PAYS", "white"), ("MORE THAN IMPULSE", "gold")],
+                "body_text": "The best opportunities appear when structure, timing, and confirmation align.",
+                "panels": [],
+                "takeaway_text": "Swipe for what to check first.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("SAME MARKETS", "A HIGHER MINDSET"),
+                "top_right_words": ["STRATEGY", "OVER", "EMOTION"],
+            },
+            {
+                "headline_lines": [("STRUCTURE.", "white"), ("TIMING. CONFIRMATION.", "gold")],
+                "body_text": "A skipped trade can protect your capital as much as a good entry can grow it.",
+                "panels": [
+                    _panel("bar_chart", "Structure", "Read the chart, not the noise"),
+                    _panel("clock", "Timing", "Right session, right moment"),
+                    _panel("search", "Confirmation", "Let price prove the idea first"),
+                ],
+                "takeaway_text": "Wait for quality, not noise.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("SAME MARKETS", "A HIGHER MINDSET"),
+                "top_right_words": ["STRATEGY", "OVER", "EMOTION"],
+            },
+            {
+                "headline_lines": [("THE TRADE YOU", "white"), ("SKIP COUNTS TOO", "gold")],
+                "body_text": "Discipline creates opportunity -- most of it happens before you click buy or sell.",
+                "panels": [],
+                "takeaway_text": "Follow for a calmer approach to XAUUSD.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("SAME MARKETS", "A HIGHER MINDSET"),
+                "top_right_words": ["STRATEGY", "OVER", "EMOTION"],
+            },
+        ],
+    },
+    {
+        "id": "retest-beats-chase",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["candlestick chart screen", "gold bars", "trading desk"],
+        "slides": [
+            {
+                "headline_lines": [("A RETEST", "white"), ("BEATS A CHASE", "gold")],
+                "body_text": "Not every breakout deserves an instant entry. Stronger setups often come after price proves the level.",
+                "panels": [],
+                "takeaway_text": "Swipe to see the difference.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("DISCIPLINE", "CREATES OPPORTUNITY"),
+                "top_right_words": ["A", "BETTER", "TRADER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("CHASING VS.", "white"), ("WAITING FOR THE RETEST", "gold")],
+                "body_text": "Chasing means a late entry with weak control. A retest means a clear level and better timing.",
+                "panels": [
+                    _panel("arrows_swap", "Chasing", "Late entry, weak control"),
+                    _panel("target", "Retest", "Clear level, better timing"),
+                    _panel("shield", "Confirmation", "Reduces emotional entries"),
+                ],
+                "takeaway_text": "Let the market prove it first.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("DISCIPLINE", "CREATES OPPORTUNITY"),
+                "top_right_words": ["A", "BETTER", "TRADER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("ONE MISSED", "white"), ("ENTRY WON'T HURT YOU", "gold")],
+                "body_text": "One bad chase, repeated for a year, will. Play the odds, not the FOMO.",
+                "panels": [],
+                "takeaway_text": "Better trades, brighter days.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("DISCIPLINE", "CREATES OPPORTUNITY"),
+                "top_right_words": ["A", "BETTER", "TRADER", "TOMORROW"],
+            },
+        ],
+    },
+    {
+        "id": "small-risk-lasts-longer",
+        "category": "XAUUSD | RISK MANAGEMENT",
+        "search_terms": ["gold bars", "financial graph", "calculator desk"],
+        "slides": [
+            {
+                "headline_lines": [("SMALL RISK", "white"), ("LASTS LONGER", "gold")],
+                "body_text": "Good trading isn't built on one big win. It's built on controlled risk, trade after trade.",
+                "panels": [],
+                "takeaway_text": "Swipe for the 3 pillars.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("SAME MARKETS", "A HIGHER MINDSET"),
+                "top_right_words": ["DISCIPLINE", "CREATES", "OPPORTUNITY"],
+            },
+            {
+                "headline_lines": [("STOP-LOSS.", "white"), ("SIZE. PROTECTION.", "gold")],
+                "body_text": "A clear stop-loss and a position size that matches your plan are what let you trade tomorrow too.",
+                "panels": [
+                    _panel("shield", "Stop-Loss", "Protects your capital first"),
+                    _panel("scale", "Position Size", "Matched to your plan, not your mood"),
+                    _panel("coins", "Capital Protection", "The real long game"),
+                ],
+                "takeaway_text": "Protection keeps you in the game.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("SAME MARKETS", "A HIGHER MINDSET"),
+                "top_right_words": ["DISCIPLINE", "CREATES", "OPPORTUNITY"],
+            },
+            {
+                "headline_lines": [("PRESERVE FIRST.", "white"), ("GROW SECOND.", "gold")],
+                "body_text": "Every trader who lasted long enough to get good did it by staying in the game.",
+                "panels": [],
+                "takeaway_text": "Follow for practical XAUUSD risk management.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("SAME MARKETS", "A HIGHER MINDSET"),
+                "top_right_words": ["DISCIPLINE", "CREATES", "OPPORTUNITY"],
+            },
+        ],
+    },
+    {
+        "id": "one-market-two-tempos",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["city skyline night", "candlestick chart screen", "gold bars"],
+        "slides": [
+            {
+                "headline_lines": [("ONE MARKET.", "white"), ("TWO TEMPOS.", "gold")],
+                "body_text": "Gold doesn't behave the same way all day. London and New York trade very differently.",
+                "panels": [],
+                "takeaway_text": "Swipe for the session breakdown.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("DIFFERENT SESSIONS", "GREATER OPPORTUNITIES"),
+                "top_right_words": ["GLOBAL", "MARKETS", "REAL", "OPPORTUNITIES"],
+            },
+            {
+                "headline_lines": [("LONDON VS.", "white"), ("NEW YORK", "gold")],
+                "body_text": "London often brings cleaner structure. New York can bring stronger reactions and sharp reversals.",
+                "panels": [
+                    _panel("bar_chart", "London", "Cleaner momentum, structured moves"),
+                    _panel("trend_up", "New York", "Higher reaction speed, bigger volatility"),
+                    _panel("clock", "Prepare", "Know which session you're trading"),
+                ],
+                "takeaway_text": "Read the session before you read the entry.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("DIFFERENT SESSIONS", "GREATER OPPORTUNITIES"),
+                "top_right_words": ["GLOBAL", "MARKETS", "REAL", "OPPORTUNITIES"],
+            },
+            {
+                "headline_lines": [("SAME CHART.", "white"), ("DIFFERENT RULES.", "gold")],
+                "body_text": "A plan built for one session rarely works well in the other -- adjust, don't force it.",
+                "panels": [],
+                "takeaway_text": "Follow for smarter session-based content.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("DIFFERENT SESSIONS", "GREATER OPPORTUNITIES"),
+                "top_right_words": ["GLOBAL", "MARKETS", "REAL", "OPPORTUNITIES"],
+            },
+        ],
+    },
+    {
+        "id": "when-news-hits",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["financial graph", "gold bars", "candlestick chart screen"],
+        "slides": [
+            {
+                "headline_lines": [("WHEN NEWS HITS,", "white"), ("DISCIPLINE MATTERS MORE", "gold")],
+                "body_text": "Economic releases can accelerate gold and expand volatility fast.",
+                "panels": [],
+                "takeaway_text": "Swipe for how to prepare.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("INFORMATION MOVES", "MARKETS FASTER"),
+                "top_right_words": ["SAME", "PRINCIPLES", "BIGGER", "OPPORTUNITIES"],
+            },
+            {
+                "headline_lines": [("VOLATILITY.", "white"), ("PREPARATION. PROTECTION.", "gold")],
+                "body_text": "Spreads widen and candles expand -- mark key levels before the release, then protect your size.",
+                "panels": [
+                    _panel("bar_chart", "Volatility", "Spreads widen, candles expand"),
+                    _panel("document", "Preparation", "Mark key levels before the release"),
+                    _panel("shield", "Protection", "Reduce size or wait for confirmation"),
+                ],
+                "takeaway_text": "Strong traders stay structured in fast markets.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("INFORMATION MOVES", "MARKETS FASTER"),
+                "top_right_words": ["SAME", "PRINCIPLES", "BIGGER", "OPPORTUNITIES"],
+            },
+            {
+                "headline_lines": [("SPEED CHANGES.", "white"), ("RULES DON'T.", "gold")],
+                "body_text": "Your process still depends on levels, risk limits, and confirmation -- news or not.",
+                "panels": [],
+                "takeaway_text": "Follow for practical gold trading ideas.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("INFORMATION MOVES", "MARKETS FASTER"),
+                "top_right_words": ["SAME", "PRINCIPLES", "BIGGER", "OPPORTUNITIES"],
+            },
+        ],
+    },
+    {
+        "id": "smart-trading-starts-before-entry",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["gold bullion bars stacked", "candlestick chart screen", "trading desk"],
+        "slides": [
+            {
+                "headline_lines": [("SMART TRADING", "white"), ("STARTS BEFORE THE ENTRY", "gold")],
+                "body_text": "Before you enter any gold trade, check the bigger trend, key levels, and market structure.",
+                "panels": [],
+                "takeaway_text": "Swipe for the 3-point checklist.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["BETTER", "ANALYSIS", "A BRIGHTER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("TREND.", "white"), ("LEVELS. STRUCTURE.", "gold")],
+                "body_text": "Good entries are prepared, not guessed -- these three things come before every trade idea.",
+                "panels": [
+                    _panel("trend_up", "Trend", "Follow the bigger picture"),
+                    _panel("bar_chart", "Key Levels", "Find opportunities at key zones"),
+                    _panel("target", "Structure", "Understand the market flow"),
+                ],
+                "takeaway_text": "Better analysis, a brighter tomorrow.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["BETTER", "ANALYSIS", "A BRIGHTER", "TOMORROW"],
+            },
+            {
+                "headline_lines": [("PREPARATION IS", "white"), ("PART OF THE TRADE", "gold")],
+                "body_text": "The chart rewards the trader who did the work before the candle closed.",
+                "panels": [],
+                "takeaway_text": "Follow for daily XAUUSD insights.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["BETTER", "ANALYSIS", "A BRIGHTER", "TOMORROW"],
+            },
+        ],
+    },
+    {
+        "id": "layered-entries-need-a-plan",
+        "category": "XAUUSD | GOLD TRADING",
+        "search_terms": ["gold bars", "candlestick chart screen", "financial graph"],
+        "slides": [
+            {
+                "headline_lines": [("LAYERED ENTRIES", "white"), ("NEED A CLEAR PLAN", "gold")],
+                "body_text": "Adding into a trade only makes sense when the scenario is defined from the start.",
+                "panels": [],
+                "takeaway_text": "Swipe for the 3 conditions.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["SAME", "MARKET", "HIGHER", "STANDARDS"],
+            },
+            {
+                "headline_lines": [("SCENARIO.", "white"), ("STOP. SIZE.", "gold")],
+                "body_text": "Know exactly when to add, protect your capital first, and keep total risk balanced.",
+                "panels": [
+                    _panel("document", "Defined Scenario", "Know exactly when to add"),
+                    _panel("shield", "Clear Stop-Loss", "Protect your capital first"),
+                    _panel("coins", "Controlled Size", "Keep risk balanced"),
+                ],
+                "takeaway_text": "Without a plan, layered entries only increase risk.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["SAME", "MARKET", "HIGHER", "STANDARDS"],
+            },
+            {
+                "headline_lines": [("ADDING SIZE", "white"), ("IS A DECISION", "gold")],
+                "body_text": "Not a reaction. Treat every add like a new trade with its own rules.",
+                "panels": [],
+                "takeaway_text": "Follow for better XAUUSD execution.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("PLAN", "ANALYZE"),
+                "top_right_words": ["SAME", "MARKET", "HIGHER", "STANDARDS"],
+            },
+        ],
+    },
+]
