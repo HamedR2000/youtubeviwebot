@@ -91,6 +91,23 @@ HASHTAGS = [
 # of rotation.
 BRAND_HASHTAGS = ["#goldhamedsignals"]
 
+# Auto-reply templates for comments on our own posts (reply_comments.py).
+# "{name}" is filled with the commenter's Instagram username. Language is
+# picked per-comment by detecting Persian/Arabic script in their comment
+# text (see comment_autoresponder.py) -- these invite them to the free
+# Telegram channel, not the paid bot, so they stay a soft, honest CTA.
+COMMENT_REPLIES_EN = [
+    "Hey {name}, thanks for stopping by! \U0001F64C We share free XAUUSD signals & daily analysis in our Telegram channel -- link in bio, come join us!",
+    "Appreciate you, {name}! \U0001F64F Free gold signals + daily breakdowns are waiting for you in our Telegram -- link in bio.",
+    "Thanks for the love, {name}! Join our free Telegram channel (link in bio) for daily XAUUSD signals and analysis.",
+]
+
+COMMENT_REPLIES_FA = [
+    "سلام {name} عزیز، ممنون که وقت گذاشتی \U0001F64C سیگنال‌های رایگان طلا و تحلیل روزانه رو تو کانال تلگرام‌مون داریم -- لینک تو بایو، بیا عضو شو!",
+    "دستت درد نکنه {name}! \U0001F64F سیگنال رایگان طلا + تحلیل هر روز منتظرته تو تلگرام -- لینک تو بایو.",
+    "ممنون از همراهیت {name}! کانال تلگرام رایگان‌مون رو از لینک تو بایو ببین، هر روز سیگنال XAUUSD می‌ذاریم.",
+]
+
 # Short single lines for Story cards -- Stories are read in ~2 seconds, so
 # these are intentionally punchier and shorter than HOOKS/TIPS. Mix of
 # facts, quotes, and soft CTAs pointing at the bot.

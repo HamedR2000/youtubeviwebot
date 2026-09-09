@@ -130,6 +130,29 @@ def publish_carousel(version: str, ig_user_id: str, access_token: str,
     return publish_container(version, ig_user_id, access_token, parent_id)
 
 
+def list_comments(version: str, media_id: str, access_token: str) -> list:
+    """Top-level comments on one of our own media items -- our own replies
+    live under each comment's `replies` edge, not here, so this never
+    returns anything we posted ourselves."""
+    resp = requests.get(
+        _graph_url(version, f"{media_id}/comments"),
+        params={"fields": "id,username,text,timestamp", "access_token": access_token},
+        timeout=30,
+    )
+    _raise_for_graph_error(resp)
+    return resp.json().get("data", [])
+
+
+def reply_to_comment(version: str, comment_id: str, access_token: str, message: str) -> str:
+    resp = requests.post(
+        _graph_url(version, f"{comment_id}/replies"),
+        data={"message": message, "access_token": access_token},
+        timeout=30,
+    )
+    _raise_for_graph_error(resp)
+    return resp.json()["id"]
+
+
 def _raise_for_graph_error(resp: requests.Response) -> None:
     if resp.status_code >= 400:
         raise PublishError(f"Graph API error {resp.status_code}: {resp.text}")

@@ -220,6 +220,8 @@ def run_publish() -> None:
     manifest = resp.json()
     today = manifest["date"]
 
+    st = state_mod.load()
+
     for item in manifest["items"]:
         kind = item["type"]
         if kind == "reel":
@@ -237,6 +239,12 @@ def run_publish() -> None:
         else:
             raise ValueError(f"Unknown manifest item type: {kind}")
         print(f"[{today}] Published {kind}: {media_id}")
+        # Stories can't take comments at all, so there's nothing for
+        # reply_comments.py to poll -- only track the other types.
+        if kind != "story":
+            st["posts"].append({"date": today, "type": kind, "ig_media_id": media_id})
+
+    state_mod.save(st)
 
 
 if __name__ == "__main__":

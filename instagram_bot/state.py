@@ -17,12 +17,18 @@ _DEFAULT_STATE = {
     "cta_cursor": 0,              # rotating offset into content_bank.CTAS
     "story_line_cursor": 0,       # rotating offset into content_bank.STORY_LINES
     "carousel_topic_cursor": 0,   # rotating offset into carousel_content.CAROUSELS
-    "posts": [],                  # history: [{date, type, pexels_id, ig_media_id}, ...]
+    "comment_reply_en_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_EN
+    "comment_reply_fa_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_FA
+    "replied_comment_ids": [],    # comment ids we've already auto-replied to
+    "posts": [],                  # history: [{date, type, pexels_id/ig_media_id, ...}, ...]
 }
 
 # Cap how much "used" history we keep so Pexels searches don't eventually
 # exhaust every result for a niche search term.
 MAX_USED_IDS = 200
+
+# Cap replied-comment history so state.json doesn't grow forever.
+MAX_REPLIED_IDS = 3000
 
 
 def load() -> dict:
@@ -38,6 +44,7 @@ def load() -> dict:
 def save(state: dict) -> None:
     state["used_pexels_ids"] = state["used_pexels_ids"][-MAX_USED_IDS:]
     state["used_pexels_photo_ids"] = state["used_pexels_photo_ids"][-MAX_USED_IDS:]
+    state["replied_comment_ids"] = state["replied_comment_ids"][-MAX_REPLIED_IDS:]
     with open(STATE_PATH, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
         f.write("\n")

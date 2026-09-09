@@ -1,0 +1,43 @@
+name: Auto-Reply to Comments
+
+# Unlike daily_post.yml, this runs on a real cron: it only ever posts one
+# of a handful of pre-approved template replies (see
+# instagram_bot/content_bank.py COMMENT_REPLIES_EN/FA), never newly
+# generated content, so there's nothing here that needs a human look
+# before it goes out.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 minutes
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # needed to commit updated state.json (replied_comment_ids)
+
+jobs:
+  reply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install requests
+
+      - name: Reply to new comments
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python instagram_bot/reply_comments.py
+
+      - name: Commit updated state.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add instagram_bot/state.json
+          git diff --cached --quiet || git commit -m "chore: update replied-comment state [skip ci]"
+          git pull --rebase origin main
+          git push
