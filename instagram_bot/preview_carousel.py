@@ -25,14 +25,16 @@ def fetch_photo(query: str, dest_path: str) -> None:
     resp = requests.get(
         "https://api.pexels.com/v1/search",
         headers={"Authorization": PEXELS_API_KEY},
-        params={"query": query, "per_page": 15},
+        params={"query": query, "per_page": 8},
         timeout=30,
     )
     resp.raise_for_status()
     photos = resp.json().get("photos", [])
     if not photos:
         raise RuntimeError(f"No Pexels photos found for query: {query}")
-    photo = random.choice(photos)
+    # Pick from the top few results rather than the full page -- Pexels
+    # ranks by relevance, and results past the first handful drift off-topic.
+    photo = random.choice(photos[:3])
     img_url = photo["src"]["large2x"]
     img_resp = requests.get(img_url, timeout=60)
     img_resp.raise_for_status()
@@ -43,7 +45,7 @@ def fetch_photo(query: str, dest_path: str) -> None:
 def main() -> None:
     os.makedirs(OUT_DIR, exist_ok=True)
     photo_path = os.path.join(OUT_DIR, "hero_photo.jpg")
-    fetch_photo("gold bars", photo_path)
+    fetch_photo("gold bullion bars stacked", photo_path)
 
     build_slide(
         photo_path=photo_path,

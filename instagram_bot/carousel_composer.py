@@ -127,11 +127,16 @@ def _background(photo_path):
     hero.putalpha(mask)
     canvas.alpha_composite(hero, (0, CANVAS_H - HERO_H))
 
-    # Gentle bottom vignette so the very bottom edge (behind the CTA pill /
-    # corner tags) stays readable even on a bright photo.
+    # Bottom vignette (graduated, strongest right at the edge) so the plain
+    # corner micro-tags stay readable no matter how bright the photo is --
+    # the pills/panels above them already have their own opaque fill.
+    fade_h = 190
     vignette = Image.new("L", (CANVAS_W, CANVAS_H), 0)
     vd = ImageDraw.Draw(vignette)
-    vd.rectangle([0, CANVAS_H - 130, CANVAS_W, CANVAS_H], fill=60)
+    for i in range(fade_h):
+        y = CANVAS_H - fade_h + i
+        a = int(190 * (i / fade_h))
+        vd.line([(0, y), (CANVAS_W, y)], fill=a)
     dark = Image.new("RGBA", (CANVAS_W, CANVAS_H), (2, 3, 4, 255))
     canvas = Image.composite(dark, canvas, vignette)
     return canvas
