@@ -89,3 +89,19 @@ HASHTAGS = [
 # Branded/always-on tags -- identity hashtags kept in every post regardless
 # of rotation, e.g. rename to your own handle/brand tag.
 BRAND_HASHTAGS = ["#goldtradingbot"]
+
+# Short single lines for Story cards -- Stories are read in ~2 seconds, so
+# these are intentionally punchier and shorter than HOOKS/TIPS. Mix of
+# facts, quotes, and soft CTAs pointing at the bot.
+STORY_LINES = [
+    "Gold just moved. Do you know why?",
+    "Discipline > Prediction.",
+    "Your stop-loss is not optional.",
+    "DXY up, gold down. Usually.",
+    "The trend is your friend -- until it bends.",
+    "Automate the boring part. Link in bio.",
+    "One good setup beats ten random trades.",
+    "Risk 1%, not your whole week.",
+    "Emotions are the real spread cost.",
+    "My bot trades gold while I sleep. DM \"BOT\".",
+]

@@ -9,12 +9,14 @@ import os
 STATE_PATH = os.path.join(os.path.dirname(__file__), "state.json")
 
 _DEFAULT_STATE = {
-    "used_pexels_ids": [],   # stock video ids already posted, oldest first
-    "hashtag_cursor": 0,     # rotating offset into content_bank.HASHTAGS
-    "hook_cursor": 0,        # rotating offset into content_bank.HOOKS
-    "tip_cursor": 0,         # rotating offset into content_bank.TIPS
-    "cta_cursor": 0,         # rotating offset into content_bank.CTAS
-    "posts": [],             # history: [{date, pexels_id, ig_media_id}, ...]
+    "used_pexels_ids": [],        # stock video ids already posted, oldest first
+    "used_pexels_photo_ids": [],  # stock photo ids already posted, oldest first
+    "hashtag_cursor": 0,          # rotating offset into content_bank.HASHTAGS
+    "hook_cursor": 0,             # rotating offset into content_bank.HOOKS
+    "tip_cursor": 0,              # rotating offset into content_bank.TIPS
+    "cta_cursor": 0,              # rotating offset into content_bank.CTAS
+    "story_line_cursor": 0,       # rotating offset into content_bank.STORY_LINES
+    "posts": [],                  # history: [{date, type, pexels_id, ig_media_id}, ...]
 }
 
 # Cap how much "used" history we keep so Pexels searches don't eventually
@@ -34,6 +36,7 @@ def load() -> dict:
 
 def save(state: dict) -> None:
     state["used_pexels_ids"] = state["used_pexels_ids"][-MAX_USED_IDS:]
+    state["used_pexels_photo_ids"] = state["used_pexels_photo_ids"][-MAX_USED_IDS:]
     with open(STATE_PATH, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
         f.write("\n")
