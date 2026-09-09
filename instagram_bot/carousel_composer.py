@@ -97,37 +97,44 @@ def _cover_crop(img, w, h):
     return resized.crop((left, top, left + w, top + h))
 
 
-def _background(photo_path):
-    bg = _cover_crop(Image.open(photo_path).convert("RGB"), CANVAS_W, CANVAS_H).convert("RGBA")
-    overlay = Image.new("RGBA", (CANVAS_W, CANVAS_H), (5, 6, 8, 80))
-    canvas = Image.alpha_composite(bg, overlay)
+HERO_H = 620          # height of the photo region, anchored to the bottom
+HERO_FEATHER = 220    # how tall the fade-to-dark transition at its top edge is
 
-    # Light top/bottom vignette only, just enough for the tag row and CTA
-    # pill to stay legible -- the middle of the photo should read clearly.
+
+def _background(photo_path):
+    """Solid near-black canvas with the subject photo confined to the lower
+    ~46% of the frame (feathered into the dark background at its top edge),
+    matching the reference template -- rather than one full-bleed photo
+    dimmed everywhere, which read as a generic dark texture instead of
+    clearly being about gold/trading.
+    """
+    canvas = Image.new("RGBA", (CANVAS_W, CANVAS_H), (7, 9, 11, 255))
+
+    # Faint warm radial glow behind where the hero photo will sit, so the
+    # transition into the photo feels intentional rather than abrupt.
+    glow = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
+    gd = ImageDraw.Draw(glow)
+    gcx, gcy, gr = CANVAS_W // 2, CANVAS_H - HERO_H // 2, int(CANVAS_W * 0.75)
+    gd.ellipse([gcx - gr, gcy - gr, gcx + gr, gcy + gr], fill=(120, 90, 40, 40))
+    canvas.alpha_composite(glow)
+
+    hero = _cover_crop(Image.open(photo_path).convert("RGB"), CANVAS_W, HERO_H).convert("RGBA")
+    mask = Image.new("L", (CANVAS_W, HERO_H), 255)
+    md = ImageDraw.Draw(mask)
+    for y in range(HERO_FEATHER):
+        a = int(255 * (y / HERO_FEATHER))
+        md.line([(0, y), (CANVAS_W, y)], fill=a)
+    hero.putalpha(mask)
+    canvas.alpha_composite(hero, (0, CANVAS_H - HERO_H))
+
+    # Gentle bottom vignette so the very bottom edge (behind the CTA pill /
+    # corner tags) stays readable even on a bright photo.
     vignette = Image.new("L", (CANVAS_W, CANVAS_H), 0)
     vd = ImageDraw.Draw(vignette)
-    vd.rectangle([0, 0, CANVAS_W, 150], fill=70)
-    vd.rectangle([0, CANVAS_H - 200, CANVAS_W, CANVAS_H], fill=70)
+    vd.rectangle([0, CANVAS_H - 130, CANVAS_W, CANVAS_H], fill=60)
     dark = Image.new("RGBA", (CANVAS_W, CANVAS_H), (2, 3, 4, 255))
     canvas = Image.composite(dark, canvas, vignette)
     return canvas
-
-
-def _scrim_band(canvas, y0, y1, max_alpha=120, fade=60):
-    """Soft dark gradient band (fades in/out at its edges) so headline/body
-    text stays legible over an arbitrary photo without hiding it elsewhere."""
-    band = Image.new("RGBA", (CANVAS_W, y1 - y0), (0, 0, 0, 0))
-    bd = ImageDraw.Draw(band)
-    h = y1 - y0
-    for y in range(h):
-        if y < fade:
-            a = int(max_alpha * (y / fade))
-        elif y > h - fade:
-            a = int(max_alpha * ((h - y) / fade))
-        else:
-            a = max_alpha
-        bd.line([(0, y), (CANVAS_W, y)], fill=(3, 4, 5, a))
-    canvas.alpha_composite(band, (0, y0))
 
 
 def build_slide(
@@ -182,10 +189,6 @@ def build_slide(
                                tracking=2, anchor_right=True)
             ty += 26
 
-    # -- soft scrim behind headline+body so text reads on any photo --
-    _scrim_band(canvas, 270, 640)
-    draw = ImageDraw.Draw(canvas)
-
     # -- headline --
     head_font = montserrat(72, "ExtraBold")
     hy = 300
@@ -209,7 +212,8 @@ def build_slide(
         y1 = y0 + panel_h
         rrect = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
         rd = ImageDraw.Draw(rrect)
-        rd.rounded_rectangle([MARGIN, y0, CANVAS_W - MARGIN, y1], radius=22, fill=PANEL_BG)
+        rd.rounded_rectangle([MARGIN, y0, CANVAS_W - MARGIN, y1], radius=22,
+                              fill=PANEL_BG, outline=(*GOLD[:3], 130), width=1)
         canvas.alpha_composite(rrect)
         draw = ImageDraw.Draw(canvas)
 
@@ -227,22 +231,26 @@ def build_slide(
         draw.text((CANVAS_W - MARGIN - 24 - num_w, y0 + 24), num_text, font=num_font, fill=GRAY)
         _wrap_draw(draw, desc, desc_font, text_x, y0 + 66, CANVAS_W - MARGIN - 24 - text_x, GRAY, line_spacing=4)
 
-    # -- takeaway line --
+    # -- takeaway bar (full-width pill, solid fill so it stays legible over
+    #    the hero photo regardless of what's directly behind it) --
     panels_bottom = panel_top + len(panels) * (panel_h + panel_gap) - (panel_gap if panels else 0)
-    take_font = montserrat(34, "SemiBold")
-    ty = panels_bottom + (34 if panels else 20)
-    take_bottom = _wrap_draw(draw, takeaway_text, take_font, MARGIN, ty, CANVAS_W - 2 * MARGIN, WHITE, line_spacing=6)
+    take_font = montserrat(30, "SemiBold")
+    take_y = panels_bottom + (30 if panels else 16)
+    take_h = 68
+    draw.rounded_rectangle([MARGIN, take_y, CANVAS_W - MARGIN, take_y + take_h],
+                            radius=take_h / 2, fill=PANEL_BG, outline=(*GOLD[:3], 160), width=1)
+    draw.text((MARGIN + 28, take_y + (take_h - 32) / 2), takeaway_text, font=take_font, fill=WHITE)
 
-    # -- bottom CTA pill --
+    # -- bottom CTA pill (centered, solid fill) --
     cta_font = montserrat(28, "SemiBold")
     cta_full = f"{cta_text}  →"
     cta_w = draw.textlength(cta_full, font=cta_font)
     pill_pad_x, pill_h = 36, 70
     pill_w = cta_w + 2 * pill_pad_x
     pill_x0 = (CANVAS_W - pill_w) / 2
-    pill_y0 = min(CANVAS_H - 128, take_bottom + 26)
+    pill_y0 = min(CANVAS_H - 128, take_y + take_h + 22)
     draw.rounded_rectangle([pill_x0, pill_y0, pill_x0 + pill_w, pill_y0 + pill_h],
-                            radius=pill_h / 2, outline=CYAN, width=2)
+                            radius=pill_h / 2, fill=PANEL_BG, outline=CYAN, width=2)
     draw.text((pill_x0 + pill_pad_x, pill_y0 + (pill_h - 34) / 2), cta_full, font=cta_font, fill=WHITE)
 
     # -- corner micro-taglines --
