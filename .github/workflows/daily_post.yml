@@ -1,18 +1,28 @@
 name: Daily Instagram Post
 
 on:
-  # Cron is intentionally disabled for now -- we're still in the
-  # review-before-posting phase. Uncomment once you're happy publishing
-  # without a manual look first:
-  # schedule:
-  #   - cron: "0 15 * * *"   # 15:00 UTC every day
-  workflow_dispatch: {}   # lets you (or me, via the API) trigger a run manually
+  # No cron here on purpose: the daily wake-up + "show me before it posts"
+  # loop lives in the Claude session (a scheduled Routine), which triggers
+  # this workflow via the API in "generate" mode, then -- only after the
+  # account owner approves what it built -- triggers it again in "publish"
+  # mode with that run's manifest_url.
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "generate (build + host assets, no Instagram calls) or publish (post an already-approved manifest)"
+        type: choice
+        options: [generate, publish]
+        default: generate
+      manifest_url:
+        description: "Required for mode=publish: the manifest.json URL a prior generate run printed"
+        type: string
+        required: false
 
 permissions:
-  contents: write   # needed to create the Release asset and commit state.json
+  contents: write   # needed to create the Release asset and (generate mode) commit state.json
 
 jobs:
-  post:
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,8 +39,10 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r instagram_bot/requirements.txt
 
-      - name: Run daily posting job
+      - name: Run pipeline
         env:
+          PIPELINE_MODE: ${{ github.event.inputs.mode || 'generate' }}
+          MANIFEST_URL: ${{ github.event.inputs.manifest_url }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
@@ -38,7 +50,8 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python instagram_bot/main.py
 
-      - name: Commit updated state.json
+      - name: Commit updated state.json (generate mode only)
+        if: github.event.inputs.mode != 'publish'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
