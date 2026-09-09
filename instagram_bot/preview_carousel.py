@@ -1,16 +1,23 @@
 """Standalone script used only by .github/workflows/preview_carousel_test.yml
-to render ONE real carousel slide (real Pexels photo + real content) as a
-CI artifact, so it can be reviewed before the full content bank / daily
-pipeline integration is built. Not part of the daily posting pipeline.
+to render ONE real carousel slide (real Pexels photo + real content) and
+publish it as a GitHub Release asset, so it can be reviewed before the full
+content bank / daily pipeline integration is built. Not part of the daily
+posting pipeline. (Uses a Release instead of an Actions artifact because
+Actions artifacts are served from a blob-storage host the reviewing agent
+cannot reach; Release assets are served from github.com's own domain.)
 """
+import datetime
 import os
 import random
 
 import requests
 
 from carousel_composer import build_slide
+from github_host import upload_release_asset
 
 PEXELS_API_KEY = os.environ["PEXELS_API_KEY"]
+GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
+GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 OUT_DIR = os.path.join(os.path.dirname(__file__), "_preview_output")
 
 
@@ -58,7 +65,12 @@ def main() -> None:
         corner_left_words=["PLAN", "ANALYZE", "TRADE", "GROW"],
         corner_right_words=["GOLD", "DISCIPLINE", "PATIENCE", "FREEDOM"],
     )
-    print("Rendered", os.path.join(OUT_DIR, "slide_1of5.jpg"))
+    output_path = os.path.join(OUT_DIR, "slide_1of5.jpg")
+    print("Rendered", output_path)
+
+    tag = "carousel-preview-" + datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+    url = upload_release_asset(GITHUB_REPOSITORY, GITHUB_TOKEN, tag, output_path)
+    print("Uploaded to:", url)
 
 
 if __name__ == "__main__":
