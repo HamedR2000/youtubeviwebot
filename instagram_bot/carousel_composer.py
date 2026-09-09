@@ -189,14 +189,29 @@ def build_slide(
                                tracking=2, anchor_right=True)
             ty += 26
 
-    # -- headline --
+    # -- headline (each entry is word-wrapped to the canvas width so a long
+    #    phrase never runs off the edge -- it just becomes more physical
+    #    lines instead) --
     head_font = montserrat(72, "ExtraBold")
+    headline_max_w = CANVAS_W - 2 * MARGIN
     hy = 300
     for text, tone in headline_lines:
         color = GOLD_BRIGHT if tone == "gold" else WHITE
-        draw.text((MARGIN, hy), text, font=head_font, fill=color)
-        bbox = draw.textbbox((0, 0), text, font=head_font)
-        hy += (bbox[3] - bbox[1]) + 14
+        words = text.split()
+        line, physical_lines = "", []
+        for w in words:
+            trial = (line + " " + w).strip()
+            if draw.textlength(trial, font=head_font) <= headline_max_w or not line:
+                line = trial
+            else:
+                physical_lines.append(line)
+                line = w
+        if line:
+            physical_lines.append(line)
+        for pl in physical_lines:
+            draw.text((MARGIN, hy), pl, font=head_font, fill=color)
+            bbox = draw.textbbox((0, 0), pl, font=head_font)
+            hy += (bbox[3] - bbox[1]) + 14
 
     # -- body paragraph --
     body_font = montserrat(33, "Regular")
