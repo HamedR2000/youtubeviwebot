@@ -27,7 +27,7 @@ from stock_media import download_video, find_unused_video
 from stock_photos import download_photo, find_unused_photo
 from video_composer import compose_video
 
-BRAND_HANDLE = "@your_handle"  # TODO: replace with your real Instagram handle
+BRAND_HANDLE = "@Goldhamedsignals"
 MUSIC_DIR = os.path.join(os.path.dirname(__file__), "music")
 WORKDIR = os.path.join(os.path.dirname(__file__), "_build")
 

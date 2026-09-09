@@ -52,15 +52,16 @@ TIPS = [
     "The best setup is worthless without the discipline to follow your own rules.",
 ]
 
-# Calls-to-action promoting the trading bot. Kept factual (no "guaranteed
-# profit" / "get rich" language) to stay within Instagram's ad policy norms
-# and basic advertising-honesty practice.
+# Calls-to-action promoting the trading bot (sold as a 6-month or 1-year
+# subscription via the Telegram channel linked in bio, or by DM). Kept
+# factual (no "guaranteed profit" / "get rich" language) to stay within
+# Instagram's ad policy norms and basic advertising-honesty practice.
 CTAS = [
-    "Want your gold trades executed with zero emotion? My trading bot is live -- link in bio.",
-    "I built a trading bot to automate this exact process. DM \"BOT\" to learn more.",
-    "Tired of watching charts all day? My bot does it for you. Details in bio.",
-    "Automate your gold strategy the way I do -- check the link in bio for my trading bot.",
-    "Consistency beats emotion. That's why I trade with my own bot -- DM me for access.",
+    "Want your gold trades executed with zero emotion? Join the Telegram channel in my bio -- 6-month & 1-year access available.",
+    "I trade with my own automated expert on gold. Get it via the Telegram in bio, or just DM me.",
+    "Tired of watching charts all day? My bot does it for you. Telegram channel in bio for subscription options.",
+    "Automate your gold strategy the way I do -- Telegram link in bio, or DM me for details.",
+    "Consistency beats emotion. That's why I trade with my own bot -- 6-month & 1-year plans open, link in bio.",
 ]
 
 # Mandatory risk disclaimer appended to every caption. Do not remove --
@@ -87,8 +88,8 @@ HASHTAGS = [
 ]
 
 # Branded/always-on tags -- identity hashtags kept in every post regardless
-# of rotation, e.g. rename to your own handle/brand tag.
-BRAND_HASHTAGS = ["#goldtradingbot"]
+# of rotation.
+BRAND_HASHTAGS = ["#goldhamedsignals"]
 
 # Short single lines for Story cards -- Stories are read in ~2 seconds, so
 # these are intentionally punchier and shorter than HOOKS/TIPS. Mix of
@@ -99,9 +100,9 @@ STORY_LINES = [
     "Your stop-loss is not optional.",
     "DXY up, gold down. Usually.",
     "The trend is your friend -- until it bends.",
-    "Automate the boring part. Link in bio.",
+    "Automate the boring part. Telegram in bio.",
     "One good setup beats ten random trades.",
     "Risk 1%, not your whole week.",
     "Emotions are the real spread cost.",
-    "My bot trades gold while I sleep. DM \"BOT\".",
+    "My bot trades gold while I sleep. Telegram in bio.",
 ]
