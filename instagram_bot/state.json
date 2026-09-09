@@ -14,5 +14,8 @@
   "cta_cursor": 2,
   "story_line_cursor": 3,
   "carousel_topic_cursor": 0,
-  "posts": []
+  "posts": [],
+  "comment_reply_en_cursor": 0,
+  "comment_reply_fa_cursor": 0,
+  "replied_comment_ids": []
 }
