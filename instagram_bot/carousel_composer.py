@@ -99,16 +99,35 @@ def _cover_crop(img, w, h):
 
 def _background(photo_path):
     bg = _cover_crop(Image.open(photo_path).convert("RGB"), CANVAS_W, CANVAS_H).convert("RGBA")
-    overlay = Image.new("RGBA", (CANVAS_W, CANVAS_H), (5, 6, 8, 165))
+    overlay = Image.new("RGBA", (CANVAS_W, CANVAS_H), (5, 6, 8, 80))
     canvas = Image.alpha_composite(bg, overlay)
 
+    # Light top/bottom vignette only, just enough for the tag row and CTA
+    # pill to stay legible -- the middle of the photo should read clearly.
     vignette = Image.new("L", (CANVAS_W, CANVAS_H), 0)
     vd = ImageDraw.Draw(vignette)
-    vd.rectangle([0, 0, CANVAS_W, 260], fill=90)
-    vd.rectangle([0, CANVAS_H - 320, CANVAS_W, CANVAS_H], fill=110)
+    vd.rectangle([0, 0, CANVAS_W, 150], fill=70)
+    vd.rectangle([0, CANVAS_H - 200, CANVAS_W, CANVAS_H], fill=70)
     dark = Image.new("RGBA", (CANVAS_W, CANVAS_H), (2, 3, 4, 255))
     canvas = Image.composite(dark, canvas, vignette)
     return canvas
+
+
+def _scrim_band(canvas, y0, y1, max_alpha=120, fade=60):
+    """Soft dark gradient band (fades in/out at its edges) so headline/body
+    text stays legible over an arbitrary photo without hiding it elsewhere."""
+    band = Image.new("RGBA", (CANVAS_W, y1 - y0), (0, 0, 0, 0))
+    bd = ImageDraw.Draw(band)
+    h = y1 - y0
+    for y in range(h):
+        if y < fade:
+            a = int(max_alpha * (y / fade))
+        elif y > h - fade:
+            a = int(max_alpha * ((h - y) / fade))
+        else:
+            a = max_alpha
+        bd.line([(0, y), (CANVAS_W, y)], fill=(3, 4, 5, a))
+    canvas.alpha_composite(band, (0, y0))
 
 
 def build_slide(
@@ -162,6 +181,10 @@ def build_slide(
             draw_tracked_text(draw, (CANVAS_W - MARGIN, ty), w.upper(), tag_font, GRAY,
                                tracking=2, anchor_right=True)
             ty += 26
+
+    # -- soft scrim behind headline+body so text reads on any photo --
+    _scrim_band(canvas, 270, 640)
+    draw = ImageDraw.Draw(canvas)
 
     # -- headline --
     head_font = montserrat(72, "ExtraBold")
