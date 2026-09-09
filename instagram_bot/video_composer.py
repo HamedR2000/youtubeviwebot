@@ -10,7 +10,7 @@ import os
 import random
 
 from PIL import Image, ImageDraw
-from moviepy.editor import (
+from moviepy import (
     AudioFileClip,
     CompositeAudioClip,
     CompositeVideoClip,
@@ -54,9 +54,9 @@ def build_text_overlay(hook: str, tip: str, brand_handle: str) -> Image.Image:
 
 def _fit_and_crop(clip: VideoFileClip) -> VideoFileClip:
     scale = max(TARGET_W / clip.w, TARGET_H / clip.h)
-    resized = clip.resize(scale)
+    resized = clip.resized(scale)
     x_center, y_center = resized.w / 2, resized.h / 2
-    return resized.crop(
+    return resized.cropped(
         x_center=x_center, y_center=y_center, width=TARGET_W, height=TARGET_H
     )
 
@@ -75,24 +75,28 @@ def compose_video(raw_video_path: str, hook: str, tip: str, brand_handle: str,
                    music_dir: str, output_path: str) -> None:
     base = VideoFileClip(raw_video_path).without_audio()
     duration = min(CLIP_DURATION_S, base.duration)
-    base = _fit_and_crop(base).subclip(0, duration)
+    base = _fit_and_crop(base).subclipped(0, duration)
 
     overlay_img = build_text_overlay(hook, tip, brand_handle)
     overlay_path = output_path + ".overlay.png"
     overlay_img.save(overlay_path)
-    overlay_clip = ImageClip(overlay_path).set_duration(duration)
+    overlay_clip = ImageClip(overlay_path).with_duration(duration)
 
     video = CompositeVideoClip([base, overlay_clip])
 
     track_path = _pick_music_track(music_dir)
     music = AudioFileClip(track_path)
     if music.duration < duration:
-        music = afx.audio_loop(music, duration=duration)
+        music = music.with_effects([afx.AudioLoop(duration=duration)])
     else:
-        music = music.subclip(0, duration)
-    music = music.volumex(MUSIC_VOLUME).audio_fadein(1).audio_fadeout(1.5)
+        music = music.subclipped(0, duration)
+    music = music.with_effects([
+        afx.MultiplyVolume(MUSIC_VOLUME),
+        afx.AudioFadeIn(1),
+        afx.AudioFadeOut(1.5),
+    ])
 
-    video = video.set_audio(CompositeAudioClip([music]))
+    video = video.with_audio(CompositeAudioClip([music]))
 
     video.write_videofile(
         output_path,
