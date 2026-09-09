@@ -9,7 +9,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: read
+  contents: write   # needed to create the Release asset
 
 jobs:
   preview:
@@ -24,13 +24,9 @@ jobs:
       - name: Install Python dependencies
         run: pip install pillow requests
 
-      - name: Render preview slide
+      - name: Render preview slide and publish as a Release asset
         env:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: python instagram_bot/preview_carousel.py
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: carousel-preview
-          path: instagram_bot/_preview_output/*.jpg
-          retention-days: 7
