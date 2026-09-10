@@ -1,18 +1,22 @@
 {
   "used_pexels_ids": [
-    6120116
+    6120116,
+    35606106
   ],
   "used_pexels_photo_ids": [
     6770770,
     29336326,
     7947661,
-    26928333
+    26928333,
+    5717766,
+    14172498,
+    7948070
   ],
-  "hashtag_cursor": 10,
-  "hook_cursor": 2,
-  "tip_cursor": 2,
-  "cta_cursor": 2,
-  "story_line_cursor": 3,
+  "hashtag_cursor": 0,
+  "hook_cursor": 3,
+  "tip_cursor": 3,
+  "cta_cursor": 3,
+  "story_line_cursor": 6,
   "carousel_topic_cursor": 0,
   "posts": [],
   "comment_reply_en_cursor": 0,
