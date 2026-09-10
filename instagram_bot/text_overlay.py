@@ -12,12 +12,36 @@ FONT_CANDIDATES = [
     "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
 ]
 
+FONT_DIR = os.path.join(os.path.dirname(__file__), "fonts")
+MONTSERRAT_PATH = os.path.join(FONT_DIR, "Montserrat[wght].ttf")
+PLAYFAIR_PATH = os.path.join(FONT_DIR, "PlayfairDisplay[wght].ttf")
+
 
 def load_font(size: int) -> ImageFont.FreeTypeFont:
     for path in FONT_CANDIDATES:
         if os.path.exists(path):
             return ImageFont.truetype(path, size)
     return ImageFont.load_default()
+
+
+def _variable_font(path: str, size: int, variation: str) -> ImageFont.FreeTypeFont:
+    f = ImageFont.truetype(path, size)
+    try:
+        f.set_variation_by_name(variation)
+    except Exception:
+        pass
+    return f
+
+
+def montserrat(size: int, weight: str = "Regular") -> ImageFont.FreeTypeFont:
+    """The same body/UI font used by the carousel slides, for visual
+    consistency across carousel, story and feed cards."""
+    return _variable_font(MONTSERRAT_PATH, size, weight)
+
+
+def playfair(size: int, weight: str = "Bold") -> ImageFont.FreeTypeFont:
+    """The same serif headline font used by the carousel slides."""
+    return _variable_font(PLAYFAIR_PATH, size, weight)
 
 
 def draw_wrapped(draw: ImageDraw.ImageDraw, text: str, font, box_left: int, box_top: int,
@@ -36,3 +60,40 @@ def draw_wrapped(draw: ImageDraw.ImageDraw, text: str, font, box_left: int, box_
 
 def rounded_panel(draw: ImageDraw.ImageDraw, xy, fill, radius: int = 28) -> None:
     draw.rounded_rectangle(xy, radius=radius, fill=fill)
+
+
+def wrap_lines_px(draw: ImageDraw.ImageDraw, text: str, font, max_width_px: int) -> list:
+    """Word-wrap `text` to `max_width_px`, measuring actual glyph width
+    (unlike draw_wrapped's char-count wrap, which is a poor fit for
+    variable-width fonts like Playfair Display)."""
+    words = text.split()
+    lines, cur = [], ""
+    for w in words:
+        trial = (cur + " " + w).strip()
+        if draw.textlength(trial, font=font) <= max_width_px or not cur:
+            cur = trial
+        else:
+            lines.append(cur)
+            cur = w
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def draw_wrapped_px(draw: ImageDraw.ImageDraw, text: str, font, x: int, y: int,
+                     max_width_px: int, fill, line_spacing: int = 10,
+                     align: str = "left", shadow=None) -> int:
+    """Pixel-width word-wrap + draw, with optional drop shadow (pass a fill
+    color) so text stays legible over a photo of unpredictable brightness.
+    Returns the y-coordinate just below the last line."""
+    lines = wrap_lines_px(draw, text, font, max_width_px)
+    for line in lines:
+        line_x = x
+        if align == "center":
+            line_x = x - draw.textlength(line, font=font) / 2
+        if shadow:
+            draw.text((line_x + 2, y + 2), line, font=font, fill=shadow)
+        draw.text((line_x, y), line, font=font, fill=fill)
+        bbox = draw.textbbox((0, 0), line, font=font)
+        y += (bbox[3] - bbox[1]) + line_spacing
+    return y
