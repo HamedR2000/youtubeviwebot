@@ -1,9 +1,9 @@
 name: Preview Carousel Test
 
-# Manual-only test workflow: renders ONE carousel slide with a real Pexels
-# photo and uploads it as a build artifact for review. Does not touch
-# Instagram at all -- purely for validating carousel_composer.py's visual
-# output before it's wired into the daily pipeline.
+# Manual-only test workflow: renders one full carousel topic using the
+# bespoke AI-art background bank (instagram_bot/backgrounds/) and uploads
+# each slide as a Release asset for review. Does not touch Instagram at
+# all -- purely for validating carousel_composer.py's visual output.
 
 on:
   workflow_dispatch: {}
@@ -26,7 +26,6 @@ jobs:
 
       - name: Render preview slide and publish as a Release asset
         env:
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python instagram_bot/preview_carousel.py

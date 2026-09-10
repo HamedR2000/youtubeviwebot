@@ -1,5 +1,5 @@
 """Standalone script used only by .github/workflows/preview_carousel_test.yml
-to render one full 3-slide carousel topic (real Pexels photos + real
+to render one full 3-slide carousel topic (real background photos + real
 content) and publish each slide as a GitHub Release asset, so it can be
 reviewed before the full daily pipeline integration is built. Not part of
 the daily posting pipeline. (Uses a Release instead of an Actions artifact
@@ -11,36 +11,17 @@ import datetime
 import os
 import random
 
-import requests
-
+from carousel_backgrounds import next_background
 from carousel_composer import build_slide
 from carousel_content import BRAND_CORNER_LEFT, BRAND_CORNER_RIGHT, CAROUSELS
 from github_host import upload_release_asset
+import state as state_mod
 
-PEXELS_API_KEY = os.environ["PEXELS_API_KEY"]
 GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 OUT_DIR = os.path.join(os.path.dirname(__file__), "_preview_output")
 
 TOPIC_ID = os.environ.get("PREVIEW_TOPIC_ID")  # optional override
-
-
-def fetch_photo(query: str, dest_path: str) -> None:
-    resp = requests.get(
-        "https://api.pexels.com/v1/search",
-        headers={"Authorization": PEXELS_API_KEY},
-        params={"query": query, "per_page": 8},
-        timeout=30,
-    )
-    resp.raise_for_status()
-    photos = resp.json().get("photos", [])
-    if not photos:
-        raise RuntimeError(f"No Pexels photos found for query: {query}")
-    photo = random.choice(photos[:3])
-    img_resp = requests.get(photo["src"]["large2x"], timeout=60)
-    img_resp.raise_for_status()
-    with open(dest_path, "wb") as f:
-        f.write(img_resp.content)
 
 
 def main() -> None:
@@ -49,16 +30,15 @@ def main() -> None:
     topic = next((t for t in CAROUSELS if t["id"] == TOPIC_ID), None) or random.choice(CAROUSELS)
     print(f"Topic: {topic['id']}")
 
+    st = state_mod.load()
     tag = "carousel-preview-" + datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
     urls = []
 
     for i, slide in enumerate(topic["slides"]):
         page_num = i + 1
         page_total = len(topic["slides"])
-        query = topic["search_terms"][i % len(topic["search_terms"])]
 
-        photo_path = os.path.join(OUT_DIR, f"photo_{page_num}.jpg")
-        fetch_photo(query, photo_path)
+        photo_path = next_background(st)
 
         output_path = os.path.join(OUT_DIR, f"slide_{page_num}of{page_total}.jpg")
         build_slide(
