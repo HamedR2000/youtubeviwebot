@@ -6,7 +6,11 @@ name: Preview Carousel Test
 # all -- purely for validating carousel_composer.py's visual output.
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      topic_id:
+        description: "Optional carousel_content.py topic id to render (random if omitted)"
+        required: false
 
 permissions:
   contents: write   # needed to create the Release asset
@@ -22,10 +26,11 @@ jobs:
           python-version: "3.11"
 
       - name: Install Python dependencies
-        run: pip install pillow requests
+        run: pip install -r instagram_bot/requirements.txt
 
       - name: Render preview slide and publish as a Release asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          PREVIEW_TOPIC_ID: ${{ github.event.inputs.topic_id }}
         run: python instagram_bot/preview_carousel.py
