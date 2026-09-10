@@ -17,5 +17,6 @@
   "posts": [],
   "comment_reply_en_cursor": 0,
   "comment_reply_fa_cursor": 0,
-  "replied_comment_ids": []
+  "replied_comment_ids": [],
+  "carousel_bg_cursor": 0
 }
