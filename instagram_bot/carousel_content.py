@@ -14,6 +14,8 @@ BRAND_CORNER_RIGHT = ["GOLD", "DISCIPLINE", "PATIENCE", "FREEDOM"]
 CTA_TELEGRAM = "Follow -- Telegram channel in bio"
 CTA_TELEGRAM_ALT = "Telegram in bio for full access"
 CTA_FOLLOW = "Follow for daily XAUUSD insights"
+CTA_BOT = "Message us to get the bot"
+CTA_BOT_ALT = "DM us for license & support"
 
 
 def _panel(icon, title, desc):
@@ -474,6 +476,84 @@ CAROUSELS = [
                 "cta_text": CTA_TELEGRAM_ALT,
                 "top_left_tagline": ("PLAN", "ANALYZE"),
                 "top_right_words": ["SAME", "MARKET", "HIGHER", "STANDARDS"],
+            },
+        ],
+    },
+    {
+        "id": "how-the-bot-works",
+        "category": "XAUUSD | AUTO TRADING BOT",
+        "slides": [
+            {
+                "headline_lines": [("TRADING", "white"), ("WITHOUT THE MANUAL WORK", "gold")],
+                "body_text": "Every trade shared in our Telegram signal channel is executed by our own bot -- exactly as posted, with no manual clicks.",
+                "panels": [],
+                "takeaway_text": "Swipe to see how it works.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("SIGNAL IN", "TRADE OUT"),
+                "top_right_words": ["ZERO", "MANUAL", "EXECUTION"],
+            },
+            {
+                "headline_lines": [("SIGNAL.", "white"), ("EXECUTION. DONE.", "gold")],
+                "body_text": "From our Telegram channel to your MetaTrader 5 -- the whole process runs on its own.",
+                "panels": [
+                    _panel("search", "Signal", "Every trade shared in our Telegram channel"),
+                    _panel("gear", "Execution", "The bot places it on MT5 automatically"),
+                    _panel("arrows_swap", "Entry & Exit", "Fully automatic, no manual clicks"),
+                ],
+                "takeaway_text": "Set it up once. Let it run.",
+                "cta_text": CTA_TELEGRAM,
+                "top_left_tagline": ("SIGNAL IN", "TRADE OUT"),
+                "top_right_words": ["ZERO", "MANUAL", "EXECUTION"],
+            },
+            {
+                "headline_lines": [("RUNS ON MT5.", "white"), ("NOT YOUR PHONE.", "gold")],
+                "body_text": "Installed on MetaTrader 5, on your own computer -- built for precision, not convenience.",
+                "panels": [],
+                "takeaway_text": "Consistency beats emotion.",
+                "cta_text": CTA_BOT,
+                "top_left_tagline": ("SIGNAL IN", "TRADE OUT"),
+                "top_right_words": ["ZERO", "MANUAL", "EXECUTION"],
+            },
+        ],
+    },
+    {
+        "id": "bot-compatibility-and-license",
+        "category": "XAUUSD | AUTO TRADING BOT",
+        "slides": [
+            {
+                "headline_lines": [("ONE BOT.", "white"), ("ANY BROKER. ANY PROP FIRM.", "gold")],
+                "body_text": "Our bot connects to any broker and any major prop firm -- you set the lot size, it handles the rest with precision.",
+                "panels": [
+                    _panel("scale", "Broker", "Works with any broker you trade with"),
+                    _panel("shield", "Prop Firm", "Compatible with major prop firms"),
+                    _panel("target", "Lot Size", "You control the size, we handle the rest"),
+                ],
+                "takeaway_text": "Same bot. Any account.",
+                "cta_text": CTA_TELEGRAM_ALT,
+                "top_left_tagline": ("BUILT FOR", "XAUUSD"),
+                "top_right_words": ["BROKER", "AND PROP", "READY"],
+            },
+            {
+                "headline_lines": [("A PRESET", "white"), ("BUILT FOR GOLD", "gold")],
+                "body_text": "A ready-made, pre-optimized preset for XAUUSD -- and fully configurable for other pairs and indices too.",
+                "panels": [
+                    _panel("coins", "XAUUSD", "Pre-optimized, ready to run"),
+                    _panel("bar_chart", "Other Markets", "EURUSD, NAS100, US30 and more"),
+                    _panel("gear", "Fully Configurable", "Adjust settings anytime"),
+                ],
+                "takeaway_text": "Ready in minutes, not hours.",
+                "cta_text": CTA_FOLLOW,
+                "top_left_tagline": ("BUILT FOR", "XAUUSD"),
+                "top_right_words": ["BROKER", "AND PROP", "READY"],
+            },
+            {
+                "headline_lines": [("6 OR 12 MONTHS.", "white"), ("FULL SUPPORT.", "gold")],
+                "body_text": "Choose a 6-month or 1-year license -- full support included for as long as your license runs.",
+                "panels": [],
+                "takeaway_text": "Simple licensing. Real support.",
+                "cta_text": CTA_BOT_ALT,
+                "top_left_tagline": ("BUILT FOR", "XAUUSD"),
+                "top_right_words": ["BROKER", "AND PROP", "READY"],
             },
         ],
     },

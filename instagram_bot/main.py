@@ -29,7 +29,7 @@ from carousel_backgrounds import next_background
 from carousel_composer import build_slide
 from carousel_content import BRAND_CORNER_LEFT, BRAND_CORNER_RIGHT, CAROUSELS
 from config import config
-from content_bank import CTAS, DISCLAIMER, HOOKS, STOCK_SEARCH_TERMS, STORY_LINES, TIPS
+from content_bank import CTAS, DISCLAIMER, HOOKS, STOCK_SEARCH_TERMS, STORY_LINES, STORY_LINES_FA, TIPS
 from github_host import upload_release_asset
 from image_composer import build_feed_card, build_story_card
 from instagram_publish import publish_carousel, publish_feed_image, publish_reel, publish_story
@@ -45,6 +45,7 @@ STORIES_PER_DAY = 3
 # Mon=0 ... Sun=6 (datetime.date.weekday())
 FEED_POST_WEEKDAYS = {2}        # Wed: a single feed image card
 CAROUSEL_WEEKDAYS = {0, 4}      # Mon, Fri: a full educational carousel
+PERSIAN_STORY_WEEKDAY = 3       # Thu: the first of that day's 3 stories is in Persian
 
 PIPELINE_MODE = os.environ.get("PIPELINE_MODE", "generate")
 
@@ -85,15 +86,21 @@ def build_reel_item(today: str, st: dict) -> dict:
     return {"type": "reel", "video_url": video_url, "caption": caption}
 
 
-def build_story_items(today: str, st: dict) -> list:
+def build_story_items(today: str, today_date: datetime.date, st: dict) -> list:
     lines = state_mod.next_rotating(STORY_LINES, st, "story_line_cursor", count=STORIES_PER_DAY)
+    persian_slot = 0 if today_date.weekday() == PERSIAN_STORY_WEEKDAY else None
+
     items = []
     for i, line in enumerate(lines):
         print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY}: rendering...")
         photo_path = next_background(st)
 
+        rtl = i == persian_slot
+        if rtl:
+            (line,) = state_mod.next_rotating(STORY_LINES_FA, st, "story_line_fa_cursor")
+
         output_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
-        build_story_card(photo_path, line, BRAND_HANDLE, output_path)
+        build_story_card(photo_path, line, BRAND_HANDLE, output_path, rtl=rtl)
         image_url = _host(today, output_path)
 
         os.remove(output_path)
@@ -172,7 +179,7 @@ def run_generate() -> None:
     items = [build_reel_item(today, st)]
     state_mod.save(st)
 
-    items.extend(build_story_items(today, st))
+    items.extend(build_story_items(today, today_date, st))
     state_mod.save(st)
 
     weekday = today_date.weekday()

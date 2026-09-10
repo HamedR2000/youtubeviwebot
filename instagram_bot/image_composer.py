@@ -8,7 +8,7 @@ premium look rather than the plain system-font style they used before.
 """
 from PIL import Image, ImageDraw
 
-from text_overlay import draw_wrapped_px, montserrat, playfair, rounded_panel
+from text_overlay import draw_wrapped_px, draw_wrapped_rtl, montserrat, playfair, rounded_panel, vazirmatn
 
 FEED_SIZE = (1080, 1350)   # Instagram feed portrait (4:5)
 STORY_SIZE = (1080, 1920)  # Instagram story/reel (9:16)
@@ -56,7 +56,10 @@ def build_feed_card(photo_path: str, headline: str, subtitle: str, cta: str,
     canvas.convert("RGB").save(output_path, quality=90)
 
 
-def build_story_card(photo_path: str, line: str, brand_handle: str, output_path: str) -> None:
+def build_story_card(photo_path: str, line: str, brand_handle: str, output_path: str,
+                      rtl: bool = False) -> None:
+    """rtl=True renders `line` with the Persian/Arabic-script font, shaped
+    and right-aligned -- used for the once-a-week Persian story."""
     w, h = STORY_SIZE
     bg = _cover_crop(Image.open(photo_path).convert("RGB"), w, h)
     dark = Image.new("RGBA", (w, h), (0, 0, 0, DARKEN_ALPHA))
@@ -64,13 +67,18 @@ def build_story_card(photo_path: str, line: str, brand_handle: str, output_path:
     draw = ImageDraw.Draw(canvas)
 
     margin = 80
-    line_font = playfair(62, "Bold")
     brand_font = montserrat(34, "SemiBold")
 
     # Vertically centered single line/short block -- stories are meant to be
     # read in ~2 seconds.
-    draw_wrapped_px(draw, line, line_font, margin, h // 2 - 120, w - 2 * margin,
-                     fill=CREAM, line_spacing=16, shadow=SHADOW)
+    if rtl:
+        line_font = vazirmatn(60, "Bold")
+        draw_wrapped_rtl(draw, line, line_font, w - margin, h // 2 - 120, w - 2 * margin,
+                          fill=CREAM, line_spacing=16, shadow=SHADOW)
+    else:
+        line_font = playfair(62, "Bold")
+        draw_wrapped_px(draw, line, line_font, margin, h // 2 - 120, w - 2 * margin,
+                         fill=CREAM, line_spacing=16, shadow=SHADOW)
 
     draw.text((margin, h - 140), brand_handle, font=brand_font, fill=GOLD_BRIGHT)
 
