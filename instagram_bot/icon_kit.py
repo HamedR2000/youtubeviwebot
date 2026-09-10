@@ -109,6 +109,17 @@ def icon_scale(draw, cx, cy, r, color, width=4):
     draw.line([(cx - s * 0.5, cy + s * 0.6), (cx + s * 0.5, cy + s * 0.6)], fill=color, width=width)
 
 
+def icon_person_plus(draw, cx, cy, r, color, width=4):
+    """Small glyph (no outer ring) for use inside the CTA pill."""
+    s = r * 0.55
+    head_r = s * 0.45
+    draw.ellipse([cx - head_r, cy - s - head_r, cx + head_r, cy - s + head_r], outline=color, width=width)
+    draw.arc([cx - s, cy - s * 0.1, cx + s, cy + s * 1.6], 200, 340, fill=color, width=width)
+    px, py, pl = cx + s * 0.75, cy - s * 0.15, s * 0.5
+    draw.line([(px - pl / 2, py), (px + pl / 2, py)], fill=color, width=width)
+    draw.line([(px, py - pl / 2), (px, py + pl / 2)], fill=color, width=width)
+
+
 def icon_arrows_swap(draw, cx, cy, r, color, width=5):
     _ring(draw, cx, cy, r, color, width)
     s = r * 0.5
@@ -133,6 +144,7 @@ ICONS = {
     "target": icon_target,
     "scale": icon_scale,
     "arrows_swap": icon_arrows_swap,
+    "person_plus": icon_person_plus,
 }
 
 
