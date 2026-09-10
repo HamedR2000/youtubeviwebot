@@ -1,0 +1,29 @@
+name: Test Persian Story (one-off)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r instagram_bot/requirements.txt
+
+      - name: Check Pillow raqm support
+        run: python -c "from PIL import features; print('raqm:', features.check('raqm'))"
+
+      - name: Render Persian story and publish as a Release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python instagram_bot/_test_persian_story.py
