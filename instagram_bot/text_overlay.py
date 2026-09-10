@@ -5,6 +5,8 @@ both video_composer.py (text-over-video Reels) and image_composer.py
 import os
 import textwrap
 
+import arabic_reshaper
+from bidi.algorithm import get_display
 from PIL import ImageDraw, ImageFont
 
 FONT_CANDIDATES = [
@@ -15,6 +17,7 @@ FONT_CANDIDATES = [
 FONT_DIR = os.path.join(os.path.dirname(__file__), "fonts")
 MONTSERRAT_PATH = os.path.join(FONT_DIR, "Montserrat[wght].ttf")
 PLAYFAIR_PATH = os.path.join(FONT_DIR, "PlayfairDisplay[wght].ttf")
+VAZIRMATN_PATH = os.path.join(FONT_DIR, "Vazirmatn[wght].ttf")
 
 
 def load_font(size: int) -> ImageFont.FreeTypeFont:
@@ -42,6 +45,18 @@ def montserrat(size: int, weight: str = "Regular") -> ImageFont.FreeTypeFont:
 def playfair(size: int, weight: str = "Bold") -> ImageFont.FreeTypeFont:
     """The same serif headline font used by the carousel slides."""
     return _variable_font(PLAYFAIR_PATH, size, weight)
+
+
+def vazirmatn(size: int, weight: str = "Bold") -> ImageFont.FreeTypeFont:
+    """Persian/Arabic-script font, used for the once-a-week Persian story."""
+    return _variable_font(VAZIRMATN_PATH, size, weight)
+
+
+def shape_rtl(text: str) -> str:
+    """Reshape + reorder Persian/Arabic text for correct glyph joining and
+    right-to-left display -- Pillow draws Unicode code points as given, it
+    does not do this itself."""
+    return get_display(arabic_reshaper.reshape(text))
 
 
 def draw_wrapped(draw: ImageDraw.ImageDraw, text: str, font, box_left: int, box_top: int,
@@ -78,6 +93,35 @@ def wrap_lines_px(draw: ImageDraw.ImageDraw, text: str, font, max_width_px: int)
     if cur:
         lines.append(cur)
     return lines
+
+
+def draw_wrapped_rtl(draw: ImageDraw.ImageDraw, text: str, font, right_x: int, y: int,
+                      max_width_px: int, fill, line_spacing: int = 10, shadow=None) -> int:
+    """Word-wrap + draw right-to-left Persian/Arabic text, right-aligned to
+    `right_x`. Wrapping splits the logical (unshaped) string on spaces --
+    correct for space-separated Persian words -- then each finished line is
+    reshaped for display. Returns the y-coordinate just below the last line."""
+    words = text.split()
+    lines, cur = [], ""
+    for w in words:
+        trial = (cur + " " + w).strip()
+        if draw.textlength(shape_rtl(trial), font=font) <= max_width_px or not cur:
+            cur = trial
+        else:
+            lines.append(cur)
+            cur = w
+    if cur:
+        lines.append(cur)
+
+    for line in lines:
+        shaped = shape_rtl(line)
+        line_x = right_x - draw.textlength(shaped, font=font)
+        if shadow:
+            draw.text((line_x + 2, y + 2), shaped, font=font, fill=shadow)
+        draw.text((line_x, y), shaped, font=font, fill=fill)
+        bbox = draw.textbbox((0, 0), shaped, font=font)
+        y += (bbox[3] - bbox[1]) + line_spacing
+    return y
 
 
 def draw_wrapped_px(draw: ImageDraw.ImageDraw, text: str, font, x: int, y: int,

@@ -122,4 +122,22 @@ STORY_LINES = [
     "Risk 1%, not your whole week.",
     "Emotions are the real spread cost.",
     "My bot trades gold while I sleep. Telegram in bio.",
+    "Signal in. Trade out. Zero manual clicks.",
+    "One bot. Any broker. Any prop firm.",
+    "You set the lot size. The bot handles the rest.",
+    "A ready XAUUSD preset, pre-optimized and tested.",
+    "Runs on MT5, on your PC -- not your phone.",
+    "6-month or 1-year license. Full support included.",
+]
+
+# Once-a-week Persian story line (see PERSIAN_STORY_WEEKDAY in main.py) --
+# same bot-focused content as STORY_LINES, for the audience segment that
+# reads Persian. Kept short, matching the Story format.
+STORY_LINES_FA = [
+    "معاملات طلا دیگه دستی نیست.",
+    "هر سیگنال کانال تلگرام، خودکار روی MT5 اجرا می‌شه.",
+    "با هر بروکر و هر پراپ‌فرم سازگاره -- فقط حجم معامله دست شماست.",
+    "یک پریست آماده و بهینه‌شده، مخصوص XAUUSD.",
+    "لایسنس ۶ ماهه یا ۱ ساله، با پشتیبانی کامل.",
+    "ربات معامله‌گر خودکار طلا -- برای دریافت، پیام بده.",
 ]
