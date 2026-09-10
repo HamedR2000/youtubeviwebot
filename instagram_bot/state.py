@@ -17,6 +17,7 @@ _DEFAULT_STATE = {
     "cta_cursor": 0,              # rotating offset into content_bank.CTAS
     "story_line_cursor": 0,       # rotating offset into content_bank.STORY_LINES
     "carousel_topic_cursor": 0,   # rotating offset into carousel_content.CAROUSELS
+    "carousel_bg_cursor": 0,      # rotating offset into carousel_backgrounds.BACKGROUNDS
     "comment_reply_en_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_EN
     "comment_reply_fa_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_FA
     "replied_comment_ids": [],    # comment ids we've already auto-replied to

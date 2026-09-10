@@ -25,6 +25,7 @@ import requests
 
 import state as state_mod
 from caption_builder import build_caption
+from carousel_backgrounds import next_background
 from carousel_composer import build_slide
 from carousel_content import BRAND_CORNER_LEFT, BRAND_CORNER_RIGHT, CAROUSELS
 from config import config
@@ -141,18 +142,11 @@ def build_carousel_item(today: str, st: dict) -> dict:
     image_urls = []
     for i, slide in enumerate(topic["slides"]):
         page_num, page_total = i + 1, len(topic["slides"])
-        query = topic["search_terms"][i % len(topic["search_terms"])]
-        photo_info = find_unused_photo(
-            api_key=config.PEXELS_API_KEY,
-            search_terms=[query],
-            used_ids=set(st["used_pexels_photo_ids"]),
-        )
-        raw_path = os.path.join(WORKDIR, f"carousel_raw_{photo_info['id']}.jpg")
-        download_photo(photo_info["download_url"], raw_path)
+        photo_path = next_background(st)
 
         output_path = os.path.join(WORKDIR, f"carousel_{today}_{page_num}.jpg")
         build_slide(
-            photo_path=raw_path,
+            photo_path=photo_path,
             output_path=output_path,
             category_label=topic["category"],
             page_num=page_num,
@@ -168,9 +162,6 @@ def build_carousel_item(today: str, st: dict) -> dict:
             corner_right_words=BRAND_CORNER_RIGHT,
         )
         image_urls.append(_host(today, output_path))
-
-        st["used_pexels_photo_ids"].append(photo_info["id"])
-        os.remove(raw_path)
         os.remove(output_path)
 
     first, mid, last = topic["slides"][0], topic["slides"][len(topic["slides"]) // 2], topic["slides"][-1]
