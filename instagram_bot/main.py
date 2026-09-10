@@ -89,21 +89,13 @@ def build_story_items(today: str, st: dict) -> list:
     lines = state_mod.next_rotating(STORY_LINES, st, "story_line_cursor", count=STORIES_PER_DAY)
     items = []
     for i, line in enumerate(lines):
-        print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY}: finding an unused stock photo...")
-        photo_info = find_unused_photo(
-            api_key=config.PEXELS_API_KEY,
-            search_terms=STOCK_SEARCH_TERMS,
-            used_ids=set(st["used_pexels_photo_ids"]),
-        )
-        raw_path = os.path.join(WORKDIR, f"story_raw_{photo_info['id']}.jpg")
-        download_photo(photo_info["download_url"], raw_path)
+        print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY}: rendering...")
+        photo_path = next_background(st)
 
         output_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
-        build_story_card(raw_path, line, BRAND_HANDLE, output_path)
+        build_story_card(photo_path, line, BRAND_HANDLE, output_path)
         image_url = _host(today, output_path)
 
-        st["used_pexels_photo_ids"].append(photo_info["id"])
-        os.remove(raw_path)
         os.remove(output_path)
         items.append({"type": "story", "image_url": image_url})
     return items
