@@ -1,15 +1,15 @@
-"""Renders one slide of a premium dark/gold educational carousel, matching
-the reference template style: top category tag + page counter with
-progress dashes, decorative micro-taglines, a two-tone headline, a body
-paragraph, up to 3 numbered "card" panels with circled line-icons, a
-takeaway line, and a bottom CTA pill.
+"""Renders one slide of a premium dark/gold-copper educational carousel,
+matching the account owner's reference template: top category tag + a
+plain circled page counter, decorative micro-taglines, a two-tone serif
+headline, a body paragraph, a 3-column row of circled line-icons (label +
+short caption, divided by thin rules), a shadowed takeaway line, and a
+bottom CTA pill with a small icon.
 
-Uses Montserrat (body/UI) + Playfair Display (occasional serif headline
-accent) -- both bundled under fonts/ as OFL-licensed variable fonts -- and
-icon_kit.py for the circled line icons. No external image assets.
+Uses Montserrat (UI/body) + Playfair Display (serif headline) -- both
+bundled under fonts/ as OFL-licensed variable fonts -- and icon_kit.py for
+the circled line icons. No external image assets.
 """
 import os
-import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -22,13 +22,12 @@ FONT_DIR = os.path.join(os.path.dirname(__file__), "fonts")
 _MONTSERRAT = os.path.join(FONT_DIR, "Montserrat[wght].ttf")
 _PLAYFAIR = os.path.join(FONT_DIR, "PlayfairDisplay[wght].ttf")
 
-WHITE = (240, 241, 243, 255)
-GRAY = (156, 163, 175, 255)
-GOLD = (205, 164, 92, 255)
-GOLD_BRIGHT = (226, 192, 128, 255)
-CYAN = (94, 211, 205, 255)
-PANEL_BG = (12, 20, 24, 195)
-DIM_DASH = (255, 255, 255, 70)
+CREAM = (240, 235, 225, 255)
+WHITE = (235, 231, 224, 255)
+GRAY = (176, 172, 166, 255)
+GOLD = (196, 155, 98, 255)
+GOLD_BRIGHT = (214, 175, 116, 255)
+SHADOW = (0, 0, 0, 170)
 
 
 def _font(path, size, variation=None):
@@ -70,7 +69,7 @@ def draw_tracked_text(draw, xy, text, font, fill, tracking=0, anchor_right=False
     return x
 
 
-def _wrap_draw(draw, text, font, x, y, max_width_px, fill, line_spacing=10):
+def _wrap_lines(draw, text, font, max_width_px):
     words = text.split()
     lines, cur = [], ""
     for w in words:
@@ -82,8 +81,19 @@ def _wrap_draw(draw, text, font, x, y, max_width_px, fill, line_spacing=10):
             cur = w
     if cur:
         lines.append(cur)
+    return lines
+
+
+def _wrap_draw(draw, text, font, x, y, max_width_px, fill, line_spacing=10,
+               align="left", shadow=False):
+    lines = _wrap_lines(draw, text, font, max_width_px)
     for line in lines:
-        draw.text((x, y), line, font=font, fill=fill)
+        line_x = x
+        if align == "center":
+            line_x = x - draw.textlength(line, font=font) / 2
+        if shadow:
+            draw.text((line_x + 2, y + 2), line, font=font, fill=SHADOW)
+        draw.text((line_x, y), line, font=font, fill=fill)
         bbox = draw.textbbox((0, 0), line, font=font)
         y += (bbox[3] - bbox[1]) + line_spacing
     return y
@@ -108,14 +118,14 @@ def _background(photo_path):
     dimmed everywhere, which read as a generic dark texture instead of
     clearly being about gold/trading.
     """
-    canvas = Image.new("RGBA", (CANVAS_W, CANVAS_H), (7, 9, 11, 255))
+    canvas = Image.new("RGBA", (CANVAS_W, CANVAS_H), (10, 8, 9, 255))
 
-    # Faint warm radial glow behind where the hero photo will sit, so the
+    # Faint warm glow behind where the hero photo will sit, so the
     # transition into the photo feels intentional rather than abrupt.
     glow = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
     gd = ImageDraw.Draw(glow)
     gcx, gcy, gr = CANVAS_W // 2, CANVAS_H - HERO_H // 2, int(CANVAS_W * 0.75)
-    gd.ellipse([gcx - gr, gcy - gr, gcx + gr, gcy + gr], fill=(120, 90, 40, 40))
+    gd.ellipse([gcx - gr, gcy - gr, gcx + gr, gcy + gr], fill=(110, 60, 60, 40))
     canvas.alpha_composite(glow)
 
     hero = _cover_crop(Image.open(photo_path).convert("RGB"), CANVAS_W, HERO_H).convert("RGBA")
@@ -128,8 +138,7 @@ def _background(photo_path):
     canvas.alpha_composite(hero, (0, CANVAS_H - HERO_H))
 
     # Bottom vignette (graduated, strongest right at the edge) so the plain
-    # corner micro-tags stay readable no matter how bright the photo is --
-    # the pills/panels above them already have their own opaque fill.
+    # corner micro-tags stay readable no matter how bright the photo is.
     fade_h = 190
     vignette = Image.new("L", (CANVAS_W, CANVAS_H), 0)
     vd = ImageDraw.Draw(vignette)
@@ -137,7 +146,7 @@ def _background(photo_path):
         y = CANVAS_H - fade_h + i
         a = int(190 * (i / fade_h))
         vd.line([(0, y), (CANVAS_W, y)], fill=a)
-    dark = Image.new("RGBA", (CANVAS_W, CANVAS_H), (2, 3, 4, 255))
+    dark = Image.new("RGBA", (CANVAS_W, CANVAS_H), (2, 2, 3, 255))
     canvas = Image.composite(dark, canvas, vignette)
     return canvas
 
@@ -148,9 +157,9 @@ def build_slide(
     category_label: str,
     page_num: int,
     page_total: int,
-    headline_lines: list,       # [(text, "white"|"gold"), ...] max ~2 lines
+    headline_lines: list,       # [(text, "white"|"gold"), ...]
     body_text: str,
-    panels: list,               # [(icon_name, title, desc), ...] up to 3
+    panels: list,               # [(icon_name, title, desc), ...] up to 3, rendered as columns
     takeaway_text: str,
     cta_text: str,
     top_left_tagline: tuple = None,   # (line1, line2)
@@ -161,22 +170,19 @@ def build_slide(
     canvas = _background(photo_path)
     draw = ImageDraw.Draw(canvas)
 
-    # -- top row: category tag (left) + page counter with dashes (right) --
+    # -- top row: category tag (left) + plain circled page counter (right) --
     cat_font = montserrat(28, "SemiBold")
-    draw_tracked_text(draw, (MARGIN, 52), category_label.upper(), cat_font, WHITE, tracking=2)
+    draw_tracked_text(draw, (MARGIN, 52), category_label.upper(), cat_font, CREAM, tracking=2)
 
-    counter_font = montserrat(34, "Bold")
+    counter_font = montserrat(30, "Bold")
     counter_text = f"{page_num}/{page_total}"
-    counter_w = draw.textlength(counter_text, font=counter_font)
-    draw.text((CANVAS_W - MARGIN - counter_w, 44), counter_text, font=counter_font, fill=WHITE)
-
-    dash_w, dash_h, dash_gap = 20, 3, 8
-    total_dash_w = page_total * dash_w + (page_total - 1) * dash_gap
-    dx = CANVAS_W - MARGIN - total_dash_w
-    for i in range(page_total):
-        color = CYAN if (i + 1) == page_num else DIM_DASH
-        draw.rectangle([dx, 92, dx + dash_w, 92 + dash_h], fill=color)
-        dx += dash_w + dash_gap
+    r = 44
+    ccx, ccy = CANVAS_W - MARGIN - r, 50 + r
+    draw.ellipse([ccx - r, ccy - r, ccx + r, ccy + r], outline=CREAM, width=2)
+    cw = draw.textlength(counter_text, font=counter_font)
+    bbox = draw.textbbox((0, 0), counter_text, font=counter_font)
+    draw.text((ccx - cw / 2, ccy - (bbox[3] - bbox[1]) / 2 - bbox[1]), counter_text,
+               font=counter_font, fill=CREAM)
 
     # -- decorative micro-taglines --
     tag_font = montserrat(20, "Regular")
@@ -194,84 +200,89 @@ def build_slide(
                                tracking=2, anchor_right=True)
             ty += 26
 
-    # -- headline (each entry is word-wrapped to the canvas width so a long
-    #    phrase never runs off the edge -- it just becomes more physical
-    #    lines instead) --
-    head_font = montserrat(72, "ExtraBold")
+    # -- headline: serif, two-tone, word-wrapped so long phrases never spill
+    #    off the canvas edge --
+    head_font = playfair(70, "Bold")
     headline_max_w = CANVAS_W - 2 * MARGIN
     hy = 300
     for text, tone in headline_lines:
-        color = GOLD_BRIGHT if tone == "gold" else WHITE
-        words = text.split()
-        line, physical_lines = "", []
-        for w in words:
-            trial = (line + " " + w).strip()
-            if draw.textlength(trial, font=head_font) <= headline_max_w or not line:
-                line = trial
-            else:
-                physical_lines.append(line)
-                line = w
-        if line:
-            physical_lines.append(line)
-        for pl in physical_lines:
+        color = GOLD_BRIGHT if tone == "gold" else CREAM
+        for pl in _wrap_lines(draw, text, head_font, headline_max_w):
             draw.text((MARGIN, hy), pl, font=head_font, fill=color)
             bbox = draw.textbbox((0, 0), pl, font=head_font)
-            hy += (bbox[3] - bbox[1]) + 14
+            hy += (bbox[3] - bbox[1]) + 16
+
+    hy += 14
+    draw.line([(MARGIN, hy), (MARGIN + 60, hy)], fill=GOLD, width=2)
+    hy += 26
 
     # -- body paragraph --
     body_font = montserrat(33, "Regular")
     body_w = CANVAS_W - 2 * MARGIN
-    by = _wrap_draw(draw, body_text, body_font, MARGIN, hy + 26, body_w, (201, 205, 211, 255), line_spacing=10)
+    by = _wrap_draw(draw, body_text, body_font, MARGIN, hy, body_w, (206, 202, 196, 255), line_spacing=10)
 
-    # -- numbered panels --
-    panel_top = by + 36
-    panel_h = 130
-    panel_gap = 18
+    # -- 3-column icon row: circled icon, bold label, short caption, thin
+    #    vertical dividers between columns. Everything gets a soft drop
+    #    shadow since this section can sit over the hero photo. --
+    panel_top = by + 46
+    n = max(len(panels), 1)
+    col_w = (CANVAS_W - 2 * MARGIN) / n
+    icon_r = 34
+    label_font = montserrat(30, "Bold")
+    desc_font = montserrat(23, "Regular")
+    col_bottom = panel_top
+
     for idx, (icon_name, title, desc) in enumerate(panels):
-        y0 = panel_top + idx * (panel_h + panel_gap)
-        y1 = y0 + panel_h
-        rrect = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
-        rd = ImageDraw.Draw(rrect)
-        rd.rounded_rectangle([MARGIN, y0, CANVAS_W - MARGIN, y1], radius=22,
-                              fill=PANEL_BG, outline=(*GOLD[:3], 130), width=1)
-        canvas.alpha_composite(rrect)
+        col_cx = MARGIN + col_w * idx + col_w / 2
+        icon_cy = panel_top + icon_r + 4
+
+        shadow_disc = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
+        sd = ImageDraw.Draw(shadow_disc)
+        sd.ellipse([col_cx - icon_r - 8, icon_cy - icon_r - 8, col_cx + icon_r + 8, icon_cy + icon_r + 8],
+                   fill=(0, 0, 0, 110))
+        canvas.alpha_composite(shadow_disc)
         draw = ImageDraw.Draw(canvas)
+        draw_icon(icon_name, draw, col_cx, icon_cy, icon_r, GOLD_BRIGHT)
 
-        icon_cx, icon_cy, icon_r = MARGIN + 70, (y0 + y1) // 2, 32
-        draw_icon(icon_name, draw, icon_cx, icon_cy, icon_r, GOLD)
+        label_y = icon_cy + icon_r + 22
+        label_w = draw.textlength(title, font=label_font)
+        draw.text((col_cx - label_w / 2 + 1, label_y + 1), title, font=label_font, fill=SHADOW)
+        draw.text((col_cx - label_w / 2, label_y), title, font=label_font, fill=CREAM)
+        bbox = draw.textbbox((0, 0), title, font=label_font)
+        desc_y = label_y + (bbox[3] - bbox[1]) + 10
 
-        title_font = montserrat(32, "Bold")
-        desc_font = montserrat(26, "Regular")
-        num_font = montserrat(23, "Regular")
+        desc_bottom = _wrap_draw(draw, desc, desc_font, col_cx, desc_y, col_w - 28, GRAY,
+                                  line_spacing=6, align="center", shadow=True)
+        col_bottom = max(col_bottom, desc_bottom)
 
-        text_x = MARGIN + 138
-        draw.text((text_x, y0 + 20), title, font=title_font, fill=WHITE)
-        num_text = f"0{idx + 1}"
-        num_w = draw.textlength(num_text, font=num_font)
-        draw.text((CANVAS_W - MARGIN - 24 - num_w, y0 + 24), num_text, font=num_font, fill=GRAY)
-        _wrap_draw(draw, desc, desc_font, text_x, y0 + 66, CANVAS_W - MARGIN - 24 - text_x, GRAY, line_spacing=4)
+        if idx > 0:
+            div_x = MARGIN + col_w * idx
+            draw.line([(div_x, panel_top + 4), (div_x, col_bottom - 6)], fill=(*GOLD[:3], 90), width=1)
 
-    # -- takeaway bar (full-width pill, solid fill so it stays legible over
-    #    the hero photo regardless of what's directly behind it) --
-    panels_bottom = panel_top + len(panels) * (panel_h + panel_gap) - (panel_gap if panels else 0)
-    take_font = montserrat(30, "SemiBold")
-    take_y = panels_bottom + (30 if panels else 16)
-    take_h = 68
-    draw.rounded_rectangle([MARGIN, take_y, CANVAS_W - MARGIN, take_y + take_h],
-                            radius=take_h / 2, fill=PANEL_BG, outline=(*GOLD[:3], 160), width=1)
-    draw.text((MARGIN + 28, take_y + (take_h - 32) / 2), takeaway_text, font=take_font, fill=WHITE)
+    # -- takeaway line: short gold divider, then shadowed centered text --
+    take_y = col_bottom + 34
+    draw.line([(CANVAS_W / 2 - 30, take_y), (CANVAS_W / 2 + 30, take_y)], fill=GOLD, width=2)
+    take_y += 20
+    take_font = montserrat(32, "SemiBold")
+    take_bottom = _wrap_draw(draw, takeaway_text, take_font, CANVAS_W / 2, take_y,
+                              CANVAS_W - 2 * MARGIN - 60, CREAM, line_spacing=8,
+                              align="center", shadow=True)
 
-    # -- bottom CTA pill (centered, solid fill) --
+    # -- bottom CTA pill (centered, outlined, small icon + text + arrow) --
     cta_font = montserrat(28, "SemiBold")
-    cta_full = f"{cta_text}  →"
+    cta_full = f"{cta_text}   →"
     cta_w = draw.textlength(cta_full, font=cta_font)
-    pill_pad_x, pill_h = 36, 70
-    pill_w = cta_w + 2 * pill_pad_x
+    icon_space = 56
+    pill_pad_x, pill_h = 34, 74
+    pill_w = cta_w + 2 * pill_pad_x + icon_space
     pill_x0 = (CANVAS_W - pill_w) / 2
-    pill_y0 = min(CANVAS_H - 128, take_y + take_h + 22)
+    pill_y0 = min(CANVAS_H - 130, take_bottom + 24)
     draw.rounded_rectangle([pill_x0, pill_y0, pill_x0 + pill_w, pill_y0 + pill_h],
-                            radius=pill_h / 2, fill=PANEL_BG, outline=CYAN, width=2)
-    draw.text((pill_x0 + pill_pad_x, pill_y0 + (pill_h - 34) / 2), cta_full, font=cta_font, fill=WHITE)
+                            radius=pill_h / 2, fill=(8, 6, 6, 190), outline=GOLD, width=2)
+    icon_cx = pill_x0 + pill_pad_x + 16
+    draw_icon("person_plus", draw, icon_cx, pill_y0 + pill_h / 2, 20, GOLD_BRIGHT)
+    draw.text((pill_x0 + pill_pad_x + icon_space, pill_y0 + (pill_h - 34) / 2), cta_full,
+               font=cta_font, fill=CREAM)
 
     # -- corner micro-taglines --
     micro_font = montserrat(17, "Regular")
