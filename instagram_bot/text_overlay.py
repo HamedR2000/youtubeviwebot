@@ -5,8 +5,6 @@ both video_composer.py (text-over-video Reels) and image_composer.py
 import os
 import textwrap
 
-import arabic_reshaper
-from bidi.algorithm import get_display
 from PIL import ImageDraw, ImageFont
 
 FONT_CANDIDATES = [
@@ -48,15 +46,18 @@ def playfair(size: int, weight: str = "Bold") -> ImageFont.FreeTypeFont:
 
 
 def vazirmatn(size: int, weight: str = "Bold") -> ImageFont.FreeTypeFont:
-    """Persian/Arabic-script font, used for the once-a-week Persian story."""
-    return _variable_font(VAZIRMATN_PATH, size, weight)
-
-
-def shape_rtl(text: str) -> str:
-    """Reshape + reorder Persian/Arabic text for correct glyph joining and
-    right-to-left display -- Pillow draws Unicode code points as given, it
-    does not do this itself."""
-    return get_display(arabic_reshaper.reshape(text))
+    """Persian/Arabic-script font, used for the once-a-week Persian story.
+    Forces the Raqm layout engine (libraqm, bundled with Pillow's Linux
+    wheels) -- Pillow's default BASIC engine draws each Unicode code point
+    as an isolated glyph left-to-right, which for Arabic-script text comes
+    out unjoined and in the wrong order. Raqm does real shaping + bidi
+    reordering, same as any real text engine."""
+    f = ImageFont.truetype(VAZIRMATN_PATH, size, layout_engine=ImageFont.Layout.RAQM)
+    try:
+        f.set_variation_by_name(weight)
+    except Exception:
+        pass
+    return f
 
 
 def draw_wrapped(draw: ImageDraw.ImageDraw, text: str, font, box_left: int, box_top: int,
@@ -98,14 +99,16 @@ def wrap_lines_px(draw: ImageDraw.ImageDraw, text: str, font, max_width_px: int)
 def draw_wrapped_rtl(draw: ImageDraw.ImageDraw, text: str, font, right_x: int, y: int,
                       max_width_px: int, fill, line_spacing: int = 10, shadow=None) -> int:
     """Word-wrap + draw right-to-left Persian/Arabic text, right-aligned to
-    `right_x`. Wrapping splits the logical (unshaped) string on spaces --
-    correct for space-separated Persian words -- then each finished line is
-    reshaped for display. Returns the y-coordinate just below the last line."""
+    `right_x`. Requires a font loaded with the Raqm layout engine (see
+    vazirmatn()) -- direction="rtl" then does correct glyph shaping and
+    reordering for each line. Returns the y-coordinate just below the last
+    line."""
     words = text.split()
     lines, cur = [], ""
     for w in words:
         trial = (cur + " " + w).strip()
-        if draw.textlength(shape_rtl(trial), font=font) <= max_width_px or not cur:
+        width = draw.textlength(trial, font=font, direction="rtl", language="fa")
+        if width <= max_width_px or not cur:
             cur = trial
         else:
             lines.append(cur)
@@ -114,12 +117,13 @@ def draw_wrapped_rtl(draw: ImageDraw.ImageDraw, text: str, font, right_x: int, y
         lines.append(cur)
 
     for line in lines:
-        shaped = shape_rtl(line)
-        line_x = right_x - draw.textlength(shaped, font=font)
+        line_w = draw.textlength(line, font=font, direction="rtl", language="fa")
+        line_x = right_x - line_w
         if shadow:
-            draw.text((line_x + 2, y + 2), shaped, font=font, fill=shadow)
-        draw.text((line_x, y), shaped, font=font, fill=fill)
-        bbox = draw.textbbox((0, 0), shaped, font=font)
+            draw.text((line_x + 2, y + 2), line, font=font, fill=shadow,
+                       direction="rtl", language="fa")
+        draw.text((line_x, y), line, font=font, fill=fill, direction="rtl", language="fa")
+        bbox = draw.textbbox((0, 0), line, font=font, direction="rtl", language="fa")
         y += (bbox[3] - bbox[1]) + line_spacing
     return y
 
