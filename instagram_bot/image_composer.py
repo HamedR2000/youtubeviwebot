@@ -1,15 +1,24 @@
 """Render a single branded card (feed image post, 4:5, or story, 9:16) from
-a Pexels photo background plus a Pillow text overlay. Reused for both feed
-posts (headline + subtitle + CTA) and story cards (one short line + brand).
+a background photo plus a Pillow text overlay. Reused for both feed posts
+(headline + subtitle + CTA) and story cards (one short line + brand).
+
+Uses the same Montserrat/Playfair Display fonts and gold/cream palette as
+carousel_composer.py, so Stories and feed posts share the carousel's
+premium look rather than the plain system-font style they used before.
 """
 from PIL import Image, ImageDraw
 
-from text_overlay import draw_wrapped, load_font, rounded_panel
+from text_overlay import draw_wrapped_px, montserrat, playfair, rounded_panel
 
 FEED_SIZE = (1080, 1350)   # Instagram feed portrait (4:5)
 STORY_SIZE = (1080, 1920)  # Instagram story/reel (9:16)
 
 DARKEN_ALPHA = 130  # 0-255, how much black overlay to lay over the photo for text legibility
+
+CREAM = (240, 235, 225, 255)
+GOLD = (196, 155, 98, 255)
+GOLD_BRIGHT = (214, 175, 116, 255)
+SHADOW = (0, 0, 0, 170)
 
 
 def _cover_crop(img: Image.Image, target_w: int, target_h: int) -> Image.Image:
@@ -29,20 +38,20 @@ def build_feed_card(photo_path: str, headline: str, subtitle: str, cta: str,
     draw = ImageDraw.Draw(canvas)
 
     margin = 72
-    headline_font = load_font(72)
-    subtitle_font = load_font(42)
-    cta_font = load_font(36)
-    brand_font = load_font(34)
+    headline_font = playfair(66, "Bold")
+    subtitle_font = montserrat(38, "Regular")
+    cta_font = montserrat(34, "SemiBold")
+    brand_font = montserrat(32, "SemiBold")
 
-    y = draw_wrapped(draw, headline, headline_font, margin, 140,
-                      fill=(255, 215, 0, 255), max_width_chars=18, line_spacing=14)
-    y = draw_wrapped(draw, subtitle, subtitle_font, margin, y + 40,
-                      fill=(255, 255, 255, 255), max_width_chars=32, line_spacing=10)
+    y = draw_wrapped_px(draw, headline, headline_font, margin, 140, w - 2 * margin,
+                         fill=CREAM, line_spacing=14, shadow=SHADOW)
+    y = draw_wrapped_px(draw, subtitle, subtitle_font, margin, y + 40, w - 2 * margin,
+                         fill=(225, 221, 214, 255), line_spacing=10, shadow=SHADOW)
 
-    rounded_panel(draw, [margin, h - 220, w - margin, h - 140], (255, 215, 0, 230))
-    draw.text((margin + 24, h - 205), cta, font=cta_font, fill=(20, 20, 20, 255))
+    rounded_panel(draw, [margin, h - 220, w - margin, h - 140], GOLD)
+    draw.text((margin + 24, h - 205), cta, font=cta_font, fill=(20, 16, 12, 255))
 
-    draw.text((margin, h - 90), brand_handle, font=brand_font, fill=(255, 255, 255, 255))
+    draw.text((margin, h - 90), brand_handle, font=brand_font, fill=GOLD_BRIGHT)
 
     canvas.convert("RGB").save(output_path, quality=90)
 
@@ -55,14 +64,14 @@ def build_story_card(photo_path: str, line: str, brand_handle: str, output_path:
     draw = ImageDraw.Draw(canvas)
 
     margin = 80
-    line_font = load_font(68)
-    brand_font = load_font(38)
+    line_font = playfair(62, "Bold")
+    brand_font = montserrat(34, "SemiBold")
 
     # Vertically centered single line/short block -- stories are meant to be
     # read in ~2 seconds.
-    draw_wrapped(draw, line, line_font, margin, h // 2 - 120,
-                 fill=(255, 255, 255, 255), max_width_chars=20, line_spacing=16)
+    draw_wrapped_px(draw, line, line_font, margin, h // 2 - 120, w - 2 * margin,
+                     fill=CREAM, line_spacing=16, shadow=SHADOW)
 
-    draw.text((margin, h - 140), brand_handle, font=brand_font, fill=(255, 215, 0, 255))
+    draw.text((margin, h - 140), brand_handle, font=brand_font, fill=GOLD_BRIGHT)
 
     canvas.convert("RGB").save(output_path, quality=90)

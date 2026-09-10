@@ -9,18 +9,13 @@ Uses Montserrat (UI/body) + Playfair Display (serif headline) -- both
 bundled under fonts/ as OFL-licensed variable fonts -- and icon_kit.py for
 the circled line icons. No external image assets.
 """
-import os
-
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 from icon_kit import draw_icon
+from text_overlay import draw_wrapped_px, montserrat, playfair, wrap_lines_px
 
 CANVAS_W, CANVAS_H = 1080, 1350
 MARGIN = 70
-
-FONT_DIR = os.path.join(os.path.dirname(__file__), "fonts")
-_MONTSERRAT = os.path.join(FONT_DIR, "Montserrat[wght].ttf")
-_PLAYFAIR = os.path.join(FONT_DIR, "PlayfairDisplay[wght].ttf")
 
 CREAM = (240, 235, 225, 255)
 WHITE = (235, 231, 224, 255)
@@ -28,24 +23,6 @@ GRAY = (176, 172, 166, 255)
 GOLD = (196, 155, 98, 255)
 GOLD_BRIGHT = (214, 175, 116, 255)
 SHADOW = (0, 0, 0, 170)
-
-
-def _font(path, size, variation=None):
-    f = ImageFont.truetype(path, size)
-    if variation:
-        try:
-            f.set_variation_by_name(variation)
-        except Exception:
-            pass
-    return f
-
-
-def montserrat(size, weight="Regular"):
-    return _font(_MONTSERRAT, size, weight)
-
-
-def playfair(size, weight="Bold"):
-    return _font(_PLAYFAIR, size, weight)
 
 
 def _tracked_width(draw, text, font, tracking):
@@ -70,33 +47,14 @@ def draw_tracked_text(draw, xy, text, font, fill, tracking=0, anchor_right=False
 
 
 def _wrap_lines(draw, text, font, max_width_px):
-    words = text.split()
-    lines, cur = [], ""
-    for w in words:
-        trial = (cur + " " + w).strip()
-        if draw.textlength(trial, font=font) <= max_width_px or not cur:
-            cur = trial
-        else:
-            lines.append(cur)
-            cur = w
-    if cur:
-        lines.append(cur)
-    return lines
+    return wrap_lines_px(draw, text, font, max_width_px)
 
 
 def _wrap_draw(draw, text, font, x, y, max_width_px, fill, line_spacing=10,
                align="left", shadow=False):
-    lines = _wrap_lines(draw, text, font, max_width_px)
-    for line in lines:
-        line_x = x
-        if align == "center":
-            line_x = x - draw.textlength(line, font=font) / 2
-        if shadow:
-            draw.text((line_x + 2, y + 2), line, font=font, fill=SHADOW)
-        draw.text((line_x, y), line, font=font, fill=fill)
-        bbox = draw.textbbox((0, 0), line, font=font)
-        y += (bbox[3] - bbox[1]) + line_spacing
-    return y
+    return draw_wrapped_px(draw, text, font, x, y, max_width_px, fill,
+                            line_spacing=line_spacing, align=align,
+                            shadow=SHADOW if shadow else None)
 
 
 def _cover_crop(img, w, h):
