@@ -35,6 +35,11 @@ HOOKS = [
     "Every pip on gold has a reason. Here's one.",
     "The market moved. Did your plan?",
     "Read this before your next gold trade.",
+    "Most gold traders lose to their own hesitation, not the market.",
+    "Here's what separates a plan from a hope.",
+    "Gold rewards patience more than it rewards speed.",
+    "The chart already told you. Did you listen?",
+    "A clean setup doesn't need a loud caption.",
 ]
 
 # Educational / value-add tips. These are intentionally generic market
@@ -50,6 +55,10 @@ TIPS = [
     "Volatility spikes around FOMC meetings -- position size accordingly.",
     "Support and resistance are zones, not exact lines. Give trades room to breathe.",
     "The best setup is worthless without the discipline to follow your own rules.",
+    "Gold's daily range compresses before major news -- a quiet chart isn't a dead chart.",
+    "Correlation isn't causation, but DXY, yields, and gold rarely move in isolation.",
+    "A missed trade costs you nothing. A bad trade can cost you weeks.",
+    "Backtesting a setup once isn't validation -- consistency over time is.",
 ]
 
 # Calls-to-action promoting the trading bot (sold as a 6-month or 1-year
@@ -62,6 +71,11 @@ CTAS = [
     "Tired of watching charts all day? My bot does it for you. Telegram channel in bio for subscription options.",
     "Automate your gold strategy the way I do -- Telegram link in bio, or DM me for details.",
     "Consistency beats emotion. That's why I trade with my own bot -- 6-month & 1-year plans open, link in bio.",
+    "Every signal I post, my own bot executes -- no manual clicks, no hesitation. Link in bio.",
+    "Works with your broker or prop firm, you just set the lot size. Message us to get started.",
+    "A ready XAUUSD preset, tested and optimized -- 6-month or 1-year license, full support included.",
+    "Stop watching charts all day. Let the bot trade the plan while you live your life. Link in bio.",
+    "Same signals, zero delay, zero emotion -- that's what automation buys you. DM for details.",
 ]
 
 # Mandatory risk disclaimer appended to every caption. Do not remove --
@@ -128,6 +142,10 @@ STORY_LINES = [
     "A ready XAUUSD preset, pre-optimized and tested.",
     "Runs on MT5, on your PC -- not your phone.",
     "6-month or 1-year license. Full support included.",
+    "Patience is a position too.",
+    "The best trade is sometimes no trade.",
+    "Protect your capital first. Grow it second.",
+    "A plan without discipline is just a guess.",
 ]
 
 # Once-a-week Persian story line (see PERSIAN_STORY_WEEKDAY in main.py) --
@@ -140,4 +158,8 @@ STORY_LINES_FA = [
     "یک پریست آماده و بهینه‌شده، مخصوص XAUUSD.",
     "لایسنس ۶ ماهه یا ۱ ساله، با پشتیبانی کامل.",
     "ربات معامله‌گر خودکار طلا -- برای دریافت، پیام بده.",
+    "نظم بهتر از پیش‌بینیه.",
+    "گاهی بهترین معامله، معامله نکردنه.",
+    "اول سرمایه‌ت رو حفظ کن، بعد رشدش بده.",
+    "ربات با هر بروکر و پراپ‌فرمی کار می‌کنه -- فقط حجم معامله دست شماست.",
 ]
