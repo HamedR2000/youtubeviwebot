@@ -146,6 +146,14 @@ STORY_LINES = [
     "The best trade is sometimes no trade.",
     "Protect your capital first. Grow it second.",
     "A plan without discipline is just a guess.",
+    "There is no easy way. Be disciplined.",
+    "No risk, no story. No loss, no profit.",
+    "A small profit beats a big loss.",
+    "Focus. Patience. Execution.",
+    "Every trade starts as risk before it becomes profit.",
+    "The market doesn't just move price -- it tests your patience.",
+    "Treat every setup like it's real gold in the vault.",
+    "Discipline works from anywhere -- a desk or a beach.",
 ]
 
 # Once-a-week Persian story line (see PERSIAN_STORY_WEEKDAY in main.py) --
