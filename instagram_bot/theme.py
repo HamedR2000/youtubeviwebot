@@ -74,10 +74,10 @@ def _draw_faint_candlesticks(canvas: Image.Image, w: int, h: int) -> None:
     competing with the foreground text."""
     layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     ld = ImageDraw.Draw(layer)
-    rng = random.Random(42)  # fixed seed: identical decoration on every render
+    rng = random.Random()  # unseeded: a different candle pattern every render
     n = 22
     band_x0, band_x1 = int(w * 0.38), int(w * 1.05)
-    base_y = int(h * 0.86)
+    base_y = int(h * rng.uniform(0.8, 0.9))
     col_w = (band_x1 - band_x0) / n
     trend = 0
     color = (150, 106, 46, 26)
