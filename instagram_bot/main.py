@@ -47,6 +47,11 @@ FEED_POST_WEEKDAYS = {2}        # Wed: a single feed image card
 CAROUSEL_WEEKDAYS = {0, 4}      # Mon, Fri: a full educational carousel
 PERSIAN_STORY_WEEKDAY = 3       # Thu: the first of that day's 3 stories is in Persian
 
+# Alternates dark (hero photo) and light (flat cream, no photo) so the
+# whole account doesn't read as uniformly dark -- each content type keeps
+# its own rotation cursor.
+THEME_ORDER = ["dark", "light"]
+
 PIPELINE_MODE = os.environ.get("PIPELINE_MODE", "generate")
 
 
@@ -92,15 +97,16 @@ def build_story_items(today: str, today_date: datetime.date, st: dict) -> list:
 
     items = []
     for i, line in enumerate(lines):
-        print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY}: rendering...")
-        photo_path = next_background(st)
+        (theme,) = state_mod.next_rotating(THEME_ORDER, st, "story_theme_cursor")
+        print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY}: rendering ({theme})...")
+        photo_path = next_background(st) if theme == "dark" else None
 
         rtl = i == persian_slot
         if rtl:
             (line,) = state_mod.next_rotating(STORY_LINES_FA, st, "story_line_fa_cursor")
 
         output_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
-        build_story_card(photo_path, line, BRAND_HANDLE, output_path, rtl=rtl)
+        build_story_card(photo_path, line, BRAND_HANDLE, output_path, rtl=rtl, theme=theme)
         image_url = _host(today, output_path)
 
         os.remove(output_path)
@@ -109,14 +115,19 @@ def build_story_items(today: str, today_date: datetime.date, st: dict) -> list:
 
 
 def build_feed_image_item(today: str, st: dict) -> dict:
-    print(f"[{today}] Feed post: finding an unused stock photo...")
-    photo_info = find_unused_photo(
-        api_key=config.PEXELS_API_KEY,
-        search_terms=STOCK_SEARCH_TERMS,
-        used_ids=set(st["used_pexels_photo_ids"]),
-    )
-    raw_path = os.path.join(WORKDIR, f"feed_raw_{photo_info['id']}.jpg")
-    download_photo(photo_info["download_url"], raw_path)
+    (theme,) = state_mod.next_rotating(THEME_ORDER, st, "feed_theme_cursor")
+    print(f"[{today}] Feed post: theme={theme}")
+
+    raw_path = None
+    photo_info = None
+    if theme == "dark":
+        photo_info = find_unused_photo(
+            api_key=config.PEXELS_API_KEY,
+            search_terms=STOCK_SEARCH_TERMS,
+            used_ids=set(st["used_pexels_photo_ids"]),
+        )
+        raw_path = os.path.join(WORKDIR, f"feed_raw_{photo_info['id']}.jpg")
+        download_photo(photo_info["download_url"], raw_path)
 
     (hook,) = state_mod.next_rotating(HOOKS, st, "hook_cursor")
     (tip,) = state_mod.next_rotating(TIPS, st, "tip_cursor")
@@ -124,24 +135,26 @@ def build_feed_image_item(today: str, st: dict) -> dict:
 
     output_path = os.path.join(WORKDIR, f"feed_{today}.jpg")
     build_feed_card(raw_path, headline=hook, subtitle=tip, cta=cta,
-                     brand_handle=BRAND_HANDLE, output_path=output_path)
+                     brand_handle=BRAND_HANDLE, output_path=output_path, theme=theme)
     caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=DISCLAIMER, state=st)
     image_url = _host(today, output_path)
 
-    st["used_pexels_photo_ids"].append(photo_info["id"])
-    os.remove(raw_path)
+    if theme == "dark":
+        st["used_pexels_photo_ids"].append(photo_info["id"])
+        os.remove(raw_path)
     os.remove(output_path)
     return {"type": "feed_image", "image_url": image_url, "caption": caption}
 
 
 def build_carousel_item(today: str, st: dict) -> dict:
     (topic,) = state_mod.next_rotating(CAROUSELS, st, "carousel_topic_cursor")
-    print(f"[{today}] Carousel: topic '{topic['id']}'")
+    (theme,) = state_mod.next_rotating(THEME_ORDER, st, "carousel_theme_cursor")
+    print(f"[{today}] Carousel: topic '{topic['id']}' theme={theme}")
 
     image_urls = []
     for i, slide in enumerate(topic["slides"]):
         page_num, page_total = i + 1, len(topic["slides"])
-        photo_path = next_background(st)
+        photo_path = next_background(st) if theme == "dark" else None
 
         output_path = os.path.join(WORKDIR, f"carousel_{today}_{page_num}.jpg")
         build_slide(
@@ -159,6 +172,7 @@ def build_carousel_item(today: str, st: dict) -> dict:
             top_right_words=slide.get("top_right_words"),
             corner_left_words=BRAND_CORNER_LEFT,
             corner_right_words=BRAND_CORNER_RIGHT,
+            theme=theme,
         )
         image_urls.append(_host(today, output_path))
         os.remove(output_path)

@@ -11,6 +11,14 @@ on:
       topic_id:
         description: "Optional carousel_content.py topic id to render (random if omitted)"
         required: false
+      theme:
+        description: "Theme to render"
+        required: false
+        default: "dark"
+        type: choice
+        options:
+          - dark
+          - light
 
 permissions:
   contents: write   # needed to create the Release asset
@@ -33,4 +41,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           PREVIEW_TOPIC_ID: ${{ github.event.inputs.topic_id }}
+          PREVIEW_THEME: ${{ github.event.inputs.theme || 'dark' }}
         run: python instagram_bot/preview_carousel.py
