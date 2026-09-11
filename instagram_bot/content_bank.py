@@ -40,6 +40,7 @@ HOOKS = [
     "Gold rewards patience more than it rewards speed.",
     "The chart already told you. Did you listen?",
     "A clean setup doesn't need a loud caption.",
+    "What's your biggest lesson from a losing trade?",
 ]
 
 # Educational / value-add tips. These are intentionally generic market
@@ -154,6 +155,7 @@ STORY_LINES = [
     "The market doesn't just move price -- it tests your patience.",
     "Treat every setup like it's real gold in the vault.",
     "Discipline works from anywhere -- a desk or a beach.",
+    "Price action is the only truth.",
 ]
 
 # Once-a-week Persian story line (see PERSIAN_STORY_WEEKDAY in main.py) --
