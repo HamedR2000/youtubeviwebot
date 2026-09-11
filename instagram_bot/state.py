@@ -19,6 +19,9 @@ _DEFAULT_STATE = {
     "story_line_fa_cursor": 0,    # rotating offset into content_bank.STORY_LINES_FA
     "carousel_topic_cursor": 0,   # rotating offset into carousel_content.CAROUSELS
     "carousel_bg_cursor": 0,      # rotating offset into carousel_backgrounds.BACKGROUNDS
+    "carousel_theme_cursor": 0,   # rotating offset into main.THEME_ORDER (carousel posts)
+    "story_theme_cursor": 0,      # rotating offset into main.THEME_ORDER (stories)
+    "feed_theme_cursor": 0,       # rotating offset into main.THEME_ORDER (feed image posts)
     "comment_reply_en_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_EN
     "comment_reply_fa_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_FA
     "replied_comment_ids": [],    # comment ids we've already auto-replied to

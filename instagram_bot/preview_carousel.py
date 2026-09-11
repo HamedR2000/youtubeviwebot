@@ -22,13 +22,14 @@ GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 OUT_DIR = os.path.join(os.path.dirname(__file__), "_preview_output")
 
 TOPIC_ID = os.environ.get("PREVIEW_TOPIC_ID")  # optional override
+THEME = os.environ.get("PREVIEW_THEME", "dark")  # "dark" or "light"
 
 
 def main() -> None:
     os.makedirs(OUT_DIR, exist_ok=True)
 
     topic = next((t for t in CAROUSELS if t["id"] == TOPIC_ID), None) or random.choice(CAROUSELS)
-    print(f"Topic: {topic['id']}")
+    print(f"Topic: {topic['id']} (theme={THEME})")
 
     st = state_mod.load()
     tag = "carousel-preview-" + datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
@@ -38,7 +39,7 @@ def main() -> None:
         page_num = i + 1
         page_total = len(topic["slides"])
 
-        photo_path = next_background(st)
+        photo_path = next_background(st) if THEME == "dark" else None
 
         output_path = os.path.join(OUT_DIR, f"slide_{page_num}of{page_total}.jpg")
         build_slide(
@@ -56,6 +57,7 @@ def main() -> None:
             top_right_words=slide.get("top_right_words"),
             corner_left_words=BRAND_CORNER_LEFT,
             corner_right_words=BRAND_CORNER_RIGHT,
+            theme=THEME,
         )
         print(f"Rendered slide {page_num}/{page_total}")
 

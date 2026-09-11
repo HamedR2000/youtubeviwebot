@@ -1,28 +1,25 @@
-"""Renders one slide of a premium dark/gold-copper educational carousel,
-matching the account owner's reference template: top category tag + a
-plain circled page counter, decorative micro-taglines, a two-tone serif
+"""Renders one slide of a premium educational carousel in one of two moods
+(see theme.py): "dark" (near-black + a hero photo, the original look) or
+"light" (warm cream/gold, no photo) -- added after the account owner asked
+for content that isn't uniformly dark. Both share the same layout: top
+category tag + a page counter, decorative micro-taglines, a two-tone serif
 headline, a body paragraph, a 3-column row of circled line-icons (label +
-short caption, divided by thin rules), a shadowed takeaway line, and a
-bottom CTA pill with a small icon.
+short caption, divided by thin rules), a takeaway line, and a bottom CTA
+pill with a small icon.
 
 Uses Montserrat (UI/body) + Playfair Display (serif headline) -- both
 bundled under fonts/ as OFL-licensed variable fonts -- and icon_kit.py for
-the circled line icons. No external image assets.
+the circled line icons. No external image assets besides the optional
+hero photo.
 """
 from PIL import Image, ImageDraw
 
 from icon_kit import draw_icon
 from text_overlay import draw_wrapped_px, montserrat, playfair, wrap_lines_px
+from theme import THEMES, flat_light_background
 
 CANVAS_W, CANVAS_H = 1080, 1350
 MARGIN = 70
-
-CREAM = (240, 235, 225, 255)
-WHITE = (235, 231, 224, 255)
-GRAY = (176, 172, 166, 255)
-GOLD = (196, 155, 98, 255)
-GOLD_BRIGHT = (214, 175, 116, 255)
-SHADOW = (0, 0, 0, 170)
 
 
 def _tracked_width(draw, text, font, tracking):
@@ -51,10 +48,9 @@ def _wrap_lines(draw, text, font, max_width_px):
 
 
 def _wrap_draw(draw, text, font, x, y, max_width_px, fill, line_spacing=10,
-               align="left", shadow=False):
+               align="left", shadow=None):
     return draw_wrapped_px(draw, text, font, x, y, max_width_px, fill,
-                            line_spacing=line_spacing, align=align,
-                            shadow=SHADOW if shadow else None)
+                            line_spacing=line_spacing, align=align, shadow=shadow)
 
 
 def _cover_crop(img, w, h):
@@ -69,7 +65,7 @@ HERO_H = 620          # height of the photo region, anchored to the bottom
 HERO_FEATHER = 220    # how tall the fade-to-dark transition at its top edge is
 
 
-def _background(photo_path):
+def _background_dark(photo_path):
     """Solid near-black canvas with the subject photo confined to the lower
     ~46% of the frame (feathered into the dark background at its top edge),
     matching the reference template -- rather than one full-bleed photo
@@ -124,37 +120,49 @@ def build_slide(
     top_right_words: list = None,     # small stacked words, e.g. ["SAME","MARKETS"]
     corner_left_words: list = None,   # e.g. ["ANALYZE","PLAN","EXECUTE"]
     corner_right_words: list = None,  # e.g. ["GOLD","DISCIPLINE","FREEDOM"]
+    theme: str = "dark",              # "dark" (hero photo) or "light" (flat cream, no photo)
 ) -> None:
-    canvas = _background(photo_path)
+    t = THEMES[theme]
+    heading, heading_accent = t["heading"], t["heading_accent"]
+    body_c, muted, gold = t["body"], t["muted"], t["gold"]
+    shadow = t["shadow"]
+
+    canvas = flat_light_background(CANVAS_W, CANVAS_H) if theme == "light" else _background_dark(photo_path)
     draw = ImageDraw.Draw(canvas)
 
-    # -- top row: category tag (left) + plain circled page counter (right) --
+    # -- top row: category tag (left) + page counter (right) --
     cat_font = montserrat(28, "SemiBold")
-    draw_tracked_text(draw, (MARGIN, 52), category_label.upper(), cat_font, CREAM, tracking=2)
+    draw_tracked_text(draw, (MARGIN, 52), category_label.upper(), cat_font, heading, tracking=2)
 
     counter_font = montserrat(30, "Bold")
     counter_text = f"{page_num}/{page_total}"
     r = 44
     ccx, ccy = CANVAS_W - MARGIN - r, 50 + r
-    draw.ellipse([ccx - r, ccy - r, ccx + r, ccy + r], outline=CREAM, width=2)
-    cw = draw.textlength(counter_text, font=counter_font)
     bbox = draw.textbbox((0, 0), counter_text, font=counter_font)
-    draw.text((ccx - cw / 2, ccy - (bbox[3] - bbox[1]) / 2 - bbox[1]), counter_text,
-               font=counter_font, fill=CREAM)
+    cw = draw.textlength(counter_text, font=counter_font)
+    if t["counter_style"] == "pill":
+        draw.rounded_rectangle([ccx - r, ccy - r * 0.7, ccx + r, ccy + r * 0.7],
+                                radius=r * 0.7, fill=t["cta_fill"])
+        draw.text((ccx - cw / 2, ccy - (bbox[3] - bbox[1]) / 2 - bbox[1]), counter_text,
+                   font=counter_font, fill=t["cta_text"])
+    else:
+        draw.ellipse([ccx - r, ccy - r, ccx + r, ccy + r], outline=heading, width=2)
+        draw.text((ccx - cw / 2, ccy - (bbox[3] - bbox[1]) / 2 - bbox[1]), counter_text,
+                   font=counter_font, fill=heading)
 
     # -- decorative micro-taglines --
     tag_font = montserrat(20, "Regular")
     if top_left_tagline:
-        draw.line([(MARGIN, 130), (MARGIN + 34, 130)], fill=GOLD, width=2)
+        draw.line([(MARGIN, 130), (MARGIN + 34, 130)], fill=gold, width=2)
         ty = 140
         for line in top_left_tagline:
-            draw_tracked_text(draw, (MARGIN, ty), line.upper(), tag_font, GRAY, tracking=2)
+            draw_tracked_text(draw, (MARGIN, ty), line.upper(), tag_font, muted, tracking=2)
             ty += 26
 
     if top_right_words:
         ty = 140
         for w in top_right_words:
-            draw_tracked_text(draw, (CANVAS_W - MARGIN, ty), w.upper(), tag_font, GRAY,
+            draw_tracked_text(draw, (CANVAS_W - MARGIN, ty), w.upper(), tag_font, muted,
                                tracking=2, anchor_right=True)
             ty += 26
 
@@ -164,24 +172,25 @@ def build_slide(
     headline_max_w = CANVAS_W - 2 * MARGIN
     hy = 300
     for text, tone in headline_lines:
-        color = GOLD_BRIGHT if tone == "gold" else CREAM
+        color = heading_accent if tone == "gold" else heading
         for pl in _wrap_lines(draw, text, head_font, headline_max_w):
             draw.text((MARGIN, hy), pl, font=head_font, fill=color)
             bbox = draw.textbbox((0, 0), pl, font=head_font)
             hy += (bbox[3] - bbox[1]) + 16
 
     hy += 14
-    draw.line([(MARGIN, hy), (MARGIN + 60, hy)], fill=GOLD, width=2)
+    draw.line([(MARGIN, hy), (MARGIN + 60, hy)], fill=gold, width=2)
     hy += 26
 
     # -- body paragraph --
     body_font = montserrat(33, "Regular")
     body_w = CANVAS_W - 2 * MARGIN
-    by = _wrap_draw(draw, body_text, body_font, MARGIN, hy, body_w, (206, 202, 196, 255), line_spacing=10)
+    by = _wrap_draw(draw, body_text, body_font, MARGIN, hy, body_w, body_c, line_spacing=10)
 
     # -- 3-column icon row: circled icon, bold label, short caption, thin
-    #    vertical dividers between columns. Everything gets a soft drop
-    #    shadow since this section can sit over the hero photo. --
+    #    vertical dividers between columns. Dark theme drop-shadows this
+    #    section since it can sit over the hero photo; light theme's flat
+    #    background doesn't need it. --
     panel_top = by + 46
     n = max(len(panels), 1)
     col_w = (CANVAS_W - 2 * MARGIN) / n
@@ -194,39 +203,41 @@ def build_slide(
         col_cx = MARGIN + col_w * idx + col_w / 2
         icon_cy = panel_top + icon_r + 4
 
-        shadow_disc = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
-        sd = ImageDraw.Draw(shadow_disc)
-        sd.ellipse([col_cx - icon_r - 8, icon_cy - icon_r - 8, col_cx + icon_r + 8, icon_cy + icon_r + 8],
-                   fill=(0, 0, 0, 110))
-        canvas.alpha_composite(shadow_disc)
-        draw = ImageDraw.Draw(canvas)
-        draw_icon(icon_name, draw, col_cx, icon_cy, icon_r, GOLD_BRIGHT)
+        if theme == "dark":
+            shadow_disc = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
+            sd = ImageDraw.Draw(shadow_disc)
+            sd.ellipse([col_cx - icon_r - 8, icon_cy - icon_r - 8, col_cx + icon_r + 8, icon_cy + icon_r + 8],
+                       fill=(0, 0, 0, 110))
+            canvas.alpha_composite(shadow_disc)
+            draw = ImageDraw.Draw(canvas)
+        draw_icon(icon_name, draw, col_cx, icon_cy, icon_r, heading_accent)
 
         label_y = icon_cy + icon_r + 22
         label_w = draw.textlength(title, font=label_font)
-        draw.text((col_cx - label_w / 2 + 1, label_y + 1), title, font=label_font, fill=SHADOW)
-        draw.text((col_cx - label_w / 2, label_y), title, font=label_font, fill=CREAM)
+        draw.text((col_cx - label_w / 2 + 1, label_y + 1), title, font=label_font, fill=shadow)
+        draw.text((col_cx - label_w / 2, label_y), title, font=label_font, fill=heading)
         bbox = draw.textbbox((0, 0), title, font=label_font)
         desc_y = label_y + (bbox[3] - bbox[1]) + 10
 
-        desc_bottom = _wrap_draw(draw, desc, desc_font, col_cx, desc_y, col_w - 28, GRAY,
-                                  line_spacing=6, align="center", shadow=True)
+        desc_bottom = _wrap_draw(draw, desc, desc_font, col_cx, desc_y, col_w - 28, muted,
+                                  line_spacing=6, align="center",
+                                  shadow=shadow if theme == "dark" else None)
         col_bottom = max(col_bottom, desc_bottom)
 
         if idx > 0:
             div_x = MARGIN + col_w * idx
-            draw.line([(div_x, panel_top + 4), (div_x, col_bottom - 6)], fill=(*GOLD[:3], 90), width=1)
+            draw.line([(div_x, panel_top + 4), (div_x, col_bottom - 6)], fill=(*gold[:3], 90), width=1)
 
-    # -- takeaway line: short gold divider, then shadowed centered text --
+    # -- takeaway line: short gold divider, then centered text --
     take_y = col_bottom + 34
-    draw.line([(CANVAS_W / 2 - 30, take_y), (CANVAS_W / 2 + 30, take_y)], fill=GOLD, width=2)
+    draw.line([(CANVAS_W / 2 - 30, take_y), (CANVAS_W / 2 + 30, take_y)], fill=gold, width=2)
     take_y += 20
     take_font = montserrat(32, "SemiBold")
     take_bottom = _wrap_draw(draw, takeaway_text, take_font, CANVAS_W / 2, take_y,
-                              CANVAS_W - 2 * MARGIN - 60, CREAM, line_spacing=8,
-                              align="center", shadow=True)
+                              CANVAS_W - 2 * MARGIN - 60, heading, line_spacing=8,
+                              align="center", shadow=shadow if theme == "dark" else None)
 
-    # -- bottom CTA pill (centered, outlined, small icon + text + arrow) --
+    # -- bottom CTA pill (centered, small icon + text + arrow) --
     cta_font = montserrat(28, "SemiBold")
     cta_full = f"{cta_text}   →"
     cta_w = draw.textlength(cta_full, font=cta_font)
@@ -235,21 +246,22 @@ def build_slide(
     pill_w = cta_w + 2 * pill_pad_x + icon_space
     pill_x0 = (CANVAS_W - pill_w) / 2
     pill_y0 = min(CANVAS_H - 130, take_bottom + 24)
+    outline_kwargs = {"outline": t["cta_outline"], "width": 2} if t["cta_outline"] else {}
     draw.rounded_rectangle([pill_x0, pill_y0, pill_x0 + pill_w, pill_y0 + pill_h],
-                            radius=pill_h / 2, fill=(8, 6, 6, 190), outline=GOLD, width=2)
+                            radius=pill_h / 2, fill=t["cta_fill"], **outline_kwargs)
     icon_cx = pill_x0 + pill_pad_x + 16
-    draw_icon("person_plus", draw, icon_cx, pill_y0 + pill_h / 2, 20, GOLD_BRIGHT)
+    draw_icon("person_plus", draw, icon_cx, pill_y0 + pill_h / 2, 20, t["cta_text"])
     draw.text((pill_x0 + pill_pad_x + icon_space, pill_y0 + (pill_h - 34) / 2), cta_full,
-               font=cta_font, fill=CREAM)
+               font=cta_font, fill=t["cta_text"])
 
     # -- corner micro-taglines --
     micro_font = montserrat(17, "Regular")
     if corner_left_words:
         draw_tracked_text(draw, (MARGIN, CANVAS_H - 46), " / ".join(corner_left_words).upper(),
-                           micro_font, GRAY, tracking=1)
+                           micro_font, muted, tracking=1)
     if corner_right_words:
         text = " / ".join(corner_right_words).upper()
-        draw_tracked_text(draw, (CANVAS_W - MARGIN, CANVAS_H - 46), text, micro_font, GRAY,
+        draw_tracked_text(draw, (CANVAS_W - MARGIN, CANVAS_H - 46), text, micro_font, muted,
                            tracking=1, anchor_right=True)
 
     canvas.convert("RGB").save(output_path, quality=92)
