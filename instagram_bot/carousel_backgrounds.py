@@ -35,6 +35,7 @@ BACKGROUNDS = [
     "pocket-watch-chart-3.jpg",
     "procedural-plum.jpg",
     "fountain-pen-3.jpg",
+    "pinterest-desk-skyline.jpg",
 ]
 
 
