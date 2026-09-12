@@ -30,6 +30,7 @@ VOICE_VOLUME = 1.0
 SOURCE_AUDIO_VOLUME_WITH_VOICE = 0.15
 
 AVATAR_MARGIN = 40
+AVATAR_MAX_WIDTH_RATIO = 0.42
 AVATAR_BOB_AMPLITUDE_PX = 8
 AVATAR_BOB_PERIOD_S = 2.5
 
@@ -70,20 +71,28 @@ def _build_caption_panel(script_text: str, panel_w: int, panel_h: int, text_left
 
 
 def _avatar_clip(avatar_path: str, panel_h: int, panel_top: int, duration: float) -> tuple[ImageClip, int]:
-    """آواتار رو گوشه‌ی چپ پنل جا می‌ده، هم‌قد ارتفاع پنل (با کمی حاشیه)،
-    و یه نوسان عمودی ملایم بهش می‌ده. عرض رزروشده رو هم برمی‌گردونه تا
-    متن کپشن زیرش نره."""
-    target_h = panel_h - 2 * AVATAR_MARGIN
-    clip = ImageClip(avatar_path).resized(height=target_h)
+    """آواتار رو گوشه‌ی چپ پنل جا می‌ده و یه نوسان عمودی ملایم بهش می‌ده.
+    اندازه‌اش هم با ارتفاع پنل هم با یه سقف عرض محدود می‌شه (وگرنه یه عکس
+    پهن -- مثلاً با ویلچر کنارش -- کل جای متن رو می‌گیره)، و عمودی وسط‌چین
+    می‌شه. عرض رزروشده رو هم برمی‌گردونه تا متن کپشن زیرش نره."""
+    max_h = panel_h - 2 * AVATAR_MARGIN
+    max_w = int(config.TARGET_W * AVATAR_MAX_WIDTH_RATIO)
+
+    with Image.open(avatar_path) as img:
+        img_w, img_h = img.size
+    scale = min(max_h / img_h, max_w / img_w)
+    disp_w, disp_h = int(img_w * scale), int(img_h * scale)
+
+    clip = ImageClip(avatar_path).resized((disp_w, disp_h))
     x = AVATAR_MARGIN
-    base_y = panel_top + AVATAR_MARGIN
+    base_y = panel_top + (panel_h - disp_h) // 2
 
     def position(t: float) -> tuple[float, float]:
         bob = AVATAR_BOB_AMPLITUDE_PX * math.sin(2 * math.pi * t / AVATAR_BOB_PERIOD_S)
         return (x, base_y + bob)
 
     clip = clip.with_duration(duration).with_position(position)
-    reserved_width = clip.w + 2 * AVATAR_MARGIN
+    reserved_width = disp_w + 2 * AVATAR_MARGIN
     return clip, reserved_width
 
 
