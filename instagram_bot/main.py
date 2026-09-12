@@ -1,6 +1,6 @@
 """Daily entry point, run in one of two modes (env var PIPELINE_MODE):
 
-  generate (default) -- builds today's content (1 Reel, 3 Stories, and
+  generate (default) -- builds today's content (1 Reel, 5 Stories, and
     either a feed image card or a full educational carousel depending on
     the weekday), hosts every asset as a public GitHub Release asset, and
     writes+uploads a manifest.json describing what was built. Does NOT
@@ -41,11 +41,11 @@ BRAND_HANDLE = "@Goldhamedsignals"
 MUSIC_DIR = os.path.join(os.path.dirname(__file__), "music")
 WORKDIR = os.path.join(os.path.dirname(__file__), "_build")
 
-STORIES_PER_DAY = 3
+STORIES_PER_DAY = 5
 # Mon=0 ... Sun=6 (datetime.date.weekday())
 FEED_POST_WEEKDAYS = {2}        # Wed: a single feed image card
 CAROUSEL_WEEKDAYS = {0, 4}      # Mon, Fri: a full educational carousel
-PERSIAN_STORY_WEEKDAY = 3       # Thu: the first of that day's 3 stories is in Persian
+PERSIAN_STORY_WEEKDAY = 3       # Thu: the first of that day's stories is in Persian
 
 # Alternates dark (hero photo) and light (flat cream, no photo) so the
 # whole account doesn't read as uniformly dark -- each content type keeps
