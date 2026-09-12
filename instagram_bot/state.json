@@ -52,5 +52,9 @@
   "story_line_fa_cursor": 0,
   "carousel_theme_cursor": 0,
   "story_theme_cursor": 1,
-  "feed_theme_cursor": 0
+  "feed_theme_cursor": 0,
+  "hook_fa_cursor": 0,
+  "tip_fa_cursor": 0,
+  "cta_fa_cursor": 0,
+  "carousel_topic_fa_cursor": 0
 }
