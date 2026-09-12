@@ -34,29 +34,49 @@ def _base_canvas(photo_path: str, w: int, h: int, theme: str) -> Image.Image:
 
 
 def build_feed_card(photo_path: str, headline: str, subtitle: str, cta: str,
-                     brand_handle: str, output_path: str, theme: str = "dark") -> None:
+                     brand_handle: str, output_path: str, theme: str = "dark",
+                     rtl: bool = False) -> None:
+    """rtl=True renders headline/subtitle/cta with the Persian/Arabic-script
+    font, shaped and right-aligned -- used on Persian-language days (see
+    ENGLISH_WEEKDAYS in main.py). brand_handle stays Latin/LTR either way,
+    same as build_story_card."""
     t = THEMES[theme]
     w, h = FEED_SIZE
     canvas = _base_canvas(photo_path, w, h, theme)
     draw = ImageDraw.Draw(canvas)
 
     margin = 72
-    headline_font = playfair(66, "Bold")
-    subtitle_font = montserrat(38, "Regular")
-    cta_font = montserrat(34, "SemiBold")
     brand_font = montserrat(32, "SemiBold")
     shadow = t["shadow"] if theme == "dark" else None
 
-    y = draw_wrapped_px(draw, headline, headline_font, margin, 140, w - 2 * margin,
-                         fill=t["heading"], line_spacing=14, shadow=shadow)
-    y = draw_wrapped_px(draw, subtitle, subtitle_font, margin, y + 40, w - 2 * margin,
-                         fill=t["body"], line_spacing=10, shadow=shadow)
+    if rtl:
+        headline_font = vazirmatn(52, "Bold")
+        subtitle_font = vazirmatn(32, "Regular")
+        cta_font = vazirmatn(28, "Bold")
+        right_x = w - margin
+        y = draw_wrapped_rtl(draw, headline, headline_font, right_x, 140, w - 2 * margin,
+                              fill=t["heading"], line_spacing=14, shadow=shadow)
+        y = draw_wrapped_rtl(draw, subtitle, subtitle_font, right_x, y + 40, w - 2 * margin,
+                              fill=t["body"], line_spacing=10, shadow=shadow)
+    else:
+        headline_font = playfair(66, "Bold")
+        subtitle_font = montserrat(38, "Regular")
+        cta_font = montserrat(34, "SemiBold")
+        y = draw_wrapped_px(draw, headline, headline_font, margin, 140, w - 2 * margin,
+                             fill=t["heading"], line_spacing=14, shadow=shadow)
+        y = draw_wrapped_px(draw, subtitle, subtitle_font, margin, y + 40, w - 2 * margin,
+                             fill=t["body"], line_spacing=10, shadow=shadow)
 
     outline = {"outline": t["cta_outline"], "width": 2} if t["cta_outline"] else {}
     rounded_panel(draw, [margin, h - 220, w - margin, h - 140], t["cta_fill"])
     if outline:
         draw.rounded_rectangle([margin, h - 220, w - margin, h - 140], radius=28, **outline)
-    draw.text((margin + 24, h - 205), cta, font=cta_font, fill=t["cta_text"])
+    if rtl:
+        cta_w = draw.textlength(cta, font=cta_font, direction="rtl", language="fa")
+        draw.text((w - margin - 24 - cta_w, h - 205), cta, font=cta_font, fill=t["cta_text"],
+                   direction="rtl", language="fa")
+    else:
+        draw.text((margin + 24, h - 205), cta, font=cta_font, fill=t["cta_text"])
 
     draw.text((margin, h - 90), brand_handle, font=brand_font, fill=t["gold_bright"])
 
