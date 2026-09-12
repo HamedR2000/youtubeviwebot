@@ -1,4 +1,4 @@
-"""نقطه‌ی ورود خط فرمان پایپ‌لاین ری‌اکشن فاز ۱ (هنوز آواتار نداره):
+"""نقطه‌ی ورود خط فرمان پایپ‌لاین ری‌اکشن (بدون لب‌سینک صوتی فعلاً):
 
     python main.py --source <لینک-اینستاگرام-یا-فایل-محلی> \\
         --script-file script.txt --approve --upload
@@ -32,6 +32,7 @@ def main() -> None:
     parser.add_argument("--script", help="متن اسکریپت ری‌اکشن")
     parser.add_argument("--script-file", help="مسیر فایل متنی حاوی اسکریپت ری‌اکشن")
     parser.add_argument("--voice", help="فایل صوتی ری‌اکشن (ضبط‌شده یا TTS) -- اختیاری")
+    parser.add_argument("--avatar", help="مسیر عکس آواتار (PNG، پس‌زمینه‌ی شفاف)؛ پیش‌فرض: reaction_bot/assets/avatar.png اگه وجود داشته باشه")
     parser.add_argument("--approve", action="store_true",
                          help="تأیید نهایی‌بودن اسکریپت؛ بدون این فلگ فقط دانلود و پیش‌نمایش انجام می‌شه")
     parser.add_argument("--upload", action="store_true", help="آپلود ویدیوی ترکیب‌شده به یوتیوب")
@@ -56,6 +57,8 @@ def main() -> None:
               "(اگه لازمه اول فایل اسکریپت رو ویرایش کن یا --script دیگه‌ای بده).")
         return
 
+    avatar_path = args.avatar or (config.DEFAULT_AVATAR_PATH if os.path.isfile(config.DEFAULT_AVATAR_PATH) else None)
+
     output_name = os.path.splitext(os.path.basename(source_path))[0] + "_reaction.mp4"
     output_path = os.path.join(config.outputs_dir, output_name)
     print(f"در حال ساخت ویدیوی ری‌اکشن -> {output_path}")
@@ -64,6 +67,7 @@ def main() -> None:
         script_text=script_text,
         output_path=output_path,
         voice_path=args.voice,
+        avatar_path=avatar_path,
     )
     print(f"ساخته شد: {output_path}")
 

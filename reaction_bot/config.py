@@ -50,5 +50,12 @@ class Config:
     SOURCE_HEIGHT_RATIO = float(_env("REACTION_SOURCE_HEIGHT_RATIO", "0.6"))
     MAX_CLIP_SECONDS = float(_env("REACTION_MAX_CLIP_SECONDS", "58"))
 
+    # عکس آواتار (PNG با پس‌زمینه‌ی شفاف) -- اگه این مسیر وجود داشته باشه،
+    # main.py خودکار استفاده‌اش می‌کنه و نیازی به دادن --avatar در هر اجرا
+    # نیست. نگاه کن به README.md "آواتار ری‌اکشن".
+    DEFAULT_AVATAR_PATH = _env(
+        "REACTION_AVATAR_PATH", os.path.join(os.path.dirname(__file__), "assets", "avatar.png")
+    )
+
 
 config = Config()
