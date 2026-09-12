@@ -1,6 +1,6 @@
-"""Environment-driven configuration for the reaction pipeline. Mirrors
-instagram_bot/config.py's pattern: secrets/paths come from env vars (or a
-local .env) so the same code runs on a laptop or a VPS with no edits.
+"""تنظیمات مبتنی بر متغیر محیطی برای پایپ‌لاین ری‌اکشن. هم‌الگو با
+instagram_bot/config.py: سکرت‌ها/مسیرها از env vars (یا یه فایل .env
+محلی) میان تا همون کد روی لپ‌تاپ یا VPS بدون تغییر اجرا بشه.
 """
 import os
 
@@ -10,7 +10,7 @@ def _env(name: str, default: str) -> str:
 
 
 class Config:
-    # Where downloaded source clips, composed outputs and OAuth state live.
+    # جایی که کلیپ‌های دانلودشده، خروجی‌های ترکیب‌شده و وضعیت OAuth ذخیره می‌شن.
     WORK_DIR = _env("REACTION_WORK_DIR", os.path.join(os.path.dirname(__file__), "workdir"))
 
     @property
@@ -25,8 +25,9 @@ class Config:
         os.makedirs(path, exist_ok=True)
         return path
 
-    # YouTube Data API v3 OAuth (installed-app flow). Create both in Google
-    # Cloud Console -- see reaction_bot/README.md "راه‌اندازی یوتیوب".
+    # OAuth یوتیوب (YouTube Data API v3، فلوی Installed App). هر دو رو توی
+    # Google Cloud Console بساز -- نگاه کن به reaction_bot/README.md بخش
+    # "راه‌اندازی یوتیوب".
     YOUTUBE_CLIENT_SECRETS_FILE = _env(
         "YOUTUBE_CLIENT_SECRETS_FILE", os.path.join(os.path.dirname(__file__), "client_secret.json")
     )
@@ -34,18 +35,18 @@ class Config:
         "YOUTUBE_TOKEN_FILE", os.path.join(os.path.dirname(__file__), "token.json")
     )
     YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube.upload"
-    # "private" by default: a Shorts upload is a public, hard-to-fully-undo
-    # action, so the pipeline never defaults to publishing straight to
-    # "public" -- pass --privacy explicitly to change it per run.
+    # پیش‌فرض "private": آپلود یه Short یه اقدام عمومی و سخت‌برگشته، پس
+    # پایپ‌لاین هیچ‌وقت به‌صورت پیش‌فرض مستقیم "public" منتشر نمی‌کنه --
+    # برای تغییرش در هر اجرا صریحاً --privacy بده.
     DEFAULT_PRIVACY_STATUS = _env("YOUTUBE_DEFAULT_PRIVACY", "private")
-    DEFAULT_CATEGORY_ID = _env("YOUTUBE_DEFAULT_CATEGORY_ID", "23")  # "Comedy"
+    DEFAULT_CATEGORY_ID = _env("YOUTUBE_DEFAULT_CATEGORY_ID", "23")  # "طنز/کمدی"
 
-    # Output canvas: vertical 9:16 for Shorts.
+    # بوم خروجی: عمودی ۹:۱۶ برای Shorts.
     TARGET_W = 1080
     TARGET_H = 1920
-    # Source clip only fills the top portion of the frame (not full-screen)
-    # and the bottom "reaction" panel is reserved for the commentary/caption
-    # (and, in phase 2, the avatar) -- see README.md "نکات حقوقی/ریسک".
+    # کلیپ منبع فقط بخش بالای فریم رو پر می‌کنه (نه تمام صفحه) و پنل
+    # "ری‌اکشن" پایینی برای تفسیر/کپشن (و در فاز ۲، آواتار) کنار گذاشته
+    # شده -- نگاه کن به README.md بخش "نکات حقوقی/ریسک".
     SOURCE_HEIGHT_RATIO = float(_env("REACTION_SOURCE_HEIGHT_RATIO", "0.6"))
     MAX_CLIP_SECONDS = float(_env("REACTION_MAX_CLIP_SECONDS", "58"))
 

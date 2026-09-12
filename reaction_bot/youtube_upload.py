@@ -1,10 +1,11 @@
-"""YouTube Data API v3 upload (OAuth, installed-app flow) for the composed
-Shorts file. See README.md "راه‌اندازی یوتیوب" for how to create the OAuth
-client in Google Cloud Console -- that step has to be done by hand once,
-this module just drives the API afterwards.
+"""آپلود به یوتیوب با YouTube Data API v3 (OAuth، فلوی Installed App) برای
+فایل نهایی Shorts. برای ساخت OAuth client توی Google Cloud Console به
+README.md بخش "راه‌اندازی یوتیوب" نگاه کن -- این قدم رو باید یه‌بار خودت
+دستی انجام بدی، این ماژول فقط از اون به بعد با API کار می‌کنه.
 
-Quota note: a new Cloud project's default daily quota (10,000 units) covers
-about 6 uploads/day (each insert costs 1600 units) -- see README.md.
+نکته‌ی quota: quota روزانه‌ی پیش‌فرض یه پروژه‌ی جدید Cloud (۱۰,۰۰۰ واحد)
+حدود ۶ آپلود در روز رو پوشش می‌ده (هر آپلود ~۱۶۰۰ واحد) -- توی README.md
+توضیح داده شده.
 """
 import os
 
@@ -29,9 +30,9 @@ def _get_credentials() -> Credentials:
         else:
             if not os.path.exists(config.YOUTUBE_CLIENT_SECRETS_FILE):
                 raise FileNotFoundError(
-                    f"{config.YOUTUBE_CLIENT_SECRETS_FILE} not found. "
-                    "See reaction_bot/README.md -> 'راه‌اندازی یوتیوب' to create "
-                    "an OAuth client in Google Cloud Console and download it."
+                    f"فایل {config.YOUTUBE_CLIENT_SECRETS_FILE} پیدا نشد. "
+                    "طبق README.md بخش 'راه‌اندازی یوتیوب' یه OAuth client توی "
+                    "Google Cloud Console بساز و دانلودش کن."
                 )
             flow = InstalledAppFlow.from_client_secrets_file(
                 config.YOUTUBE_CLIENT_SECRETS_FILE, [config.YOUTUBE_UPLOAD_SCOPE]
@@ -52,8 +53,9 @@ def upload_video(
     made_for_kids: bool = False,
     dry_run: bool = False,
 ) -> str | None:
-    """Uploads file_path as a YouTube Short. Returns the new video id, or
-    None in dry_run mode (nothing is sent to Google)."""
+    """فایل file_path رو به‌عنوان یه YouTube Short آپلود می‌کنه. آی‌دی ویدیوی
+    جدید رو برمی‌گردونه، یا در حالت dry_run هیچی به گوگل فرستاده نمی‌شه و
+    None برمی‌گرده."""
     body = {
         "snippet": {
             "title": title,
@@ -68,8 +70,8 @@ def upload_video(
     }
 
     if dry_run:
-        print("[dry-run] Would upload to YouTube with:")
-        print(f"  file: {file_path}")
+        print("[dry-run] چیزی که به یوتیوب آپلود می‌شد:")
+        print(f"  فایل: {file_path}")
         print(f"  body: {body}")
         return None
 
@@ -82,8 +84,8 @@ def upload_video(
     while response is None:
         status, response = request.next_chunk()
         if status:
-            print(f"Uploaded {int(status.progress() * 100)}%")
+            print(f"آپلود شده: {int(status.progress() * 100)}٪")
 
     video_id = response["id"]
-    print(f"Uploaded: https://youtube.com/shorts/{video_id}")
+    print(f"آپلود کامل شد: https://youtube.com/shorts/{video_id}")
     return video_id

@@ -1,5 +1,5 @@
-"""Fetches the source clip: either a direct Instagram reel/post URL (via
-yt-dlp) or a local video file the user already saved from Instagram.
+"""کلیپ منبع رو می‌گیره: یا مستقیم لینک ریل/پست اینستاگرام (با yt-dlp) یا
+یه فایل ویدیوی محلی که خودت قبلاً از اینستاگرام ذخیره کردی.
 """
 import os
 import re
@@ -14,12 +14,12 @@ def is_url(source: str) -> bool:
 
 
 def fetch_source_video(source: str) -> str:
-    """Returns a local path to the source clip. `source` is either an
-    Instagram URL or an existing local file path."""
+    """مسیر محلی کلیپ منبع رو برمی‌گردونه. `source` یا لینک اینستاگرامه یا
+    مسیر یه فایل محلی موجود."""
     if not is_url(source):
         path = os.path.abspath(source)
         if not os.path.isfile(path):
-            raise FileNotFoundError(f"Source video not found: {path}")
+            raise FileNotFoundError(f"ویدیوی منبع پیدا نشد: {path}")
         return path
     return _download_from_url(source)
 

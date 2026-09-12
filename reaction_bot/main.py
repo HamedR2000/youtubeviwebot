@@ -1,13 +1,12 @@
-"""CLI entry point for the phase-1 reaction pipeline (no avatar yet):
+"""نقطه‌ی ورود خط فرمان پایپ‌لاین ری‌اکشن فاز ۱ (هنوز آواتار نداره):
 
-    python main.py --source <instagram-url-or-local-file> \\
+    python main.py --source <لینک-اینستاگرام-یا-فایل-محلی> \\
         --script-file script.txt --approve --upload
 
-Without --approve, the source clip is downloaded and the script is printed
-back for review, then the run stops -- matching the project's requirement
-that the reaction script is confirmed/edited by hand before final
-production (see ../README project notes). Without --upload, the composed
-file is left in workdir/outputs/ for a manual look before it goes public.
+بدون --approve، فقط کلیپ منبع دانلود می‌شه و اسکریپت برای بازبینی چاپ
+می‌شه و اجرا همون‌جا متوقف می‌شه -- دقیقاً همون قدمی که پروژه لازم داره:
+تأیید/ویرایش اسکریپت ری‌اکشن قبل از تولید نهایی. بدون --upload، فایل
+نهایی توی workdir/outputs/ می‌مونه تا خودت قبل از پابلیک‌شدن نگاهش کنی.
 """
 import argparse
 import os
@@ -24,55 +23,53 @@ def _read_script(args: argparse.Namespace) -> str:
             return f.read().strip()
     if args.script:
         return args.script.strip()
-    raise SystemExit("Provide the reaction script with --script or --script-file.")
+    raise SystemExit("اسکریپت ری‌اکشن رو با --script یا --script-file بده.")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Instagram clip -> reaction Short pipeline (phase 1)")
-    parser.add_argument("--source", required=True, help="Instagram URL or local video file")
-    parser.add_argument("--script", help="Reaction script text")
-    parser.add_argument("--script-file", help="Path to a text file with the reaction script")
-    parser.add_argument("--lang", choices=["fa", "en"], default="fa", help="Script language (controls RTL layout)")
-    parser.add_argument("--voice", help="Optional recorded/TTS reaction voiceover audio file")
+    parser = argparse.ArgumentParser(description="پایپ‌لاین کلیپ اینستاگرام -> ری‌اکشن Shorts (فاز ۱)")
+    parser.add_argument("--source", required=True, help="لینک اینستاگرام یا مسیر فایل ویدیوی محلی")
+    parser.add_argument("--script", help="متن اسکریپت ری‌اکشن")
+    parser.add_argument("--script-file", help="مسیر فایل متنی حاوی اسکریپت ری‌اکشن")
+    parser.add_argument("--voice", help="فایل صوتی ری‌اکشن (ضبط‌شده یا TTS) -- اختیاری")
     parser.add_argument("--approve", action="store_true",
-                         help="Confirms the script is final; without this, only downloads and previews it")
-    parser.add_argument("--upload", action="store_true", help="Upload the composed video to YouTube")
-    parser.add_argument("--dry-run", action="store_true", help="With --upload: print the upload payload, send nothing")
-    parser.add_argument("--title", help="YouTube video title (defaults to the first line of the script)")
-    parser.add_argument("--description", default="", help="YouTube video description")
-    parser.add_argument("--tags", default="", help="Comma-separated YouTube tags")
-    parser.add_argument("--privacy", choices=["private", "unlisted", "public"], help="YouTube privacy status")
+                         help="تأیید نهایی‌بودن اسکریپت؛ بدون این فلگ فقط دانلود و پیش‌نمایش انجام می‌شه")
+    parser.add_argument("--upload", action="store_true", help="آپلود ویدیوی ترکیب‌شده به یوتیوب")
+    parser.add_argument("--dry-run", action="store_true", help="همراه --upload: فقط payload آپلود رو چاپ می‌کنه، چیزی ارسال نمی‌شه")
+    parser.add_argument("--title", help="عنوان ویدیوی یوتیوب (پیش‌فرض: خط اول اسکریپت)")
+    parser.add_argument("--description", default="", help="توضیحات ویدیوی یوتیوب")
+    parser.add_argument("--tags", default="", help="تگ‌های یوتیوب، با کاما جدا شده")
+    parser.add_argument("--privacy", choices=["private", "unlisted", "public"], help="وضعیت انتشار یوتیوب")
     args = parser.parse_args()
 
     script_text = _read_script(args)
 
-    print(f"Fetching source video from: {args.source}")
+    print(f"در حال دانلود ویدیوی منبع از: {args.source}")
     source_path = fetch_source_video(args.source)
-    print(f"Source video: {source_path}")
-    print("--- Reaction script ---")
+    print(f"ویدیوی منبع: {source_path}")
+    print("--- اسکریپت ری‌اکشن ---")
     print(script_text)
     print("-----------------------")
 
     if not args.approve:
-        print("\nScript not approved yet -- rerun with --approve once you're happy with it "
-              "(edit the script file or pass a different --script first).")
+        print("\nاسکریپت هنوز تأیید نشده -- بعد از این‌که ازش راضی شدی، همین دستور رو با --approve دوباره بزن "
+              "(اگه لازمه اول فایل اسکریپت رو ویرایش کن یا --script دیگه‌ای بده).")
         return
 
     output_name = os.path.splitext(os.path.basename(source_path))[0] + "_reaction.mp4"
     output_path = os.path.join(config.outputs_dir, output_name)
-    print(f"Composing reaction video -> {output_path}")
+    print(f"در حال ساخت ویدیوی ری‌اکشن -> {output_path}")
     compose_reaction_video(
         source_path=source_path,
         script_text=script_text,
         output_path=output_path,
-        rtl=(args.lang == "fa"),
         voice_path=args.voice,
     )
-    print(f"Composed: {output_path}")
+    print(f"ساخته شد: {output_path}")
 
     if not args.upload:
-        print("\nNot uploading (pass --upload to publish to YouTube). "
-              "Review the file above first.")
+        print("\nآپلود انجام نشد (برای انتشار در یوتیوب --upload بده). "
+              "اول فایل بالا رو خودت ببین.")
         return
 
     title = args.title or script_text.splitlines()[0][:100]
