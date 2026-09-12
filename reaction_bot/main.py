@@ -1,12 +1,11 @@
-"""نقطه‌ی ورود خط فرمان پایپ‌لاین ری‌اکشن (بدون لب‌سینک صوتی فعلاً):
+"""نقطه‌ی ورود خط فرمان پایپ‌لاین ری‌اکشن (فقط عکس آواتار کنار ویدیو، بدون
+هیچ متنی روی صفحه، بدون لب‌سینک صوتی فعلاً):
 
-    python main.py --source <لینک-اینستاگرام-یا-فایل-محلی> \\
-        --script-file script.txt --approve --upload
+    python main.py --source <لینک-اینستاگرام-یا-فایل-محلی> --approve --upload
 
-بدون --approve، فقط کلیپ منبع دانلود می‌شه و اسکریپت برای بازبینی چاپ
-می‌شه و اجرا همون‌جا متوقف می‌شه -- دقیقاً همون قدمی که پروژه لازم داره:
-تأیید/ویرایش اسکریپت ری‌اکشن قبل از تولید نهایی. بدون --upload، فایل
-نهایی توی workdir/outputs/ می‌مونه تا خودت قبل از پابلیک‌شدن نگاهش کنی.
+بدون --approve، فقط کلیپ منبع دانلود می‌شه و اجرا متوقف می‌شه تا خودت
+تأیید کنی. بدون --upload، فایل نهایی توی workdir/outputs/ می‌مونه تا
+خودت قبل از پابلیک‌شدن نگاهش کنی.
 """
 import argparse
 import os
@@ -18,19 +17,22 @@ from youtube_upload import upload_video
 
 
 def _read_script(args: argparse.Namespace) -> str:
+    """اختیاریه -- ویدیو دیگه هیچ متنی روی صفحه نشون نمی‌ده، ولی اگه بدی
+    برای پیش‌نمایش/عنوان پیش‌فرض یوتیوب و کارهای بعدی (مثلاً TTS) نگه
+    داشته می‌شه."""
     if args.script_file:
         with open(args.script_file, encoding="utf-8") as f:
             return f.read().strip()
     if args.script:
         return args.script.strip()
-    raise SystemExit("اسکریپت ری‌اکشن رو با --script یا --script-file بده.")
+    return ""
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="پایپ‌لاین کلیپ اینستاگرام -> ری‌اکشن Shorts (فاز ۱)")
     parser.add_argument("--source", required=True, help="لینک اینستاگرام یا مسیر فایل ویدیوی محلی")
-    parser.add_argument("--script", help="متن اسکریپت ری‌اکشن")
-    parser.add_argument("--script-file", help="مسیر فایل متنی حاوی اسکریپت ری‌اکشن")
+    parser.add_argument("--script", help="متن اسکریپت ری‌اکشن (اختیاری -- روی ویدیو نمایش داده نمی‌شه، فقط برای عنوان/یادداشت)")
+    parser.add_argument("--script-file", help="مسیر فایل متنی حاوی اسکریپت ری‌اکشن (اختیاری)")
     parser.add_argument("--voice", help="فایل صوتی ری‌اکشن (ضبط‌شده یا TTS) -- اختیاری")
     parser.add_argument("--avatar", help="مسیر عکس آواتار (PNG، پس‌زمینه‌ی شفاف)؛ پیش‌فرض: reaction_bot/assets/avatar.png اگه وجود داشته باشه")
     parser.add_argument("--approve", action="store_true",
@@ -48,13 +50,13 @@ def main() -> None:
     print(f"در حال دانلود ویدیوی منبع از: {args.source}")
     source_path = fetch_source_video(args.source)
     print(f"ویدیوی منبع: {source_path}")
-    print("--- اسکریپت ری‌اکشن ---")
-    print(script_text)
-    print("-----------------------")
+    if script_text:
+        print("--- اسکریپت ری‌اکشن (فقط برای عنوان/یادداشت، روی ویدیو نمایش داده نمی‌شه) ---")
+        print(script_text)
+        print("-----------------------")
 
     if not args.approve:
-        print("\nاسکریپت هنوز تأیید نشده -- بعد از این‌که ازش راضی شدی، همین دستور رو با --approve دوباره بزن "
-              "(اگه لازمه اول فایل اسکریپت رو ویرایش کن یا --script دیگه‌ای بده).")
+        print("\nهنوز تأیید نشده -- بعد از این‌که مطمئن شدی، همین دستور رو با --approve دوباره بزن.")
         return
 
     avatar_path = args.avatar or (config.DEFAULT_AVATAR_PATH if os.path.isfile(config.DEFAULT_AVATAR_PATH) else None)
@@ -64,7 +66,6 @@ def main() -> None:
     print(f"در حال ساخت ویدیوی ری‌اکشن -> {output_path}")
     compose_reaction_video(
         source_path=source_path,
-        script_text=script_text,
         output_path=output_path,
         voice_path=args.voice,
         avatar_path=avatar_path,
@@ -76,7 +77,7 @@ def main() -> None:
               "اول فایل بالا رو خودت ببین.")
         return
 
-    title = args.title or script_text.splitlines()[0][:100]
+    title = args.title or (script_text.splitlines()[0][:100] if script_text else os.path.basename(source_path))
     tags = [t.strip() for t in args.tags.split(",") if t.strip()]
     upload_video(
         file_path=output_path,
