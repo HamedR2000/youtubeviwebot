@@ -2,7 +2,8 @@
   "used_pexels_ids": [
     6120116,
     35606106,
-    32536829
+    32536829,
+    37685002
   ],
   "used_pexels_photo_ids": [
     6770770,
@@ -13,11 +14,11 @@
     14172498,
     7948070
   ],
-  "hashtag_cursor": 10,
-  "hook_cursor": 4,
-  "tip_cursor": 4,
-  "cta_cursor": 4,
-  "story_line_cursor": 9,
+  "hashtag_cursor": 0,
+  "hook_cursor": 5,
+  "tip_cursor": 5,
+  "cta_cursor": 5,
+  "story_line_cursor": 12,
   "carousel_topic_cursor": 1,
   "posts": [
     {
@@ -42,9 +43,9 @@
     "17881856976686772",
     "18092262329149899"
   ],
-  "carousel_bg_cursor": 6,
+  "carousel_bg_cursor": 8,
   "story_line_fa_cursor": 0,
   "carousel_theme_cursor": 0,
-  "story_theme_cursor": 0,
+  "story_theme_cursor": 1,
   "feed_theme_cursor": 0
 }
