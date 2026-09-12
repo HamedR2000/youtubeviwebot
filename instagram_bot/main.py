@@ -5,7 +5,9 @@
     the weekday), hosts every asset as a public GitHub Release asset, and
     writes+uploads a manifest.json describing what was built. Does NOT
     call the Instagram API at all -- this is the "show me before it goes
-    out" half of the pipeline.
+    out" half of the pipeline. Everything posted on a given day is in one
+    language -- English on ENGLISH_WEEKDAYS (Mon/Wed/Fri), Persian the
+    rest of the week -- see ENGLISH_WEEKDAYS below.
 
   publish -- takes a manifest URL (env MANIFEST_URL, produced by a prior
     generate run once a human has reviewed and approved it) and actually
@@ -27,9 +29,28 @@ import state as state_mod
 from caption_builder import build_caption
 from carousel_backgrounds import next_background
 from carousel_composer import build_slide
-from carousel_content import BRAND_CORNER_LEFT, BRAND_CORNER_RIGHT, CAROUSELS
+from carousel_content import (
+    BRAND_CORNER_LEFT,
+    BRAND_CORNER_LEFT_FA,
+    BRAND_CORNER_RIGHT,
+    BRAND_CORNER_RIGHT_FA,
+    CAROUSELS,
+    CAROUSELS_FA,
+)
 from config import config
-from content_bank import CTAS, DISCLAIMER, HOOKS, STOCK_SEARCH_TERMS, STORY_LINES, STORY_LINES_FA, TIPS
+from content_bank import (
+    CTAS,
+    CTAS_FA,
+    DISCLAIMER,
+    DISCLAIMER_FA,
+    HOOKS,
+    HOOKS_FA,
+    STOCK_SEARCH_TERMS,
+    STORY_LINES,
+    STORY_LINES_FA,
+    TIPS,
+    TIPS_FA,
+)
 from github_host import upload_release_asset
 from image_composer import build_feed_card, build_story_card
 from instagram_publish import publish_carousel, publish_feed_image, publish_reel, publish_story
@@ -45,7 +66,8 @@ STORIES_PER_DAY = 5
 # Mon=0 ... Sun=6 (datetime.date.weekday())
 FEED_POST_WEEKDAYS = {2}        # Wed: a single feed image card
 CAROUSEL_WEEKDAYS = {0, 4}      # Mon, Fri: a full educational carousel
-PERSIAN_STORY_WEEKDAY = 3       # Thu: the first of that day's stories is in Persian
+ENGLISH_WEEKDAYS = {0, 2, 4}    # Mon, Wed, Fri: everything posted that day is in English
+                                 # (every other day -- Sat, Sun, Tue, Thu -- is Persian)
 
 # Alternates dark (hero photo) and light (flat cream, no photo) so the
 # whole account doesn't read as uniformly dark -- each content type keeps
@@ -64,7 +86,7 @@ def _host(today: str, path: str) -> str:
     )
 
 
-def build_reel_item(today: str, st: dict) -> dict:
+def build_reel_item(today: str, st: dict, lang: str) -> dict:
     print(f"[{today}] Reel: finding an unused stock clip...")
     video_info = find_unused_video(
         api_key=config.PEXELS_API_KEY,
@@ -74,15 +96,20 @@ def build_reel_item(today: str, st: dict) -> dict:
     raw_path = os.path.join(WORKDIR, f"raw_{video_info['id']}.mp4")
     download_video(video_info["download_url"], raw_path)
 
-    (hook,) = state_mod.next_rotating(HOOKS, st, "hook_cursor")
-    (tip,) = state_mod.next_rotating(TIPS, st, "tip_cursor")
-    (cta,) = state_mod.next_rotating(CTAS, st, "cta_cursor")
+    rtl = lang == "fa"
+    hooks, tips, ctas, disclaimer = (HOOKS_FA, TIPS_FA, CTAS_FA, DISCLAIMER_FA) if rtl \
+        else (HOOKS, TIPS, CTAS, DISCLAIMER)
+    hook_cursor, tip_cursor, cta_cursor = ("hook_fa_cursor", "tip_fa_cursor", "cta_fa_cursor") if rtl \
+        else ("hook_cursor", "tip_cursor", "cta_cursor")
+    (hook,) = state_mod.next_rotating(hooks, st, hook_cursor)
+    (tip,) = state_mod.next_rotating(tips, st, tip_cursor)
+    (cta,) = state_mod.next_rotating(ctas, st, cta_cursor)
 
     output_path = os.path.join(WORKDIR, f"reel_{today}.mp4")
     compose_video(raw_video_path=raw_path, hook=hook, tip=tip, brand_handle=BRAND_HANDLE,
-                  music_dir=MUSIC_DIR, output_path=output_path)
+                  music_dir=MUSIC_DIR, output_path=output_path, rtl=rtl)
 
-    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=DISCLAIMER, state=st)
+    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st)
     video_url = _host(today, output_path)
 
     st["used_pexels_ids"].append(video_info["id"])
@@ -91,19 +118,17 @@ def build_reel_item(today: str, st: dict) -> dict:
     return {"type": "reel", "video_url": video_url, "caption": caption}
 
 
-def build_story_items(today: str, today_date: datetime.date, st: dict) -> list:
-    lines = state_mod.next_rotating(STORY_LINES, st, "story_line_cursor", count=STORIES_PER_DAY)
-    persian_slot = 0 if today_date.weekday() == PERSIAN_STORY_WEEKDAY else None
+def build_story_items(today: str, st: dict, lang: str) -> list:
+    rtl = lang == "fa"
+    story_lines, cursor_key = (STORY_LINES_FA, "story_line_fa_cursor") if rtl \
+        else (STORY_LINES, "story_line_cursor")
+    lines = state_mod.next_rotating(story_lines, st, cursor_key, count=STORIES_PER_DAY)
 
     items = []
     for i, line in enumerate(lines):
         (theme,) = state_mod.next_rotating(THEME_ORDER, st, "story_theme_cursor")
         print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY}: rendering ({theme})...")
         photo_path = next_background(st) if theme == "dark" else None
-
-        rtl = i == persian_slot
-        if rtl:
-            (line,) = state_mod.next_rotating(STORY_LINES_FA, st, "story_line_fa_cursor")
 
         output_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
         build_story_card(photo_path, line, BRAND_HANDLE, output_path, rtl=rtl, theme=theme)
@@ -114,7 +139,7 @@ def build_story_items(today: str, today_date: datetime.date, st: dict) -> list:
     return items
 
 
-def build_feed_image_item(today: str, st: dict) -> dict:
+def build_feed_image_item(today: str, st: dict, lang: str) -> dict:
     (theme,) = state_mod.next_rotating(THEME_ORDER, st, "feed_theme_cursor")
     print(f"[{today}] Feed post: theme={theme}")
 
@@ -129,14 +154,19 @@ def build_feed_image_item(today: str, st: dict) -> dict:
         raw_path = os.path.join(WORKDIR, f"feed_raw_{photo_info['id']}.jpg")
         download_photo(photo_info["download_url"], raw_path)
 
-    (hook,) = state_mod.next_rotating(HOOKS, st, "hook_cursor")
-    (tip,) = state_mod.next_rotating(TIPS, st, "tip_cursor")
-    (cta,) = state_mod.next_rotating(CTAS, st, "cta_cursor")
+    rtl = lang == "fa"
+    hooks, tips, ctas, disclaimer = (HOOKS_FA, TIPS_FA, CTAS_FA, DISCLAIMER_FA) if rtl \
+        else (HOOKS, TIPS, CTAS, DISCLAIMER)
+    hook_cursor, tip_cursor, cta_cursor = ("hook_fa_cursor", "tip_fa_cursor", "cta_fa_cursor") if rtl \
+        else ("hook_cursor", "tip_cursor", "cta_cursor")
+    (hook,) = state_mod.next_rotating(hooks, st, hook_cursor)
+    (tip,) = state_mod.next_rotating(tips, st, tip_cursor)
+    (cta,) = state_mod.next_rotating(ctas, st, cta_cursor)
 
     output_path = os.path.join(WORKDIR, f"feed_{today}.jpg")
     build_feed_card(raw_path, headline=hook, subtitle=tip, cta=cta,
-                     brand_handle=BRAND_HANDLE, output_path=output_path, theme=theme)
-    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=DISCLAIMER, state=st)
+                     brand_handle=BRAND_HANDLE, output_path=output_path, theme=theme, rtl=rtl)
+    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st)
     image_url = _host(today, output_path)
 
     if theme == "dark":
@@ -146,10 +176,17 @@ def build_feed_image_item(today: str, st: dict) -> dict:
     return {"type": "feed_image", "image_url": image_url, "caption": caption}
 
 
-def build_carousel_item(today: str, st: dict) -> dict:
-    (topic,) = state_mod.next_rotating(CAROUSELS, st, "carousel_topic_cursor")
+def build_carousel_item(today: str, st: dict, lang: str) -> dict:
+    rtl = lang == "fa"
+    carousels, cursor_key = (CAROUSELS_FA, "carousel_topic_fa_cursor") if rtl \
+        else (CAROUSELS, "carousel_topic_cursor")
+    corner_left = BRAND_CORNER_LEFT_FA if rtl else BRAND_CORNER_LEFT
+    corner_right = BRAND_CORNER_RIGHT_FA if rtl else BRAND_CORNER_RIGHT
+    disclaimer = DISCLAIMER_FA if rtl else DISCLAIMER
+
+    (topic,) = state_mod.next_rotating(carousels, st, cursor_key)
     (theme,) = state_mod.next_rotating(THEME_ORDER, st, "carousel_theme_cursor")
-    print(f"[{today}] Carousel: topic '{topic['id']}' theme={theme}")
+    print(f"[{today}] Carousel: topic '{topic['id']}' theme={theme} lang={lang}")
 
     image_urls = []
     for i, slide in enumerate(topic["slides"]):
@@ -170,9 +207,10 @@ def build_carousel_item(today: str, st: dict) -> dict:
             cta_text=slide["cta_text"],
             top_left_tagline=slide.get("top_left_tagline"),
             top_right_words=slide.get("top_right_words"),
-            corner_left_words=BRAND_CORNER_LEFT,
-            corner_right_words=BRAND_CORNER_RIGHT,
+            corner_left_words=corner_left,
+            corner_right_words=corner_right,
             theme=theme,
+            rtl=rtl,
         )
         image_urls.append(_host(today, output_path))
         os.remove(output_path)
@@ -180,7 +218,7 @@ def build_carousel_item(today: str, st: dict) -> dict:
     first, mid, last = topic["slides"][0], topic["slides"][len(topic["slides"]) // 2], topic["slides"][-1]
     hook = " ".join(t for t, _ in first["headline_lines"])
     caption = build_caption(hook=hook, tip=mid["body_text"], cta=last["cta_text"],
-                             disclaimer=DISCLAIMER, state=st)
+                             disclaimer=disclaimer, state=st)
     return {"type": "carousel", "image_urls": image_urls, "caption": caption}
 
 
@@ -188,20 +226,23 @@ def run_generate() -> None:
     os.makedirs(WORKDIR, exist_ok=True)
     today_date = datetime.date.today()
     today = today_date.isoformat()
+    weekday = today_date.weekday()
+    lang = "en" if weekday in ENGLISH_WEEKDAYS else "fa"
     st = state_mod.load()
 
-    items = [build_reel_item(today, st)]
+    print(f"[{today}] Language for today: {lang}")
+
+    items = [build_reel_item(today, st, lang)]
     state_mod.save(st)
 
-    items.extend(build_story_items(today, today_date, st))
+    items.extend(build_story_items(today, st, lang))
     state_mod.save(st)
 
-    weekday = today_date.weekday()
     if weekday in CAROUSEL_WEEKDAYS:
-        items.append(build_carousel_item(today, st))
+        items.append(build_carousel_item(today, st, lang))
         state_mod.save(st)
     elif weekday in FEED_POST_WEEKDAYS:
-        items.append(build_feed_image_item(today, st))
+        items.append(build_feed_image_item(today, st, lang))
         state_mod.save(st)
     else:
         print(f"[{today}] No feed/carousel post scheduled today.")

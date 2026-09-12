@@ -15,9 +15,13 @@ _DEFAULT_STATE = {
     "hook_cursor": 0,             # rotating offset into content_bank.HOOKS
     "tip_cursor": 0,              # rotating offset into content_bank.TIPS
     "cta_cursor": 0,              # rotating offset into content_bank.CTAS
+    "hook_fa_cursor": 0,          # rotating offset into content_bank.HOOKS_FA
+    "tip_fa_cursor": 0,           # rotating offset into content_bank.TIPS_FA
+    "cta_fa_cursor": 0,           # rotating offset into content_bank.CTAS_FA
     "story_line_cursor": 0,       # rotating offset into content_bank.STORY_LINES
     "story_line_fa_cursor": 0,    # rotating offset into content_bank.STORY_LINES_FA
     "carousel_topic_cursor": 0,   # rotating offset into carousel_content.CAROUSELS
+    "carousel_topic_fa_cursor": 0,  # rotating offset into carousel_content.CAROUSELS_FA
     "carousel_bg_cursor": 0,      # rotating offset into carousel_backgrounds.BACKGROUNDS
     "carousel_theme_cursor": 0,   # rotating offset into main.THEME_ORDER (carousel posts)
     "story_theme_cursor": 0,      # rotating offset into main.THEME_ORDER (stories)
