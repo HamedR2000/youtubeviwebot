@@ -15,10 +15,11 @@ import state as state_mod
 import main as main_mod
 
 FIX_SUFFIX = "-fix"
+_ORIG_HOST = main_mod._host  # captured before monkeypatching, to avoid self-recursion
 
 
 def _fixed_host(today: str, path: str):
-    return main_mod._host(today + FIX_SUFFIX, path)
+    return _ORIG_HOST(today + FIX_SUFFIX, path)
 
 
 def run() -> None:
