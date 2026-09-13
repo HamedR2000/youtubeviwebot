@@ -1,7 +1,8 @@
 """آپلود به یوتیوب با YouTube Data API v3 (OAuth، فلوی Installed App) برای
 فایل نهایی Shorts. برای ساخت OAuth client توی Google Cloud Console به
-README.md بخش "راه‌اندازی یوتیوب" نگاه کن -- این قدم رو باید یه‌بار خودت
-دستی انجام بدی، این ماژول فقط از اون به بعد با API کار می‌کنه.
+README.md بخش "راه‌اندازی یوتیوب" نگاه کن، و برای گرفتن اولین توکن (این
+سرور مرورگر نداره، پس فلوی معمول جواب نمی‌ده) به `oauth_setup.py` --
+این ماژول فقط از اون به بعد با API کار می‌کنه.
 
 نکته‌ی quota: quota روزانه‌ی پیش‌فرض یه پروژه‌ی جدید Cloud (۱۰,۰۰۰ واحد)
 حدود ۶ آپلود در روز رو پوشش می‌ده (هر آپلود ~۱۶۰۰ واحد) -- توی README.md
@@ -11,7 +12,6 @@ import os
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
@@ -19,27 +19,24 @@ from config import config
 
 
 def _get_credentials() -> Credentials:
-    creds = None
-    if os.path.exists(config.YOUTUBE_TOKEN_FILE):
-        creds = Credentials.from_authorized_user_file(
-            config.YOUTUBE_TOKEN_FILE, [config.YOUTUBE_UPLOAD_SCOPE]
+    if not os.path.exists(config.YOUTUBE_TOKEN_FILE):
+        raise FileNotFoundError(
+            f"فایل {config.YOUTUBE_TOKEN_FILE} پیدا نشد. اول `python oauth_setup.py "
+            "--print-url` رو اجرا کن و دسترسی یوتیوب رو یک‌بار راه‌اندازی کن."
         )
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
+    creds = Credentials.from_authorized_user_file(
+        config.YOUTUBE_TOKEN_FILE, [config.YOUTUBE_UPLOAD_SCOPE]
+    )
+    if not creds.valid:
+        if creds.expired and creds.refresh_token:
             creds.refresh(Request())
+            with open(config.YOUTUBE_TOKEN_FILE, "w") as f:
+                f.write(creds.to_json())
         else:
-            if not os.path.exists(config.YOUTUBE_CLIENT_SECRETS_FILE):
-                raise FileNotFoundError(
-                    f"فایل {config.YOUTUBE_CLIENT_SECRETS_FILE} پیدا نشد. "
-                    "طبق README.md بخش 'راه‌اندازی یوتیوب' یه OAuth client توی "
-                    "Google Cloud Console بساز و دانلودش کن."
-                )
-            flow = InstalledAppFlow.from_client_secrets_file(
-                config.YOUTUBE_CLIENT_SECRETS_FILE, [config.YOUTUBE_UPLOAD_SCOPE]
+            raise RuntimeError(
+                "دسترسی یوتیوب دیگه معتبر نیست. `python oauth_setup.py --print-url` "
+                "رو دوباره اجرا کن."
             )
-            creds = flow.run_local_server(port=0)
-        with open(config.YOUTUBE_TOKEN_FILE, "w") as f:
-            f.write(creds.to_json())
     return creds
 
 
