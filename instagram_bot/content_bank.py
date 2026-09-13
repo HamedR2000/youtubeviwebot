@@ -77,6 +77,8 @@ CTAS = [
     "A ready XAUUSD preset, tested and optimized -- 6-month or 1-year license, full support included.",
     "Stop watching charts all day. Let the bot trade the plan while you live your life. Link in bio.",
     "Same signals, zero delay, zero emotion -- that's what automation buys you. DM for details.",
+    "No fear, no greed -- just logic. Every entry and exit calculated before the trade, not during it. Link in bio.",
+    "Precise entry, precise exit, zero emotion -- that's the whole edge. Telegram in bio for access.",
 ]
 
 # Mandatory risk disclaimer appended to every caption. Do not remove --
@@ -156,6 +158,8 @@ STORY_LINES = [
     "Treat every setup like it's real gold in the vault.",
     "Discipline works from anywhere -- a desk or a beach.",
     "Price action is the only truth.",
+    "No emotion. Just logic and precision.",
+    "Every entry, every exit -- calculated, not guessed.",
 ]
 
 # Persian equivalents of HOOKS -- used on Persian-language days (see
@@ -209,6 +213,8 @@ CTAS_FA = [
     "یک پریست آماده‌ی XAUUSD، تست‌شده و بهینه -- لایسنس ۶ ماهه یا ۱ ساله، با پشتیبانی کامل.",
     "دیگه تمام روز چارت نگاه نکن. بذار ربات برنامه رو معامله کنه، تو زندگیت رو بکن. لینک تو بایو.",
     "همون سیگنال‌ها، بدون تأخیر، بدون احساس -- این چیزیه که خودکارسازی بهت می‌ده. برای جزئیات دایرکت بده.",
+    "بدون ترس، بدون طمع -- فقط منطق. نقطه‌ی ورود و خروج هر معامله از قبل محاسبه می‌شه، نه وسط معامله. لینک تو بایو.",
+    "ورود دقیق، خروج دقیق، بدون هیچ احساسی -- کل مزیتش همینه. برای دسترسی، تلگرام تو بایو.",
 ]
 
 # Persian equivalent of DISCLAIMER -- appended to every Persian-day caption
@@ -253,4 +259,6 @@ STORY_LINES_FA = [
     "با هر ستاپ طوری رفتار کن که انگار طلای واقعیه تو گاوصندوقه.",
     "نظم از هر جایی جواب می‌ده -- پشت میز یا لب ساحل.",
     "پرایس اکشن تنها حقیقته.",
+    "بدون احساس. فقط منطق و دقت.",
+    "هر ورود، هر خروج -- محاسبه‌شده، نه حدسی.",
 ]
