@@ -6,7 +6,7 @@ that everything read too uniformly dark.
 """
 import random
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
 THEMES = {
     "dark": {
@@ -41,17 +41,26 @@ THEMES = {
 
 
 def flat_light_background(w: int, h: int) -> Image.Image:
-    """Warm cream canvas with a soft off-center glow and a faint bottom
-    warm shade for depth -- the light theme has no photo, unlike dark's
-    hero-photo background, so this keeps it from reading flat/dead."""
+    """Warm cream canvas, layered up with a richer set of decorative
+    elements -- two warm glows, a full-width candlestick band, scattered
+    gold dust with a few brighter twinkles, and a thin ornamental frame --
+    so the light theme reads as a designed, glamorous card rather than an
+    empty page (the account owner's own words: "شلوغتر و پر زرق و برق‌تر",
+    busier and more glamorous, after the first plain version)."""
     base = THEMES["light"]["canvas_base"]
     canvas = Image.new("RGBA", (w, h), (*base, 255))
 
     glow = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     gd = ImageDraw.Draw(glow)
-    gcx, gcy, gr = int(w * 0.72), int(h * 0.2), int(w * 0.85)
-    gd.ellipse([gcx - gr, gcy - gr, gcx + gr, gcy + gr], fill=(255, 250, 240, 70))
-    canvas.alpha_composite(glow)
+    gcx, gcy, gr = int(w * 0.78), int(h * 0.14), int(w * 0.95)
+    gd.ellipse([gcx - gr, gcy - gr, gcx + gr, gcy + gr], fill=(255, 250, 235, 110))
+    gcx2, gcy2, gr2 = int(w * 0.08), int(h * 0.9), int(w * 0.75)
+    gd.ellipse([gcx2 - gr2, gcy2 - gr2, gcx2 + gr2, gcy2 + gr2], fill=(214, 175, 116, 60))
+    canvas.alpha_composite(glow.filter(ImageFilter.GaussianBlur(40)))
+
+    _draw_rich_candlesticks(canvas, w, h)
+    _draw_gold_dust(canvas, w, h)
+    _draw_ornamental_frame(canvas, w, h)
 
     fade_h = int(h * 0.24)
     vignette = Image.new("L", (w, h), 0)
@@ -63,32 +72,79 @@ def flat_light_background(w: int, h: int) -> Image.Image:
     warm_edge = Image.new("RGBA", (w, h), (222, 210, 190, 255))
     canvas = Image.composite(warm_edge, canvas, vignette)
 
-    _draw_faint_candlesticks(canvas, w, h)
     return canvas
 
 
-def _draw_faint_candlesticks(canvas: Image.Image, w: int, h: int) -> None:
-    """A soft, low-opacity candlestick chart along the lower-right, so a
-    light-themed slide with little text doesn't read as empty -- same
-    quiet-texture role the hero photo plays on the dark theme, without
-    competing with the foreground text."""
+def _draw_rich_candlesticks(canvas: Image.Image, w: int, h: int) -> None:
+    """A wider, more visible candlestick chart spanning most of the width,
+    low in the frame -- reads as "trading chart" texture without competing
+    with foreground text, but fuller than a single faint corner sliver."""
     layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     ld = ImageDraw.Draw(layer)
     rng = random.Random()  # unseeded: a different candle pattern every render
-    n = 22
-    band_x0, band_x1 = int(w * 0.38), int(w * 1.05)
-    base_y = int(h * rng.uniform(0.8, 0.9))
+    n = 32
+    band_x0, band_x1 = int(w * -0.05), int(w * 1.05)
+    base_y = int(h * rng.uniform(0.78, 0.88))
     col_w = (band_x1 - band_x0) / n
     trend = 0
-    color = (150, 106, 46, 26)
+    color = (150, 106, 46, 46)
     for i in range(n):
         trend += rng.uniform(-1, 1.6)
         cx = band_x0 + col_w * i + col_w / 2
-        body_h = rng.uniform(30, 90)
-        wick_h = body_h + rng.uniform(10, 40)
+        body_h = rng.uniform(30, 100)
+        wick_h = body_h + rng.uniform(10, 46)
         top = base_y - trend * 6 - body_h / 2
         ld.line([(cx, top - wick_h / 2), (cx, top + body_h / 2 + wick_h / 2 - body_h)],
                 fill=color, width=2)
-        ld.rectangle([cx - col_w * 0.28, top - body_h / 2, cx + col_w * 0.28, top + body_h / 2],
+        ld.rectangle([cx - col_w * 0.3, top - body_h / 2, cx + col_w * 0.3, top + body_h / 2],
                       fill=color)
+    canvas.alpha_composite(layer)
+
+
+def _draw_gold_dust(canvas: Image.Image, w: int, h: int) -> None:
+    """Scattered gold particles across the whole canvas, plus a handful of
+    brighter 4-point twinkle marks, for the "پر زرق و برق" (glittery,
+    glamorous) look -- the dark theme's photo backgrounds already have
+    plenty going on visually, the light theme's flat cream needed this to
+    not read as bare."""
+    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ld = ImageDraw.Draw(layer)
+    rng = random.Random()
+    gold = (150, 106, 46)
+    for _ in range(220):
+        x, y = rng.uniform(0, w), rng.uniform(0, h * 0.92)
+        r = rng.uniform(0.8, 3.2)
+        a = rng.randint(25, 90)
+        ld.ellipse([x - r, y - r, x + r, y + r], fill=gold + (a,))
+
+    for _ in range(10):
+        x, y = rng.uniform(w * 0.05, w * 0.95), rng.uniform(h * 0.05, h * 0.88)
+        size = rng.uniform(7, 14)
+        a = rng.randint(90, 160)
+        color = (214, 175, 116, a)
+        ld.line([(x - size, y), (x + size, y)], fill=color, width=1)
+        ld.line([(x, y - size), (x, y + size)], fill=color, width=1)
+        small = size * 0.4
+        ld.line([(x - small, y - small), (x + small, y + small)], fill=color, width=1)
+        ld.line([(x - small, y + small), (x + small, y - small)], fill=color, width=1)
+
+    canvas.alpha_composite(layer.filter(ImageFilter.GaussianBlur(0.4)))
+
+
+def _draw_ornamental_frame(canvas: Image.Image, w: int, h: int) -> None:
+    """A thin double gold rule inset from the edges with small diamond
+    accents at the corners -- gives the light theme the "framed, designed
+    card" feel the dark theme gets for free from its hero photo."""
+    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ld = ImageDraw.Draw(layer)
+    gold = (150, 106, 46, 100)
+    inset1, inset2 = 34, 42
+    ld.rectangle([inset1, inset1, w - inset1, h - inset1], outline=gold, width=1)
+    ld.rectangle([inset2, inset2, w - inset2, h - inset2], outline=gold, width=1)
+
+    d = 9
+    for cx, cy in [(inset1, inset1), (w - inset1, inset1), (inset1, h - inset1), (w - inset1, h - inset1)]:
+        ld.polygon([(cx, cy - d), (cx + d, cy), (cx, cy + d), (cx - d, cy)],
+                    outline=(150, 106, 46, 160), width=1)
+
     canvas.alpha_composite(layer)
