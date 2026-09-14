@@ -13,6 +13,7 @@ import os
 from config import config
 from composer import compose_reaction_video
 from downloader import fetch_source_video
+from hashtags import ensure_hashtags
 from titles import pick_title
 from youtube_upload import upload_video
 
@@ -83,7 +84,7 @@ def main() -> None:
     upload_video(
         file_path=output_path,
         title=title,
-        description=args.description,
+        description=ensure_hashtags(args.description),
         tags=tags,
         privacy_status=args.privacy,
         dry_run=args.dry_run,

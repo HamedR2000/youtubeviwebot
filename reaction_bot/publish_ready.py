@@ -16,6 +16,7 @@ from moviepy import VideoFileClip
 
 from branding import add_subscribe_banner
 from config import config
+from hashtags import ensure_hashtags
 from titles import pick_title
 from youtube_upload import upload_video
 
@@ -68,9 +69,7 @@ def main() -> None:
     title = args.title or pick_title()
     print(f"عنوان نهایی: {title}")
 
-    description = args.description
-    if "#shorts" not in description.lower():
-        description = (description + "\n\n#Shorts").strip()
+    description = ensure_hashtags(args.description)
     tags = [t.strip() for t in args.tags.split(",") if t.strip()]
 
     upload_video(
