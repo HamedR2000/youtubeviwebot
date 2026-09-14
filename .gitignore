@@ -6,3 +6,4 @@ reaction_bot/workdir/
 reaction_bot/client_secret.json
 reaction_bot/token.json
 reaction_bot/.oauth_pkce_verifier
+reaction_bot/.title_cursor.json

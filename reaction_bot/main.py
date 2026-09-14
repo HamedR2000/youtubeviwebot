@@ -13,6 +13,7 @@ import os
 from config import config
 from composer import compose_reaction_video
 from downloader import fetch_source_video
+from titles import pick_title
 from youtube_upload import upload_video
 
 
@@ -39,7 +40,7 @@ def main() -> None:
                          help="تأیید نهایی‌بودن اسکریپت؛ بدون این فلگ فقط دانلود و پیش‌نمایش انجام می‌شه")
     parser.add_argument("--upload", action="store_true", help="آپلود ویدیوی ترکیب‌شده به یوتیوب")
     parser.add_argument("--dry-run", action="store_true", help="همراه --upload: فقط payload آپلود رو چاپ می‌کنه، چیزی ارسال نمی‌شه")
-    parser.add_argument("--title", help="عنوان ویدیوی یوتیوب (پیش‌فرض: خط اول اسکریپت)")
+    parser.add_argument("--title", help="عنوان ویدیوی یوتیوب (پیش‌فرض: خط اول اسکریپت، وگرنه یه عنوان عمومی از titles.py)")
     parser.add_argument("--description", default="", help="توضیحات ویدیوی یوتیوب")
     parser.add_argument("--tags", default="", help="تگ‌های یوتیوب، با کاما جدا شده")
     parser.add_argument("--privacy", choices=["private", "unlisted", "public"], help="وضعیت انتشار یوتیوب")
@@ -77,7 +78,7 @@ def main() -> None:
               "اول فایل بالا رو خودت ببین.")
         return
 
-    title = args.title or (script_text.splitlines()[0][:100] if script_text else os.path.basename(source_path))
+    title = args.title or (script_text.splitlines()[0][:100] if script_text else pick_title())
     tags = [t.strip() for t in args.tags.split(",") if t.strip()]
     upload_video(
         file_path=output_path,
