@@ -17,25 +17,43 @@ localhost نیست. کل آدرس همون صفحه‌ی ارور رو از نو
     python oauth_setup.py --exchange "http://localhost:8080/?state=...&code=..."
 """
 import argparse
+import os
+import secrets
 
-from google_auth_oauthlib.flow import Flow
+# redirect_uri عمداً http (نه https)ه چون یه آدرس لوکال‌لوپه، نه یه سرور
+# واقعی -- این استثنای شناخته‌شده و امن OAuth برای اپ‌های Desktop/Installed
+# هست، ولی oauthlib به‌صورت پیش‌فرض هر http غیرلوکالی رو رد می‌کنه؛ این env
+# var همون چک رو غیرفعال می‌کنه (باید قبل از import مربوطه ست بشه).
+os.environ.setdefault("OAUTHLIB_INSECURE_TRANSPORT", "1")
 
-from config import config
+from google_auth_oauthlib.flow import Flow  # noqa: E402
+
+from config import config  # noqa: E402
 
 REDIRECT_URI = "http://localhost:8080/"
 
+# print-url و exchange دو تا اجرای جدا (دو تا پروسه)ن، پس code_verifier
+# تصادفی‌ای که Flow برای PKCE می‌سازه با اجرای اول از بین می‌ره -- باید
+# خودمون بینشون نگهش داریم، وگرنه گوگل با ارور "Missing code verifier" رد
+# می‌کنه.
+_VERIFIER_FILE = os.path.join(os.path.dirname(__file__), ".oauth_pkce_verifier")
 
-def _build_flow() -> Flow:
+
+def _build_flow(code_verifier: str | None = None) -> Flow:
     return Flow.from_client_secrets_file(
         config.YOUTUBE_CLIENT_SECRETS_FILE,
         scopes=[config.YOUTUBE_UPLOAD_SCOPE],
         redirect_uri=REDIRECT_URI,
+        code_verifier=code_verifier,
     )
 
 
 def print_url() -> None:
-    flow = _build_flow()
+    code_verifier = secrets.token_urlsafe(64)
+    flow = _build_flow(code_verifier)
     auth_url, _ = flow.authorization_url(prompt="consent", access_type="offline")
+    with open(_VERIFIER_FILE, "w") as f:
+        f.write(code_verifier)
     print("این لینک رو توی مرورگر خودت باز کن:\n")
     print(auth_url)
     print("\nبعد از تأیید، آدرس کامل صفحه‌ی بعدی (حتی اگه ارور داد) رو کپی کن و با:")
@@ -44,10 +62,13 @@ def print_url() -> None:
 
 
 def exchange(redirected_url: str) -> None:
-    flow = _build_flow()
+    with open(_VERIFIER_FILE) as f:
+        code_verifier = f.read().strip()
+    flow = _build_flow(code_verifier)
     flow.fetch_token(authorization_response=redirected_url)
     with open(config.YOUTUBE_TOKEN_FILE, "w") as f:
         f.write(flow.credentials.to_json())
+    os.remove(_VERIFIER_FILE)
     print(f"دسترسی یوتیوب با موفقیت ذخیره شد: {config.YOUTUBE_TOKEN_FILE}")
 
 

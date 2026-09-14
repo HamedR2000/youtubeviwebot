@@ -5,3 +5,4 @@ instagram_bot/_build/
 reaction_bot/workdir/
 reaction_bot/client_secret.json
 reaction_bot/token.json
+reaction_bot/.oauth_pkce_verifier
