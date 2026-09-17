@@ -18,8 +18,8 @@ _DEFAULT_STATE = {
     "hook_fa_cursor": 0,          # rotating offset into content_bank.HOOKS_FA
     "tip_fa_cursor": 0,           # rotating offset into content_bank.TIPS_FA
     "cta_fa_cursor": 0,           # rotating offset into content_bank.CTAS_FA
-    "story_line_cursor": 0,       # rotating offset into content_bank.STORY_LINES
-    "story_line_fa_cursor": 0,    # rotating offset into content_bank.STORY_LINES_FA
+    "story_set_cursor": 0,        # rotating offset into content_bank.STORY_SETS
+    "story_set_fa_cursor": 0,     # rotating offset into content_bank.STORY_SETS_FA
     "carousel_topic_cursor": 0,   # rotating offset into carousel_content.CAROUSELS
     "carousel_topic_fa_cursor": 0,  # rotating offset into carousel_content.CAROUSELS_FA
     "carousel_bg_cursor": 0,      # rotating offset into carousel_backgrounds.BACKGROUNDS

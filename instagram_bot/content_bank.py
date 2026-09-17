@@ -125,41 +125,92 @@ COMMENT_REPLIES_FA = [
     "ممنون از همراهیت {name}! کانال تلگرام رایگان‌مون رو از لینک تو بایو ببین، هر روز سیگنال XAUUSD می‌ذاریم.",
 ]
 
-# Short single lines for Story cards -- Stories are read in ~2 seconds, so
-# these are intentionally punchier and shorter than HOOKS/TIPS. Mix of
-# facts, quotes, and soft CTAs pointing at the bot.
-STORY_LINES = [
-    "Gold just moved. Do you know why?",
-    "Discipline > Prediction.",
-    "Your stop-loss is not optional.",
-    "DXY up, gold down. Usually.",
-    "The trend is your friend -- until it bends.",
-    "Automate the boring part. Telegram in bio.",
-    "One good setup beats ten random trades.",
-    "Risk 1%, not your whole week.",
-    "Emotions are the real spread cost.",
-    "My bot trades gold while I sleep. Telegram in bio.",
-    "Signal in. Trade out. Zero manual clicks.",
-    "One bot. Any broker. Any prop firm.",
-    "You set the lot size. The bot handles the rest.",
-    "A ready XAUUSD preset, pre-optimized and tested.",
-    "Runs on MT5, on your PC -- not your phone.",
-    "6-month or 1-year license. Full support included.",
-    "Patience is a position too.",
-    "The best trade is sometimes no trade.",
-    "Protect your capital first. Grow it second.",
-    "A plan without discipline is just a guess.",
-    "There is no easy way. Be disciplined.",
-    "No risk, no story. No loss, no profit.",
-    "A small profit beats a big loss.",
-    "Focus. Patience. Execution.",
-    "Every trade starts as risk before it becomes profit.",
-    "The market doesn't just move price -- it tests your patience.",
-    "Treat every setup like it's real gold in the vault.",
-    "Discipline works from anywhere -- a desk or a beach.",
-    "Price action is the only truth.",
-    "No emotion. Just logic and precision.",
-    "Every entry, every exit -- calculated, not guessed.",
+# Story cards are read in ~2 seconds each, so lines stay short -- but a
+# whole day's STORIES_PER_DAY slides come from ONE set here, not random
+# picks off a flat list, so the sequence reads as one connected thread
+# (a shared "topic" kicker + a build-up) instead of disconnected one-liners.
+# Each set must have exactly STORIES_PER_DAY (see main.py) lines.
+STORY_SETS = [
+    {
+        "topic": "RISK FIRST",
+        "lines": [
+            "Before you enter, know your exit.",
+            "Risk 1%, not your whole week.",
+            "Your stop-loss is not optional.",
+            "Protect your capital first. Grow it second.",
+            "A small profit beats a big loss.",
+        ],
+    },
+    {
+        "topic": "AFTER A LOSS",
+        "lines": [
+            "You just took a loss. Don't rush back in.",
+            "Close the chart. Breathe. Reset.",
+            "One loss is data, not a verdict.",
+            "Review the trade, not your worth.",
+            "Come back only when your plan is clear again.",
+        ],
+    },
+    {
+        "topic": "WHY WE AUTOMATE",
+        "lines": [
+            "Every signal we post, our bot executes.",
+            "No manual clicks. No hesitation.",
+            "Runs on MT5, on your PC -- not your phone.",
+            "Works with any broker, any prop firm.",
+            "6-month or 1-year license. Telegram in bio.",
+        ],
+    },
+    {
+        "topic": "PATIENCE PAYS",
+        "lines": [
+            "Gold rewards patience more than speed.",
+            "The best trade is sometimes no trade.",
+            "One good setup beats ten random trades.",
+            "Boredom is not a reason to enter.",
+            "Discipline works from anywhere -- a desk or a beach.",
+        ],
+    },
+    {
+        "topic": "READ THE CHART",
+        "lines": [
+            "Price action is the only truth.",
+            "Support and resistance are zones, not lines.",
+            "A quiet chart isn't a dead chart.",
+            "Volatility spikes around big news -- size down.",
+            "The chart already told you. Did you listen?",
+        ],
+    },
+    {
+        "topic": "EMOTIONS COST MONEY",
+        "lines": [
+            "Fear closes winners early.",
+            "Greed holds losers too long.",
+            "Emotions are the real spread cost.",
+            "No emotion. Just logic and precision.",
+            "That's why our bot trades it, not us.",
+        ],
+    },
+    {
+        "topic": "KNOW THE LEVELS",
+        "lines": [
+            "Round numbers like $2,000 act like magnets.",
+            "DXY up, gold down. Usually.",
+            "CPI and NFP days move gold hard.",
+            "Real yields and gold rarely move alone.",
+            "Know the calendar before you know the entry.",
+        ],
+    },
+    {
+        "topic": "PRECISE ENTRY, PRECISE EXIT",
+        "lines": [
+            "Every entry, every exit -- calculated, not guessed.",
+            "No fear, no greed -- just logic.",
+            "Pre-calculated levels. Zero manual clicks.",
+            "Signal in. Trade out. Same process, every time.",
+            "That's what automation buys you. Link in bio.",
+        ],
+    },
 ]
 
 # Persian equivalents of HOOKS -- used on Persian-language days (see
@@ -225,40 +276,88 @@ DISCLAIMER_FA = (
     "عملکرد گذشته تضمینی برای نتایج آینده نیست."
 )
 
-# Persian equivalents of STORY_LINES -- used on Persian-language days (see
-# ENGLISH_WEEKDAYS in main.py). Kept short, matching the Story format.
-STORY_LINES_FA = [
-    "معاملات طلا دیگه دستی نیست.",
-    "هر سیگنال کانال تلگرام، خودکار روی MT5 اجرا می‌شه.",
-    "با هر بروکر و هر پراپ‌فرم سازگاره -- فقط حجم معامله دست شماست.",
-    "یک پریست آماده و بهینه‌شده، مخصوص XAUUSD.",
-    "لایسنس ۶ ماهه یا ۱ ساله، با پشتیبانی کامل.",
-    "ربات معامله‌گر خودکار طلا -- برای دریافت، پیام بده.",
-    "نظم بهتر از پیش‌بینیه.",
-    "گاهی بهترین معامله، معامله نکردنه.",
-    "اول سرمایه‌ت رو حفظ کن، بعد رشدش بده.",
-    "ربات با هر بروکر و پراپ‌فرمی کار می‌کنه -- فقط حجم معامله دست شماست.",
-    "طلا همین الان حرکت کرد. می‌دونی چرا؟",
-    "نظم > پیش‌بینی.",
-    "حد ضررت اختیاری نیست.",
-    "DXY بالا، طلا پایین. معمولاً.",
-    "روند دوست توئه -- تا وقتی که بشکنه.",
-    "یک ستاپ خوب، از ده تا معامله‌ی تصادفی بهتره.",
-    "۱٪ ریسک کن، نه کل هفته‌ت رو.",
-    "احساسات، هزینه‌ی واقعیِ اسپردن.",
-    "روی MT5، روی کامپیوترت اجرا می‌شه -- نه گوشیت.",
-    "صبر هم یک پوزیشنه.",
-    "گاهی بهترین معامله، هیچ معامله‌ای نیست.",
-    "برنامه بدون نظم، فقط یک حدسه.",
-    "راه آسونی وجود نداره. منظم باش.",
-    "بدون ریسک، داستانی نیست. بدون ضرر، سودی نیست.",
-    "یک سود کوچیک، از یک ضرر بزرگ بهتره.",
-    "تمرکز. صبر. اجرا.",
-    "هر معامله اول ریسکه، قبل از اینکه سود بشه.",
-    "بازار فقط قیمت رو حرکت نمی‌ده -- صبر تو رو هم امتحان می‌کنه.",
-    "با هر ستاپ طوری رفتار کن که انگار طلای واقعیه تو گاوصندوقه.",
-    "نظم از هر جایی جواب می‌ده -- پشت میز یا لب ساحل.",
-    "پرایس اکشن تنها حقیقته.",
-    "بدون احساس. فقط منطق و دقت.",
-    "هر ورود، هر خروج -- محاسبه‌شده، نه حدسی.",
+# Persian equivalents of STORY_SETS -- same 8 topics, same order, faithful
+# translation (not word-for-word) so each day's 5 Persian stories form one
+# connected thread too, not disconnected one-liners.
+STORY_SETS_FA = [
+    {
+        "topic": "اول ریسک",
+        "lines": [
+            "قبل از ورود، خروجت رو بدون.",
+            "۱٪ ریسک کن، نه کل هفته‌ت رو.",
+            "حد ضررت اختیاری نیست.",
+            "اول سرمایه‌ت رو حفظ کن، بعد رشدش بده.",
+            "یک سود کوچیک، از یک ضرر بزرگ بهتره.",
+        ],
+    },
+    {
+        "topic": "بعد از یک ضرر",
+        "lines": [
+            "تازه ضرر کردی. سریع برنگرد تو معامله.",
+            "چارت رو ببند. نفس بکش. ریست کن.",
+            "یک ضرر فقط یک داده‌ست، نه یک حکم.",
+            "معامله رو بررسی کن، نه ارزش خودت رو.",
+            "فقط وقتی برنامه‌ت دوباره روشنه برگرد.",
+        ],
+    },
+    {
+        "topic": "چرا خودکارش کردیم",
+        "lines": [
+            "هر سیگنالی که پست می‌کنیم، رباتمون اجراش می‌کنه.",
+            "بدون کلیک دستی. بدون تردید.",
+            "روی MT5، روی کامپیوترت اجرا می‌شه -- نه گوشیت.",
+            "با هر بروکر و هر پراپ‌فرمی کار می‌کنه.",
+            "لایسنس ۶ ماهه یا ۱ ساله. لینک تو بایو.",
+        ],
+    },
+    {
+        "topic": "صبر جواب می‌ده",
+        "lines": [
+            "طلا به صبر بیشتر از سرعت پاداش می‌ده.",
+            "گاهی بهترین معامله، معامله نکردنه.",
+            "یک ستاپ خوب، از ده تا معامله‌ی تصادفی بهتره.",
+            "حوصله سر رفتن دلیل ورود نیست.",
+            "نظم از هر جایی جواب می‌ده -- پشت میز یا لب ساحل.",
+        ],
+    },
+    {
+        "topic": "چارت رو بخون",
+        "lines": [
+            "پرایس اکشن تنها حقیقته.",
+            "حمایت و مقاومت، ناحیه‌ن نه خط‌های دقیق.",
+            "چارت ساکت به معنی چارت مرده نیست.",
+            "نوسان دور و بر خبرهای مهم بالا می‌ره -- حجمت رو کم کن.",
+            "چارت از قبل بهت گفته بود. گوش دادی؟",
+        ],
+    },
+    {
+        "topic": "احساسات هزینه داره",
+        "lines": [
+            "ترس، سود رو زود می‌بنده.",
+            "طمع، ضرر رو طولانی نگه می‌داره.",
+            "احساسات، هزینه‌ی واقعیِ اسپردن.",
+            "بدون احساس. فقط منطق و دقت.",
+            "برای همینه که رباتمون معامله می‌گیره، نه ما.",
+        ],
+    },
+    {
+        "topic": "سطح‌ها رو بشناس",
+        "lines": [
+            "اعداد رند مثل ۲۰۰۰ دلار مثل آهن‌ربان.",
+            "DXY بالا، طلا پایین. معمولاً.",
+            "روزهای CPI و NFP طلا رو شدید حرکت می‌دن.",
+            "بازده واقعی و طلا به‌ندرت تنها حرکت می‌کنن.",
+            "قبل از نقطه‌ی ورود، تقویم رو بشناس.",
+        ],
+    },
+    {
+        "topic": "ورود دقیق، خروج دقیق",
+        "lines": [
+            "هر ورود، هر خروج -- محاسبه‌شده، نه حدسی.",
+            "بدون ترس، بدون طمع -- فقط منطق.",
+            "سطح‌های از پیش محاسبه‌شده. بدون کلیک دستی.",
+            "سیگنال میاد. معامله میره. هر بار همون فرآیند.",
+            "این چیزیه که خودکارسازی بهت می‌ده. لینک تو بایو.",
+        ],
+    },
 ]
