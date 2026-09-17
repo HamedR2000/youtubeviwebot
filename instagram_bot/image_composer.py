@@ -84,9 +84,13 @@ def build_feed_card(photo_path: str, headline: str, subtitle: str, cta: str,
 
 
 def build_story_card(photo_path: str, line: str, brand_handle: str, output_path: str,
-                      rtl: bool = False, theme: str = "dark") -> None:
+                      rtl: bool = False, theme: str = "dark",
+                      topic: str = None, page_num: int = None, page_total: int = None) -> None:
     """rtl=True renders `line` with the Persian/Arabic-script font, shaped
-    and right-aligned -- used for the once-a-week Persian story."""
+    and right-aligned. topic/page_num/page_total (all optional) draw a
+    small kicker + counter at the top -- so the STORIES_PER_DAY slides of
+    one content_bank.STORY_SETS entry visibly read as one connected
+    thread instead of disconnected one-liners."""
     t = THEMES[theme]
     w, h = STORY_SIZE
     canvas = _base_canvas(photo_path, w, h, theme)
@@ -95,6 +99,22 @@ def build_story_card(photo_path: str, line: str, brand_handle: str, output_path:
     margin = 80
     brand_font = montserrat(34, "SemiBold")
     shadow = t["shadow"] if theme == "dark" else None
+
+    if topic:
+        kicker_font = vazirmatn(24, "Bold") if rtl else montserrat(24, "SemiBold")
+        if rtl:
+            tw = draw.textlength(topic, font=kicker_font, direction="rtl", language="fa")
+            draw.text((w - margin - tw, 64), topic, font=kicker_font, fill=t["gold_bright"],
+                       direction="rtl", language="fa")
+        else:
+            draw.text((margin, 64), topic.upper(), font=kicker_font, fill=t["gold_bright"])
+
+    if page_num and page_total:
+        counter_font = montserrat(24, "SemiBold")
+        counter_text = f"{page_num}/{page_total}"
+        cw = draw.textlength(counter_text, font=counter_font)
+        cx = margin if rtl else w - margin - cw
+        draw.text((cx, 64), counter_text, font=counter_font, fill=t["muted"])
 
     # Vertically centered single line/short block -- stories are meant to be
     # read in ~2 seconds.

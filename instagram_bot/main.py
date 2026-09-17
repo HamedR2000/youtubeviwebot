@@ -46,8 +46,8 @@ from content_bank import (
     HOOKS,
     HOOKS_FA,
     STOCK_SEARCH_TERMS,
-    STORY_LINES,
-    STORY_LINES_FA,
+    STORY_SETS,
+    STORY_SETS_FA,
     TIPS,
     TIPS_FA,
 )
@@ -120,18 +120,20 @@ def build_reel_item(today: str, st: dict, lang: str) -> dict:
 
 def build_story_items(today: str, st: dict, lang: str) -> list:
     rtl = lang == "fa"
-    story_lines, cursor_key = (STORY_LINES_FA, "story_line_fa_cursor") if rtl \
-        else (STORY_LINES, "story_line_cursor")
-    lines = state_mod.next_rotating(story_lines, st, cursor_key, count=STORIES_PER_DAY)
+    story_sets, cursor_key = (STORY_SETS_FA, "story_set_fa_cursor") if rtl \
+        else (STORY_SETS, "story_set_cursor")
+    (story_set,) = state_mod.next_rotating(story_sets, st, cursor_key)
+    topic, lines = story_set["topic"], story_set["lines"]
 
     items = []
     for i, line in enumerate(lines):
         (theme,) = state_mod.next_rotating(THEME_ORDER, st, "story_theme_cursor")
-        print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY}: rendering ({theme})...")
+        print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY} ('{topic}'): rendering ({theme})...")
         photo_path = next_background(st) if theme == "dark" else None
 
         output_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
-        build_story_card(photo_path, line, BRAND_HANDLE, output_path, rtl=rtl, theme=theme)
+        build_story_card(photo_path, line, BRAND_HANDLE, output_path, rtl=rtl, theme=theme,
+                          topic=topic, page_num=i + 1, page_total=len(lines))
         image_url = _host(today, output_path)
 
         os.remove(output_path)
