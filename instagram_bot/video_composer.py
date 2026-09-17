@@ -1,6 +1,9 @@
 """Compose the final Reel: crop the stock clip to 1080x1920, burn in a text
 overlay (hook + tip + branding) rendered with Pillow, and mix in a random
-royalty-free background track from music/.
+royalty-free background track from music/. Also composes Story videos:
+wraps an already-rendered story card (from image_composer.build_story_card)
+into a short static-image video with the same music bank, since Instagram
+Stories can only carry audio as a video, never as a plain image.
 
 Text is rendered to a transparent PNG with Pillow (not moviepy's
 TextClip) specifically to avoid an ImageMagick dependency in CI.
@@ -24,6 +27,7 @@ from text_overlay import draw_wrapped, draw_wrapped_rtl, load_font, rounded_pane
 TARGET_W, TARGET_H = 1080, 1920
 CLIP_DURATION_S = 15
 MUSIC_VOLUME = 0.35
+STORY_CLIP_DURATION_S = 6
 
 
 def build_text_overlay(hook: str, tip: str, brand_handle: str, rtl: bool = False) -> Image.Image:
@@ -83,6 +87,46 @@ def _pick_music_track(music_dir: str) -> str:
     return random.choice(tracks)
 
 
+def _scored_clip(music_dir: str, duration: float, fade_in: float, fade_out: float):
+    """Pick a random track, loop/trim it to `duration`, and fade it in/out
+    -- shared between compose_video and compose_story_video."""
+    music = AudioFileClip(_pick_music_track(music_dir))
+    if music.duration < duration:
+        music = music.with_effects([afx.AudioLoop(duration=duration)])
+    else:
+        music = music.subclipped(0, duration)
+    return music.with_effects([
+        afx.MultiplyVolume(MUSIC_VOLUME),
+        afx.AudioFadeIn(fade_in),
+        afx.AudioFadeOut(fade_out),
+    ])
+
+
+def compose_story_video(image_path: str, music_dir: str, output_path: str,
+                         duration: float = STORY_CLIP_DURATION_S) -> None:
+    """Wrap an already-rendered story card (a static 1080x1920 JPEG from
+    image_composer.build_story_card) into a short video with a random
+    royalty-free track from music/ -- Instagram Stories only carry audio
+    when posted as video, never as a plain image."""
+    base = ImageClip(image_path).with_duration(duration)
+    music = _scored_clip(music_dir, duration, fade_in=0.5, fade_out=1.0)
+    video = base.with_audio(music)
+
+    video.write_videofile(
+        output_path,
+        fps=30,
+        codec="libx264",
+        audio_codec="aac",
+        threads=4,
+        preset="medium",
+        logger=None,
+    )
+
+    base.close()
+    video.close()
+    music.close()
+
+
 def compose_video(raw_video_path: str, hook: str, tip: str, brand_handle: str,
                    music_dir: str, output_path: str, rtl: bool = False) -> None:
     base = VideoFileClip(raw_video_path).without_audio()
@@ -96,18 +140,7 @@ def compose_video(raw_video_path: str, hook: str, tip: str, brand_handle: str,
 
     video = CompositeVideoClip([base, overlay_clip])
 
-    track_path = _pick_music_track(music_dir)
-    music = AudioFileClip(track_path)
-    if music.duration < duration:
-        music = music.with_effects([afx.AudioLoop(duration=duration)])
-    else:
-        music = music.subclipped(0, duration)
-    music = music.with_effects([
-        afx.MultiplyVolume(MUSIC_VOLUME),
-        afx.AudioFadeIn(1),
-        afx.AudioFadeOut(1.5),
-    ])
-
+    music = _scored_clip(music_dir, duration, fade_in=1, fade_out=1.5)
     video = video.with_audio(CompositeAudioClip([music]))
 
     video.write_videofile(

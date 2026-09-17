@@ -1,8 +1,9 @@
 """Daily entry point, run in one of two modes (env var PIPELINE_MODE):
 
-  generate (default) -- builds today's content (1 Reel, 5 Stories, and
-    either a feed image card or a full educational carousel depending on
-    the weekday), hosts every asset as a public GitHub Release asset, and
+  generate (default) -- builds today's content (1 Reel, 5 Stories -- each
+    a short video with background music, not a plain image -- and either a
+    feed image card or a full educational carousel depending on the
+    weekday), hosts every asset as a public GitHub Release asset, and
     writes+uploads a manifest.json describing what was built. Does NOT
     call the Instagram API at all -- this is the "show me before it goes
     out" half of the pipeline. Everything posted on a given day is in one
@@ -56,7 +57,7 @@ from image_composer import build_feed_card, build_story_card
 from instagram_publish import publish_carousel, publish_feed_image, publish_reel, publish_story
 from stock_media import download_video, find_unused_video
 from stock_photos import download_photo, find_unused_photo
-from video_composer import compose_video
+from video_composer import compose_story_video, compose_video
 
 BRAND_HANDLE = "@Goldhamedsignals"
 MUSIC_DIR = os.path.join(os.path.dirname(__file__), "music")
@@ -131,13 +132,17 @@ def build_story_items(today: str, st: dict, lang: str) -> list:
         print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY} ('{topic}'): rendering ({theme})...")
         photo_path = next_background(st) if theme == "dark" else None
 
-        output_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
-        build_story_card(photo_path, line, BRAND_HANDLE, output_path, rtl=rtl, theme=theme,
+        card_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
+        build_story_card(photo_path, line, BRAND_HANDLE, card_path, rtl=rtl, theme=theme,
                           topic=topic, page_num=i + 1, page_total=len(lines))
-        image_url = _host(today, output_path)
 
-        os.remove(output_path)
-        items.append({"type": "story", "image_url": image_url})
+        video_path = os.path.join(WORKDIR, f"story_{today}_{i}.mp4")
+        compose_story_video(card_path, MUSIC_DIR, video_path)
+        video_url = _host(today, video_path)
+
+        os.remove(card_path)
+        os.remove(video_path)
+        items.append({"type": "story", "video_url": video_url})
     return items
 
 
@@ -276,7 +281,7 @@ def run_publish() -> None:
                                      config.IG_ACCESS_TOKEN, item["video_url"], item["caption"])
         elif kind == "story":
             media_id = publish_story(config.GRAPH_API_VERSION, config.IG_USER_ID,
-                                      config.IG_ACCESS_TOKEN, image_url=item["image_url"])
+                                      config.IG_ACCESS_TOKEN, video_url=item["video_url"])
         elif kind == "feed_image":
             media_id = publish_feed_image(config.GRAPH_API_VERSION, config.IG_USER_ID,
                                            config.IG_ACCESS_TOKEN, item["image_url"], item["caption"])
