@@ -125,6 +125,19 @@ COMMENT_REPLIES_FA = [
     "ممنون از همراهیت {name}! کانال تلگرام رایگان‌مون رو از لینک تو بایو ببین، هر روز سیگنال XAUUSD می‌ذاریم.",
 ]
 
+# The channel's actual Telegram invite link. Comments (like captions) never
+# render links as tappable on Instagram -- only the bio link does -- but
+# spelling it out here still lets people copy it straight from the post,
+# which is what FIRST_COMMENT_EN/FA below are for.
+TELEGRAM_CHANNEL_URL = "https://t.me/+L8xT0WpBnJtjZjA0"
+
+# Auto-posted as the very first comment on every new Reel/feed post/carousel
+# (main.py run_publish(), via instagram_publish.create_comment) -- an
+# evergreen CTA with the channel link spelled out for easy copy-paste, not
+# rotated since there's nothing to keep fresh about a fixed link.
+FIRST_COMMENT_EN = f"\U0001F517 Free daily XAUUSD signals in our Telegram channel: {TELEGRAM_CHANNEL_URL}"
+FIRST_COMMENT_FA = f"\U0001F517 سیگنال‌های رایگان روزانه‌ی طلا تو کانال تلگرام‌مون: {TELEGRAM_CHANNEL_URL}"
+
 # Story cards are read in ~2 seconds each, so lines stay short -- but a
 # whole day's STORIES_PER_DAY slides come from ONE set here, not random
 # picks off a flat list, so the sequence reads as one connected thread

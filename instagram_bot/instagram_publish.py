@@ -153,6 +153,18 @@ def reply_to_comment(version: str, comment_id: str, access_token: str, message: 
     return resp.json()["id"]
 
 
+def create_comment(version: str, media_id: str, access_token: str, message: str) -> str:
+    """Post a fresh top-level comment on our own media -- used right after
+    publishing to drop the Telegram channel link as the first comment."""
+    resp = requests.post(
+        _graph_url(version, f"{media_id}/comments"),
+        data={"message": message, "access_token": access_token},
+        timeout=30,
+    )
+    _raise_for_graph_error(resp)
+    return resp.json()["id"]
+
+
 def _raise_for_graph_error(resp: requests.Response) -> None:
     if resp.status_code >= 400:
         raise PublishError(f"Graph API error {resp.status_code}: {resp.text}")

@@ -14,6 +14,10 @@
     generate run once a human has reviewed and approved it) and actually
     publishes each item to Instagram using the already-hosted assets. No
     regeneration, no new Pexels picks -- what was approved is what posts.
+    Right after each Reel/feed post/carousel (not Stories -- they can't
+    take comments), also drops the Telegram channel link as the first
+    comment (content_bank.FIRST_COMMENT_EN/FA, via
+    instagram_publish.create_comment).
 
 Run as: python main.py (from inside instagram_bot/).
 """
@@ -44,6 +48,8 @@ from content_bank import (
     CTAS_FA,
     DISCLAIMER,
     DISCLAIMER_FA,
+    FIRST_COMMENT_EN,
+    FIRST_COMMENT_FA,
     HOOKS,
     HOOKS_FA,
     STOCK_SEARCH_TERMS,
@@ -54,7 +60,13 @@ from content_bank import (
 )
 from github_host import upload_release_asset
 from image_composer import build_feed_card, build_story_card
-from instagram_publish import publish_carousel, publish_feed_image, publish_reel, publish_story
+from instagram_publish import (
+    create_comment,
+    publish_carousel,
+    publish_feed_image,
+    publish_reel,
+    publish_story,
+)
 from stock_media import download_video, find_unused_video
 from stock_photos import download_photo, find_unused_photo
 from video_composer import compose_story_video, compose_video
@@ -254,7 +266,7 @@ def run_generate() -> None:
     else:
         print(f"[{today}] No feed/carousel post scheduled today.")
 
-    manifest = {"date": today, "items": items}
+    manifest = {"date": today, "lang": lang, "items": items}
     manifest_path = os.path.join(WORKDIR, "manifest.json")
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
@@ -271,6 +283,8 @@ def run_publish() -> None:
     resp.raise_for_status()
     manifest = resp.json()
     today = manifest["date"]
+    lang = manifest.get("lang", "en")
+    first_comment = FIRST_COMMENT_FA if lang == "fa" else FIRST_COMMENT_EN
 
     st = state_mod.load()
 
@@ -292,9 +306,17 @@ def run_publish() -> None:
             raise ValueError(f"Unknown manifest item type: {kind}")
         print(f"[{today}] Published {kind}: {media_id}")
         # Stories can't take comments at all, so there's nothing for
-        # reply_comments.py to poll -- only track the other types.
+        # reply_comments.py to poll -- only track the other types. Same
+        # reason the Telegram-link first comment only goes on these three.
         if kind != "story":
             st["posts"].append({"date": today, "type": kind, "ig_media_id": media_id})
+            comment_id = create_comment(config.GRAPH_API_VERSION, media_id, config.IG_ACCESS_TOKEN,
+                                         first_comment)
+            # Mark our own comment as already-replied so reply_comments.py's
+            # scan of this media's comments (which returns everyone's,
+            # including ours) never treats it as a commenter to reply to.
+            st["replied_comment_ids"].append(comment_id)
+            print(f"[{today}] Posted first comment on {kind} {media_id}")
 
     state_mod.save(st)
 
