@@ -61,6 +61,7 @@ from content_bank import (
 from github_host import upload_release_asset
 from image_composer import build_feed_card, build_story_card
 from instagram_publish import (
+    PublishError,
     create_comment,
     publish_carousel,
     publish_feed_image,
@@ -310,13 +311,24 @@ def run_publish() -> None:
         # reason the Telegram-link first comment only goes on these three.
         if kind != "story":
             st["posts"].append({"date": today, "type": kind, "ig_media_id": media_id})
-            comment_id = create_comment(config.GRAPH_API_VERSION, media_id, config.IG_ACCESS_TOKEN,
-                                         first_comment)
-            # Mark our own comment as already-replied so reply_comments.py's
-            # scan of this media's comments (which returns everyone's,
-            # including ours) never treats it as a commenter to reply to.
-            st["replied_comment_ids"].append(comment_id)
-            print(f"[{today}] Posted first comment on {kind} {media_id}")
+            # Non-fatal: the app's current Graph API permissions may not
+            # (yet) include creating fresh top-level comments -- seen in
+            # production as "Graph API error 400: (#10) Application does
+            # not have permission for this action". That's a Meta App
+            # Review / permission-grant issue, not something retrying or
+            # code can fix, so don't let it block the rest of today's
+            # publish run over a nice-to-have.
+            try:
+                comment_id = create_comment(config.GRAPH_API_VERSION, media_id, config.IG_ACCESS_TOKEN,
+                                             first_comment)
+                # Mark our own comment as already-replied so
+                # reply_comments.py's scan of this media's comments (which
+                # returns everyone's, including ours) never treats it as a
+                # commenter to reply to.
+                st["replied_comment_ids"].append(comment_id)
+                print(f"[{today}] Posted first comment on {kind} {media_id}")
+            except PublishError as e:
+                print(f"[{today}] Could not post first comment on {kind} {media_id}: {e}")
 
     state_mod.save(st)
 
