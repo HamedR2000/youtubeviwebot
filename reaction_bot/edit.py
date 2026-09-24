@@ -9,24 +9,54 @@ from moviepy import ColorClip, CompositeVideoClip, ImageClip, VideoFileClip, con
 from PIL import Image, ImageDraw
 
 from config import config
-from ig_text_overlay import draw_wrapped_rtl, vazirmatn
+from ig_text_overlay import vazirmatn
 
 CARD_BG = (18, 18, 22)
+
+
+def _wrap_rtl_lines(draw: ImageDraw.ImageDraw, text: str, font, max_width_px: int) -> list[str]:
+    words = text.split()
+    lines, cur = [], ""
+    for w in words:
+        trial = (cur + " " + w).strip()
+        if draw.textlength(trial, font=font, direction="rtl", language="fa") <= max_width_px or not cur:
+            cur = trial
+        else:
+            lines.append(cur)
+            cur = w
+    if cur:
+        lines.append(cur)
+    return lines
 
 
 def _text_card(text: str, duration: float, width: int, height: int) -> ImageClip:
     """کارت رو دقیقاً هم‌اندازه‌ی خودِ ویدیوی مقصد می‌سازه -- وگرنه موقع
     اتصال (concatenate) چون اندازه‌ها یکی نیست، moviepy دور فریم کوچیک‌تر
-    حاشیه‌ی سیاه می‌ذاره (letterbox)."""
+    حاشیه‌ی سیاه می‌ذاره (letterbox).
+
+    برخلاف draw_wrapped_rtl (که هر خط رو به یه right_x ثابت می‌چسبونه، مناسب
+    زیرنویس روی عکس)، این‌جا هر خط رو خودش وسط صفحه سنتر می‌کنیم -- روی یه
+    کارت خالی و تک‌متنی، چسبیدن به حاشیه‌ی راست به‌جای وسط صفحه بد به چشم
+    میاد."""
     img = Image.new("RGB", (width, height), CARD_BG)
     draw = ImageDraw.Draw(img)
     font_size = max(28, int(height * 0.033))
     font = vazirmatn(font_size, "Bold")
     margin = int(width * 0.07)
-    draw_wrapped_rtl(
-        draw, text, font, width - margin, height // 2 - int(font_size * 2.3),
-        width - 2 * margin, fill=(255, 255, 255, 255), line_spacing=16,
-    )
+    max_width_px = width - 2 * margin
+
+    lines = _wrap_rtl_lines(draw, text, font, max_width_px)
+    line_heights = []
+    y = height // 2 - int(font_size * 2.3)
+    for line in lines:
+        bbox = draw.textbbox((0, 0), line, font=font, direction="rtl", language="fa")
+        line_heights.append(bbox[3] - bbox[1])
+    for line, line_h in zip(lines, line_heights):
+        line_w = draw.textlength(line, font=font, direction="rtl", language="fa")
+        x = (width - line_w) / 2
+        draw.text((x, y), line, font=font, fill=(255, 255, 255, 255), direction="rtl", language="fa")
+        y += line_h + 16
+
     path = os.path.join(config.outputs_dir, f"_card_{abs(hash(text))}.png")
     img.save(path)
     clip = ImageClip(path).with_duration(duration)
