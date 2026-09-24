@@ -34,7 +34,9 @@ class Config:
     YOUTUBE_TOKEN_FILE = _env(
         "YOUTUBE_TOKEN_FILE", os.path.join(os.path.dirname(__file__), "token.json")
     )
-    YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube.upload"
+    # "youtube" (نه فقط "youtube.upload") چون علاوه بر آپلود، برای تغییر
+    # بعدی privacyStatus یه ویدیو (مثلاً private -> public) هم لازمه.
+    YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube"
     # پیش‌فرض "private": آپلود یه Short یه اقدام عمومی و سخت‌برگشته، پس
     # پایپ‌لاین هیچ‌وقت به‌صورت پیش‌فرض مستقیم "public" منتشر نمی‌کنه --
     # برای تغییرش در هر اجرا صریحاً --privacy بده.
