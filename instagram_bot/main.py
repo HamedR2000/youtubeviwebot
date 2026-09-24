@@ -69,7 +69,6 @@ from instagram_publish import (
     publish_story,
 )
 from stock_media import download_video, find_unused_video
-from stock_photos import download_photo, find_unused_photo
 from video_composer import compose_story_video, compose_video
 
 BRAND_HANDLE = "@Goldhamedsignals"
@@ -163,16 +162,7 @@ def build_feed_image_item(today: str, st: dict, lang: str) -> dict:
     (theme,) = state_mod.next_rotating(THEME_ORDER, st, "feed_theme_cursor")
     print(f"[{today}] Feed post: theme={theme}")
 
-    raw_path = None
-    photo_info = None
-    if theme == "dark":
-        photo_info = find_unused_photo(
-            api_key=config.PEXELS_API_KEY,
-            search_terms=STOCK_SEARCH_TERMS,
-            used_ids=set(st["used_pexels_photo_ids"]),
-        )
-        raw_path = os.path.join(WORKDIR, f"feed_raw_{photo_info['id']}.jpg")
-        download_photo(photo_info["download_url"], raw_path)
+    photo_path = next_background(st) if theme == "dark" else None
 
     rtl = lang == "fa"
     hooks, tips, ctas, disclaimer = (HOOKS_FA, TIPS_FA, CTAS_FA, DISCLAIMER_FA) if rtl \
@@ -184,14 +174,11 @@ def build_feed_image_item(today: str, st: dict, lang: str) -> dict:
     (cta,) = state_mod.next_rotating(ctas, st, cta_cursor)
 
     output_path = os.path.join(WORKDIR, f"feed_{today}.jpg")
-    build_feed_card(raw_path, headline=hook, subtitle=tip, cta=cta,
+    build_feed_card(photo_path, headline=hook, subtitle=tip, cta=cta,
                      brand_handle=BRAND_HANDLE, output_path=output_path, theme=theme, rtl=rtl)
     caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st)
     image_url = _host(today, output_path)
 
-    if theme == "dark":
-        st["used_pexels_photo_ids"].append(photo_info["id"])
-        os.remove(raw_path)
     os.remove(output_path)
     return {"type": "feed_image", "image_url": image_url, "caption": caption}
 

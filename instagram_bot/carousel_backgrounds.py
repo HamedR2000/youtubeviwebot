@@ -53,6 +53,27 @@ BACKGROUNDS = [
     "sergeitokmakov-stock-trading-6525081_1920.jpg",
     "pexels-thales13-38343508.jpg",
     "theinvestorpost-man-5782415_1920.jpg",
+    # Batch vetted 2026-09-24: free stock photos/illustrations from
+    # Pixabay/Pexels/Unsplash the account owner sourced directly. Screened
+    # the same way as the rest of this pool -- the crypto-exchange
+    # screenshots (Binance, BitMEX, Bitcoin/CoinMarketCap price charts,
+    # ADA/USDT, Chiliz) in that batch were left out as off-topic/risky and
+    # are not in this list.
+    "trader-tablet-annotations.jpg",
+    "candlestick-macro-1.jpg",
+    "sunglasses-chart-reflection.jpg",
+    "candlestick-green-uptrend.jpg",
+    "multi-monitor-desk-setup.jpg",
+    "stock-indices-dashboard.jpg",
+    "candlestick-macro-2.jpg",
+    "candlestick-macro-3.jpg",
+    "candlestick-moving-averages.jpg",
+    "phone-chart-dollar-bill.jpg",
+    "businessman-tablet-fintech.jpg",
+    "hand-touch-data-wall.jpg",
+    "hand-keyboard-chart-overlay.jpg",
+    "running-businessman-chart-illustration.jpg",
+    "abstract-candlestick-digits.jpg",
 ]
 
 
