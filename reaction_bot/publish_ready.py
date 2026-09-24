@@ -16,7 +16,7 @@ from moviepy import VideoFileClip
 
 from branding import add_subscribe_banner
 from config import config
-from hashtags import ensure_hashtags
+from hashtags import CATEGORY_POOLS, ensure_hashtags
 from titles import pick_title
 from youtube_upload import upload_video
 
@@ -29,6 +29,7 @@ def main() -> None:
     parser.add_argument("--title", help="عنوان ویدیوی یوتیوب (اختیاری -- بدون این، از titles.py یه عنوان عمومی انتخاب می‌شه)")
     parser.add_argument("--description", default="", help="توضیحات ویدیوی یوتیوب")
     parser.add_argument("--tags", default="", help="تگ‌های یوتیوب، با کاما جدا شده")
+    parser.add_argument("--category", choices=list(CATEGORY_POOLS), help="ژانر ویدیو (اختیاری) -- چندتا هشتگ مرتبط‌تر هم به توضیحات اضافه می‌کنه")
     parser.add_argument("--no-banner", action="store_true", help="نوار سابسکرایب/لایک اضافه نشه")
     parser.add_argument("--approve", action="store_true", help="تأیید نهایی؛ بدون این فلگ فقط اطلاعات ویدیو رو چاپ می‌کنه")
     parser.add_argument("--upload", action="store_true", help="آپلود به یوتیوب")
@@ -69,7 +70,7 @@ def main() -> None:
     title = args.title or pick_title()
     print(f"عنوان نهایی: {title}")
 
-    description = ensure_hashtags(args.description)
+    description = ensure_hashtags(args.description, category=args.category)
     tags = [t.strip() for t in args.tags.split(",") if t.strip()]
 
     upload_video(
