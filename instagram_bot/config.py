@@ -30,5 +30,13 @@ class Config:
 
     GRAPH_API_VERSION = os.environ.get("GRAPH_API_VERSION", "v21.0")
 
+    # YouTube Shorts cross-post (optional) -- see README.md "YouTube Shorts
+    # setup". Plain (non-required) attributes, not _require()'d properties,
+    # so the pipeline keeps working IG-only until these are set: main.py
+    # checks YOUTUBE_CLIENT_ID before attempting a Shorts upload at all.
+    YOUTUBE_CLIENT_ID = os.environ.get("YOUTUBE_CLIENT_ID")
+    YOUTUBE_CLIENT_SECRET = os.environ.get("YOUTUBE_CLIENT_SECRET")
+    YOUTUBE_REFRESH_TOKEN = os.environ.get("YOUTUBE_REFRESH_TOKEN")
+
 
 config = Config()

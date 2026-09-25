@@ -17,7 +17,10 @@
     Right after each Reel/feed post/carousel (not Stories -- they can't
     take comments), also drops the Telegram channel link as the first
     comment (content_bank.FIRST_COMMENT_EN/FA, via
-    instagram_publish.create_comment).
+    instagram_publish.create_comment). Also cross-posts the Reel to a
+    dedicated YouTube Shorts channel (youtube_publish.upload_short) once
+    config.YOUTUBE_CLIENT_ID is set -- see README.md "YouTube Shorts
+    setup"; a no-op until then.
 
 Run as: python main.py (from inside instagram_bot/).
 """
@@ -70,6 +73,7 @@ from instagram_publish import (
 )
 from stock_media import download_video, find_unused_video
 from video_composer import compose_story_video, compose_video
+from youtube_publish import YouTubePublishError, get_access_token, upload_short
 
 BRAND_HANDLE = "@Goldhamedsignals"
 MUSIC_DIR = os.path.join(os.path.dirname(__file__), "music")
@@ -293,6 +297,27 @@ def run_publish() -> None:
         else:
             raise ValueError(f"Unknown manifest item type: {kind}")
         print(f"[{today}] Published {kind}: {media_id}")
+
+        # Cross-post the Reel to the dedicated YouTube Shorts channel too
+        # -- optional (config.YOUTUBE_CLIENT_ID is None until
+        # youtube_auth_setup.py has been run and the secrets added), and
+        # non-fatal like the first-comment step below: a YouTube hiccup
+        # should never block the rest of today's Instagram publish run.
+        if kind == "reel" and config.YOUTUBE_CLIENT_ID:
+            reel_path = os.path.join(WORKDIR, f"reel_{today}_youtube.mp4")
+            try:
+                download_video(item["video_url"], reel_path)
+                access_token = get_access_token(config.YOUTUBE_CLIENT_ID, config.YOUTUBE_CLIENT_SECRET,
+                                                 config.YOUTUBE_REFRESH_TOKEN)
+                title = item["caption"].splitlines()[0].strip() + " #Shorts"
+                video_id = upload_short(access_token, reel_path, title=title, description=item["caption"])
+                print(f"[{today}] Uploaded YouTube Short: https://youtube.com/shorts/{video_id}")
+            except (YouTubePublishError, requests.RequestException, OSError) as e:
+                print(f"[{today}] Could not upload YouTube Short: {e}")
+            finally:
+                if os.path.exists(reel_path):
+                    os.remove(reel_path)
+
         # Stories can't take comments at all, so there's nothing for
         # reply_comments.py to poll -- only track the other types. Same
         # reason the Telegram-link first comment only goes on these three.
