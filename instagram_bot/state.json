@@ -15,7 +15,8 @@
     8480680,
     7579948,
     5716233,
-    7679396
+    7679396,
+    37615808
   ],
   "used_pexels_photo_ids": [
     6770770,
@@ -27,12 +28,12 @@
     7948070,
     17977098
   ],
-  "hashtag_cursor": 10,
-  "hook_cursor": 12,
-  "tip_cursor": 12,
-  "cta_cursor": 0,
+  "hashtag_cursor": 20,
+  "hook_cursor": 13,
+  "tip_cursor": 13,
+  "cta_cursor": 1,
   "story_line_cursor": 22,
-  "carousel_topic_cursor": 4,
+  "carousel_topic_cursor": 5,
   "posts": [
     {
       "date": "2026-09-10",
@@ -145,15 +146,15 @@
     "18089806388286558",
     "17909131731508622"
   ],
-  "carousel_bg_cursor": 24,
+  "carousel_bg_cursor": 26,
   "story_line_fa_cursor": 20,
-  "carousel_theme_cursor": 1,
-  "story_theme_cursor": 1,
+  "carousel_theme_cursor": 0,
+  "story_theme_cursor": 0,
   "feed_theme_cursor": 0,
   "hook_fa_cursor": 7,
   "tip_fa_cursor": 7,
   "cta_fa_cursor": 7,
   "carousel_topic_fa_cursor": 0,
-  "story_set_cursor": 3,
+  "story_set_cursor": 4,
   "story_set_fa_cursor": 5
 }
