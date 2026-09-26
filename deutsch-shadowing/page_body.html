@@ -1,0 +1,208 @@
+<div class="wrap" dir="rtl">
+  <header>
+    <div class="eyebrow">Uni Sicher · Wortschatz B2/C1</div>
+    <h1>تمرین روزانه‌ی Shadowing</h1>
+    <div class="nav">
+      <button class="btn" id="prev" aria-label="جلسه‌ی قبل">→ قبلی</button>
+      <div class="label"><b id="sessTitle"></b><span id="sessWhen"></span></div>
+      <button class="btn" id="next" aria-label="جلسه‌ی بعد">بعدی ←</button>
+      <button class="btn" id="nowBtn">جلسه‌ی الان</button>
+    </div>
+    <div><span class="chip" id="topic"></span></div>
+  </header>
+
+  <div id="ttsWarn" class="warn" hidden>فایل صوتی این جلسه پخش نشد. اینترنت رو چک کن و دوباره روی پخش بزن. اگه باز هم پخش نشد، لینک رو توی Chrome باز کن.</div>
+
+  <div class="controls" id="controls">
+    <label>سرعت
+      <span class="seg" id="rateSeg">
+        <button type="button" data-v="0.7">0.7×</button>
+        <button type="button" data-v="0.85">0.85×</button>
+        <button type="button" data-v="1">1×</button>
+      </span>
+    </label>
+    <label>تکرار
+      <span class="seg" id="repSeg">
+        <button type="button" data-v="1">1</button>
+        <button type="button" data-v="2">2</button>
+        <button type="button" data-v="3">3</button>
+      </span>
+    </label>
+    <button type="button" class="btn" id="hideBtn" aria-pressed="false">مخفی کردن متن</button>
+  </div>
+
+  <section>
+    <h2>۵ جمله برای Shadowing <small>بشنو، هم‌زمان تکرار کن</small></h2>
+    <ol class="steps">
+      <li>اول با متن مخفی فقط گوش بده.</li>
+      <li>بعد متن رو ببین و هم‌زمان با صدا بلند تکرار کن (سرعت ۰.۸۵).</li>
+      <li>در آخر با سرعت ۱ بدون نگاه کردن به متن تکرار کن.</li>
+    </ol>
+    <div class="done-row"><button type="button" class="btn primary" id="playAll">پخش همه‌ی جمله‌ها</button><button type="button" class="btn" id="stopBtn">توقف</button></div>
+    <div id="sents" style="display:flex;flex-direction:column;gap:10px"></div>
+  </section>
+
+  <section>
+    <h2>۱۰ کلمه <small>معنی رو بخون و با هر کلمه یه جمله‌ی خودت بساز</small></h2>
+    <div class="words" id="words"></div>
+    <p class="note">جمله‌هایی که ساختی رو توی چت بفرست تا اصلاحشون کنم.</p>
+  </section>
+
+  <div class="done-row">
+    <button type="button" class="btn" id="doneBtn" aria-pressed="false">این جلسه رو تموم کردم</button>
+    <span class="note" id="doneCount"></span>
+  </div>
+</div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(function(){
+  var S = JSON.parse(document.getElementById('data').textContent);
+  var SLOTS = [9, 14, 20];
+  var START = Date.UTC(2026, 8, 26); // day 0: first session is the 20:00 slot
+  var FIRST_SLOT = 2;
+  var fa = function(n){ return Number(n).toLocaleString('fa-IR'); };
+  var store = {
+    get: function(k, d){ try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+    set: function(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  };
+
+  function berlinNow(){
+    var p = {};
+    new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/Berlin', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', hour12:false})
+      .formatToParts(new Date()).forEach(function(x){ p[x.type] = x.value; });
+    return {day: Math.round((Date.UTC(+p.year, +p.month - 1, +p.day) - START) / 864e5), hour: +p.hour % 24};
+  }
+  function currentIndex(){
+    var b = berlinNow(), slot = -1;
+    SLOTS.forEach(function(h, i){ if (b.hour >= h) slot = i; });
+    var idx = b.day * 3 + slot - FIRST_SLOT;
+    return Math.max(0, Math.min(S.length - 1, idx));
+  }
+  function whenOf(i){
+    var k = i + FIRST_SLOT, day = Math.floor(k / 3), slot = k % 3;
+    var d = new Date(START + day * 864e5);
+    var ds = d.toLocaleDateString('fa-IR', {timeZone:'UTC', weekday:'long', day:'numeric', month:'long'});
+    return ds + ' · ساعت ' + fa(SLOTS[slot]) + ':۰۰ (وقت آلمان)';
+  }
+
+  var PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 2.5v11l9-5.5z"/></svg>';
+  var cur = store.get('us_idx_manual', null);
+  var autoIdx = currentIndex();
+  var lastAuto = store.get('us_last_auto', null);
+  if (cur === null || lastAuto !== autoIdx) { cur = autoIdx; store.set('us_last_auto', autoIdx); }
+  var rate = store.get('us_rate', 0.85), reps = store.get('us_reps', 2);
+  var done = store.get('us_done', {});
+
+  var audio = new Audio(); audio.preload = 'auto';
+  try { audio.preservesPitch = true; } catch(e){}
+  var loadedIdx = -1;
+  function ensureSrc(){
+    if (loadedIdx !== cur) { audio.src = 'audio/s' + String(cur + 1).padStart(3, '0') + '.mp3'; loadedIdx = cur; }
+  }
+  function segOf(kind, k){
+    var s = S[cur];
+    if (kind === 'x') { var j = s.st.indexOf(s.w[k].x); if (j >= 0) { kind = 'st'; k = j; } }
+    var m = (s.m || []).filter(function(a){ return a[0] === kind && a[1] === k; })[0];
+    return m ? [m[2], m[3]] : null;
+  }
+  audio.onerror = function(){ document.getElementById('ttsWarn').hidden = false; };
+
+  var queue = [], speakingEl = null, token = 0, raf = 0;
+  function clearSpeaking(){ if (speakingEl) speakingEl.classList.remove('speaking'); speakingEl = null; }
+  function stop(){ token++; queue = []; cancelAnimationFrame(raf); try { audio.pause(); } catch(e){} clearSpeaking(); }
+  function speakList(items){
+    stop(); ensureSrc(); var my = token; queue = items.filter(function(it){ return it.seg; });
+    (function nextItem(){
+      if (my !== token) return;
+      var it = queue.shift(); clearSpeaking();
+      if (!it) return;
+      if (it.el) { speakingEl = it.el; it.el.classList.add('speaking'); }
+      var r = it.rate || rate;
+      function start(){
+        audio.currentTime = it.seg[0];
+        audio.playbackRate = r;
+        var p = audio.play();
+        if (p && p.catch) p.catch(function(){ document.getElementById('ttsWarn').hidden = false; });
+        (function watch(){
+          if (my !== token) return;
+          if (audio.currentTime >= it.seg[1] || audio.ended) {
+            audio.pause();
+            setTimeout(nextItem, (it.pause || 0));
+            return;
+          }
+          raf = requestAnimationFrame(watch);
+        })();
+      }
+      if (audio.readyState >= 1) { start(); return; }
+      var p0 = audio.play();
+      if (p0 && p0.then) p0.then(start, function(){ document.getElementById('ttsWarn').hidden = false; clearSpeaking(); });
+      else audio.addEventListener('loadedmetadata', start, {once: true});
+    })();
+  }
+  function repeated(kind, k, el){
+    var seg = segOf(kind, k), out = [];
+    if (!seg) return out;
+    for (var r = 0; r < reps; r++) out.push({seg: seg, el: el, pause: r < reps - 1 ? Math.max(1200, (seg[1] - seg[0]) * 1000 / rate + 400) : 0});
+    return out;
+  }
+
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function render(){
+    var s = S[cur]; ensureSrc();
+    document.getElementById('sessTitle').textContent = 'جلسه‌ی ' + fa(cur + 1) + ' از ' + fa(S.length);
+    document.getElementById('sessWhen').textContent = whenOf(cur) + (cur === autoIdx ? ' · جلسه‌ی الان' : '');
+    document.getElementById('topic').textContent = s.topic;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('next').disabled = cur === S.length - 1;
+    var sents = document.getElementById('sents'); sents.innerHTML = '';
+    s.st.forEach(function(t, i){
+      var d = document.createElement('div'); d.className = 'sent';
+      d.innerHTML = '<span class="num">' + (i + 1) + '</span><div class="de" lang="de">' + esc(t) + '</div><button type="button" class="play" aria-label="پخش جمله ' + (i + 1) + '">' + PLAY + '</button>';
+      d.querySelector('.play').onclick = function(){ speakList(repeated('st', i, d)); };
+      sents.appendChild(d);
+    });
+    var words = document.getElementById('words'); words.innerHTML = '';
+    s.w.forEach(function(w, wi){
+      var d = document.createElement('div'); d.className = 'word';
+      var meaning = w.f ? '<div class="fa">' + esc(w.f) + '</div>' : '';
+      var syn = w.s ? '<div class="syn"><span class="tag">' + (w.f ? 'مترادف:' : 'توضیح آلمانی:') + '</span><span class="de" lang="de">' + esc(w.s) + '</span></div>' : '';
+      var ex = w.x ? '<div class="ex"><span class="de" lang="de">' + esc(w.x) + '</span><button type="button" class="linkbtn" data-ex>▶ مثال</button></div>' : '';
+      d.innerHTML = '<button type="button" class="play sm" aria-label="تلفظ ' + esc(w.d) + '">' + PLAY + '</button><div class="de head" lang="de">' + esc(w.d) + '</div>' + meaning + syn + ex;
+      d.querySelector('.play').onclick = function(){ var sg = segOf('w', wi); speakList([{seg: sg, el: d, rate: Math.min(rate, 0.85), pause: 700}, {seg: sg, el: d, rate: Math.min(rate, 0.85)}]); };
+      var eb = d.querySelector('[data-ex]'); if (eb) eb.onclick = function(){ speakList(repeated('x', wi, d)); };
+      words.appendChild(d);
+    });
+    var db = document.getElementById('doneBtn'); db.setAttribute('aria-pressed', done[cur] ? 'true' : 'false');
+    db.textContent = done[cur] ? 'تموم شد ✓' : 'این جلسه رو تموم کردم';
+    document.getElementById('doneCount').textContent = fa(Object.keys(done).length) + ' جلسه از ' + fa(S.length) + ' تموم شده';
+  }
+  function go(i){ stop(); document.getElementById('ttsWarn').hidden = true; cur = Math.max(0, Math.min(S.length - 1, i)); store.set('us_idx_manual', cur); render(); window.scrollTo({top:0}); }
+
+  function seg(id, val, cb){
+    var el = document.getElementById(id);
+    function paint(){ [].forEach.call(el.children, function(b){ b.setAttribute('aria-pressed', String(+b.dataset.v === val)); }); }
+    [].forEach.call(el.children, function(b){ b.onclick = function(){ val = +b.dataset.v; cb(val); paint(); }; });
+    paint();
+  }
+  seg('rateSeg', rate, function(v){ rate = v; store.set('us_rate', v); });
+  seg('repSeg', reps, function(v){ reps = v; store.set('us_reps', v); });
+
+  document.getElementById('prev').onclick = function(){ go(cur - 1); };
+  document.getElementById('next').onclick = function(){ go(cur + 1); };
+  document.getElementById('nowBtn').onclick = function(){ autoIdx = currentIndex(); go(autoIdx); };
+  document.getElementById('stopBtn').onclick = stop;
+  document.getElementById('playAll').onclick = function(){
+    var items = []; [].forEach.call(document.querySelectorAll('.sent'), function(el, i){ items = items.concat(repeated('st', i, el)); });
+    speakList(items);
+  };
+  var hidden = store.get('us_hide', false), hb = document.getElementById('hideBtn');
+  function paintHide(){ document.body.classList.toggle('hidden-text', hidden); hb.setAttribute('aria-pressed', String(hidden)); hb.textContent = hidden ? 'نمایش متن' : 'مخفی کردن متن'; }
+  hb.onclick = function(){ hidden = !hidden; store.set('us_hide', hidden); paintHide(); };
+  paintHide();
+  document.getElementById('doneBtn').onclick = function(){ if (done[cur]) delete done[cur]; else done[cur] = 1; store.set('us_done', done); render(); };
+  render();
+})();
+</script>
