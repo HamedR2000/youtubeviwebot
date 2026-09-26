@@ -84,11 +84,11 @@
   }
 
   /* پرتره‌ی جایگزین (سیلوئت) */
-  function portrait(pal, h = 520) {
+  function portrait(pal, h = 520, label = 'جای عکس پرتره‌ی استاد') {
     const u = ++UID, W = 400; const [bg, fg, acc] = pal;
     return open(W, h) + `<defs><radialGradient id="pt${u}" cx=".5" cy=".35" r=".8"><stop offset="0" stop-color="${acc}"/><stop offset="1" stop-color="${bg}"/></radialGradient></defs>
       <rect width="${W}" height="${h}" fill="url(#pt${u})"/><circle cx="200" cy="${h * .36}" r="72" fill="${fg}"/><path d="M60,${h} C70,${h * .66} 140,${h * .56} 200,${h * .56} S330,${h * .66} 340,${h}Z" fill="${fg}"/>
-      <text x="200" y="${h - 30}" font-family="Vazirmatn,sans-serif" font-size="14" fill="${acc}" text-anchor="middle" opacity=".9">جای عکس پرتره‌ی استاد</text></svg>`;
+      <text x="200" y="${h - 30}" font-family="Vazirmatn,sans-serif" font-size="14" fill="${acc}" text-anchor="middle" opacity=".9">${label}</text></svg>`;
   }
 
   /* گالری تمام‌صفحه: بزرگ‌نمایی، کیبورد، کشیدن انگشت، شمارنده */
@@ -99,7 +99,7 @@
       <div class="lb-stage"><div class="lb-art"></div></div><div class="lb-cap"><div><h3></h3><p></p></div><span class="lb-c"></span></div><div class="lb-hint">برای بزرگ‌نمایی روی اثر بزنید</div>`;
     document.body.appendChild(el);
     const art = el.querySelector('.lb-art'), stage = el.querySelector('.lb-stage');
-    let items = [], i = 0, tx = 0;
+    let items = [], i = 0, tx = 0; const rtl = () => document.documentElement.dir !== 'ltr';
     function fit() {
       const svg = art.querySelector('svg'); if (!svg) return;
       const vb = svg.viewBox.baseVal, ar = vb.width / vb.height;
@@ -112,7 +112,7 @@
       setTimeout(() => {
         art.innerHTML = it.html; fit();
         el.querySelector('h3').textContent = it.title; el.querySelector('p').textContent = it.meta || '';
-        el.querySelector('.lb-c').textContent = `${(i + 1).toLocaleString('fa')} / ${items.length.toLocaleString('fa')}`;
+        const L = Art.locale || 'fa'; el.querySelector('.lb-c').textContent = `${(i + 1).toLocaleString(L)} / ${items.length.toLocaleString(L)}`;
         art.style.opacity = 1;
       }, 160);
     }
@@ -133,12 +133,18 @@
     });
     addEventListener('keydown', e => {
       if (!el.classList.contains('on')) return;
-      if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') show(i + 1); if (e.key === 'ArrowRight') show(i - 1);
+      const k = rtl() ? 1 : -1; if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') show(i + k); if (e.key === 'ArrowRight') show(i - k);
     });
     el.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
-    el.addEventListener('touchend', e => { const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50 && !art.classList.contains('zoom')) show(d > 0 ? i + 1 : i - 1); });
+    el.addEventListener('touchend', e => { const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50 && !art.classList.contains('zoom')) show((d > 0) === rtl() ? i + 1 : i - 1); });
     addEventListener('resize', fit);
-    return (list, n) => { items = list; el.classList.add('on'); document.body.style.overflow = 'hidden'; show(n); };
+    return (list, n) => { items = list;
+      const T = Art.lbText || {}; const r = rtl();
+      el.querySelector('.lb-hint').textContent = T.hint || 'برای بزرگ‌نمایی روی اثر بزنید';
+      el.querySelector('.lb-x').setAttribute('aria-label', T.close || 'بستن');
+      const pv = el.querySelector('.lb-prev'), nx = el.querySelector('.lb-next');
+      pv.setAttribute('aria-label', T.prev || 'قبلی'); nx.setAttribute('aria-label', T.next || 'بعدی');
+      pv.textContent = r ? '›' : '‹'; nx.textContent = r ? '‹' : '›'; el.classList.add('on'); document.body.style.overflow = 'hidden'; show(n); };
   }
 
   /* ظاهرشدن تدریجی هنگام اسکرول */
