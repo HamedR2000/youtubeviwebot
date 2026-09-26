@@ -16,7 +16,8 @@
     7579948,
     5716233,
     7679396,
-    37615808
+    37615808,
+    38860073
   ],
   "used_pexels_photo_ids": [
     6770770,
@@ -28,7 +29,7 @@
     7948070,
     17977098
   ],
-  "hashtag_cursor": 20,
+  "hashtag_cursor": 10,
   "hook_cursor": 13,
   "tip_cursor": 13,
   "cta_cursor": 1,
@@ -157,15 +158,15 @@
     "18102911462093221",
     "17930419089408953"
   ],
-  "carousel_bg_cursor": 29,
+  "carousel_bg_cursor": 32,
   "story_line_fa_cursor": 20,
   "carousel_theme_cursor": 0,
-  "story_theme_cursor": 0,
+  "story_theme_cursor": 1,
   "feed_theme_cursor": 0,
-  "hook_fa_cursor": 7,
-  "tip_fa_cursor": 7,
-  "cta_fa_cursor": 7,
+  "hook_fa_cursor": 8,
+  "tip_fa_cursor": 8,
+  "cta_fa_cursor": 8,
   "carousel_topic_fa_cursor": 0,
   "story_set_cursor": 4,
-  "story_set_fa_cursor": 5
+  "story_set_fa_cursor": 6
 }
