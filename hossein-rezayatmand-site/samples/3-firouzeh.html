@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نمونه ۳ · فیروزه — استاد حسین رضایتمند</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;300;400;600;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--lapis:#0b2240;--lapis2:#0f2e54;--deep:#071729;--tq:#35c2c1;--tq2:#8fe3dc;--gold:#d8ae5a;--cream:#f5ecd9;--muted:#9fb0c4;--glass:rgba(255,255,255,.06);--gl:rgba(143,227,220,.18);--lb-bg:rgba(7,23,41,.96);--lb-accent:#35c2c1}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--deep);color:var(--cream);font-family:Vazirmatn,sans-serif;font-weight:300;line-height:1.95;overflow-x:hidden}
+a{color:inherit;text-decoration:none}.nast{font-family:'Noto Nastaliq Urdu',serif}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+.girih{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%238fe3dc' stroke-opacity='.09' stroke-width='1'%3E%3Cpath d='M40 4 50 30 76 40 50 50 40 76 30 50 4 40 30 30Z'/%3E%3Crect x='22' y='22' width='36' height='36' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='8'/%3E%3Cpath d='M0 0 22 22M80 0 58 22M0 80 22 58M80 80 58 58'/%3E%3C/g%3E%3C/svg%3E")}
+.demo{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:950;background:rgba(7,23,41,.85);backdrop-filter:blur(10px);border:1px solid var(--gl);border-radius:40px;padding:6px 8px;display:flex;gap:4px;font-size:.78rem;white-space:nowrap}
+.demo a{padding:5px 12px;border-radius:30px;color:var(--muted)}.demo a.on{background:var(--tq);color:var(--deep)}
+
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(11,34,64,.55);backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--gl);border-radius:60px;padding:8px 10px 8px 22px;display:flex;align-items:center;gap:6px;width:max-content;max-width:calc(100% - 24px)}
+nav .logo{font-size:1.15rem;color:var(--gold);margin-left:14px;line-height:1}
+nav .l{display:flex;gap:2px;position:relative}nav .l a{padding:7px 14px;border-radius:30px;font-size:.86rem;color:var(--muted);position:relative;z-index:1;transition:color .3s}
+nav .l a.on{color:var(--deep)}.pill{position:absolute;top:0;height:100%;background:var(--tq);border-radius:30px;transition:all .5s cubic-bezier(.2,.8,.2,1);z-index:0}
+.mb{display:none;background:none;border:0;color:var(--cream);font-size:1.4rem;cursor:pointer}
+@media (max-width:960px){nav{width:calc(100% - 24px);justify-content:space-between}.mb{display:block}nav .l{position:absolute;top:calc(100% + 10px);right:0;left:0;flex-direction:column;background:rgba(7,23,41,.97);border:1px solid var(--gl);border-radius:24px;padding:12px;display:none}nav.open .l{display:flex}.pill{display:none}nav .l a.on{color:var(--tq)}}
+
+/* قهرمان */
+.hero{min-height:100svh;position:relative;display:grid;place-items:center;overflow:hidden;text-align:center;padding:120px 16px 80px}
+.aur{position:absolute;inset:-20%;background:radial-gradient(40% 35% at 30% 35%,rgba(53,194,193,.35),transparent 70%),radial-gradient(35% 30% at 72% 60%,rgba(216,174,90,.22),transparent 70%),radial-gradient(45% 40% at 55% 20%,rgba(40,90,170,.45),transparent 70%);filter:blur(30px);animation:aur 18s ease-in-out infinite alternate}
+@keyframes aur{50%{transform:translate(4%,-3%) rotate(8deg) scale(1.08)}100%{transform:translate(-4%,3%) rotate(-6deg)}}
+.star{position:absolute;width:min(92vw,720px);aspect-ratio:1;opacity:.55;animation:spin 90s linear infinite}
+.star2{width:min(70vw,520px);animation-direction:reverse;animation-duration:60s;opacity:.4}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-in{position:relative;z-index:2}
+.hero h1{font-size:clamp(3rem,9.5vw,7rem);line-height:2;margin:0;color:var(--cream);text-shadow:0 0 60px rgba(53,194,193,.35)}
+.hero .t{color:var(--tq2);letter-spacing:.25em;font-size:.82rem}
+.chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.chips a{border:1px solid var(--gl);background:var(--glass);backdrop-filter:blur(6px);padding:8px 20px;border-radius:40px;font-size:.92rem;transition:.35s}
+.chips a:hover{background:var(--tq);color:var(--deep);border-color:var(--tq);transform:translateY(-3px)}
+
+section{padding:120px 0;position:relative;overflow-x:clip}
+.sh{text-align:center;margin-bottom:60px}
+.sh .o{display:inline-flex;align-items:center;gap:12px;color:var(--gold);font-size:.85rem}
+.sh .o::before,.sh .o::after{content:"✦";font-size:.7rem;color:var(--tq)}
+h2{font-size:clamp(2.2rem,5vw,3.6rem);margin:6px 0 0;line-height:1.6;font-weight:600}
+.sh p{color:var(--muted);max-width:620px;margin:10px auto 0}
+.rv{opacity:0;transform:translateY(40px) scale(.98);transition:1s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
+
+/* قاب محرابی */
+.arch{border-radius:999px 999px 18px 18px;overflow:hidden;position:relative}
+.arch::after{content:"";position:absolute;inset:8px;border-radius:999px 999px 12px 12px;border:1px solid rgba(216,174,90,.55);pointer-events:none}
+
+/* زندگی‌نامه */
+.bio{display:grid;grid-template-columns:4fr 7fr;gap:70px;align-items:center}
+.bio .arch svg{display:block;width:100%;height:auto}
+.tabs{display:flex;gap:6px;background:var(--glass);border:1px solid var(--gl);padding:5px;border-radius:40px;width:max-content;max-width:100%;overflow-x:auto;margin-bottom:26px}
+.tabs button{background:none;border:0;color:var(--muted);font:inherit;font-size:.9rem;padding:8px 18px;border-radius:30px;cursor:pointer;white-space:nowrap;transition:.3s}
+.tabs button.on{background:var(--tq);color:var(--deep)}
+.pane{display:none;animation:pin .6s ease}.pane.on{display:block}@keyframes pin{from{opacity:0;transform:translateY(12px)}}
+.pane li{margin-bottom:8px}.pane b{color:var(--gold);font-weight:600}
+@media (max-width:900px){.bio{grid-template-columns:1fr;gap:40px}.bio .arch{max-width:340px;margin:0 auto}}
+
+/* سبک: کارت‌های سه‌بعدی */
+.style{background:linear-gradient(var(--deep),var(--lapis) 50%,var(--deep))}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;perspective:1000px}
+.card{background:linear-gradient(160deg,rgba(143,227,220,.1),rgba(255,255,255,.02));border:1px solid var(--gl);border-radius:22px;padding:34px 26px;transform-style:preserve-3d;transition:transform .15s,box-shadow .4s;position:relative;overflow:hidden}
+.card:hover{box-shadow:0 30px 60px rgba(0,0,0,.4)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(143,227,220,.18),transparent 45%);opacity:0;transition:opacity .4s}.card:hover::before{opacity:1}
+.card svg{width:54px;height:54px;transform:translateZ(40px)}.card h3{margin:16px 0 6px;transform:translateZ(30px)}.card p{color:var(--muted);margin:0;font-size:.92rem;transform:translateZ(20px)}
+@media (max-width:900px){.cards{grid-template-columns:1fr 1fr}}@media (max-width:520px){.cards{grid-template-columns:1fr}}
+
+/* چرخ‌فلک برگزیده */
+.cf{position:relative;height:min(62vh,520px);perspective:1400px;margin-bottom:30px;touch-action:pan-y}
+.cf figure{position:absolute;top:0;left:50%;width:min(62vw,340px);margin:0;transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s,filter .8s;cursor:pointer}
+.cf figure svg{display:block;width:100%;height:auto}.cf figure .arch{box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.cf-nav{display:flex;justify-content:center;gap:12px;align-items:center}
+.cf-nav button{width:50px;height:50px;border-radius:50%;border:1px solid var(--gl);background:var(--glass);color:var(--cream);font-size:1.3rem;cursor:pointer;transition:.3s}.cf-nav button:hover{background:var(--tq);color:var(--deep)}
+.cf-cap{min-width:220px;text-align:center}.cf-cap b{display:block;font-weight:600}.cf-cap small{color:var(--muted)}
+
+/* گالری فیلتردار */
+.filters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:70px 0 36px}
+.filters button{background:var(--glass);border:1px solid var(--gl);color:var(--cream);font:inherit;padding:9px 22px;border-radius:40px;cursor:pointer;transition:.3s;font-size:.92rem}
+.filters button sup{color:var(--tq2);margin-right:4px}.filters button.on{background:var(--gold);color:var(--deep);border-color:var(--gold)}.filters button.on sup{color:var(--deep)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px}
+.it{cursor:pointer;transition:opacity .5s,transform .5s;perspective:800px}
+.it.hide{display:none}.it.fade{opacity:0;transform:scale(.9)}
+.it .arch{transition:transform .2s;transform-style:preserve-3d}.it svg{display:block;width:100%;height:auto;aspect-ratio:4/5}
+.it .shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.25) 50%,transparent 65%);background-size:250% 100%;background-position:120% 0;transition:background-position .9s;pointer-events:none;z-index:2}
+.it:hover .shine{background-position:-40% 0}
+.it h4{margin:14px 0 0;font-weight:600;font-size:1rem;display:flex;justify-content:space-between;gap:10px}.it h4 small{color:var(--tq2);font-weight:300;font-size:.78rem}.it p{margin:0;color:var(--muted);font-size:.85rem}
+
+/* نوشته‌ها + کتاب ورق‌خور */
+.books{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.bk{background:var(--glass);border:1px solid var(--gl);border-radius:22px;padding:22px;text-align:center;transition:.4s;cursor:pointer}
+.bk:hover{transform:translateY(-8px);border-color:var(--tq)}
+.bk .cv{aspect-ratio:2/3;border-radius:4px 10px 10px 4px;display:flex;flex-direction:column;justify-content:space-between;padding:18px 12px;box-shadow:inset 8px 0 14px rgba(0,0,0,.35),0 16px 30px rgba(0,0,0,.35);position:relative;overflow:hidden}
+.bk .cv::before{content:"";position:absolute;inset:0;opacity:.6}.bk .cv *{position:relative}
+.bk .cv .nast{font-size:1.25rem;line-height:2.2;color:var(--gold)}.bk .cv small{font-size:.7rem;color:var(--cream);opacity:.75}
+.bk h4{margin:16px 0 0}.bk p{margin:0;color:var(--muted);font-size:.85rem}
+@media (max-width:900px){.books{grid-template-columns:1fr 1fr}}
+.reader{position:fixed;inset:0;z-index:1100;background:rgba(4,14,26,.94);backdrop-filter:blur(10px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:.45s;padding:16px}
+.reader.on{opacity:1;pointer-events:auto}
+.bookv{position:relative;width:min(860px,94vw);aspect-ratio:1.45;perspective:2200px}
+.bookv .base{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 40px 90px rgba(0,0,0,.6)}
+.bookv .base div{background:#f4ead6}.bookv .base div:first-child{background:linear-gradient(90deg,#f4ead6 85%,#dccfb4)}.bookv .base div:last-child{background:linear-gradient(90deg,#dccfb4,#f4ead6 15%)}
+.pg{position:absolute;top:0;left:0;width:50%;height:100%;transform-origin:right center;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.4,.1,.2,1)}
+.pg.flip{transform:rotateY(-180deg)}
+.pg>div{position:absolute;inset:0;backface-visibility:hidden;padding:clamp(16px,4vw,44px);color:#2a2118;font-size:clamp(.72rem,1.6vw,1rem);line-height:2.1;overflow:hidden}
+.pg .fr{background:linear-gradient(90deg,#f4ead6 85%,#dccfb4)}.pg .bk2{transform:rotateY(180deg);background:linear-gradient(90deg,#dccfb4,#f4ead6 15%)}
+.pg .nast{color:#0b2240}.pg .num{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:.75rem;color:#8a7a5f}
+.pg.cover .fr{background:linear-gradient(145deg,var(--lapis2),var(--deep));color:var(--cream);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.rctl{display:flex;gap:12px;justify-content:center;margin-top:22px}
+.rctl button{background:var(--glass);border:1px solid var(--gl);color:var(--cream);font:inherit;padding:8px 20px;border-radius:30px;cursor:pointer}.rctl button:hover{background:var(--tq);color:var(--deep)}
+
+/* رویدادها */
+.ev{display:grid;gap:14px;max-width:900px;margin:0 auto}
+.e{display:grid;grid-template-columns:90px 1fr auto;gap:22px;align-items:center;background:var(--glass);border:1px solid var(--gl);border-radius:18px;padding:18px 24px;transition:.35s}
+.e:hover{border-color:var(--gold);transform:translateX(-6px)}
+.e .d{text-align:center;border-left:1px solid var(--gl);padding-left:18px}.e .d b{display:block;font-size:1.8rem;color:var(--gold);line-height:1.2;font-weight:300}.e .d small{color:var(--muted)}
+.e span.s{font-size:.78rem;padding:4px 14px;border-radius:20px;background:rgba(53,194,193,.15);color:var(--tq2)}
+@media (max-width:600px){.e{grid-template-columns:70px 1fr}.e span.s{display:none}}
+
+.contact{text-align:center}
+.cbox{max-width:760px;margin:0 auto;background:linear-gradient(160deg,rgba(143,227,220,.1),rgba(255,255,255,.02));border:1px solid var(--gl);border-radius:30px;padding:50px clamp(20px,5vw,50px)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}.form textarea,.form .full{grid-column:1/-1}
+.form input,.form textarea,.form select{background:rgba(7,23,41,.6);border:1px solid var(--gl);border-radius:14px;padding:14px 16px;color:var(--cream);font:inherit;outline:none;transition:border-color .3s}
+.form input:focus,.form textarea:focus,.form select:focus{border-color:var(--tq)}
+.go{background:linear-gradient(90deg,var(--tq),var(--gold));border:0;color:var(--deep);font:inherit;font-weight:600;padding:14px;border-radius:14px;cursor:pointer;transition:filter .3s}.go:hover{filter:brightness(1.1)}
+@media (max-width:600px){.form{grid-template-columns:1fr}}
+footer{text-align:center;padding:40px 0 90px;color:var(--muted);font-size:.85rem}
+.wa{position:fixed;bottom:70px;left:18px;width:54px;height:54px;border-radius:50%;background:var(--tq);color:var(--deep);display:grid;place-items:center;font-size:1.4rem;z-index:900;box-shadow:0 10px 30px rgba(53,194,193,.4);animation:pulse 2.4s infinite}
+@keyframes pulse{50%{box-shadow:0 10px 30px rgba(53,194,193,.4),0 0 0 12px rgba(53,194,193,0)}0%{box-shadow:0 10px 30px rgba(53,194,193,.4),0 0 0 0 rgba(53,194,193,.5)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body class="girih">
+<nav><a href="#home" class="logo nast">رضایتمند</a><button class="mb" aria-label="منو">☰</button>
+  <div class="l"><span class="pill"></span><a href="#bio">زندگی‌نامه</a><a href="#style">سبک</a><a href="#works" data-f="paint">نقاشی</a><a href="#works" data-f="callig">خوشنویسی</a><a href="#works" data-f="sculpt">مجسمه</a><a href="#books">نوشته‌ها</a><a href="#events">رویدادها</a><a href="#contact">تماس</a></div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="aur"></div>
+  <svg class="star" viewBox="0 0 200 200" fill="none" stroke="#8fe3dc" stroke-opacity=".35"><rect x="45" y="45" width="110" height="110"/><rect x="45" y="45" width="110" height="110" transform="rotate(45 100 100)"/><circle cx="100" cy="100" r="78"/><circle cx="100" cy="100" r="96" stroke-dasharray="2 6"/></svg>
+  <svg class="star star2" viewBox="0 0 200 200" fill="none" stroke="#d8ae5a" stroke-opacity=".4"><path d="M100 10 120 80 190 100 120 120 100 190 80 120 10 100 80 80Z"/><path d="M100 10 120 80 190 100 120 120 100 190 80 120 10 100 80 80Z" transform="rotate(45 100 100)"/></svg>
+  <div class="hero-in">
+    <div class="t rv in">استاد</div>
+    <h1 class="nast">حسین رضایتمند</h1>
+    <div class="chips"><a href="#works" data-f="paint">نقاشی</a><a href="#works" data-f="callig">خوشنویسی</a><a href="#works" data-f="sculpt">مجسمه‌سازی</a><a href="#books">آثار نوشتاری</a></div>
+  </div>
+</header>
+
+<section id="bio"><div class="wrap bio">
+  <div class="arch rv" id="portrait"></div>
+  <div>
+    <div class="sh" style="text-align:right;margin-bottom:24px"><span class="o">زندگی‌نامه</span><h2>روایت یک عمر هنر</h2></div>
+    <div class="tabs rv"><button class="on" data-t="0">زندگی</button><button data-t="1">آموزش و استادان</button><button data-t="2">نمایشگاه‌ها</button><button data-t="3">افتخارات</button></div>
+    <div class="rv">
+      <div class="pane on"><p>متن نمونه — استاد حسین رضایتمند در خانواده‌ای اهل هنر بالید؛ از کودکی قلم نی و رنگ همراهش بود. در این بخش زندگی‌نامه‌ی کامل ایشان قرار می‌گیرد و با زبانه‌ها به بخش‌های کوتاه و خوانا تقسیم می‌شود.</p></div>
+      <div class="pane"><ul><li><b>خوشنویسی:</b> نام استادان و دوره‌ها (نمونه)</li><li><b>نقاشی:</b> دوره‌های آموزشی و کارگاه‌ها (نمونه)</li><li><b>مجسمه‌سازی:</b> تجربه‌ها و همکاری‌ها (نمونه)</li></ul></div>
+      <div class="pane"><ul><li><b>۱۳۶۸</b> — نخستین نمایشگاه انفرادی، تهران (نمونه)</li><li><b>۱۳۸۵</b> — نمایشگاه گروهی خوشنویسی (نمونه)</li><li><b>۱۴۰۱</b> — مرور آثار چهار دهه (نمونه)</li></ul></div>
+      <div class="pane"><ul><li>جوایز و تقدیرنامه‌ها اینجا فهرست می‌شوند (نمونه)</li><li>عضویت در انجمن‌های هنری (نمونه)</li></ul></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="style" id="style"><div class="wrap">
+  <div class="sh rv"><span class="o">سبک و اندیشه</span><h2>چهار زبان، یک روح</h2><p>متن نمونه — توضیح سبک شخصی استاد و پیوند میان رشته‌های هنری ایشان.</p></div>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<section id="works"><div class="wrap">
+  <div class="sh rv"><span class="o">آثار</span><h2>گنجینه‌ی آثار</h2><p>آثار برگزیده را ورق بزنید یا بر اساس رشته فیلتر کنید</p></div>
+  <div class="cf rv" id="cf"></div>
+  <div class="cf-nav"><button id="cfp" aria-label="قبلی">›</button><div class="cf-cap"><b id="cft"></b><small id="cfm"></small></div><button id="cfn" aria-label="بعدی">‹</button></div>
+  <div class="filters" id="filters"><button class="on" data-f="all">همه</button><button data-f="paint">نقاشی</button><button data-f="callig">خوشنویسی</button><button data-f="sculpt">مجسمه</button></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="books" class="style"><div class="wrap">
+  <div class="sh rv"><span class="o">آثار نوشتاری</span><h2>رمان‌ها و کتاب‌ها</h2><p>روی هر کتاب بزنید تا مثل یک کتاب واقعی ورق بخورد (عنوان‌ها نمونه‌اند)</p></div>
+  <div class="books" id="bks"></div>
+</div></section>
+
+<section id="events"><div class="wrap">
+  <div class="sh rv"><span class="o">رویدادها</span><h2>نمایشگاه‌ها و دیدارها</h2></div>
+  <div class="ev">
+    <div class="e rv"><div class="d"><b>۱۲</b><small>مهر</small></div><div><b>نمایشگاه انفرادی نقاشی و خوشنویسی</b><br><small style="color:var(--muted)">نگارخانه‌ی نمونه · تهران</small></div><span class="s">به‌زودی</span></div>
+    <div class="e rv"><div class="d"><b>۰۳</b><small>آبان</small></div><div><b>جلسه‌ی رونمایی و امضای رمان تازه</b><br><small style="color:var(--muted)">کتاب‌فروشی نمونه</small></div><span class="s">ثبت‌نام</span></div>
+    <div class="e rv"><div class="d"><b>۲۰</b><small>آذر</small></div><div><b>کارگاه آموزشی خوشنویسی نستعلیق</b><br><small style="color:var(--muted)">آتلیه‌ی استاد</small></div><span class="s">ظرفیت محدود</span></div>
+  </div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+  <div class="cbox rv">
+    <div class="sh" style="margin:0"><span class="o">ارتباط</span><h2>سفارش و گفت‌وگو</h2></div>
+    <form class="form" onsubmit="event.preventDefault();this.querySelector('.go').textContent='پیام شما ثبت شد ✓'">
+      <input placeholder="نام" required><input type="tel" placeholder="شماره تماس">
+      <select class="full"><option>موضوع: سفارش اثر</option><option>خرید تابلو</option><option>خرید کتاب</option><option>دعوت به نمایشگاه</option><option>کلاس و کارگاه</option></select>
+      <textarea rows="4" placeholder="پیام شما"></textarea><button class="go full">ارسال</button>
+    </form>
+  </div>
+</div></section>
+<footer>© استاد حسین رضایتمند · تمامی حقوق آثار محفوظ است</footer>
+<a class="wa" href="#contact" aria-label="گفت‌وگوی سریع">✉</a>
+
+<div class="reader" id="reader"><div><div class="bookv" id="bookv"></div><div class="rctl"><button id="rp">صفحه‌ی قبل</button><button id="rx">بستن</button><button id="rn">صفحه‌ی بعد</button></div></div></div>
+<div class="demo"><a href="index.html">همه‌ی نمونه‌ها</a><a href="1-shab-gallery.html">۱ شبِ گالری</a><a href="2-sepid.html">۲ سپید</a><a class="on" href="3-firouzeh.html">۳ فیروزه</a></div>
+
+<script>/* موتور مشترک نمونه‌ها: تولید آثار آزمایشی (SVG)، گالری تمام‌صفحه، انیمیشن ظاهرشدن
+   در نسخه‌ی نهایی به‌جای آثار تولیدی، عکس‌های واقعی آثار استاد قرار می‌گیرد. */
+(() => {
+  let UID = 0;
+  const rand = seed => { let s = (seed * 2654435761 >>> 0) % 2147483647 || 1; return () => (s = s * 16807 % 2147483647) / 2147483647; };
+  const pick = (r, a) => a[Math.floor(r() * a.length)];
+  const f = n => n.toFixed(1);
+
+  function smooth(p) {
+    const n = p.length; let d = `M${f(p[0][0])},${f(p[0][1])}`;
+    for (let i = 0; i < n; i++) {
+      const a = p[(i - 1 + n) % n], b = p[i], c = p[(i + 1) % n], e = p[(i + 2) % n];
+      d += `C${f(b[0] + (c[0] - a[0]) / 6)},${f(b[1] + (c[1] - a[1]) / 6)} ${f(c[0] - (e[0] - b[0]) / 6)},${f(c[1] - (e[1] - b[1]) / 6)} ${f(c[0])},${f(c[1])}`;
+    }
+    return d + 'Z';
+  }
+  function blob(r, cx, cy, rx, ry, n = 8, amp = .35) {
+    const p = [];
+    for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2, k = 1 + (r() - .5) * amp; p.push([cx + Math.cos(a) * rx * k, cy + Math.sin(a) * ry * k]); }
+    return smooth(p);
+  }
+  const open = (W, h) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${h}" width="${W}" height="${h}" preserveAspectRatio="xMidYMid slice">`;
+
+  /* تابلوی نقاشی انتزاعی/منظره‌گون */
+  function painting(seed, pal, h = 500) {
+    const r = rand(seed), u = ++UID, W = 400;
+    let s = open(W, h) + `<defs><filter id="bl${u}" filterUnits="userSpaceOnUse" x="-200" y="-200" width="${W + 400}" height="${h + 400}"><feGaussianBlur stdDeviation="${18 + r() * 22}"/></filter>
+      <linearGradient id="lg${u}" x1="0" y1="0" x2="${f(r())}" y2="1"><stop offset="0" stop-color="${pal[0]}"/><stop offset="1" stop-color="${pick(r, pal)}"/></linearGradient></defs>
+      <rect width="${W}" height="${h}" fill="url(#lg${u})"/><g filter="url(#bl${u})">`;
+    for (let i = 0; i < 7; i++) s += `<path d="${blob(r, r() * W, r() * h, 50 + r() * 120, 50 + r() * 120)}" fill="${pick(r, pal)}" opacity="${f(.5 + r() * .5)}"/>`;
+    s += '</g>';
+    for (let i = 0; i < 4; i++) { const y = r() * h; s += `<path d="M-20,${f(y)} Q${W / 2},${f(y + (r() - .5) * 160)} ${W + 20},${f(y + (r() - .5) * 90)}" stroke="${pick(r, pal)}" stroke-width="${f(3 + r() * 22)}" fill="none" stroke-linecap="round" opacity="${f(.3 + r() * .5)}"/>`; }
+    if (r() > .45) s += `<circle cx="${f(60 + r() * 280)}" cy="${f(40 + r() * h * .4)}" r="${f(14 + r() * 38)}" fill="${pick(r, pal)}" opacity=".92"/>`;
+    return s + '</svg>';
+  }
+
+  /* قطعه‌ی خوشنویسی: تک‌کلمه، سیاه‌مشق یا چلیپا با زرافشان و قاب */
+  const WORDS = ['عشق', 'هو', 'صبر', 'نور', 'دل', 'یار', 'امید', 'سکوت', 'جان', 'مهر'];
+  const VERSES = [['در ازل پرتو حسنت', 'ز تجلی دم زد'], ['بشنو این نی', 'چون شکایت می‌کند'], ['هر کسی کو دور ماند', 'از اصل خویش']];
+  function calligraphy(seed, pal, h = 500) {
+    const r = rand(seed), u = ++UID, W = 400; const [paper, edge, ink, gold, seal] = pal;
+    const F = `font-family="'Noto Nastaliq Urdu',serif"`;
+    let s = open(W, h) + `<defs><radialGradient id="pg${u}" cx=".5" cy=".45" r=".8"><stop offset="0" stop-color="${paper}"/><stop offset="1" stop-color="${edge}"/></radialGradient></defs>
+      <rect width="${W}" height="${h}" fill="url(#pg${u})"/>`;
+    for (let i = 0; i < 70; i++) s += `<circle cx="${f(r() * W)}" cy="${f(r() * h)}" r="${f(.5 + r() * 2.2)}" fill="${gold}" opacity="${f(.25 + r() * .5)}"/>`;
+    s += `<rect x="16" y="16" width="${W - 32}" height="${h - 32}" fill="none" stroke="${gold}" stroke-width="2"/><rect x="24" y="24" width="${W - 48}" height="${h - 48}" fill="none" stroke="${gold}" stroke-width=".7"/>`;
+    const mode = r();
+    if (mode < .3) {
+      for (let i = 0; i < 9; i++) s += `<text x="${f(40 + r() * 320)}" y="${f(80 + r() * (h - 140))}" ${F} font-size="${f(34 + r() * 50)}" fill="${ink}" opacity="${f(.12 + r() * .75)}" text-anchor="middle" transform="rotate(${f(-25 + r() * 20)} 200 ${h / 2})">${pick(r, WORDS)}</text>`;
+    } else if (mode < .6) {
+      const v = pick(r, VERSES);
+      s += `<g transform="rotate(-14 200 ${h / 2})"><text x="200" y="${h / 2 - 34}" ${F} font-size="40" fill="${ink}" text-anchor="middle">${v[0]}</text><text x="200" y="${h / 2 + 62}" ${F} font-size="40" fill="${ink}" text-anchor="middle">${v[1]}</text></g>`;
+    } else {
+      const w = pick(r, WORDS), fs = Math.min(150, 360 / Math.max(1.4, w.length * .62));
+      s += `<text x="200" y="${f(h / 2 + fs * .1)}" ${F} font-size="${f(fs)}" fill="${ink}" text-anchor="middle">${w}</text>`;
+    }
+    s += `<text x="58" y="${h - 44}" ${F} font-size="13" fill="${ink}" opacity=".75" text-anchor="middle">رضایتمند</text><rect x="${W - 62}" y="${h - 62}" width="22" height="22" fill="${seal}" opacity=".85" rx="2"/>`;
+    return s + '</svg>';
+  }
+
+  /* مجسمه: فرم سه‌بعدی‌نما روی پایه با نورپردازی قابل تغییر (light: ۰ تا ۱) */
+  function sculpture(seed, pal, h = 500, light = .3) {
+    const r = rand(seed), u = ++UID, W = 400; const [bg, base, hi, sh] = pal;
+    const top = h * .72;
+    let s = open(W, h) + `<defs><radialGradient id="sp${u}" cx=".5" cy=".1" r=".95"><stop offset="0" stop-color="${hi}" stop-opacity=".28"/><stop offset=".6" stop-color="${bg}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="m${u}" cx="${f(light)}" cy=".3" r=".9" fx="${f(light)}" fy=".22"><stop offset="0" stop-color="${hi}"/><stop offset=".45" stop-color="${base}"/><stop offset="1" stop-color="${sh}"/></radialGradient>
+      <linearGradient id="pd${u}" x1="0" x2="1"><stop offset="0" stop-color="#2a2724"/><stop offset="${f(light)}" stop-color="#57514a"/><stop offset="1" stop-color="#1c1a18"/></linearGradient>
+      <filter id="fs${u}" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${h}"><feGaussianBlur stdDeviation="9"/></filter></defs>
+      <rect width="${W}" height="${h}" fill="${bg}"/><rect width="${W}" height="${h}" fill="url(#sp${u})"/>
+      <ellipse cx="200" cy="${f(h * .93)}" rx="120" ry="12" fill="#000" opacity=".55" filter="url(#fs${u})"/>
+      <rect x="135" y="${f(top)}" width="130" height="${f(h * .21)}" fill="url(#pd${u})"/><rect x="135" y="${f(top)}" width="130" height="5" fill="#6d665d"/>`;
+    const type = Math.floor(r() * 3), M = `fill="url(#m${u})"`;
+    if (type === 0) {
+      const th = h * .36;
+      s += `<path d="${blob(r, 200, top - th / 2, 62 + r() * 20, th / 2, 9, .22)}" ${M}/><rect x="188" y="${f(top - th - 26)}" width="24" height="34" ${M}/><path d="${blob(r, 200 + (r() - .5) * 16, top - th - 58, 34, 42, 8, .15)}" ${M}/>`;
+    } else if (type === 1) {
+      const ry = h * .3;
+      s += `<path fill-rule="evenodd" d="${blob(r, 200, top - ry, 95, ry, 10, .25)} ${blob(r, 200 + (r() - .5) * 30, top - ry - 10, 36, ry * .42, 8, .3)}" ${M}/>`;
+    } else {
+      let y = top;
+      for (let i = 0; i < 3; i++) { const ry = 34 + r() * 40, rx = 40 + r() * 60; s += `<path d="${blob(r, 200 + (r() - .5) * 50, y - ry * .85, rx, ry, 8, .3)}" ${M}/>`; y -= ry * 1.55; }
+    }
+    return s + '</svg>';
+  }
+
+  /* پرتره‌ی جایگزین (سیلوئت) */
+  function portrait(pal, h = 520) {
+    const u = ++UID, W = 400; const [bg, fg, acc] = pal;
+    return open(W, h) + `<defs><radialGradient id="pt${u}" cx=".5" cy=".35" r=".8"><stop offset="0" stop-color="${acc}"/><stop offset="1" stop-color="${bg}"/></radialGradient></defs>
+      <rect width="${W}" height="${h}" fill="url(#pt${u})"/><circle cx="200" cy="${h * .36}" r="72" fill="${fg}"/><path d="M60,${h} C70,${h * .66} 140,${h * .56} 200,${h * .56} S330,${h * .66} 340,${h}Z" fill="${fg}"/>
+      <text x="200" y="${h - 30}" font-family="Vazirmatn,sans-serif" font-size="14" fill="${acc}" text-anchor="middle" opacity=".9">جای عکس پرتره‌ی استاد</text></svg>`;
+  }
+
+  /* گالری تمام‌صفحه: بزرگ‌نمایی، کیبورد، کشیدن انگشت، شمارنده */
+  function lightbox() {
+    const el = document.createElement('div');
+    el.className = 'lb'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true');
+    el.innerHTML = `<button class="lb-x" aria-label="بستن">×</button><button class="lb-n lb-prev" aria-label="قبلی">›</button><button class="lb-n lb-next" aria-label="بعدی">‹</button>
+      <div class="lb-stage"><div class="lb-art"></div></div><div class="lb-cap"><div><h3></h3><p></p></div><span class="lb-c"></span></div><div class="lb-hint">برای بزرگ‌نمایی روی اثر بزنید</div>`;
+    document.body.appendChild(el);
+    const art = el.querySelector('.lb-art'), stage = el.querySelector('.lb-stage');
+    let items = [], i = 0, tx = 0;
+    function fit() {
+      const svg = art.querySelector('svg'); if (!svg) return;
+      const vb = svg.viewBox.baseVal, ar = vb.width / vb.height;
+      const mw = innerWidth * .9, mh = innerHeight * .72, w = Math.min(mw, mh * ar);
+      svg.style.width = w + 'px'; svg.style.height = w / ar + 'px';
+    }
+    function show(n) {
+      i = (n + items.length) % items.length; const it = items[i];
+      art.classList.remove('zoom'); art.style.opacity = 0;
+      setTimeout(() => {
+        art.innerHTML = it.html; fit();
+        el.querySelector('h3').textContent = it.title; el.querySelector('p').textContent = it.meta || '';
+        el.querySelector('.lb-c').textContent = `${(i + 1).toLocaleString('fa')} / ${items.length.toLocaleString('fa')}`;
+        art.style.opacity = 1;
+      }, 160);
+    }
+    const close = () => { el.classList.remove('on'); document.body.style.overflow = ''; };
+    el.querySelector('.lb-x').onclick = close;
+    el.querySelector('.lb-prev').onclick = () => show(i - 1);
+    el.querySelector('.lb-next').onclick = () => show(i + 1);
+    el.addEventListener('click', e => { if (e.target === el || e.target === stage) close(); });
+    art.addEventListener('click', e => {
+      const b = art.getBoundingClientRect();
+      art.style.transformOrigin = `${(e.clientX - b.left) / b.width * 100}% ${(e.clientY - b.top) / b.height * 100}%`;
+      art.classList.toggle('zoom');
+    });
+    art.addEventListener('mousemove', e => {
+      if (!art.classList.contains('zoom')) return;
+      const b = art.getBoundingClientRect();
+      art.style.transformOrigin = `${(e.clientX - b.left) / b.width * 100}% ${(e.clientY - b.top) / b.height * 100}%`;
+    });
+    addEventListener('keydown', e => {
+      if (!el.classList.contains('on')) return;
+      if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') show(i + 1); if (e.key === 'ArrowRight') show(i - 1);
+    });
+    el.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+    el.addEventListener('touchend', e => { const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50 && !art.classList.contains('zoom')) show(d > 0 ? i + 1 : i - 1); });
+    addEventListener('resize', fit);
+    return (list, n) => { items = list; el.classList.add('on'); document.body.style.overflow = 'hidden'; show(n); };
+  }
+
+  /* ظاهرشدن تدریجی هنگام اسکرول */
+  function reveal(sel = '.rv') {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll(sel).forEach(x => io.observe(x));
+  }
+
+  /* شمارنده‌ی عددی */
+  function counters(sel = '[data-count]') {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return; io.unobserve(e.target);
+      const t = +e.target.dataset.count, t0 = performance.now();
+      const step = now => { const k = Math.min(1, (now - t0) / 1600), v = Math.round(t * (1 - Math.pow(1 - k, 3))); e.target.textContent = v.toLocaleString('fa'); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    }), { threshold: .5 });
+    document.querySelectorAll(sel).forEach(x => io.observe(x));
+  }
+
+  /* نوار پیشرفت اسکرول */
+  function progress(el) { addEventListener('scroll', () => { el.style.transform = `scaleX(${scrollY / (document.documentElement.scrollHeight - innerHeight)})`; }, { passive: true }); }
+
+  const LB_CSS = `.lb{position:fixed;inset:0;z-index:1000;background:var(--lb-bg,rgba(8,7,6,.96));backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+.lb.on{opacity:1;pointer-events:auto}.lb-stage{flex:1;display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden}
+.lb-art{transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .16s;cursor:zoom-in;box-shadow:0 30px 80px rgba(0,0,0,.6)}.lb-art.zoom{transform:scale(2.2);cursor:zoom-out}.lb-art svg{display:block}
+.lb-cap{width:min(900px,92vw);display:flex;justify-content:space-between;align-items:end;gap:16px;padding:14px 0 26px;color:var(--lb-fg,#eee)}.lb-cap h3{margin:0;font-size:1.15rem;font-weight:600}.lb-cap p{margin:4px 0 0;opacity:.65;font-size:.88rem}
+.lb-c{font-size:.85rem;opacity:.7;white-space:nowrap}.lb-hint{position:absolute;top:22px;inset-inline-start:24px;font-size:.78rem;color:var(--lb-fg,#eee);opacity:.45}
+.lb button{position:absolute;background:none;border:1px solid var(--lb-accent,#c9a45c);color:var(--lb-fg,#eee);width:48px;height:48px;border-radius:50%;font-size:1.6rem;cursor:pointer;z-index:2;transition:background .25s;line-height:1}
+.lb button:hover{background:var(--lb-accent,#c9a45c);color:#000}.lb-x{top:16px;inset-inline-end:18px}.lb-prev{inset-inline-start:18px;top:50%}.lb-next{inset-inline-end:18px;top:50%}
+@media (max-width:640px){.lb-n{top:auto!important;bottom:84px}.lb-hint{display:none}}`;
+  const st = document.createElement('style'); st.textContent = LB_CSS; document.head.appendChild(st);
+
+  window.Art = { rand, pick, painting, calligraphy, sculpture, portrait, lightbox, reveal, counters, progress };
+})();
+</script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s),fa=n=>n.toLocaleString('fa',{useGrouping:false});
+const lb=Art.lightbox();
+const PP=[['#0b2240','#35c2c1','#d8ae5a','#f5ecd9','#1d5c8c','#8fe3dc'],['#3a1633','#d8ae5a','#e76f51','#f5ecd9','#35c2c1','#6b2d5c'],['#0f3b3a','#8fe3dc','#f2c14e','#f5ecd9','#0b2240','#35c2c1']];
+const CP=[['#f5ecd9','#dcc9a3','#0b2240','#b98d3c','#a33'],['#0f2e54','#071729','#f5ecd9','#d8ae5a','#35c2c1'],['#e8f6f3','#b7ddd6','#0b2240','#b98d3c','#a33']];
+const SP=[['#081a30','#2f8f8e','#d6fffb','#062021'],['#081a30','#9a7434','#ffe7b0','#2a1b05'],['#081a30','#6c7fa0','#eef3ff','#141d2e']];
+
+$('#portrait').innerHTML=Art.portrait(['#0b2240','#123a66','#35c2c1'],560);
+
+/* زبانه‌ها */
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));$$('.pane').forEach((p,i)=>p.classList.toggle('on',i==b.dataset.t))});
+
+/* کارت‌ها با کج‌شدن سه‌بعدی */
+const ic=['<path d="M8 44 C18 20 34 10 46 8 M10 30 C24 26 30 34 44 30" stroke="#35c2c1" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="40" cy="16" r="6" fill="#d8ae5a"/>','<path d="M10 40 Q22 10 30 26 T46 14" stroke="#d8ae5a" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="16" cy="18" r="3" fill="#35c2c1"/>','<ellipse cx="28" cy="22" rx="12" ry="15" fill="#35c2c1" opacity=".8"/><rect x="18" y="38" width="20" height="10" fill="#d8ae5a"/>','<path d="M12 10h24l8 8v28H12z" fill="none" stroke="#35c2c1" stroke-width="3"/><path d="M18 24h20M18 32h20M18 40h12" stroke="#d8ae5a" stroke-width="2.5"/>'];
+[['نقاشی','رنگ به‌مثابه‌ی حال؛ منظره‌هایی میان خیال و خاطره (نمونه).'],['خوشنویسی','نستعلیق، چلیپا و سیاه‌مشق با نگاهی نو (نمونه).'],['مجسمه‌سازی','حجم دادن به حروف و فرم‌های انسانی (نمونه).'],['نویسندگی','رمان‌هایی که همان قصه‌های تابلوها را ادامه می‌دهند (نمونه).']].forEach((c,k)=>{
+ const d=document.createElement('div');d.className='card rv';d.style.transitionDelay=k*.1+'s';d.innerHTML=`<svg viewBox="0 0 56 56">${ic[k]}</svg><h3>${c[0]}</h3><p>${c[1]}</p>`;$('#cards').appendChild(d)});
+function tilt(el,deg=10){if(matchMedia('(pointer:coarse)').matches)return;
+ el.addEventListener('pointermove',e=>{const b=el.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;el.style.transform=`rotateX(${(.5-y)*deg}deg) rotateY(${(x-.5)*deg}deg)`;el.style.setProperty('--mx',x*100+'%');el.style.setProperty('--my',y*100+'%')});
+ el.addEventListener('pointerleave',()=>el.style.transform='')}
+$$('.card').forEach(c=>tilt(c,12));
+
+/* داده‌ی آثار */
+const W=[];
+for(let k=0;k<6;k++)W.push({c:'paint',html:Art.painting(700+k*5,PP[k%3],500),title:['فیروزه‌ای','شب نیشابور','انار و آینه','باغ','رود','کاشی'][k],meta:'رنگ روغن · '+fa(1392+k)});
+for(let k=0;k<6;k++)W.push({c:'callig',html:Art.calligraphy(800+k*9,CP[k%3],500),title:['چلیپا','کتیبه','سیاه‌مشق','قطعه','ترکیب','مرقع'][k],meta:'مرکب و زر · '+fa(1395+k)});
+for(let k=0;k<4;k++)W.push({c:'sculpt',html:Art.sculpture(900+k*6,SP[k%3],500),title:['ایستادگی','موج','رویش','مادر'][k],meta:['برنز','سنگ','چوب','برنز'][k]+' · '+fa(1398+k)});
+const CN={paint:'نقاشی',callig:'خوشنویسی',sculpt:'مجسمه'};
+$$('#filters button').forEach(b=>{const n=b.dataset.f==='all'?W.length:W.filter(w=>w.c===b.dataset.f).length;b.insertAdjacentHTML('beforeend',`<sup>${fa(n)}</sup>`)});
+W.forEach((w,k)=>{const d=document.createElement('div');d.className='it rv';d.dataset.c=w.c;
+ d.innerHTML=`<div class="arch">${w.html}<span class="shine"></span></div><h4>${w.title}<small>${CN[w.c]}</small></h4><p>${w.meta}</p>`;
+ d.onclick=()=>{const vis=W.filter((x,i)=>!$$('.it')[i].classList.contains('hide'));lb(vis,vis.indexOf(w))};$('#grid').appendChild(d);tilt(d.querySelector('.arch'),14)});
+function filter(f){$$('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
+ $$('.it').forEach(el=>el.classList.add('fade'));
+ setTimeout(()=>{$$('.it').forEach(el=>{el.classList.toggle('hide',f!=='all'&&el.dataset.c!==f);el.classList.add('in')});requestAnimationFrame(()=>requestAnimationFrame(()=>$$('.it').forEach(el=>el.classList.remove('fade'))))},350)}
+$$('#filters button').forEach(b=>b.onclick=()=>filter(b.dataset.f));
+$$('[data-f]').forEach(a=>{if(a.tagName==='A')a.addEventListener('click',()=>filter(a.dataset.f))});
+
+/* چرخ‌فلک سه‌بعدی */
+const F=[W[0],W[6],W[12],W[2],W[8],W[13],W[4]];let ci=0;
+F.forEach((w,k)=>{const f=document.createElement('figure');f.innerHTML=`<div class="arch">${w.html}</div>`;f.onclick=()=>k===ci?lb(F,k):go(k);$('#cf').appendChild(f)});
+function go(n){ci=(n+F.length)%F.length;$$('#cf figure').forEach((f,k)=>{let d=k-ci;if(d>F.length/2)d-=F.length;if(d<-F.length/2)d+=F.length;const a=Math.abs(d);
+ f.style.transform=`translateX(calc(-50% + ${-d*min()}px)) translateZ(${-a*180}px) rotateY(${d*28}deg)`;f.style.opacity=a>2?0:1-a*.25;f.style.filter=`brightness(${1-a*.28})`;f.style.zIndex=10-a});
+ $('#cft').textContent=F[ci].title;$('#cfm').textContent=CN[F[ci].c]+' · '+F[ci].meta}
+const min=()=>Math.min(innerWidth*.28,230);
+$('#cfp').onclick=()=>go(ci-1);$('#cfn').onclick=()=>go(ci+1);go(0);addEventListener('resize',()=>go(ci));
+let cx0=0;$('#cf').addEventListener('touchstart',e=>cx0=e.touches[0].clientX,{passive:true});$('#cf').addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-cx0;if(Math.abs(d)>40)go(d>0?ci+1:ci-1)});
+setInterval(()=>{if(!document.hidden&&!$('.lb.on'))go(ci+1)},5000);
+
+/* کتاب‌ها و کتاب‌خوان ورق‌خور */
+const BK=[['سایه‌های کویر','رمان','#5c2a1c'],['باغ بی‌خزان','رمان','#0f2e54'],['نامه‌های نانوشته','داستان کوتاه','#0f3b3a'],['رنگ و کلمه','جستار','#3a1633']];
+BK.forEach((b,k)=>{const d=document.createElement('div');d.className='bk rv';d.style.transitionDelay=k*.1+'s';
+ d.innerHTML=`<div class="cv" style="background:linear-gradient(150deg,${b[2]},#071729)"><small>${b[1]}</small><div class="nast">${b[0]}</div><small>حسین رضایتمند</small></div><h4>${b[0]}</h4><p>${b[1]} · ${fa(1392+k*3)}</p>`;d.onclick=()=>openBook(b);$('#bks').appendChild(d)});
+let pi=0,pages=[];
+function openBook(b){
+ const txt='متن نمونه — اینجا بخشی از متن کتاب قرار می‌گیرد. خواننده می‌تواند مثل یک کتاب کاغذی صفحه‌ها را ورق بزند و با نثر استاد آشنا شود. ';
+ const sheets=[[`<div class="nast" style="font-size:2rem;color:var(--gold)">${b[0]}</div><div>${b[1]}</div><div style="margin-top:30px;font-size:.85rem;opacity:.7">حسین رضایتمند</div>`,`<h3 class="nast">فصل یکم</h3><p>${txt}</p><span class="num">۱</span>`],[`<p>${txt.repeat(2)}</p><span class="num">۲</span>`,`<p>${txt.repeat(2)}</p><span class="num">۳</span>`],[`<p>${txt}</p><p style="text-align:center;margin-top:30px">— پایان بخش نمونه —</p><span class="num">۴</span>`,`<div style="display:grid;place-items:center;height:100%;text-align:center"><div><p>برای خواندن ادامه‌ی کتاب</p><b>خرید نسخه‌ی کامل</b></div></div>`]];
+ $('#bookv').innerHTML='<div class="base"><div></div><div></div></div>'+sheets.map((s,i)=>`<div class="pg ${i?'':'cover'}" style="z-index:${sheets.length-i}"><div class="fr">${s[0]}</div><div class="bk2">${s[1]}</div></div>`).join('');
+ pages=[...$$('#bookv .pg')];pi=0;$('#reader').classList.add('on')}
+$('#rn').onclick=()=>{if(pi<pages.length){const p=pages[pi];p.classList.add('flip');p.style.zIndex=10+pi;pi++}};
+$('#rp').onclick=()=>{if(pi>0){pi--;const p=pages[pi];p.classList.remove('flip');setTimeout(()=>p.style.zIndex=pages.length-pi,500)}};
+$('#rx').onclick=()=>$('#reader').classList.remove('on');$('#reader').onclick=e=>{if(e.target.id==='reader')$('#reader').classList.remove('on')};
+$('#bookv').addEventListener('click',e=>{if(e.target.closest('.pg'))$('#rn').click()});
+
+/* منو با نشانگر متحرک */
+const pill=$('.pill'),links=[...$$('nav .l a')];
+function mark(a){links.forEach(x=>x.classList.toggle('on',x===a));if(a){pill.style.width=a.offsetWidth+'px';pill.style.left=a.offsetLeft+'px';pill.style.opacity=1}else pill.style.opacity=0}
+$('.mb').onclick=()=>$('nav').classList.toggle('open');links.forEach(a=>a.addEventListener('click',()=>$('nav').classList.remove('open')));
+const S=['bio','style','works','books','events','contact'];
+addEventListener('scroll',()=>{let cur=null;S.forEach(id=>{if(document.getElementById(id).getBoundingClientRect().top<innerHeight*.4)cur=id});
+ const a=cur==='works'?links.find(l=>l.dataset.f===($('#filters .on').dataset.f))||links[2]:links.find(l=>l.getAttribute('href')==='#'+cur);mark(a||null)},{passive:true});
+Art.reveal();
+</script>
+</body>
+</html>
