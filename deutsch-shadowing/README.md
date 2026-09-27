@@ -1,8 +1,9 @@
 # Deutsch Shadowing (Uni Sicher)
 
 - `sessions.json`: 179 sessions (10 words + 5 sentences each), in book order.
-- Schedule: session 1 = 2026-09-26 20:00 Europe/Berlin, then 09:00 / 14:00 / 20:00 daily.
-  Session index = day*3 + slot - 2 (day 0 = 2026-09-26, slot 0/1/2 = 9/14/20).
+- Schedule (Europe/Berlin): session 1 = 2026-09-26 20:00, session 2 = 2026-09-27 09:00,
+  then two sessions daily at 10:00 and 17:00 from 2026-09-27 17:00 (session 3).
+  Session number (1-based) = 2*(days since 2026-09-27) + slot + 2, slot 0/1 = 10:00/17:00.
 - `uni-sicher-shadowing.html`: shadowing page (published as a Claude artifact:
   https://claude.ai/artifact/MNrTPNGGPntqj63ptyEys4).
 - Scripts: `parse_fa.py` (Farsi PDF → entries), `book.py` (OCR TSV → example sentences),
