@@ -9,3 +9,4 @@
 - Scripts: `parse_fa.py` (Farsi PDF → entries), `book.py` (OCR TSV → example sentences),
   `match.py` (entries ↔ sentences), `sessions.py` (bundle into sessions).
 - Audio: `gen.py` builds one mp3 per session (Piper, voice de-thorsten-low from rhasspy/piper v0.0.2 release) plus segment timings, embedded in the page as `m`. Audio is published with the artifact under `audio/sNNN.mp3`, not stored in git.
+- Audio v2 (current): `gen2.py` renders every item with two Coqui VITS voices (male: thorsten, female: css10) into `audio2/sNNN.mp3` (40 kbps); marks are `[voice, kind, k, start, end]`. The page alternates male/female per repetition (default 3).

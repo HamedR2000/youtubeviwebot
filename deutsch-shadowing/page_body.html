@@ -29,6 +29,7 @@
       </span>
     </label>
     <button type="button" class="btn" id="hideBtn" aria-pressed="false">مخفی کردن متن</button>
+    <span class="note">صدای مرد و زن یکی در میان</span> <span class="chip" id="who" aria-live="polite"></span>
   </div>
 
   <section>
@@ -92,25 +93,26 @@
   var autoIdx = currentIndex();
   var lastAuto = store.get('us_last_auto', null);
   if (cur === null || lastAuto !== autoIdx) { cur = autoIdx; store.set('us_last_auto', autoIdx); }
-  var rate = store.get('us_rate', 0.85), reps = store.get('us_reps', 2);
+  var rate = store.get('us_rate', 0.85), reps = store.get('us_reps3', 3);
   var done = store.get('us_done', {});
 
   var audio = new Audio(); audio.preload = 'auto';
   try { audio.preservesPitch = true; } catch(e){}
   var loadedIdx = -1;
   function ensureSrc(){
-    if (loadedIdx !== cur) { audio.src = 'audio/s' + String(cur + 1).padStart(3, '0') + '.mp3'; loadedIdx = cur; }
+    if (loadedIdx !== cur) { audio.src = 'audio2/s' + String(cur + 1).padStart(3, '0') + '.mp3'; loadedIdx = cur; }
   }
-  function segOf(kind, k){
+  function segOf(kind, k, voice){
     var s = S[cur];
     if (kind === 'x') { var j = s.st.indexOf(s.w[k].x); if (j >= 0) { kind = 'st'; k = j; } }
-    var m = (s.m || []).filter(function(a){ return a[0] === kind && a[1] === k; })[0];
-    return m ? [m[2], m[3]] : null;
+    var ms = (s.m || []).filter(function(a){ return a[1] === kind && a[2] === k; });
+    var m = ms.filter(function(a){ return a[0] === voice; })[0] || ms[0];
+    return m ? [m[3], m[4], m[0]] : null;
   }
   audio.onerror = function(){ document.getElementById('ttsWarn').hidden = false; };
 
   var queue = [], speakingEl = null, token = 0, raf = 0;
-  function clearSpeaking(){ if (speakingEl) speakingEl.classList.remove('speaking'); speakingEl = null; }
+  function clearSpeaking(){ if (speakingEl) speakingEl.classList.remove('speaking'); speakingEl = null; var w = document.getElementById('who'); if (w) w.textContent = ''; }
   function stop(){ token++; queue = []; cancelAnimationFrame(raf); try { audio.pause(); } catch(e){} clearSpeaking(); }
   function speakList(items){
     stop(); ensureSrc(); var my = token; queue = items.filter(function(it){ return it.seg; });
@@ -119,6 +121,7 @@
       var it = queue.shift(); clearSpeaking();
       if (!it) return;
       if (it.el) { speakingEl = it.el; it.el.classList.add('speaking'); }
+      document.getElementById('who').textContent = it.seg[2] === 'f' ? 'صدای زن' : 'صدای مرد';
       var r = it.rate || rate;
       function start(){
         audio.currentTime = it.seg[0];
@@ -142,9 +145,11 @@
     })();
   }
   function repeated(kind, k, el){
-    var seg = segOf(kind, k), out = [];
-    if (!seg) return out;
-    for (var r = 0; r < reps; r++) out.push({seg: seg, el: el, pause: r < reps - 1 ? Math.max(1200, (seg[1] - seg[0]) * 1000 / rate + 400) : 0});
+    var out = [];
+    for (var r = 0; r < reps; r++) {
+      var seg = segOf(kind, k, r % 2 ? 'f' : 'm');
+      if (seg) out.push({seg: seg, el: el, pause: r < reps - 1 ? Math.max(1200, (seg[1] - seg[0]) * 1000 / rate + 400) : 0});
+    }
     return out;
   }
 
@@ -172,7 +177,7 @@
       var syn = w.s ? '<div class="syn"><span class="tag">' + (w.f ? 'مترادف:' : 'توضیح آلمانی:') + '</span><span class="de" lang="de">' + esc(w.s) + '</span></div>' : '';
       var ex = w.x ? '<div class="ex"><span class="de" lang="de">' + esc(w.x) + '</span><button type="button" class="linkbtn" data-ex>▶ مثال</button></div>' : '';
       d.innerHTML = '<button type="button" class="play sm" aria-label="تلفظ ' + esc(w.d) + '">' + PLAY + '</button><div class="de head" lang="de">' + esc(w.d) + '</div>' + meaning + syn + ex;
-      d.querySelector('.play').onclick = function(){ var sg = segOf('w', wi); speakList([{seg: sg, el: d, rate: Math.min(rate, 0.85), pause: 700}, {seg: sg, el: d, rate: Math.min(rate, 0.85)}]); };
+      d.querySelector('.play').onclick = function(){ speakList([{seg: segOf('w', wi, 'm'), el: d, rate: Math.min(rate, 0.85), pause: 700}, {seg: segOf('w', wi, 'f'), el: d, rate: Math.min(rate, 0.85)}]); };
       var eb = d.querySelector('[data-ex]'); if (eb) eb.onclick = function(){ speakList(repeated('x', wi, d)); };
       words.appendChild(d);
     });
@@ -189,7 +194,7 @@
     paint();
   }
   seg('rateSeg', rate, function(v){ rate = v; store.set('us_rate', v); });
-  seg('repSeg', reps, function(v){ reps = v; store.set('us_reps', v); });
+  seg('repSeg', reps, function(v){ reps = v; store.set('us_reps3', v); });
 
   document.getElementById('prev').onclick = function(){ go(cur - 1); };
   document.getElementById('next').onclick = function(){ go(cur + 1); };
