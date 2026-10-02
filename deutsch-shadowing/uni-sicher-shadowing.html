@@ -297,5 +297,13 @@ section{display:flex;flex-direction:column;gap:12px}
   paintHide();
   document.getElementById('doneBtn').onclick = function(){ if (done[cur]) delete done[cur]; else done[cur] = 1; store.set('us_done', done); render(); };
   render();
+  // The app can keep this page open for days; when it comes back into view, jump to the session that is due now.
+  function refreshDue(){
+    var now = currentIndex();
+    if (now !== autoIdx) { autoIdx = now; store.set('us_last_auto', now); go(now); }
+  }
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) refreshDue(); });
+  window.addEventListener('focus', refreshDue);
+  setInterval(refreshDue, 60000);
 })();
 </script>
