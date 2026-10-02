@@ -62,6 +62,8 @@
   var SLOTS = [10, 17];
   var START = Date.UTC(2026, 8, 27); // day 0: session 2 at 10:00, session 3 at 17:00 (session 1 was 2026-09-26 20:00)
   var OFFSET = 1;
+  // From 2026-10-03 (day 6): one session daily at 12:00; session 14 (index 13) is the first.
+  var DAILY_FROM_DAY = 6, DAILY_FIRST = 13, DAILY_HOUR = 12;
   var fa = function(n){ return Number(n).toLocaleString('fa-IR'); };
   var store = {
     get: function(k, d){ try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
@@ -78,9 +80,12 @@
     var b = berlinNow(), slot = -1;
     SLOTS.forEach(function(h, i){ if (b.hour >= h) slot = i; });
     var idx = b.day * 2 + slot + OFFSET;
+    var d2 = b.day - DAILY_FROM_DAY;
+    if (d2 >= 0) idx = DAILY_FIRST + d2 - (b.hour < DAILY_HOUR ? 1 : 0);
     return Math.max(0, Math.min(S.length - 1, idx));
   }
   function whenOf(i){
+    if (i >= DAILY_FIRST) return new Date(START + (DAILY_FROM_DAY + i - DAILY_FIRST) * 864e5).toLocaleDateString('fa-IR', {timeZone:'UTC', weekday:'long', day:'numeric', month:'long'}) + ' · ساعت ' + fa(DAILY_HOUR) + ':۰۰ (وقت آلمان)';
     if (i === 0) return new Date(START - 864e5).toLocaleDateString('fa-IR', {timeZone:'UTC', weekday:'long', day:'numeric', month:'long'}) + ' · ساعت ' + fa(20) + ':۰۰ (وقت آلمان)';
     var k = i - OFFSET, day = Math.floor(k / 2), slot = k % 2;
     var d = new Date(START + day * 864e5);
