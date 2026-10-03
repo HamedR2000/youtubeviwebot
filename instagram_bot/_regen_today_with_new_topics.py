@@ -15,9 +15,9 @@ import datetime
 import json
 import os
 
-import config
 import main
 import state as state_mod
+from config import config
 from github_host import upload_release_asset
 
 
