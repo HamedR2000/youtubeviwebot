@@ -240,6 +240,110 @@ STORY_SETS = [
             "Jan 2026: gold broke $5,600 for the first time in history.",
         ],
     },
+    # Ten trading-principles/methodology topics, added at the account
+    # owner's request after the original 9 sets started feeling repetitive.
+    # Rotate once each before new topics get added again (see
+    # story_set_cursor / story_set_fa_cursor in state.json).
+    {
+        "topic": "RISK:REWARD RATIO",
+        "lines": [
+            "Win rate doesn't matter as much as you think.",
+            "A 40% win rate can still be profitable.",
+            "What matters is your risk-to-reward ratio.",
+            "Risk $1 to make $2 or more, every time.",
+            "Do the math before the trade, not after.",
+        ],
+    },
+    {
+        "topic": "POSITION SIZING",
+        "lines": [
+            "Lot size isn't a feeling. It's a calculation.",
+            "Risk a fixed % of your account, not a fixed lot.",
+            "A $10k account and a $1k account need different sizes.",
+            "Your stop-loss distance decides your position size.",
+            "Same risk, every trade -- that's the goal.",
+        ],
+    },
+    {
+        "topic": "MULTI-TIMEFRAME ANALYSIS",
+        "lines": [
+            "The daily chart shows the story. The hourly shows the sentence.",
+            "Trade with the higher timeframe trend.",
+            "Use the lower timeframe only for your entry.",
+            "Fighting the bigger trend is fighting the tide.",
+            "Zoom out before you zoom in.",
+        ],
+    },
+    {
+        "topic": "TRADING AS A BUSINESS",
+        "lines": [
+            "A business has a plan. So should your trading.",
+            "Track your numbers like a business tracks revenue.",
+            "Rules first. Instincts second.",
+            "No business survives without managing its losses.",
+            "Treat it like a business, not a lottery ticket.",
+        ],
+    },
+    {
+        "topic": "DRAWDOWN MANAGEMENT",
+        "lines": [
+            "Every trader has losing streaks. Even the good ones.",
+            "Cut your size when the losses pile up.",
+            "A drawdown is a signal to slow down, not speed up.",
+            "Protect what's left before you chase what's lost.",
+            "Recovery starts with smaller risk, not bigger bets.",
+        ],
+    },
+    {
+        "topic": "TREND VS RANGE",
+        "lines": [
+            "Not every strategy works in every market.",
+            "Trends reward patience. Ranges reward precision.",
+            "Breakout strategies struggle in a sideways market.",
+            "Know which one you're in before you enter.",
+            "The chart tells you. Read it first.",
+        ],
+    },
+    {
+        "topic": "FOMO",
+        "lines": [
+            "The candle already moved. You didn't miss much.",
+            "Chasing price is how late entries turn into early losses.",
+            "If you missed the move, there's always another one.",
+            "FOMO has no stop-loss.",
+            "Wait for your setup, not the crowd's.",
+        ],
+    },
+    {
+        "topic": "LEVERAGE",
+        "lines": [
+            "Leverage doesn't create an edge. It multiplies the one you already have.",
+            "The same leverage that doubles your win doubles your loss.",
+            "High leverage, low size -- or it adds up fast.",
+            "Leverage is a tool, not a shortcut.",
+            "Respect it, or it won't respect you.",
+        ],
+    },
+    {
+        "topic": "SESSIONS & LIQUIDITY",
+        "lines": [
+            "Not all hours are equal for gold.",
+            "London and New York overlap brings the real volume.",
+            "Asian session often just drifts sideways.",
+            "Thin liquidity means wider spreads and fake moves.",
+            "Trade when the market is actually trading.",
+        ],
+    },
+    {
+        "topic": "BACKTEST FIRST",
+        "lines": [
+            "Test the idea before you trust it with real money.",
+            "History doesn't repeat, but setups often do.",
+            "A backtested edge beats a gut feeling.",
+            "If it doesn't work on old charts, it won't work tomorrow.",
+            "Prove it on paper before you prove it with capital.",
+        ],
+    },
 ]
 
 # Persian equivalents of HOOKS -- used on Persian-language days (see
@@ -397,6 +501,108 @@ STORY_SETS_FA = [
             "بعد از ۵ سال، فقط ۵ تا ۷ درصد معامله‌گرها هنوز سودده‌ن.",
             "وقتی نصف حساب از دست بره، معمولاً ظرف ۹۰ روز بقیه‌ش هم می‌ره.",
             "ژانویه ۲۰۲۶: طلا برای اولین‌بار در تاریخ از ۵٬۶۰۰ دلار رد شد.",
+        ],
+    },
+    # Persian equivalents of the 10 new trading-principles sets above --
+    # same order/meaning, faithful translation not word-for-word.
+    {
+        "topic": "نسبت ریسک به ریوارد",
+        "lines": [
+            "نرخ برد اون‌قدری که فکر می‌کنی مهم نیست.",
+            "با ۴۰٪ برد هم می‌شه سودده بود.",
+            "چیزی که مهمه، نسبت ریسک به ریورده.",
+            "هر بار ۱ دلار ریسک کن برای ۲ دلار یا بیشتر سود.",
+            "قبل از معامله حساب کن، نه بعدش.",
+        ],
+    },
+    {
+        "topic": "اندازه‌ی پوزیشن",
+        "lines": [
+            "حجم معامله حس نیست، محاسبه‌ست.",
+            "درصد ثابتی از حساب رو ریسک کن، نه یک حجم ثابت.",
+            "یک حساب ۱۰هزار دلاری با یک حساب ۱هزار دلاری حجم یکسان نمی‌خوان.",
+            "فاصله‌ی حد ضررت، حجم معامله‌ت رو تعیین می‌کنه.",
+            "ریسک یکسان توی هر معامله -- همینه هدف.",
+        ],
+    },
+    {
+        "topic": "تحلیل چند تایم‌فریم",
+        "lines": [
+            "چارت روزانه داستان رو نشون می‌ده. چارت ساعتی جمله رو.",
+            "همراه با روند تایم‌فریم بالا معامله کن.",
+            "تایم‌فریم پایین رو فقط برای ورودت استفاده کن.",
+            "مقابل روند بزرگ‌تر رفتن، مثل مقابل جزر و مده.",
+            "اول دور شو، بعد نزدیک.",
+        ],
+    },
+    {
+        "topic": "ترید به‌عنوان کسب‌وکار",
+        "lines": [
+            "یک کسب‌وکار برنامه داره. تریدینگ تو هم باید داشته باشه.",
+            "آمارت رو مثل یک کسب‌وکار دنبال کن.",
+            "اول قانون، بعد غریزه.",
+            "هیچ کسب‌وکاری بدون مدیریت ضرر دوام نمیاره.",
+            "باهاش مثل یک کسب‌وکار رفتار کن، نه یک بلیط بخت‌آزمایی.",
+        ],
+    },
+    {
+        "topic": "مدیریت دوره‌ی ضرر",
+        "lines": [
+            "هر معامله‌گری دوره‌ی ضرر داره. حتی خوب‌هاش.",
+            "وقتی ضررها جمع شد، حجمت رو کم کن.",
+            "دوره‌ی ضرر یعنی آروم‌تر برو، نه تندتر.",
+            "اول چیزی که مونده رو حفظ کن، بعد دنبال جبران باش.",
+            "جبران با ریسک کمتر شروع می‌شه، نه شرط بزرگ‌تر.",
+        ],
+    },
+    {
+        "topic": "روند در مقابل رنج",
+        "lines": [
+            "هر استراتژی تو هر بازاری جواب نمی‌ده.",
+            "روند به صبر پاداش می‌ده. رنج به دقت.",
+            "استراتژی‌های breakout تو بازار رنج ضعیف عمل می‌کنن.",
+            "قبل از ورود بدون تو کدومشی.",
+            "چارت بهت می‌گه. اول بخونش.",
+        ],
+    },
+    {
+        "topic": "ترس از دست دادن فرصت",
+        "lines": [
+            "کندل حرکت کرده. چیز زیادی از دست ندادی.",
+            "دنبال قیمت دواندن، ورود دیر رو به ضرر زود تبدیل می‌کنه.",
+            "اگه یک حرکت رو از دست دادی، همیشه یکی دیگه هست.",
+            "FOMO حد ضرر نداره.",
+            "برای ستاپ خودت صبر کن، نه برای جمعیت.",
+        ],
+    },
+    {
+        "topic": "اهرم",
+        "lines": [
+            "اهرم مزیت نمی‌سازه، مزیتِ موجودت رو چند برابر می‌کنه.",
+            "همون اهرمی که سودت رو دوبرابر می‌کنه، ضررت رو هم دوبرابر می‌کنه.",
+            "اهرم بالا، حجم پایین -- وگرنه سریع جمع می‌شه.",
+            "اهرم یک ابزاره، نه یک میان‌بر.",
+            "بهش احترام بذار، وگرنه بهت احترام نمی‌ذاره.",
+        ],
+    },
+    {
+        "topic": "نشست‌های معاملاتی و نقدینگی",
+        "lines": [
+            "همه‌ی ساعت‌ها برای طلا یکسان نیستن.",
+            "overlap لندن و نیویورک حجم واقعی رو میاره.",
+            "سشن آسیا معمولاً فقط رنج می‌زنه.",
+            "نقدینگی کم یعنی اسپرد بازتر و حرکت‌های الکی.",
+            "وقتی بازار واقعاً در حال معامله‌ست معامله کن.",
+        ],
+    },
+    {
+        "topic": "بک‌تست قبل از ریسک واقعی",
+        "lines": [
+            "قبل از اینکه با پول واقعی بهش اعتماد کنی، ایده رو تست کن.",
+            "تاریخ تکرار نمی‌شه، ولی ستاپ‌ها اغلب تکرار می‌شن.",
+            "یک مزیتِ بک‌تست‌شده از یک حس دلی بهتره.",
+            "اگه رو چارت‌های قدیمی جواب نده، فردا هم جواب نمی‌ده.",
+            "اول رو کاغذ ثابتش کن، بعد با سرمایه.",
         ],
     },
 ]
