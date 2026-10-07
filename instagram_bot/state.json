@@ -40,7 +40,7 @@
     7948070,
     17977098
   ],
-  "hashtag_cursor": 0,
+  "hashtag_cursor": 20,
   "hook_cursor": 2,
   "tip_cursor": 4,
   "cta_cursor": 6,
@@ -239,14 +239,14 @@
     "18131806330738472",
     "17881979595652919"
   ],
-  "carousel_bg_cursor": 27,
+  "carousel_bg_cursor": 28,
   "story_line_fa_cursor": 20,
   "carousel_theme_cursor": 1,
   "story_theme_cursor": 0,
-  "feed_theme_cursor": 0,
-  "hook_fa_cursor": 1,
-  "tip_fa_cursor": 3,
-  "cta_fa_cursor": 5,
+  "feed_theme_cursor": 1,
+  "hook_fa_cursor": 2,
+  "tip_fa_cursor": 4,
+  "cta_fa_cursor": 6,
   "carousel_topic_fa_cursor": 0,
   "story_set_cursor": 10,
   "story_set_fa_cursor": 13
