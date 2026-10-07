@@ -7,8 +7,8 @@
     writes+uploads a manifest.json describing what was built. Does NOT
     call the Instagram API at all -- this is the "show me before it goes
     out" half of the pipeline. Everything posted on a given day is in one
-    language -- English on ENGLISH_WEEKDAYS (Mon/Wed/Fri), Persian the
-    rest of the week -- see ENGLISH_WEEKDAYS below.
+    language -- English on ENGLISH_WEEKDAYS (Fri only), Persian the rest
+    of the week -- see ENGLISH_WEEKDAYS below.
 
   publish -- takes a manifest URL (env MANIFEST_URL, produced by a prior
     generate run once a human has reviewed and approved it) and actually
@@ -83,8 +83,10 @@ STORIES_PER_DAY = 5
 # Mon=0 ... Sun=6 (datetime.date.weekday())
 FEED_POST_WEEKDAYS = {2}        # Wed: a single feed image card
 CAROUSEL_WEEKDAYS = {0, 4}      # Mon, Fri: a full educational carousel
-ENGLISH_WEEKDAYS = {0, 2, 4}    # Mon, Wed, Fri: everything posted that day is in English
-                                 # (every other day -- Sat, Sun, Tue, Thu -- is Persian)
+ENGLISH_WEEKDAYS = {4}          # Fri only: everything posted that day is in English.
+                                 # Narrowed from {Mon, Wed, Fri} after the Oct 2026
+                                 # engagement review showed Persian reels outperforming
+                                 # English ones -- Persian is now the default 6 days/week.
 
 # Alternates dark (hero photo) and light (flat cream, no photo) so the
 # whole account doesn't read as uniformly dark -- each content type keeps
