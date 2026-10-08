@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw
 
 from icon_kit import draw_icon
 from text_overlay import draw_wrapped_px, montserrat, playfair, vazirmatn, wrap_lines_px
-from theme import THEMES, flat_light_background
+from theme import THEMES, add_sparkle_accents, flat_light_background
 
 CANVAS_W, CANVAS_H = 1080, 1350
 MARGIN = 70
@@ -154,6 +154,12 @@ def _background_dark(photo_path):
         vd.line([(0, y), (CANVAS_W, y)], fill=a)
     dark = Image.new("RGBA", (CANVAS_W, CANVAS_H), (2, 2, 3, 255))
     canvas = Image.composite(dark, canvas, vignette)
+
+    # Same glitter texture as the light theme (see theme.flat_light_background)
+    # -- the dark theme relied on the hero photo alone for visual interest,
+    # which read as plain next to other niche accounts (account owner's
+    # feedback).
+    add_sparkle_accents(canvas, CANVAS_W, CANVAS_H)
     return canvas
 
 

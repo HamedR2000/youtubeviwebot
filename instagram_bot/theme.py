@@ -101,6 +101,15 @@ def _draw_rich_candlesticks(canvas: Image.Image, w: int, h: int) -> None:
     canvas.alpha_composite(layer)
 
 
+def add_sparkle_accents(canvas: Image.Image, w: int, h: int) -> None:
+    """Public entry point for _draw_gold_dust, so dark-themed cards (which
+    get their visual interest from a hero photo alone) can opt into the
+    same glitter texture the light theme already has -- requested by the
+    account owner after feeling the dark posts/stories read too plain next
+    to other accounts in the same niche."""
+    _draw_gold_dust(canvas, w, h)
+
+
 def _draw_gold_dust(canvas: Image.Image, w: int, h: int) -> None:
     """Scattered gold particles across the whole canvas, plus a handful of
     brighter 4-point twinkle marks, for the "پر زرق و برق" (glittery,

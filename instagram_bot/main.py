@@ -62,7 +62,7 @@ from content_bank import (
     TIPS_FA,
 )
 from github_host import upload_release_asset
-from image_composer import build_feed_card, build_story_card
+from image_composer import build_feed_card, build_reel_cover, build_story_card
 from instagram_publish import (
     PublishError,
     create_comment,
@@ -72,7 +72,7 @@ from instagram_publish import (
     publish_story,
 )
 from stock_media import download_video, find_unused_video
-from video_composer import compose_story_video, compose_video
+from video_composer import compose_story_video, compose_video, extract_cover_frame
 from youtube_publish import YouTubePublishError, get_access_token, upload_short
 
 BRAND_HANDLE = "@Goldhamedsignals"
@@ -128,13 +128,25 @@ def build_reel_item(today: str, st: dict, lang: str) -> dict:
     compose_video(raw_video_path=raw_path, hook=hook, tip=tip, brand_handle=BRAND_HANDLE,
                   music_dir=MUSIC_DIR, output_path=output_path, rtl=rtl)
 
+    # A dedicated cover image for the profile grid tile -- without it,
+    # Instagram auto-picks a frame from the raw clip with no branding or
+    # headline on it at all (the account owner's complaint: reels had no
+    # attention-grabbing cover on the profile).
+    frame_path = os.path.join(WORKDIR, f"reel_{today}_frame.jpg")
+    extract_cover_frame(raw_path, frame_path)
+    cover_path = os.path.join(WORKDIR, f"reel_{today}_cover.jpg")
+    build_reel_cover(frame_path, hook, BRAND_HANDLE, cover_path, rtl=rtl)
+    cover_url = _host(today, cover_path)
+
     caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st)
     video_url = _host(today, output_path)
 
     st["used_pexels_ids"].append(video_info["id"])
     os.remove(raw_path)
     os.remove(output_path)
-    return {"type": "reel", "video_url": video_url, "caption": caption}
+    os.remove(frame_path)
+    os.remove(cover_path)
+    return {"type": "reel", "video_url": video_url, "caption": caption, "cover_url": cover_url}
 
 
 def build_story_items(today: str, st: dict, lang: str) -> list:
@@ -286,7 +298,8 @@ def run_publish() -> None:
         kind = item["type"]
         if kind == "reel":
             media_id = publish_reel(config.GRAPH_API_VERSION, config.IG_USER_ID,
-                                     config.IG_ACCESS_TOKEN, item["video_url"], item["caption"])
+                                     config.IG_ACCESS_TOKEN, item["video_url"], item["caption"],
+                                     cover_url=item.get("cover_url"))
         elif kind == "story":
             media_id = publish_story(config.GRAPH_API_VERSION, config.IG_USER_ID,
                                       config.IG_ACCESS_TOKEN, video_url=item["video_url"])
