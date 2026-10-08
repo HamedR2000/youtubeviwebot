@@ -68,6 +68,17 @@ def build_text_overlay(hook: str, tip: str, brand_handle: str, rtl: bool = False
     return img
 
 
+def extract_cover_frame(video_path: str, output_path: str, t: float = 1.0) -> None:
+    """Grab a single still frame from the raw stock clip (before any text
+    overlay) to use as the base photo for the Reel's cover image -- see
+    image_composer.build_reel_cover. t=1.0 skips the clip's very first
+    frame, which is sometimes a hard cut/black frame."""
+    clip = VideoFileClip(video_path)
+    frame_t = min(t, max(clip.duration - 0.1, 0))
+    clip.save_frame(output_path, t=frame_t)
+    clip.close()
+
+
 def _fit_and_crop(clip: VideoFileClip) -> VideoFileClip:
     scale = max(TARGET_W / clip.w, TARGET_H / clip.h)
     resized = clip.resized(scale)

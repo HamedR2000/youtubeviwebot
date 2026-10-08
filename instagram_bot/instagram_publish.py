@@ -25,7 +25,8 @@ def _graph_url(version: str, path: str) -> str:
 
 def create_media_container(version: str, ig_user_id: str, access_token: str, *,
                             media_type: str = None, image_url: str = None,
-                            video_url: str = None, caption: str = None) -> str:
+                            video_url: str = None, caption: str = None,
+                            cover_url: str = None) -> str:
     if not image_url and not video_url:
         raise ValueError("create_media_container requires image_url or video_url")
 
@@ -38,6 +39,8 @@ def create_media_container(version: str, ig_user_id: str, access_token: str, *,
         data["video_url"] = video_url
     if caption:
         data["caption"] = caption
+    if cover_url:
+        data["cover_url"] = cover_url
 
     resp = requests.post(_graph_url(version, f"{ig_user_id}/media"), data=data, timeout=60)
     _raise_for_graph_error(resp)
@@ -80,9 +83,10 @@ def _create_wait_publish(version, ig_user_id, access_token, **container_kwargs) 
 
 
 def publish_reel(version: str, ig_user_id: str, access_token: str,
-                  video_url: str, caption: str) -> str:
+                  video_url: str, caption: str, cover_url: str = None) -> str:
     return _create_wait_publish(version, ig_user_id, access_token,
-                                 media_type="REELS", video_url=video_url, caption=caption)
+                                 media_type="REELS", video_url=video_url, caption=caption,
+                                 cover_url=cover_url)
 
 
 def publish_feed_image(version: str, ig_user_id: str, access_token: str,
