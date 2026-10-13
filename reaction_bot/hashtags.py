@@ -9,7 +9,15 @@
 
 import random
 
-CORE_HASHTAGS = ["#Shorts", "#ری_اکشن"]
+# این‌ها همیشه (بدون تصادفی بودن) توی هر آپلود هستن -- پرمخاطب‌ترین و
+# عمومی‌ترین هشتگ‌های این ژانر روی یوتیوب (Shorts/reaction/comedy)، که
+# خواستیم تضمین‌شده باشن نه فقط شانسی از GENERAL_POOL انتخاب بشن.
+CORE_HASHTAGS = [
+    "#Shorts", "#ری_اکشن", "#shortsfeed", "#fyp", "#viral", "#trending",
+    "#reaction", "#comedy",
+]
+
+TOTAL_HASHTAGS = 15
 
 GENERAL_POOL = [
     "#خنده", "#خنده_دار", "#طنز", "#طنز_ایرانی", "#کلیپ_طنز", "#کمدی",
@@ -17,8 +25,7 @@ GENERAL_POOL = [
     "#کلیپ_باحال", "#کلیپ_خنده_دار", "#طنز_واقعی", "#خنده_تضمینی",
     "#ویدیوی_خنده_دار", "#موقعیت_خنده_دار", "#کلیپ_ایرانی", "#خنده_از_ته_دل",
     "#طنز_خنده_دار", "#لحظه_خنده_دار", "#کلیپ_فان", "#خنده_دار_ترین",
-    "#reaction", "#comedy", "#funny", "#funnyvideos", "#viral", "#fyp",
-    "#laugh", "#lol", "#trending", "#shortsfeed", "#ytshorts", "#comedyvideos",
+    "#funny", "#funnyvideos", "#laugh", "#lol", "#ytshorts", "#comedyvideos",
     "#funnymoments", "#instafunny", "#persian", "#iranian",
 ]
 
@@ -33,21 +40,22 @@ CATEGORY_POOLS = {
 }
 
 
-def ensure_hashtags(description: str, category: str | None = None, count: int = 13) -> str:
-    """اگه description از قبل هیچ هشتگی نداشت، یه ترکیب تصادفی از
-    CORE + (چندتا هشتگ مرتبط با category، اگه داده باشی) + بقیه از
-    GENERAL_POOL رو ته‌ش اضافه می‌کنه، جوری که جمعاً از ۱۵ تا رد نشه.
-    اگه خودت هشتگ گذاشته باشی، دست‌نخورده می‌مونه."""
+def ensure_hashtags(description: str, category: str | None = None) -> str:
+    """همیشه CORE_HASHTAGS (پرمخاطب‌ترین‌ها، ثابت) رو می‌ذاره، بعد با
+    چندتا هشتگ مرتبط با category (اگه داده باشی) و بقیه از GENERAL_POOL
+    (تصادفی، برای تنوع بین ویدیوها) جمعاً دقیقاً به TOTAL_HASHTAGS (۱۵)
+    می‌رسه -- نه کمتر، نه بیشتر (بیشتر از ۱۵ یعنی یوتیوب کل هشتگ‌ها رو
+    نادیده می‌گیره). اگه خودت از قبل هشتگ گذاشته باشی، دست‌نخورده می‌مونه."""
     if "#" in description:
         return description
 
     picked: list[str] = []
     if category and category in CATEGORY_POOLS:
-        pool = CATEGORY_POOLS[category]
+        pool = [t for t in CATEGORY_POOLS[category] if t not in CORE_HASHTAGS]
         picked.extend(random.sample(pool, min(3, len(pool))))
 
-    remaining = count - len(picked)
-    general_choices = [t for t in GENERAL_POOL if t not in picked]
+    remaining = TOTAL_HASHTAGS - len(CORE_HASHTAGS) - len(picked)
+    general_choices = [t for t in GENERAL_POOL if t not in picked and t not in CORE_HASHTAGS]
     picked.extend(random.sample(general_choices, min(remaining, len(general_choices))))
 
     tags = CORE_HASHTAGS + picked

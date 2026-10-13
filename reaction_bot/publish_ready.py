@@ -17,8 +17,9 @@ from moviepy import VideoFileClip
 from branding import add_subscribe_banner
 from config import config
 from hashtags import CATEGORY_POOLS, ensure_hashtags
+from thumbnail import extract_thumbnail
 from titles import pick_title
-from youtube_upload import upload_video
+from youtube_upload import set_thumbnail, upload_video
 
 SHORTS_MAX_SECONDS = 180
 
@@ -35,6 +36,9 @@ def main() -> None:
     parser.add_argument("--upload", action="store_true", help="آپلود به یوتیوب")
     parser.add_argument("--dry-run", action="store_true", help="همراه --upload: فقط payload رو چاپ می‌کنه")
     parser.add_argument("--privacy", choices=["private", "unlisted", "public"], help="وضعیت انتشار یوتیوب")
+    parser.add_argument("--no-thumbnail", action="store_true", help="تامبنیل سفارشی (فریمی از خود ویدیو) ست نشه")
+    parser.add_argument("--intro-seconds", type=float, default=3.0, help="مدت کارت مقدمه در ویدیوی ورودی (برای رد شدن از روش موقع انتخاب فریم تامبنیل)")
+    parser.add_argument("--outro-seconds", type=float, default=2.5, help="مدت کارت پایان‌بندی در ویدیوی ورودی (همون منطق تامبنیل)")
     args = parser.parse_args()
 
     with VideoFileClip(args.video) as clip:
@@ -73,7 +77,7 @@ def main() -> None:
     description = ensure_hashtags(args.description, category=args.category)
     tags = [t.strip() for t in args.tags.split(",") if t.strip()]
 
-    upload_video(
+    video_id = upload_video(
         file_path=final_path,
         title=title,
         description=description,
@@ -81,6 +85,20 @@ def main() -> None:
         privacy_status=args.privacy,
         dry_run=args.dry_run,
     )
+
+    if video_id and not args.no_thumbnail:
+        thumb_path = final_path + ".thumb.jpg"
+        try:
+            extract_thumbnail(
+                final_path, thumb_path,
+                intro_seconds=args.intro_seconds, outro_seconds=args.outro_seconds,
+            )
+            set_thumbnail(video_id, thumb_path)
+        except Exception as e:
+            print(f"⚠️  تامبنیل ست نشد (خود ویدیو مشکلی نداره): {e}")
+        finally:
+            if os.path.exists(thumb_path):
+                os.remove(thumb_path)
 
 
 if __name__ == "__main__":

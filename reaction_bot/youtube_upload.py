@@ -86,3 +86,13 @@ def upload_video(
     video_id = response["id"]
     print(f"آپلود کامل شد: https://youtube.com/shorts/{video_id}")
     return video_id
+
+
+def set_thumbnail(video_id: str, thumbnail_path: str) -> None:
+    """تامبنیل سفارشی ویدیو رو ست می‌کنه. اسکوپ youtube (نه فقط
+    youtube.upload) همینجا هم لازمه، همونیه که توی config.py هست."""
+    creds = _get_credentials()
+    youtube = build("youtube", "v3", credentials=creds)
+    media = MediaFileUpload(thumbnail_path, mimetype="image/jpeg")
+    youtube.thumbnails().set(videoId=video_id, media_body=media).execute()
+    print(f"تامبنیل ست شد: {thumbnail_path}")
