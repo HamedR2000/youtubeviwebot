@@ -344,6 +344,110 @@ STORY_SETS = [
             "Prove it on paper before you prove it with capital.",
         ],
     },
+    # Second batch of ten trading-principles topics, added once the first
+    # batch above completed a full rotation (see story_set_cursor /
+    # story_set_fa_cursor in state.json) -- account owner approved this
+    # exact list before it went in.
+    {
+        "topic": "ORDER TYPES",
+        "lines": [
+            "A market order fills now, at whatever price is available.",
+            "A limit order only fills at your price, or better.",
+            "A stop order triggers once price reaches a level you set.",
+            "Most costly mistakes come from using the wrong one at the wrong time.",
+            "Know all three before you place your next trade.",
+        ],
+    },
+    {
+        "topic": "CORRELATION",
+        "lines": [
+            "Gold rarely moves alone.",
+            "A stronger dollar usually pulls gold down, and vice versa.",
+            "Real yields often move opposite to gold's price.",
+            "Watch DXY and yields alongside your gold chart, not instead of it.",
+            "Correlation isn't causation, but ignoring it is a mistake.",
+        ],
+    },
+    {
+        "topic": "NEWS TRADING",
+        "lines": [
+            "NFP, CPI, and FOMC can move gold 1% in a minute.",
+            "Spreads widen and slippage spikes right before release.",
+            "Many pros simply step aside during high-impact news.",
+            "If you trade through it, size down and widen your stop.",
+            "A plan beats a guess every time volatility spikes.",
+        ],
+    },
+    {
+        "topic": "TRADE JOURNAL",
+        "lines": [
+            "The trade you don't write down, you're doomed to repeat.",
+            "A journal turns random trades into a repeatable process.",
+            "Log the setup, the reason, and the result -- every time.",
+            "Patterns in your losses show up faster on paper than in your head.",
+            "Review weekly. Adjust monthly. Improve constantly.",
+        ],
+    },
+    {
+        "topic": "EMOTIONAL DISCIPLINE",
+        "lines": [
+            "Revenge trading turns one loss into three.",
+            "The market doesn't know you're trying to win it back.",
+            "Step away after a loss before you place the next trade.",
+            "Patience isn't passive -- it's the hardest skill in trading.",
+            "Your plan should decide the trade, not your mood.",
+        ],
+    },
+    {
+        "topic": "SUPPORT & RESISTANCE",
+        "lines": [
+            "A level isn't a line -- it's a zone.",
+            "Price respects areas more often than exact numbers.",
+            "The more times a level holds, the more traders watch it.",
+            "A broken resistance often becomes new support.",
+            "Mark your zones before the session starts, not during it.",
+        ],
+    },
+    {
+        "topic": "MARKET STRUCTURE",
+        "lines": [
+            "Higher highs and higher lows -- that's an uptrend, simply put.",
+            "A break of structure is often the first clue a trend is shifting.",
+            "Trade with structure until it proves otherwise.",
+            "Counter-trend trades need stronger evidence, not just a hunch.",
+            "Structure tells you the story price is already writing.",
+        ],
+    },
+    {
+        "topic": "OVERTRADING",
+        "lines": [
+            "More trades rarely means more profit.",
+            "Boredom is not a trading signal.",
+            "One clean setup beats five mediocre ones.",
+            "Overtrading usually shows up right after a big win or a big loss.",
+            "Quality of entries matters more than quantity of trades.",
+        ],
+    },
+    {
+        "topic": "STOP LOSS PLACEMENT",
+        "lines": [
+            "A stop loss too tight gets you stopped out by noise.",
+            "A stop loss too wide turns a small loss into a big one.",
+            "Place it where your setup is wrong, not where you feel safe.",
+            "Behind structure, not behind hope.",
+            "Every trade needs one before it needs anything else.",
+        ],
+    },
+    {
+        "topic": "TRADING PLAN",
+        "lines": [
+            "A trading plan turns decisions into routines.",
+            "Write your entry rules, exit rules, and risk limits -- before you need them.",
+            "Without a plan, every trade becomes a fresh guess.",
+            "A plan you don't follow is just a wish.",
+            "The goal isn't to be right. It's to follow the plan.",
+        ],
+    },
 ]
 
 # Persian equivalents of HOOKS -- used on Persian-language days (see
@@ -603,6 +707,108 @@ STORY_SETS_FA = [
             "یک مزیتِ بک‌تست‌شده از یک حس دلی بهتره.",
             "اگه رو چارت‌های قدیمی جواب نده، فردا هم جواب نمی‌ده.",
             "اول رو کاغذ ثابتش کن، بعد با سرمایه.",
+        ],
+    },
+    # Persian equivalents of the second batch of ten topics above -- same
+    # order/meaning, faithful translation not word-for-word.
+    {
+        "topic": "انواع سفارش",
+        "lines": [
+            "سفارش مارکت همین الان، با هر قیمتی که موجوده، اجرا می‌شه.",
+            "سفارش لیمیت فقط با قیمت تو، یا بهتر، پر می‌شه.",
+            "سفارش استاپ وقتی قیمت به سطحی که تعیین کردی برسه، فعال می‌شه.",
+            "بیشتر اشتباه‌های گرون از استفاده‌ی اشتباه از این‌ها تو زمان غلط میاد.",
+            "قبل از معامله‌ی بعدیت، هر سه رو خوب بشناس.",
+        ],
+    },
+    {
+        "topic": "همبستگی بازارها",
+        "lines": [
+            "طلا به‌ندرت تنها حرکت می‌کنه.",
+            "معمولاً یک دلار قوی‌تر، طلا رو پایین می‌کشه، و برعکس.",
+            "بازده واقعی اغلب برعکس قیمت طلا حرکت می‌کنه.",
+            "DXY و بازده‌ها رو کنار چارت طلا دنبال کن، نه به‌جاش.",
+            "همبستگی به معنی علیت نیست، ولی نادیده گرفتنش اشتباهه.",
+        ],
+    },
+    {
+        "topic": "معامله دور اخبار مهم",
+        "lines": [
+            "NFP، CPI، و FOMC می‌تونن طلا رو تو یک دقیقه ۱٪ جابه‌جا کنن.",
+            "درست قبل از انتشار خبر، اسپردها باز و لغزش قیمت زیاد می‌شه.",
+            "خیلی از حرفه‌ای‌ها ساده فقط تو این بازه کنار می‌کشن.",
+            "اگه معامله کردی، حجمت رو کم و حد ضررت رو بازتر کن.",
+            "هر وقت نوسان زیاد شد، یک پلن از یک حدس بهتره.",
+        ],
+    },
+    {
+        "topic": "ژورنال معاملاتی",
+        "lines": [
+            "معامله‌ای که ثبتش نکنی، محکومی که تکرارش کنی.",
+            "ژورنال، معاملات تصادفی رو به یک فرآیند قابل‌تکرار تبدیل می‌کنه.",
+            "هر بار ستاپ، دلیل، و نتیجه رو بنویس.",
+            "الگوهای ضررهات رو روی کاغذ زودتر از تو ذهنت می‌بینی.",
+            "هفتگی مرور کن، ماهانه اصلاح کن، همیشه بهتر شو.",
+        ],
+    },
+    {
+        "topic": "انضباط احساسی",
+        "lines": [
+            "معامله‌ی انتقامی یک ضرر رو به سه تا تبدیل می‌کنه.",
+            "بازار نمی‌دونه داری سعی می‌کنی پولت رو پس بگیری.",
+            "بعد از یک ضرر، قبل از معامله‌ی بعدی یک قدم کنار برو.",
+            "صبر منفعل نیست -- سخت‌ترین مهارت تو تریده.",
+            "پلنت باید معامله رو تصمیم بگیره، نه حالت.",
+        ],
+    },
+    {
+        "topic": "سطوح حمایت و مقاومت",
+        "lines": [
+            "یک سطح، خط نیست -- یک ناحیه‌ست.",
+            "قیمت بیشتر به نواحی احترام می‌ذاره تا اعداد دقیق.",
+            "هرچی یک سطح بیشتر نگه داشته، معامله‌گرهای بیشتری زیر نظرش دارن.",
+            "مقاومت شکسته‌شده، اغلب حمایت جدید می‌شه.",
+            "نواحیت رو قبل از شروع سشن مشخص کن، نه وسطش.",
+        ],
+    },
+    {
+        "topic": "ساختار بازار",
+        "lines": [
+            "سقف‌ها و کف‌های بالاتر -- یعنی روند صعودی، به زبون ساده.",
+            "شکست ساختار اغلب اولین سرنخ تغییر روندـه.",
+            "تا وقتی خلافش ثابت نشه، هم‌جهت با ساختار معامله کن.",
+            "معاملات خلاف روند به شواهد قوی‌تر نیاز دارن، نه فقط حدس.",
+            "ساختار، داستانی که قیمت داره از قبل می‌نویسه رو بهت می‌گه.",
+        ],
+    },
+    {
+        "topic": "بیش‌ازحد معامله کردن",
+        "lines": [
+            "معامله‌ی بیشتر به‌ندرت یعنی سود بیشتر.",
+            "حوصله سررفتن، سیگنال معاملاتی نیست.",
+            "یک ستاپ تمیز بهتر از پنج تای متوسطه.",
+            "بیش‌ازحد معامله کردن معمولاً درست بعد از یک برد یا باخت بزرگ سر می‌زنه.",
+            "کیفیت ورودها مهم‌تر از تعداد معاملاتـه.",
+        ],
+    },
+    {
+        "topic": "جای درست حد ضرر",
+        "lines": [
+            "حد ضرر خیلی تنگ، با نویز بازار می‌زنتت بیرون.",
+            "حد ضرر خیلی باز، یک ضرر کوچیک رو به یک ضرر بزرگ تبدیل می‌کنه.",
+            "جایی بذارش که ستاپت غلط می‌شه، نه جایی که حس امنیت می‌کنی.",
+            "پشت ساختار، نه پشت امید.",
+            "هر معامله قبل از هر چیز دیگه، به یک حد ضرر نیاز داره.",
+        ],
+    },
+    {
+        "topic": "داشتن پلن معاملاتی",
+        "lines": [
+            "پلن معاملاتی، تصمیم‌ها رو به روتین تبدیل می‌کنه.",
+            "قوانین ورود، خروج، و محدودیت ریسکت رو -- قبل از نیاز -- بنویس.",
+            "بدون پلن، هر معامله یک حدس تازه می‌شه.",
+            "پلنی که دنبالش نکنی، فقط یک آرزوئه.",
+            "هدف درست بودن نیست. هدف دنبال کردن پلنه.",
         ],
     },
 ]
