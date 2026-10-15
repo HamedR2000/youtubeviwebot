@@ -19,6 +19,13 @@ doesn't run through one kind before the other:
 Add more files to backgrounds/ and list them here to keep growing the
 pool; state.carousel_bg_cursor rotates through them so the same one isn't
 reused back-to-back.
+
+A small second pool (PSYCHOLOGY_BACKGROUNDS) holds images that actually
+depict a mind/brain, for the handful of story and carousel topics that are
+specifically about trading psychology -- per the account owner's request
+that the background photo match the content ("اگر راجب روانشناسی ترید هست
+مطلب، یه مغز یا یه المان راجبش باشه"). next_background() picks from it
+instead of the general pool when called with a matching topic/carousel_id.
 """
 import os
 
@@ -76,7 +83,38 @@ BACKGROUNDS = [
     "abstract-candlestick-digits.jpg",
 ]
 
+# AI-generated images (same burgundy-velvet art direction as the rest of the
+# pool) that actually show a brain/mind, for psychology-themed content.
+PSYCHOLOGY_BACKGROUNDS = [
+    "psychology-golden-brain.jpg",
+    "psychology-phrenology-bust.jpg",
+]
 
-def next_background(state: dict) -> str:
+# Story topics (STORY_SETS / STORY_SETS_FA in content_bank.py) that are
+# specifically about trading psychology/emotion, in both languages -- the
+# "topic" string on the picked story set is checked against this set.
+PSYCHOLOGY_STORY_TOPICS = {
+    "AFTER A LOSS", "بعد از یک ضرر",
+    "PATIENCE PAYS", "صبر جواب می‌ده",
+    "EMOTIONS COST MONEY", "احساسات هزینه داره",
+    "FOMO", "ترس از دست دادن فرصت",
+    "EMOTIONAL DISCIPLINE", "انضباط احساسی",
+    "OVERTRADING", "بیش‌ازحد معامله کردن",
+}
+
+# Carousel ids (CAROUSELS / CAROUSELS_FA in carousel_content.py) that are
+# specifically about trading psychology/mindset -- same ids in both
+# languages, so no separate Persian set is needed.
+PSYCHOLOGY_CAROUSEL_IDS = {"after-a-loss", "success-is-what-you-dont-see"}
+
+
+def next_background(state: dict, topic: str = None, carousel_id: str = None) -> str:
+    """Pick the next background. When `topic` (a story set's topic string)
+    or `carousel_id` matches a psychology-themed entry, rotate through
+    PSYCHOLOGY_BACKGROUNDS instead of the general pool."""
+    if (topic and topic in PSYCHOLOGY_STORY_TOPICS) or \
+            (carousel_id and carousel_id in PSYCHOLOGY_CAROUSEL_IDS):
+        (filename,) = state_mod.next_rotating(PSYCHOLOGY_BACKGROUNDS, state, "psychology_bg_cursor")
+        return os.path.join(BACKGROUNDS_DIR, filename)
     (filename,) = state_mod.next_rotating(BACKGROUNDS, state, "carousel_bg_cursor")
     return os.path.join(BACKGROUNDS_DIR, filename)

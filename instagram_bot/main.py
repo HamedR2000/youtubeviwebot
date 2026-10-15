@@ -160,7 +160,7 @@ def build_story_items(today: str, st: dict, lang: str) -> list:
     for i, line in enumerate(lines):
         (theme,) = state_mod.next_rotating(THEME_ORDER, st, "story_theme_cursor")
         print(f"[{today}] Story {i + 1}/{STORIES_PER_DAY} ('{topic}'): rendering ({theme})...")
-        photo_path = next_background(st) if theme == "dark" else None
+        photo_path = next_background(st, topic=topic) if theme == "dark" else None
 
         card_path = os.path.join(WORKDIR, f"story_{today}_{i}.jpg")
         build_story_card(photo_path, line, BRAND_HANDLE, card_path, rtl=rtl, theme=theme,
@@ -216,7 +216,7 @@ def build_carousel_item(today: str, st: dict, lang: str) -> dict:
     image_urls = []
     for i, slide in enumerate(topic["slides"]):
         page_num, page_total = i + 1, len(topic["slides"])
-        photo_path = next_background(st) if theme == "dark" else None
+        photo_path = next_background(st, carousel_id=topic["id"]) if theme == "dark" else None
 
         output_path = os.path.join(WORKDIR, f"carousel_{today}_{page_num}.jpg")
         build_slide(

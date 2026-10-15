@@ -23,6 +23,7 @@ _DEFAULT_STATE = {
     "carousel_topic_cursor": 0,   # rotating offset into carousel_content.CAROUSELS
     "carousel_topic_fa_cursor": 0,  # rotating offset into carousel_content.CAROUSELS_FA
     "carousel_bg_cursor": 0,      # rotating offset into carousel_backgrounds.BACKGROUNDS
+    "psychology_bg_cursor": 0,    # rotating offset into carousel_backgrounds.PSYCHOLOGY_BACKGROUNDS
     "carousel_theme_cursor": 0,   # rotating offset into main.THEME_ORDER (carousel posts)
     "story_theme_cursor": 0,      # rotating offset into main.THEME_ORDER (stories)
     "feed_theme_cursor": 0,       # rotating offset into main.THEME_ORDER (feed image posts)
