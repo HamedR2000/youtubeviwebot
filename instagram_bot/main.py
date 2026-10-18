@@ -294,8 +294,17 @@ def run_publish() -> None:
 
     st = state_mod.load()
 
+    # Lets the account owner approve everything in a generate run except one
+    # piece (e.g. "publish the reel, skip the stories today") without a
+    # separate generate/review round -- comma-separated manifest item types,
+    # passed through from the workflow's skip_types input.
+    skip_types = {t.strip() for t in os.environ.get("SKIP_TYPES", "").split(",") if t.strip()}
+
     for item in manifest["items"]:
         kind = item["type"]
+        if kind in skip_types:
+            print(f"[{today}] Skipping {kind} (SKIP_TYPES)")
+            continue
         if kind == "reel":
             media_id = publish_reel(config.GRAPH_API_VERSION, config.IG_USER_ID,
                                      config.IG_ACCESS_TOKEN, item["video_url"], item["caption"],
