@@ -1,14 +1,17 @@
 """Daily entry point, run in one of two modes (env var PIPELINE_MODE):
 
-  generate (default) -- builds today's content (1 Reel, 5 Stories -- each
-    a short video with background music, not a plain image -- and either a
-    feed image card or a full educational carousel depending on the
-    weekday), hosts every asset as a public GitHub Release asset, and
-    writes+uploads a manifest.json describing what was built. Does NOT
-    call the Instagram API at all -- this is the "show me before it goes
-    out" half of the pipeline. Everything posted on a given day is in one
-    language -- English on ENGLISH_WEEKDAYS (Fri only), Persian the rest
-    of the week -- see ENGLISH_WEEKDAYS below.
+  generate (default) -- builds today's content: 5 Stories every day, plus
+    -- only on a "content day" (see CONTENT_DAY_ANCHOR below; every other
+    calendar day, starting 2026-10-22) -- 1 Reel and either a feed image
+    card or a full educational carousel. The account owner asked for this
+    on 2026-10-20 after noticing a reel posted every single day felt like
+    too much; stories stay daily, everything else now runs every other
+    day together instead of its own weekday. Hosts every asset as a public
+    GitHub Release asset, and writes+uploads a manifest.json describing
+    what was built. Does NOT call the Instagram API at all -- this is the
+    "show me before it goes out" half of the pipeline. Everything posted
+    on a given day is in one language -- English on ENGLISH_WEEKDAYS (Fri
+    only), Persian the rest of the week -- see ENGLISH_WEEKDAYS below.
 
   publish -- takes a manifest URL (env MANIFEST_URL, produced by a prior
     generate run once a human has reviewed and approved it) and actually
@@ -81,12 +84,27 @@ WORKDIR = os.path.join(os.path.dirname(__file__), "_build")
 
 STORIES_PER_DAY = 5
 # Mon=0 ... Sun=6 (datetime.date.weekday())
-FEED_POST_WEEKDAYS = {2}        # Wed: a single feed image card
-CAROUSEL_WEEKDAYS = {0, 4}      # Mon, Fri: a full educational carousel
 ENGLISH_WEEKDAYS = {4}          # Fri only: everything posted that day is in English.
                                  # Narrowed from {Mon, Wed, Fri} after the Oct 2026
                                  # engagement review showed Persian reels outperforming
                                  # English ones -- Persian is now the default 6 days/week.
+
+# A known "content day" -- the Reel and the extra feed/carousel post run
+# together every other day starting here, alternating forward and backward
+# from this date; every day in between is a "content day" too, just an
+# even number of days from this anchor. 2026-10-21 (the day before) is the
+# first "no reel/post" day. Stories are unaffected -- always daily.
+CONTENT_DAY_ANCHOR = datetime.date(2026, 10, 22)
+
+# What the extra post is on a content day, alternating evenly instead of
+# being tied to a specific weekday (its own rotation cursor, like the rest
+# of the content bank's rotating picks).
+POST_TYPE_ROTATION = ["carousel", "feed_image"]
+
+
+def _is_content_day(d: datetime.date) -> bool:
+    return (d - CONTENT_DAY_ANCHOR).days % 2 == 0
+
 
 # Alternates dark (hero photo) and light (flat cream, no photo) so the
 # whole account doesn't read as uniformly dark -- each content type keeps
@@ -253,24 +271,31 @@ def run_generate() -> None:
     today = today_date.isoformat()
     weekday = today_date.weekday()
     lang = "en" if weekday in ENGLISH_WEEKDAYS else "fa"
+    content_day = _is_content_day(today_date)
     st = state_mod.load()
 
     print(f"[{today}] Language for today: {lang}")
 
-    items = [build_reel_item(today, st, lang)]
-    state_mod.save(st)
+    items = []
+
+    if content_day:
+        items.append(build_reel_item(today, st, lang))
+        state_mod.save(st)
+    else:
+        print(f"[{today}] No reel today (content-day rotation).")
 
     items.extend(build_story_items(today, st, lang))
     state_mod.save(st)
 
-    if weekday in CAROUSEL_WEEKDAYS:
-        items.append(build_carousel_item(today, st, lang))
-        state_mod.save(st)
-    elif weekday in FEED_POST_WEEKDAYS:
-        items.append(build_feed_image_item(today, st, lang))
+    if content_day:
+        (post_type,) = state_mod.next_rotating(POST_TYPE_ROTATION, st, "post_type_cursor")
+        if post_type == "carousel":
+            items.append(build_carousel_item(today, st, lang))
+        else:
+            items.append(build_feed_image_item(today, st, lang))
         state_mod.save(st)
     else:
-        print(f"[{today}] No feed/carousel post scheduled today.")
+        print(f"[{today}] No feed/carousel post today (content-day rotation).")
 
     manifest = {"date": today, "lang": lang, "items": items}
     manifest_path = os.path.join(WORKDIR, "manifest.json")

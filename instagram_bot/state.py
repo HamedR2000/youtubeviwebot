@@ -26,6 +26,7 @@ _DEFAULT_STATE = {
     "carousel_theme_cursor": 0,   # rotating offset into main.THEME_ORDER (carousel posts)
     "story_theme_cursor": 0,      # rotating offset into main.THEME_ORDER (stories)
     "feed_theme_cursor": 0,       # rotating offset into main.THEME_ORDER (feed image posts)
+    "post_type_cursor": 0,        # rotating offset into main.POST_TYPE_ROTATION (carousel vs feed, on content days)
     "comment_reply_en_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_EN
     "comment_reply_fa_cursor": 0,  # rotating offset into content_bank.COMMENT_REPLIES_FA
     "replied_comment_ids": [],    # comment ids we've already auto-replied to
