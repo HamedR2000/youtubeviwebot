@@ -49,8 +49,8 @@ class Config:
     # کلیپ منبع فقط بخش بالای فریم رو پر می‌کنه (نه تمام صفحه) و پنل
     # "ری‌اکشن" پایینی برای تفسیر/کپشن (و در فاز ۲، آواتار) کنار گذاشته
     # شده -- نگاه کن به README.md بخش "نکات حقوقی/ریسک".
-    SOURCE_HEIGHT_RATIO = float(_env("REACTION_SOURCE_HEIGHT_RATIO", "0.6"))
-    MAX_CLIP_SECONDS = float(_env("REACTION_MAX_CLIP_SECONDS", "58"))
+    SOURCE_HEIGHT_RATIO = float(_env("REACTION_SOURCE_HEIGHT_RATIO", "0.45"))
+    MAX_CLIP_SECONDS = float(_env("REACTION_MAX_CLIP_SECONDS", "170"))
 
     # عکس آواتار (PNG با پس‌زمینه‌ی شفاف) -- اگه این مسیر وجود داشته باشه،
     # main.py خودکار استفاده‌اش می‌کنه و نیازی به دادن --avatar در هر اجرا
