@@ -17,7 +17,6 @@ from moviepy import VideoFileClip
 from branding import add_subscribe_banner
 from config import config
 from hashtags import CATEGORY_POOLS, ensure_hashtags
-from queue_process import enqueue
 from thumbnail import extract_thumbnail
 from titles import pick_title
 from youtube_upload import set_thumbnail, upload_video
@@ -40,7 +39,7 @@ def main() -> None:
     parser.add_argument("--no-thumbnail", action="store_true", help="تامبنیل سفارشی (فریمی از خود ویدیو) ست نشه")
     parser.add_argument("--intro-seconds", type=float, default=3.0, help="مدت کارت مقدمه در ویدیوی ورودی (برای رد شدن از روش موقع انتخاب فریم تامبنیل)")
     parser.add_argument("--outro-seconds", type=float, default=2.5, help="مدت کارت پایان‌بندی در ویدیوی ورودی (همون منطق تامبنیل)")
-    parser.add_argument("--queue", action="store_true", help="به‌جای public کردن فوری، private آپلود کن و به صف انتشار زمان‌بندی‌شده (queue_process.py) اضافه کن")
+    parser.add_argument("--queue", action="store_true", help="به‌جای public کردن فوری، private آپلود کن (زمان‌بندی/اضافه‌شدن به صف با batch_upload.py انجام می‌شه، نه این‌جا)")
     args = parser.parse_args()
 
     with VideoFileClip(args.video) as clip:
@@ -88,10 +87,6 @@ def main() -> None:
         privacy_status=privacy,
         dry_run=args.dry_run,
     )
-
-    if video_id and args.queue:
-        enqueue(video_id, title)
-        print(f"به صف انتشار اضافه شد (الان private -- طبق نوبت public می‌شه): {video_id}")
 
     if video_id and not args.no_thumbnail:
         thumb_path = final_path + ".thumb.jpg"
