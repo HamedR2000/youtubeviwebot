@@ -12,6 +12,7 @@ BATCH_SIZE تای اول صف رو از private به public تغییر می‌د
 """
 import json
 import os
+import time
 
 from googleapiclient.discovery import build
 from youtube_upload import _get_credentials
@@ -19,11 +20,14 @@ from youtube_upload import _get_credentials
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 QUEUE_PATH = os.path.join(BASE_DIR, "queue", "publish_queue.json")
 BATCH_SIZE = 5
+MIN_GAP_SECONDS = 4 * 3600
 
 
 def load_queue() -> dict:
     with open(QUEUE_PATH, encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+    data.setdefault("last_run", 0)
+    return data
 
 
 def save_queue(data: dict) -> None:
@@ -66,8 +70,21 @@ def process_batch() -> list[dict]:
             results.append({**entry, "ok": False, "error": str(e)})
             # توی pending می‌مونه تا دفعه‌ی بعد دوباره امتحان بشه
 
+    queue["last_run"] = time.time()
     save_queue(queue)
     return results
+
+
+def process_if_due(min_gap_seconds: int = MIN_GAP_SECONDS) -> list[dict]:
+    """شبکه‌ی ایمنی: اگه cron به هر دلیلی (مثلاً از بین رفتن سشن) اجرا نشه،
+    هر بار که این فایل صدا زده می‌شه (مثلاً موقع آپلود بچ بعدی) چک می‌کنه
+    اگه حداقل ۴ ساعت از آخرین اجرا گذشته و صف خالی نیست، یه بچ رو پابلیک کنه."""
+    queue = load_queue()
+    if not queue["pending"]:
+        return []
+    if time.time() - queue.get("last_run", 0) < min_gap_seconds:
+        return []
+    return process_batch()
 
 
 if __name__ == "__main__":
