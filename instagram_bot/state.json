@@ -373,16 +373,16 @@
     "17908328421473465",
     "18101997455362747"
   ],
-  "carousel_bg_cursor": 26,
+  "carousel_bg_cursor": 28,
   "story_line_fa_cursor": 20,
   "carousel_theme_cursor": 1,
-  "story_theme_cursor": 1,
+  "story_theme_cursor": 0,
   "feed_theme_cursor": 0,
   "hook_fa_cursor": 14,
   "tip_fa_cursor": 2,
   "cta_fa_cursor": 6,
   "carousel_topic_fa_cursor": 2,
   "story_set_cursor": 12,
-  "story_set_fa_cursor": 23,
+  "story_set_fa_cursor": 24,
   "post_type_cursor": 0
 }
