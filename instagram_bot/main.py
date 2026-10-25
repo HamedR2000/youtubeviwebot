@@ -75,7 +75,7 @@ from instagram_publish import (
     publish_story,
 )
 from stock_media import download_video, find_unused_video
-from video_composer import compose_story_video, compose_video, extract_cover_frame
+from video_composer import compose_story_video, compose_video, extract_cover_frame, next_music_track
 from youtube_publish import YouTubePublishError, get_access_token, upload_short
 
 BRAND_HANDLE = "@Goldhamedsignals"
@@ -143,8 +143,9 @@ def build_reel_item(today: str, st: dict, lang: str) -> dict:
     (cta,) = state_mod.next_rotating(ctas, st, cta_cursor)
 
     output_path = os.path.join(WORKDIR, f"reel_{today}.mp4")
+    track_path = next_music_track(MUSIC_DIR, st)
     compose_video(raw_video_path=raw_path, hook=hook, tip=tip, brand_handle=BRAND_HANDLE,
-                  music_dir=MUSIC_DIR, output_path=output_path, rtl=rtl)
+                  track_path=track_path, output_path=output_path, rtl=rtl)
 
     # A dedicated cover image for the profile grid tile -- without it,
     # Instagram auto-picks a frame from the raw clip with no branding or
@@ -185,7 +186,8 @@ def build_story_items(today: str, st: dict, lang: str) -> list:
                           topic=topic, page_num=i + 1, page_total=len(lines))
 
         video_path = os.path.join(WORKDIR, f"story_{today}_{i}.mp4")
-        compose_story_video(card_path, MUSIC_DIR, video_path)
+        track_path = next_music_track(MUSIC_DIR, st)
+        compose_story_video(card_path, track_path, video_path)
         video_url = _host(today, video_path)
 
         os.remove(card_path)
