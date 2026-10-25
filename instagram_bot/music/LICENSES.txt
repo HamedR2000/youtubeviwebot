@@ -11,3 +11,31 @@ filtered to "Attribution not required".
 
 Downloaded 2026-09-09. If YouTube ever changes a track's license terms,
 re-check youtube.com/audiolibrary before continuing to use it.
+
+---
+
+Second batch -- supplied directly by the account owner (2026-10-25), not
+sourced by this pipeline. Rights/license not independently verified here;
+the account owner is responsible for confirming these are clear to use on
+the account's content.
+
+- Velet - Roman Olur Yazsam Seni SevilMusic.mp3
+- Ahange You Think The Devil SevilMusic.mp3
+- Calm Down SevilMusic.mp3
+- Zmeex - Shadow SevilMusic.mp3
+- Yiwang Yiwang Dou Yiwang Monkey Version SevilMusic.mp3
+- Minimum SevilMusic.mp3
+- Shake It To The Max SevilMusic.mp3
+- Martoven - Mmm SevilMusic.mp3
+- Trend 2025 SevilMusic.mp3
+- Dame Un Grrr SevilMusic.mp3
+- Husan - Asaldey SevilMusic.mp3
+- Jony Kamin - SevilMusic.mp3
+- Salam Aleykum Trend SevilMusic.mp3
+- Fanta Trend SevilMusic.mp3
+- Miss Tyka Like This Trend SevilMusic.mp3
+- Kasimoff - Numb SevilMusic.mp3
+
+"Yahoo - Got Mail.mp3" from this same batch was left out -- it's a ~1s
+notification chime, not a music track, and looping it for a 6-15s clip
+would sound like a rapid repeated ding rather than background music.
