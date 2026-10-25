@@ -1,16 +1,16 @@
 """Compose the final Reel: crop the stock clip to 1080x1920, burn in a text
-overlay (hook + tip + branding) rendered with Pillow, and mix in a random
-royalty-free background track from music/. Also composes Story videos:
-wraps an already-rendered story card (from image_composer.build_story_card)
-into a short static-image video with the same music bank, since Instagram
-Stories can only carry audio as a video, never as a plain image.
+overlay (hook + tip + branding) rendered with Pillow, and mix in a
+royalty-free background track from music/, picked via next_music_track()
+(see below). Also composes Story videos: wraps an already-rendered story
+card (from image_composer.build_story_card) into a short static-image
+video with the same music bank, since Instagram Stories can only carry
+audio as a video, never as a plain image.
 
 Text is rendered to a transparent PNG with Pillow (not moviepy's
 TextClip) specifically to avoid an ImageMagick dependency in CI.
 """
 import glob
 import os
-import random
 
 from PIL import Image, ImageDraw
 from moviepy import (
@@ -22,6 +22,7 @@ from moviepy import (
     afx,
 )
 
+import state as state_mod
 from text_overlay import draw_wrapped, draw_wrapped_rtl, load_font, rounded_panel, vazirmatn
 
 TARGET_W, TARGET_H = 1080, 1920
@@ -88,20 +89,26 @@ def _fit_and_crop(clip: VideoFileClip) -> VideoFileClip:
     )
 
 
-def _pick_music_track(music_dir: str) -> str:
-    tracks = glob.glob(os.path.join(music_dir, "*.mp3")) + glob.glob(os.path.join(music_dir, "*.m4a"))
+def next_music_track(music_dir: str, state: dict) -> str:
+    """Rotate through every track once (state.music_track_cursor) before any
+    repeats, instead of a plain random pick -- random.choice let the same
+    handful of tracks cluster together within a single day's 5 stories, which
+    is exactly what the account owner complained about on 2026-10-25
+    ("تمام استوری‌ها شدن همین چند تا آهنگ فقط")."""
+    tracks = sorted(glob.glob(os.path.join(music_dir, "*.mp3")) + glob.glob(os.path.join(music_dir, "*.m4a")))
     if not tracks:
         raise FileNotFoundError(
             f"No .mp3/.m4a files found in {music_dir}. Add royalty-free tracks there "
             "(see instagram_bot/README.md -> 'Background music')."
         )
-    return random.choice(tracks)
+    (track,) = state_mod.next_rotating(tracks, state, "music_track_cursor")
+    return track
 
 
-def _scored_clip(music_dir: str, duration: float, fade_in: float, fade_out: float):
-    """Pick a random track, loop/trim it to `duration`, and fade it in/out
-    -- shared between compose_video and compose_story_video."""
-    music = AudioFileClip(_pick_music_track(music_dir))
+def _scored_clip(track_path: str, duration: float, fade_in: float, fade_out: float):
+    """Loop/trim the given track to `duration` and fade it in/out -- shared
+    between compose_video and compose_story_video."""
+    music = AudioFileClip(track_path)
     if music.duration < duration:
         music = music.with_effects([afx.AudioLoop(duration=duration)])
     else:
@@ -113,14 +120,14 @@ def _scored_clip(music_dir: str, duration: float, fade_in: float, fade_out: floa
     ])
 
 
-def compose_story_video(image_path: str, music_dir: str, output_path: str,
+def compose_story_video(image_path: str, track_path: str, output_path: str,
                          duration: float = STORY_CLIP_DURATION_S) -> None:
     """Wrap an already-rendered story card (a static 1080x1920 JPEG from
-    image_composer.build_story_card) into a short video with a random
-    royalty-free track from music/ -- Instagram Stories only carry audio
-    when posted as video, never as a plain image."""
+    image_composer.build_story_card) into a short video with the given
+    royalty-free track (pick one with next_music_track()) -- Instagram
+    Stories only carry audio when posted as video, never as a plain image."""
     base = ImageClip(image_path).with_duration(duration)
-    music = _scored_clip(music_dir, duration, fade_in=0.5, fade_out=1.0)
+    music = _scored_clip(track_path, duration, fade_in=0.5, fade_out=1.0)
     video = base.with_audio(music)
 
     video.write_videofile(
@@ -139,7 +146,7 @@ def compose_story_video(image_path: str, music_dir: str, output_path: str,
 
 
 def compose_video(raw_video_path: str, hook: str, tip: str, brand_handle: str,
-                   music_dir: str, output_path: str, rtl: bool = False) -> None:
+                   track_path: str, output_path: str, rtl: bool = False) -> None:
     base = VideoFileClip(raw_video_path).without_audio()
     duration = min(CLIP_DURATION_S, base.duration)
     base = _fit_and_crop(base).subclipped(0, duration)
@@ -151,7 +158,7 @@ def compose_video(raw_video_path: str, hook: str, tip: str, brand_handle: str,
 
     video = CompositeVideoClip([base, overlay_clip])
 
-    music = _scored_clip(music_dir, duration, fade_in=1, fade_out=1.5)
+    music = _scored_clip(track_path, duration, fade_in=1, fade_out=1.5)
     video = video.with_audio(CompositeAudioClip([music]))
 
     video.write_videofile(
