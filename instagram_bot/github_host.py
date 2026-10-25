@@ -53,6 +53,18 @@ def upload_release_asset(repo: str, token: str, tag: str, file_path: str,
     filename = os.path.basename(file_path)
     content_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
 
+    # A same-named asset already on the release (e.g. the account owner asked
+    # for a same-day regenerate, so today's filenames repeat) makes GitHub
+    # reject the upload with 422 -- delete the stale one first so a rebuild
+    # of an already-reviewed-and-rejected day's content doesn't just fail.
+    # Both the create and the get-by-tag response above embed the current
+    # asset list, so no extra request is needed to check for one.
+    existing = next((a for a in release.get("assets", []) if a["name"] == filename), None)
+    if existing is not None:
+        del_resp = requests.delete(f"{API_ROOT}/repos/{repo}/releases/assets/{existing['id']}",
+                                    headers=_headers(token), timeout=30)
+        del_resp.raise_for_status()
+
     with open(file_path, "rb") as f:
         upload_resp = requests.post(
             upload_url,
