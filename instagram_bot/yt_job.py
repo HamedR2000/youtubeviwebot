@@ -122,7 +122,8 @@ def render_step(job_dir: str, video_id: str, content_path: str) -> None:
     print(f"[yt_job] {video_id}: {len(image_urls)} carousel slides hosted")
 
     cover_path = os.path.join(out, "reel_cover.jpg")
-    render_slide(slides[0], 1, len(slides), REEL_SIZE, theme, rtl, BRAND_HANDLE, category).save(cover_path, quality=92)
+    render_slide(slides[0], 1, len(slides), REEL_SIZE, theme, rtl, BRAND_HANDLE, category,
+                 numbering=False).save(cover_path, quality=92)
     reel_path = os.path.join(out, "reel.mp4")
     info = build_reel(content, reel_path, _music_for(video_id), out, brand=BRAND_HANDLE)
     reel_url, cover_url = host(reel_path), host(cover_path)

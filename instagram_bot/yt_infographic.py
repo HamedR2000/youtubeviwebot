@@ -359,9 +359,15 @@ _RENDERERS = {"cover": _cover, "point": _point, "summary": _summary, "cta": _cta
 
 def render_slide(slide: dict, page: int, total: int, size: tuple, theme: str = "dark",
                  rtl: bool = True, brand: str = "", category: str = "",
-                 reveal: int = None, background: Image.Image = None) -> Image.Image:
+                 reveal: int = None, background: Image.Image = None,
+                 numbering: bool = True) -> Image.Image:
     """Render one slide to an RGB image. `reveal` limits a point slide to
-    its first N stages (None = everything)."""
+    its first N stages (None = everything). numbering=False drops every
+    "N of M" marker -- the page counter, page dots and a point's "tip N of
+    M" label -- which the account owner wants on carousel slides but not
+    in the Reel."""
+    if not numbering:
+        slide = dict(slide, label="")
     w, h = size
     t = THEMES[theme]
     T = _Text(rtl)
@@ -375,12 +381,13 @@ def render_slide(slide: dict, page: int, total: int, size: tuple, theme: str = "
     if category:
         clw = T.length(draw, category, cf)
         draw.text((W - M - clw if rtl else M, top), category, font=cf, fill=t["muted"], **T.kw)
-    pf = montserrat(26, "Bold")
-    counter = f"{page}/{total}"
-    pw = draw.textlength(counter, font=pf)
-    px = M if rtl else W - M - pw
-    draw.rounded_rectangle([px - 18, top - 6, px + pw + 18, top + 42], radius=24, outline=t["gold"], width=2)
-    draw.text((px, top + 1), counter, font=pf, fill=t["heading"])
+    if numbering:
+        pf = montserrat(26, "Bold")
+        counter = f"{page}/{total}"
+        pw = draw.textlength(counter, font=pf)
+        px = M if rtl else W - M - pw
+        draw.rounded_rectangle([px - 18, top - 6, px + pw + 18, top + 42], radius=24, outline=t["gold"], width=2)
+        draw.text((px, top + 1), counter, font=pf, fill=t["heading"])
 
     band_top, band_bottom = CONTENT_BAND[h]
     footer_y = band_bottom + 40
@@ -389,7 +396,7 @@ def render_slide(slide: dict, page: int, total: int, size: tuple, theme: str = "
         bw = draw.textlength(brand, font=bf)
         draw.text(((W - bw) / 2, footer_y + 30), brand, font=bf, fill=t["gold"])
     dx = (W - (24 * total - 10 + 20)) / 2
-    for i in range(total):
+    for i in range(total if numbering else 0):
         idx = total - 1 - i if rtl else i
         dw = 34 if idx == page - 1 else 14
         draw.rounded_rectangle([dx, footer_y, dx + dw, footer_y + 14], radius=7,

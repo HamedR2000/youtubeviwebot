@@ -48,6 +48,11 @@ jobs:
           # reading captions -- see instagram_bot/yt_source.py.
           YT_PROXY_URL: ${{ secrets.YT_PROXY_URL }}
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
+          # Optional natural-sounding voiceover (instagram_bot/yt_tts.py);
+          # free edge-tts is used while none of these are set.
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python instagram_bot/yt_job.py
 
       - name: Commit job results

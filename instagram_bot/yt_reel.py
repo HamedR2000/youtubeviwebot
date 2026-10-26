@@ -4,15 +4,14 @@
 Each slide plays as a sequence of reveal stages (title first, then each
 bullet, then the takeaway), every stage held for as long as its line of
 voiceover takes, with a short crossfade between stages and a thin gold
-progress bar across the top. Voiceover is Microsoft Edge's neural TTS
-(edge-tts, free, no key) -- Persian "fa-IR-FaridNeural" by default. If
-TTS is unavailable the Reel still renders, music-only, with each stage
-held for an estimated reading time instead.
+progress bar across the top. Voiceover comes from yt_tts.py (ElevenLabs
+or OpenAI when their key is set, free edge-tts otherwise). If TTS is
+unavailable the Reel still renders, music-only, with each stage held for
+an estimated reading time instead.
 
 Background music comes from the same music/ bank and rotation as the
 daily Reels (video_composer.next_music_track), ducked under the voice.
 """
-import asyncio
 import bisect
 import os
 
@@ -21,13 +20,13 @@ from moviepy import AudioFileClip, CompositeAudioClip, VideoClip, afx
 
 from video_composer import _scored_clip
 from yt_infographic import REEL_SIZE, make_background, render_slide, stage_count
+from yt_tts import pick_provider, synthesize
 
 FPS = 30
 CROSSFADE_S = 0.4
 VOICE_LEAD_S = 0.25     # silence before each line, so it starts after the crossfade
 VOICE_TAIL_S = 0.45     # breath after each line before the next stage appears
 MUSIC_UNDER_VOICE = 0.3  # extra multiplier on video_composer.MUSIC_VOLUME when narrated
-DEFAULT_VOICES = {"fa": "fa-IR-FaridNeural", "en": "en-US-AndrewNeural"}
 
 
 def stage_lines(slide: dict) -> list:
@@ -53,23 +52,14 @@ def _reading_time(text: str) -> float:
     return 1.4 + 0.42 * len(text.split())
 
 
-def _tts(text: str, voice: str, rate: str, out_path: str) -> None:
-    import edge_tts
-
-    async def run():
-        await edge_tts.Communicate(text, voice, rate=rate).save(out_path)
-
-    asyncio.run(run())
-
-
 def build_reel(content: dict, output_path: str, music_track: str, workdir: str,
                brand: str = "", min_s: float = 60, max_s: float = 120) -> dict:
-    """Render the Reel to output_path. Returns {"duration", "voiceover"}."""
+    """Render the Reel to output_path. Returns {"duration", "voiceover"},
+    where voiceover is the TTS provider used, or False for music-only."""
     rtl = content.get("lang", "fa") == "fa"
     theme = content.get("theme", "dark")
     category = content.get("category", "")
-    voice = content.get("voice", DEFAULT_VOICES["fa" if rtl else "en"])
-    rate = content.get("voice_rate", "+5%")
+    provider = pick_provider(content)
     use_voice = content.get("voiceover", True)
     slides = content["slides"]
 
@@ -80,7 +70,7 @@ def build_reel(content: dict, output_path: str, music_track: str, workdir: str,
         spoken = stage_lines(slide)
         for k in range(1, stage_count(slide) + 1):
             img = render_slide(slide, page, len(slides), REEL_SIZE, theme, rtl, brand, category,
-                               reveal=k, background=bg)
+                               reveal=k, background=bg, numbering=False)
             frames.append(np.asarray(img))
             lines.append(spoken[k - 1] if k - 1 < len(spoken) else "")
 
@@ -90,7 +80,7 @@ def build_reel(content: dict, output_path: str, music_track: str, workdir: str,
         if use_voice and text.strip():
             path = os.path.join(workdir, f"voice_{i:03d}.mp3")
             try:
-                _tts(text, voice, rate, path)
+                synthesize(provider, text, path, content)
             except Exception as e:  # network/service hiccup: fall back to music-only
                 print(f"[yt_reel] TTS failed ({type(e).__name__}: {e}); rendering without voiceover")
                 use_voice, path = False, None
@@ -156,4 +146,4 @@ def build_reel(content: dict, output_path: str, music_track: str, workdir: str,
     for p in voice_paths:
         if p and os.path.exists(p):
             os.remove(p)
-    return {"duration": round(total, 1), "voiceover": use_voice}
+    return {"duration": round(total, 1), "voiceover": provider if use_voice else False}
