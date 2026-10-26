@@ -24,8 +24,8 @@ from yt_tts import pick_provider, synthesize
 
 FPS = 30
 CROSSFADE_S = 0.4
-VOICE_LEAD_S = 0.25     # silence before each line, so it starts after the crossfade
-VOICE_TAIL_S = 0.45     # breath after each line before the next stage appears
+VOICE_LEAD_S = 0.2      # silence before each line, so it starts after the crossfade
+VOICE_TAIL_S = 0.3      # breath after each line before the next stage appears
 MUSIC_UNDER_VOICE = 0.3  # extra multiplier on video_composer.MUSIC_VOLUME when narrated
 
 
