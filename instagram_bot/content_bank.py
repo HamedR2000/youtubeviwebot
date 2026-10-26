@@ -92,12 +92,15 @@ DISCLAIMER = (
 
 # Evergreen hashtag pool for the niche. main.py rotates a subset of these
 # each day (Instagram caps usable hashtags and repeating the exact same 30
-# every day looks spammy / can suppress reach).
+# every day looks spammy / can suppress reach). #gold, #trading, and
+# #tradingsignals live in BRAND_HASHTAGS below instead of here, so they're
+# guaranteed on every post rather than only ~2 days out of 3 of this pool's
+# rotation window.
 HASHTAGS = [
-    "#gold", "#goldtrading", "#xauusd", "#forex", "#forextrading",
-    "#trading", "#tradingbot", "#daytrading", "#swingtrading",
+    "#goldtrading", "#xauusd", "#forex", "#forextrading",
+    "#tradingbot", "#daytrading", "#swingtrading",
     "#stockmarket", "#investing", "#financialfreedom", "#priceaction",
-    "#technicalanalysis", "#tradingsignals", "#forexsignals",
+    "#technicalanalysis", "#forexsignals",
     "#goldprice", "#preciousmetals", "#wallstreet", "#tradertips",
     "#tradingstrategy", "#algotrading", "#fintech", "#tradinglife",
     "#forexmarket", "#goldinvestment", "#tradereducation", "#usdollar",
@@ -105,8 +108,10 @@ HASHTAGS = [
 ]
 
 # Branded/always-on tags -- identity hashtags kept in every post regardless
-# of rotation.
-BRAND_HASHTAGS = ["#goldhamedsignals"]
+# of rotation. #gold, #trading, and #tradingsignals are here (not in the
+# rotating HASHTAGS pool above) per the account owner's explicit request
+# (2026-10-26) that gold/signal/trade hashtags always be on the post.
+BRAND_HASHTAGS = ["#goldhamedsignals", "#gold", "#trading", "#tradingsignals"]
 
 # Auto-reply templates for comments on our own posts (reply_comments.py).
 # "{name}" is filled with the commenter's Instagram username. Language is
