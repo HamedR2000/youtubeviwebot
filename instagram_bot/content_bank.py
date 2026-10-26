@@ -90,18 +90,37 @@ DISCLAIMER = (
     "Past performance does not guarantee future results."
 )
 
-# Evergreen hashtag pool for the niche. main.py rotates a subset of these
-# each day (Instagram caps usable hashtags and repeating the exact same 30
-# every day looks spammy / can suppress reach).
+# Hashtags, focused on gold / signals / trading (account owner's request,
+# 2026-10-26, to get the content discovered). Every caption carries
+# BRAND_HASHTAGS + the CORE set for its language, then a rotating subset of
+# that language's pool tops it up to caption_builder.MAX_HASHTAGS --
+# rotation so the exact same block doesn't repeat every day (reads as spam
+# and can suppress reach). Persian-day posts mix in a few English core tags
+# too, since #xauusd / #goldsignals are searched in every language.
+CORE_HASHTAGS = {
+    "en": ["#gold", "#xauusd", "#goldsignals", "#goldtrading", "#tradingsignals",
+           "#forexsignals", "#trading", "#forex"],
+    "fa": ["#طلا", "#سیگنال_طلا", "#سیگنال", "#ترید", "#فارکس", "#انس_جهانی",
+           "#xauusd", "#goldsignals", "#tradingsignals"],
+}
+
 HASHTAGS = [
-    "#gold", "#goldtrading", "#xauusd", "#forex", "#forextrading",
-    "#trading", "#tradingbot", "#daytrading", "#swingtrading",
-    "#stockmarket", "#investing", "#financialfreedom", "#priceaction",
-    "#technicalanalysis", "#tradingsignals", "#forexsignals",
-    "#goldprice", "#preciousmetals", "#wallstreet", "#tradertips",
-    "#tradingstrategy", "#algotrading", "#fintech", "#tradinglife",
-    "#forexmarket", "#goldinvestment", "#tradereducation", "#usdollar",
-    "#marketanalysis", "#automatedtrading",
+    "#goldprice", "#goldanalysis", "#goldforecast", "#xauusdsignals", "#xauusdanalysis",
+    "#signals", "#freesignals", "#forextrading", "#forextrader", "#forexmarket",
+    "#forexlife", "#trader", "#tradinglife", "#daytrading", "#swingtrading",
+    "#scalping", "#priceaction", "#technicalanalysis", "#tradingstrategy",
+    "#tradereducation", "#tradertips", "#riskmanagement", "#tradingbot",
+    "#algotrading", "#automatedtrading", "#mt5", "#metatrader5", "#propfirm",
+    "#fundedtrader", "#preciousmetals",
+]
+
+HASHTAGS_FA = [
+    "#سیگنال_فارکس", "#سیگنال_رایگان", "#سیگنال_ترید", "#اونس_طلا", "#بازار_طلا",
+    "#تحلیل_طلا", "#قیمت_طلا", "#تریدر", "#معامله_گر", "#معامله_گری", "#آموزش_ترید",
+    "#آموزش_فارکس", "#تحلیل_تکنیکال", "#پرایس_اکشن", "#مدیریت_سرمایه",
+    "#مدیریت_ریسک", "#ربات_معامله_گر", "#متاتریدر", "#پراپ_فرم", "#پراپ_تریدینگ",
+    "#بازار_جهانی", "#کسب_درآمد_دلاری", "#اسکلپ", "#goldtrading", "#forexsignals",
+    "#forex", "#trading", "#priceaction",
 ]
 
 # Branded/always-on tags -- identity hashtags kept in every post regardless

@@ -163,7 +163,7 @@ def build_reel_item(today: str, st: dict, lang: str) -> dict:
     build_reel_cover(frame_path, hook, BRAND_HANDLE, cover_path, rtl=rtl)
     cover_url = _host(today, cover_path)
 
-    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st)
+    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st, lang=lang)
     video_url = _host(today, output_path)
 
     st["used_pexels_ids"].append(video_info["id"])
@@ -220,7 +220,7 @@ def build_feed_image_item(today: str, st: dict, lang: str) -> dict:
     output_path = os.path.join(WORKDIR, f"feed_{today}.jpg")
     build_feed_card(photo_path, headline=hook, subtitle=tip, cta=cta,
                      brand_handle=BRAND_HANDLE, output_path=output_path, theme=theme, rtl=rtl)
-    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st)
+    caption = build_caption(hook=hook, tip=tip, cta=cta, disclaimer=disclaimer, state=st, lang=lang)
     image_url = _host(today, output_path)
 
     os.remove(output_path)
@@ -277,7 +277,7 @@ def build_carousel_item(today: str, st: dict, lang: str) -> dict:
     first, mid, last = topic["slides"][0], topic["slides"][len(topic["slides"]) // 2], topic["slides"][-1]
     hook = " ".join(t for t, _ in first["headline_lines"])
     caption = build_caption(hook=hook, tip=mid["body_text"], cta=last["cta_text"],
-                             disclaimer=disclaimer, state=st)
+                             disclaimer=disclaimer, state=st, lang=lang)
     return {"type": "carousel", "image_urls": image_urls, "video_urls": video_urls, "caption": caption}
 
 
