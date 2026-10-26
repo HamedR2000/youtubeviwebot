@@ -6,8 +6,9 @@ bullet, then the takeaway), every stage held for as long as its line of
 voiceover takes, with a short crossfade between stages and a thin gold
 progress bar across the top. Voiceover comes from yt_tts.py (ElevenLabs
 or OpenAI when their key is set, free edge-tts otherwise). If TTS is
-unavailable the Reel still renders, music-only, with each stage held for
-an estimated reading time instead.
+unavailable -- or, the default, content.json doesn't ask for it -- the Reel
+is music-only, each stage held for the time its on-screen text takes to
+read.
 
 Background music comes from the same music/ bank and rotation as the
 daily Reels (video_composer.next_music_track), ducked under the voice.
@@ -43,13 +44,35 @@ def stage_lines(slide: dict) -> list:
     return lines
 
 
+def stage_texts(slide: dict) -> list:
+    """The on-screen text each reveal stage adds -- what a music-only Reel
+    times its holds by, so every stage stays up long enough to read."""
+    def text_of(x):
+        return x.get("text", "") if isinstance(x, dict) else str(x)
+
+    kind = slide.get("type")
+    if kind == "cover":
+        return [" ".join([_flat_title(slide), slide.get("subtitle", "")]
+                         + [text_of(c) for c in slide.get("chips", [])])]
+    if kind == "summary":
+        return [" ".join([slide.get("title", "")] + list(slide.get("items", [])))]
+    if kind == "cta":
+        return [" ".join([slide.get("title", ""), slide.get("text", "")]
+                         + [text_of(a) for a in slide.get("actions", [])])]
+    texts = [slide.get("title", "")] + [text_of(b) for b in slide.get("bullets", [])]
+    if slide.get("takeaway") or slide.get("highlight"):
+        hl = slide.get("highlight") or {}
+        texts.append(" ".join([str(hl.get("value", "")), hl.get("label", ""), slide.get("takeaway", "")]))
+    return texts
+
+
 def _flat_title(slide: dict) -> str:
     title = slide.get("title", "")
     return " ".join(t for t, _ in title) if isinstance(title, list) else title
 
 
 def _reading_time(text: str) -> float:
-    return 1.4 + 0.42 * len(text.split())
+    return 1.5 + 0.38 * len(text.split())
 
 
 def build_reel(content: dict, output_path: str, music_track: str, workdir: str,
@@ -60,19 +83,23 @@ def build_reel(content: dict, output_path: str, music_track: str, workdir: str,
     theme = content.get("theme", "dark")
     category = content.get("category", "")
     provider = pick_provider(content)
-    use_voice = content.get("voiceover", True)
+    # Music-only by default: the account owner found even the best free
+    # Persian TTS too accented/robotic (2026-10-26). "voiceover": true in
+    # content.json turns narration back on.
+    use_voice = content.get("voiceover", False)
     slides = content["slides"]
 
     # 1. Render every reveal stage, and voice (or time) its line.
-    frames, lines, voice_paths = [], [], []
+    frames, lines, shown, voice_paths = [], [], [], []
     for page, slide in enumerate(slides, 1):
         bg = make_background(REEL_SIZE, theme, seed=page)
-        spoken = stage_lines(slide)
+        spoken, on_screen = stage_lines(slide), stage_texts(slide)
         for k in range(1, stage_count(slide) + 1):
             img = render_slide(slide, page, len(slides), REEL_SIZE, theme, rtl, brand, category,
                                reveal=k, background=bg, numbering=False)
             frames.append(np.asarray(img))
             lines.append(spoken[k - 1] if k - 1 < len(spoken) else "")
+            shown.append(on_screen[k - 1] if k - 1 < len(on_screen) else "")
 
     durations = []
     for i, text in enumerate(lines):
@@ -88,7 +115,7 @@ def build_reel(content: dict, output_path: str, music_track: str, workdir: str,
     if not use_voice:
         voice_paths = [None] * len(lines)
 
-    for text, path in zip(lines, voice_paths):
+    for text, path in zip(shown, voice_paths):
         if path:
             with AudioFileClip(path) as a:
                 durations.append(VOICE_LEAD_S + a.duration + VOICE_TAIL_S)
