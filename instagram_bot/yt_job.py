@@ -31,7 +31,8 @@ import traceback
 sys.path.insert(0, os.path.dirname(__file__))
 
 from config import config
-from content_bank import BRAND_HASHTAGS, DISCLAIMER, DISCLAIMER_FA, HASHTAGS
+from caption_builder import build_hashtags
+from content_bank import DISCLAIMER, DISCLAIMER_FA
 from github_host import upload_release_asset
 from video_composer import compose_slide_videos
 from yt_infographic import CAROUSEL_SIZE, REEL_SIZE, make_background, render_slide
@@ -43,7 +44,6 @@ JOBS_DIR = os.path.join(os.path.dirname(__file__), "yt_jobs")
 MUSIC_DIR = os.path.join(os.path.dirname(__file__), "music")
 WORKDIR = os.path.join(os.path.dirname(__file__), "_build", "yt")
 MAX_CAROUSEL_SLIDES = 10  # Instagram's carousel limit
-HASHTAGS_PER_POST = 15
 
 
 def _read(path):
@@ -75,8 +75,9 @@ def _music_for(video_id: str, offset: int = 0) -> str:
 
 def _caption(content: dict) -> str:
     rtl = content.get("lang", "fa") == "fa"
-    tags = content.get("hashtags") or HASHTAGS[:HASHTAGS_PER_POST]
-    tags = " ".join(BRAND_HASHTAGS + [t for t in tags if t not in BRAND_HASHTAGS])
+    # Gold/signal/trading core tags always lead; the video's own topic tags
+    # (content.json "hashtags") follow, topped up from the pool.
+    tags = build_hashtags("fa" if rtl else "en", extra=content.get("hashtags", []))
     return f"{content['caption'].strip()}\n\n{DISCLAIMER_FA if rtl else DISCLAIMER}\n\n{tags}"
 
 

@@ -12,6 +12,7 @@ _DEFAULT_STATE = {
     "used_pexels_ids": [],        # stock video ids already posted, oldest first
     "used_pexels_photo_ids": [],  # stock photo ids already posted, oldest first
     "hashtag_cursor": 0,          # rotating offset into content_bank.HASHTAGS
+    "hashtag_fa_cursor": 0,       # rotating offset into content_bank.HASHTAGS_FA
     "hook_cursor": 0,             # rotating offset into content_bank.HOOKS
     "tip_cursor": 0,              # rotating offset into content_bank.TIPS
     "cta_cursor": 0,              # rotating offset into content_bank.CTAS
