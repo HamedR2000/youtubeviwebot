@@ -7,7 +7,7 @@
 | ۱. ثبت لینک | Claude | `job.json` → `{"url": "...", "lang": "fa"}` |
 | ۲. گرفتن متن ویدیو (زیرنویس) | GitHub Actions (`yt_to_reel.yml`) | `transcript.json` |
 | ۳. خلاصه‌کردن نکات ترید به اسلاید | Claude، از روی transcript | `content.json` |
-| ۴. ساخت کارسل ۴:۵ + ریلز ۱ تا ۲ دقیقه‌ای با موزیک پس‌زمینه | GitHub Actions | `result.json` (لینک‌ها + `manifest_url`) |
+| ۴. ساخت کارسل ۴:۵ (هر اسلاید یه ویدیوی کوتاه با آهنگ) + ریلز ۱ تا ۲ دقیقه‌ای با موزیک پس‌زمینه | GitHub Actions | `result.json` (لینک‌ها + `manifest_url`) |
 | ۵. پیش‌نمایش و تأیید | تو | — |
 | ۶. انتشار | `daily_post.yml` با `mode=publish` و همون `manifest_url` | — |
 

@@ -75,7 +75,13 @@ from instagram_publish import (
     publish_story,
 )
 from stock_media import download_video, find_unused_video
-from video_composer import compose_story_video, compose_video, extract_cover_frame, next_music_track
+from video_composer import (
+    compose_slide_videos,
+    compose_story_video,
+    compose_video,
+    extract_cover_frame,
+    next_music_track,
+)
 from youtube_publish import YouTubePublishError, get_access_token, upload_short
 
 BRAND_HANDLE = "@Goldhamedsignals"
@@ -233,7 +239,7 @@ def build_carousel_item(today: str, st: dict, lang: str) -> dict:
     (theme,) = state_mod.next_rotating(THEME_ORDER, st, "carousel_theme_cursor")
     print(f"[{today}] Carousel: topic '{topic['id']}' theme={theme} lang={lang}")
 
-    image_urls = []
+    image_urls, slide_paths = [], []
     for i, slide in enumerate(topic["slides"]):
         page_num, page_total = i + 1, len(topic["slides"])
         photo_path = next_background(st) if theme == "dark" else None
@@ -258,13 +264,21 @@ def build_carousel_item(today: str, st: dict, lang: str) -> dict:
             rtl=rtl,
         )
         image_urls.append(_host(today, output_path))
-        os.remove(output_path)
+        slide_paths.append(output_path)
+
+    # Music on slide posts too (account owner, 2026-10-26): the same slides
+    # as short videos sharing one track; publish falls back to image_urls.
+    video_paths = [p[:-4] + ".mp4" for p in slide_paths]
+    compose_slide_videos(slide_paths, next_music_track(MUSIC_DIR, st), video_paths)
+    video_urls = [_host(today, p) for p in video_paths]
+    for p in slide_paths + video_paths:
+        os.remove(p)
 
     first, mid, last = topic["slides"][0], topic["slides"][len(topic["slides"]) // 2], topic["slides"][-1]
     hook = " ".join(t for t, _ in first["headline_lines"])
     caption = build_caption(hook=hook, tip=mid["body_text"], cta=last["cta_text"],
                              disclaimer=disclaimer, state=st)
-    return {"type": "carousel", "image_urls": image_urls, "caption": caption}
+    return {"type": "carousel", "image_urls": image_urls, "video_urls": video_urls, "caption": caption}
 
 
 def run_generate() -> None:
@@ -343,8 +357,20 @@ def run_publish() -> None:
             media_id = publish_feed_image(config.GRAPH_API_VERSION, config.IG_USER_ID,
                                            config.IG_ACCESS_TOKEN, item["image_url"], item["caption"])
         elif kind == "carousel":
-            media_id = publish_carousel(config.GRAPH_API_VERSION, config.IG_USER_ID,
-                                         config.IG_ACCESS_TOKEN, item["image_urls"], item["caption"])
+            media_id = None
+            if item.get("video_urls"):
+                # Slide videos carry the music; if Instagram rejects them for
+                # any reason, still post the slides as plain images rather
+                # than lose the post.
+                try:
+                    media_id = publish_carousel(config.GRAPH_API_VERSION, config.IG_USER_ID,
+                                                 config.IG_ACCESS_TOKEN, item["image_urls"], item["caption"],
+                                                 video_urls=item["video_urls"])
+                except PublishError as e:
+                    print(f"[{today}] Video carousel failed ({e}); publishing the image version")
+            if media_id is None:
+                media_id = publish_carousel(config.GRAPH_API_VERSION, config.IG_USER_ID,
+                                             config.IG_ACCESS_TOKEN, item["image_urls"], item["caption"])
         else:
             raise ValueError(f"Unknown manifest item type: {kind}")
         print(f"[{today}] Published {kind}: {media_id}")

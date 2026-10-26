@@ -1,6 +1,6 @@
 """Instagram Graph API (Meta Content Publishing) client: turn a public
-media URL into a live Reel, feed post, or Story on the connected
-Business/Creator account.
+media URL into a live Reel, feed post, carousel (image or video items)
+or Story on the connected Business/Creator account.
 
 Flow (per Meta's docs), the same three steps for every content type:
   1. POST /{ig-user-id}/media                -> creates a container, returns creation_id
@@ -102,17 +102,20 @@ def publish_story(version: str, ig_user_id: str, access_token: str, *,
 
 
 def publish_carousel(version: str, ig_user_id: str, access_token: str,
-                      image_urls: list, caption: str) -> str:
-    """Publish a multi-image swipeable carousel (album) post: each image
-    becomes an `is_carousel_item` child container, then a parent CAROUSEL
-    container ties them together and carries the single shared caption."""
+                      image_urls: list, caption: str, video_urls: list = None) -> str:
+    """Publish a swipeable carousel (album) post: each item becomes an
+    `is_carousel_item` child container, then a parent CAROUSEL container
+    ties them together and carries the single shared caption. With
+    video_urls, the children are videos instead of images -- the only way
+    a slide post can carry music (see video_composer.compose_slide_videos)."""
     child_ids = []
-    for image_url in image_urls:
-        resp = requests.post(
-            _graph_url(version, f"{ig_user_id}/media"),
-            data={"image_url": image_url, "is_carousel_item": "true", "access_token": access_token},
-            timeout=60,
-        )
+    for url in (video_urls or image_urls):
+        data = {"is_carousel_item": "true", "access_token": access_token}
+        if video_urls:
+            data.update(media_type="VIDEO", video_url=url)
+        else:
+            data["image_url"] = url
+        resp = requests.post(_graph_url(version, f"{ig_user_id}/media"), data=data, timeout=60)
         _raise_for_graph_error(resp)
         child_id = resp.json()["id"]
         wait_until_ready(version, child_id, access_token)

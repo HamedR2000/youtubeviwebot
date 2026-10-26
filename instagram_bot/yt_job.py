@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from config import config
 from content_bank import BRAND_HASHTAGS, DISCLAIMER, DISCLAIMER_FA, HASHTAGS
 from github_host import upload_release_asset
+from video_composer import compose_slide_videos
 from yt_infographic import CAROUSEL_SIZE, REEL_SIZE, make_background, render_slide
 from yt_reel import build_reel
 from yt_source import fetch_transcript
@@ -61,13 +62,15 @@ def _sha(path) -> str:
         return hashlib.sha256(f.read()).hexdigest()[:16]
 
 
-def _music_for(video_id: str) -> str:
+def _music_for(video_id: str, offset: int = 0) -> str:
     """Deterministic pick from music/ per video (not the daily rotation
-    cursor, which lives in state.json and belongs to main.py)."""
+    cursor, which lives in state.json and belongs to main.py). `offset`
+    picks a neighbouring track, so the Reel and the slide post don't share
+    one song."""
     tracks = sorted(glob.glob(os.path.join(MUSIC_DIR, "*.mp3")) + glob.glob(os.path.join(MUSIC_DIR, "*.m4a")))
     if not tracks:
         raise FileNotFoundError(f"No music in {MUSIC_DIR}")
-    return tracks[int(hashlib.md5(video_id.encode()).hexdigest(), 16) % len(tracks)]
+    return tracks[(int(hashlib.md5(video_id.encode()).hexdigest(), 16) + offset) % len(tracks)]
 
 
 def _caption(content: dict) -> str:
@@ -113,13 +116,19 @@ def render_step(job_dir: str, video_id: str, content_path: str) -> None:
         return upload_release_asset(config.GITHUB_REPOSITORY, config.GITHUB_TOKEN, tag, path,
                                     release_name=f"YouTube summary {video_id}")
 
-    image_urls = []
+    slide_paths = []
     for page, slide in enumerate(slides, 1):
         path = os.path.join(out, f"slide_{page:02d}.jpg")
         render_slide(slide, page, len(slides), CAROUSEL_SIZE, theme, rtl, BRAND_HANDLE, category,
                      background=make_background(CAROUSEL_SIZE, theme, seed=page)).save(path, quality=92)
-        image_urls.append(host(path))
-    print(f"[yt_job] {video_id}: {len(image_urls)} carousel slides hosted")
+        slide_paths.append(path)
+    image_urls = [host(p) for p in slide_paths]
+    # The slide post gets music too, as short slide videos (main.py's
+    # publish falls back to image_urls if Instagram rejects them).
+    video_paths = [p[:-4] + ".mp4" for p in slide_paths]
+    compose_slide_videos(slide_paths, _music_for(video_id, offset=1), video_paths)
+    video_urls = [host(p) for p in video_paths]
+    print(f"[yt_job] {video_id}: {len(image_urls)} carousel slides hosted (+ music videos)")
 
     cover_path = os.path.join(out, "reel_cover.jpg")
     render_slide(slides[0], 1, len(slides), REEL_SIZE, theme, rtl, BRAND_HANDLE, category,
@@ -136,7 +145,7 @@ def render_step(job_dir: str, video_id: str, content_path: str) -> None:
         "source": "yt_job",
         "items": [
             {"type": "reel", "video_url": reel_url, "cover_url": cover_url, "caption": caption},
-            {"type": "carousel", "image_urls": image_urls, "caption": caption},
+            {"type": "carousel", "image_urls": image_urls, "video_urls": video_urls, "caption": caption},
         ],
     }
     manifest_path = os.path.join(out, "manifest.json")
@@ -151,6 +160,7 @@ def render_step(job_dir: str, video_id: str, content_path: str) -> None:
         "voiceover": info["voiceover"],
         "cover_url": cover_url,
         "carousel_urls": image_urls,
+        "carousel_video_urls": video_urls,
         "caption": caption,
         "manifest_url": manifest_url,
     })
