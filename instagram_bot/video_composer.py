@@ -29,6 +29,7 @@ TARGET_W, TARGET_H = 1080, 1920
 CLIP_DURATION_S = 15
 MUSIC_VOLUME = 0.35
 STORY_CLIP_DURATION_S = 6
+SLIDE_CLIP_DURATION_S = 8  # each carousel slide's video (loops while viewed)
 
 
 def build_text_overlay(hook: str, tip: str, brand_handle: str, rtl: bool = False) -> Image.Image:
@@ -143,6 +144,34 @@ def compose_story_video(image_path: str, track_path: str, output_path: str,
     base.close()
     video.close()
     music.close()
+
+
+def compose_slide_videos(image_paths: list, track_path: str, output_paths: list,
+                          duration: float = SLIDE_CLIP_DURATION_S) -> None:
+    """Turn each carousel slide image into a short video carrying music, so
+    a slide post can have sound -- the Graph API can't attach audio to an
+    image carousel, only to video items (account owner's request,
+    2026-10-26: music on every post). Slide i plays the i-th consecutive
+    `duration`-long segment of the same track (wrapping around if the track
+    is shorter), so the song carries on as people swipe instead of
+    restarting on every slide."""
+    music = AudioFileClip(track_path)
+    try:
+        for i, (image_path, output_path) in enumerate(zip(image_paths, output_paths)):
+            start = (i * duration) % max(music.duration - duration, 1)
+            segment = music.subclipped(start, min(start + duration, music.duration)).with_effects([
+                afx.MultiplyVolume(MUSIC_VOLUME * 1.6),
+                afx.AudioFadeIn(0.3),
+                afx.AudioFadeOut(0.6),
+            ])
+            clip = ImageClip(image_path).with_duration(segment.duration).with_audio(segment)
+            clip.write_videofile(output_path, fps=30, codec="libx264", audio_codec="aac",
+                                 audio_fps=44100, threads=4, preset="medium",
+                                 ffmpeg_params=["-pix_fmt", "yuv420p", "-movflags", "+faststart"],
+                                 logger=None)
+            clip.close()
+    finally:
+        music.close()
 
 
 def compose_video(raw_video_path: str, hook: str, tip: str, brand_handle: str,

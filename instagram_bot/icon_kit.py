@@ -131,7 +131,44 @@ def icon_arrows_swap(draw, cx, cy, r, color, width=5):
               fill=color, width=width, joint="curve")
 
 
+def icon_check(draw, cx, cy, r, color, width=5):
+    _ring(draw, cx, cy, r, color, width)
+    s = r * 0.5
+    draw.line([(cx - s * 0.8, cy + s * 0.05), (cx - s * 0.2, cy + s * 0.6), (cx + s * 0.85, cy - s * 0.55)],
+              fill=color, width=width, joint="curve")
+
+
+def icon_warning(draw, cx, cy, r, color, width=5):
+    _ring(draw, cx, cy, r, color, width)
+    s = r * 0.6
+    pts = [(cx, cy - s * 0.9), (cx + s, cy + s * 0.75), (cx - s, cy + s * 0.75)]
+    draw.line(pts + [pts[0]], fill=color, width=width - 1, joint="curve")
+    draw.line([(cx, cy - s * 0.3), (cx, cy + s * 0.25)], fill=color, width=width)
+    d = width * 0.6
+    draw.ellipse([cx - d, cy + s * 0.45 - d, cx + d, cy + s * 0.45 + d], fill=color)
+
+
+def icon_bulb(draw, cx, cy, r, color, width=4):
+    _ring(draw, cx, cy, r, color, width)
+    s = r * 0.42
+    by = cy - s * 0.35
+    draw.ellipse([cx - s, by - s, cx + s, by + s], outline=color, width=width)
+    draw.line([(cx - s * 0.45, cy + s * 0.75), (cx + s * 0.45, cy + s * 0.75)], fill=color, width=width)
+    draw.line([(cx - s * 0.3, cy + s * 1.1), (cx + s * 0.3, cy + s * 1.1)], fill=color, width=width)
+
+
+def icon_stop(draw, cx, cy, r, color, width=5):
+    _ring(draw, cx, cy, r, color, width)
+    s = r * 0.42
+    draw.line([(cx - s, cy - s), (cx + s, cy + s)], fill=color, width=width)
+    draw.line([(cx - s, cy + s), (cx + s, cy - s)], fill=color, width=width)
+
+
 ICONS = {
+    "check": icon_check,
+    "warning": icon_warning,
+    "bulb": icon_bulb,
+    "stop": icon_stop,
     "trend_up": icon_trend_up,
     "shield": icon_shield,
     "globe": icon_globe,
