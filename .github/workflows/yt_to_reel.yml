@@ -1,0 +1,62 @@
+name: YouTube to Reel
+
+# Turns a YouTube trading video into an infographic carousel + a 1-2 minute
+# narrated Reel (instagram_bot/yt_job.py). Driven by files, not inputs:
+# pushing a new instagram_bot/yt_jobs/<video_id>/job.json fetches its
+# transcript; pushing that job's content.json (the summary, written in a
+# Claude session from the transcript) renders and hosts the media. Results
+# are committed back to the same branch. Nothing here posts to Instagram --
+# after approval, run daily_post.yml in publish mode with the job's
+# result.json manifest_url.
+
+on:
+  push:
+    paths:
+      - "instagram_bot/yt_jobs/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # Release assets + committing results back
+
+concurrency:
+  group: yt-to-reel-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies (ffmpeg)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: pip install -r instagram_bot/requirements.txt
+
+      - name: Run YouTube jobs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          # Optional, only if YouTube starts blocking GitHub's runners from
+          # reading captions -- see instagram_bot/yt_source.py.
+          YT_PROXY_URL: ${{ secrets.YT_PROXY_URL }}
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+        run: python instagram_bot/yt_job.py
+
+      - name: Commit job results
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add instagram_bot/yt_jobs
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update YouTube job results [skip ci]"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
