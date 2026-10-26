@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 .env
 instagram_bot/_build/
+yt_preview/
