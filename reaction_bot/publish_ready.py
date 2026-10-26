@@ -39,7 +39,6 @@ def main() -> None:
     parser.add_argument("--no-thumbnail", action="store_true", help="تامبنیل سفارشی (فریمی از خود ویدیو) ست نشه")
     parser.add_argument("--intro-seconds", type=float, default=3.0, help="مدت کارت مقدمه در ویدیوی ورودی (برای رد شدن از روش موقع انتخاب فریم تامبنیل)")
     parser.add_argument("--outro-seconds", type=float, default=2.5, help="مدت کارت پایان‌بندی در ویدیوی ورودی (همون منطق تامبنیل)")
-    parser.add_argument("--queue", action="store_true", help="به‌جای public کردن فوری، private آپلود کن (زمان‌بندی/اضافه‌شدن به صف با batch_upload.py انجام می‌شه، نه این‌جا)")
     args = parser.parse_args()
 
     with VideoFileClip(args.video) as clip:
@@ -78,13 +77,12 @@ def main() -> None:
     description = ensure_hashtags(args.description, category=args.category)
     tags = [t.strip() for t in args.tags.split(",") if t.strip()]
 
-    privacy = "private" if args.queue else args.privacy
     video_id = upload_video(
         file_path=final_path,
         title=title,
         description=description,
         tags=tags,
-        privacy_status=privacy,
+        privacy_status=args.privacy,
         dry_run=args.dry_run,
     )
 
