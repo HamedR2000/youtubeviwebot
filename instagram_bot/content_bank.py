@@ -467,6 +467,110 @@ STORY_SETS = [
             "The goal isn't to be right. It's to follow the plan.",
         ],
     },
+    # Third batch of ten trading-principles topics, added once the second
+    # batch above completed a full rotation (see story_set_cursor /
+    # story_set_fa_cursor in state.json) -- account owner approved this
+    # exact list before it went in.
+    {
+        "topic": "CONFIRMATION BIAS",
+        "lines": [
+            "You see what you expect to see, not what's actually there.",
+            "Looking for a reason to enter is not the same as having one.",
+            "A biased eye finds support in every random wiggle.",
+            "Play devil's advocate with your own setup before you take it.",
+            "The chart doesn't care what you're hoping for.",
+        ],
+    },
+    {
+        "topic": "PRE-MARKET ROUTINE",
+        "lines": [
+            "Same checklist, every session -- that's what makes it a routine.",
+            "Mark your key levels before the first candle forms.",
+            "Know today's news events before you know today's entry.",
+            "A clear head beats a rushed click.",
+            "Prepare like today is the only trade that matters.",
+        ],
+    },
+    {
+        "topic": "SPREAD & SLIPPAGE",
+        "lines": [
+            "The price you click isn't always the price you get.",
+            "Wider spreads during news aren't a glitch -- they're the cost of volatility.",
+            "A scalper who ignores spread is trading on a loss from the start.",
+            "Slippage adds up quietly across a hundred trades.",
+            "Check the spread before you judge the setup.",
+        ],
+    },
+    {
+        "topic": "DEMO VS LIVE",
+        "lines": [
+            "The chart looks the same. Your hands don't feel the same.",
+            "Real money adds a variable no demo account can simulate: you.",
+            "Demo discipline often disappears the moment risk becomes real.",
+            "Test the strategy on demo. Test yourself on a small live size.",
+            "If live trading changes your decisions, the problem isn't the market.",
+        ],
+    },
+    {
+        "topic": "MASTER ONE STRATEGY",
+        "lines": [
+            "Ten half-learned systems lose to one you actually understand.",
+            "Every new strategy resets your learning curve to zero.",
+            "Depth beats variety in the first few years.",
+            "Know exactly why your setup works before you add another one.",
+            "Mastery looks boring from the outside.",
+        ],
+    },
+    {
+        "topic": "CONSISTENCY OVER PREDICTION",
+        "lines": [
+            "You don't need to predict the market. You need to repeat a process.",
+            "A trader who's right once looks lucky. A trader who's consistent looks skilled.",
+            "Small, repeatable edges compound. Big predictions rarely do.",
+            "Consistency is a system. Prediction is a guess with confidence.",
+            "Do the same right thing a hundred times, not the perfect thing once.",
+        ],
+    },
+    {
+        "topic": "ECONOMIC CALENDAR",
+        "lines": [
+            "Trading through NFP without checking the calendar isn't bold -- it's blind.",
+            "High-impact news can move gold before you finish reading the headline.",
+            "Mark red-flag events the night before, not five minutes before.",
+            "No calendar check is itself a trading decision -- usually a bad one.",
+            "Some of the best trades are the ones you skip on news days.",
+        ],
+    },
+    {
+        "topic": "PROTECT THE WIN",
+        "lines": [
+            "A winning trade can still end as a losing one if you don't manage it.",
+            "Move your stop to breakeven once the trade proves you right.",
+            "Greed turns a solved trade back into an open risk.",
+            "Lock in progress before you reach for more.",
+            "Protecting a gain takes more discipline than chasing one.",
+        ],
+    },
+    {
+        "topic": "IGNORE THE NOISE",
+        "lines": [
+            "Every signal seller online claims the next move is obvious.",
+            "Your plan doesn't need a hundred opinions, it needs you to follow it.",
+            "Social media timing is entertainment, not a strategy.",
+            "If everyone's shouting the same trade, ask who's left to buy it.",
+            "Mute the noise. Trust the process you already built.",
+        ],
+    },
+    {
+        "topic": "WEEKLY REVIEW",
+        "lines": [
+            "A week of trades without review is a week of lessons wasted.",
+            "Look for the pattern in your losses, not just the excuse.",
+            "Celebrate the process that worked, not just the trade that worked.",
+            "Ten minutes of honest review beats an hour of chart-watching.",
+            "What got better this week? What still needs work?",
+        ],
+    },
 ]
 
 # Persian equivalents of HOOKS -- used on Persian-language days (see
@@ -828,6 +932,108 @@ STORY_SETS_FA = [
             "بدون پلن، هر معامله یک حدس تازه می‌شه.",
             "پلنی که دنبالش نکنی، فقط یک آرزوئه.",
             "هدف درست بودن نیست. هدف دنبال کردن پلنه.",
+        ],
+    },
+    # Third batch of ten -- Persian equivalents, same order as the English
+    # list above, account owner approved.
+    {
+        "topic": "تعصب تأییدی",
+        "lines": [
+            "چیزی رو می‌بینی که انتظارشو داری، نه چیزی که واقعاً هست.",
+            "دنبال دلیل برای ورود بودن، با داشتن دلیل واقعی فرق داره.",
+            "یک چشم متعصب، تو هر نوسان تصادفی هم حمایت پیدا می‌کنه.",
+            "قبل از گرفتن ستاپ، یک‌بار نقش مخالفش رو بازی کن.",
+            "چارت اهمیتی نمی‌ده که تو چی امیدواری.",
+        ],
+    },
+    {
+        "topic": "روتین قبل از بازار",
+        "lines": [
+            "یک چک‌لیست ثابت تو هر سشن -- همینه که یک روتین می‌سازه.",
+            "قبل از شکل‌گیری اولین کندل، سطوح کلیدیت رو مشخص کن.",
+            "قبل از اینکه ورودِ امروز رو بدونی، اخبار امروز رو بدون.",
+            "ذهن آروم، از کلیک عجولانه بهتره.",
+            "طوری آماده شو که انگار امروز تنها معامله‌ی مهمته.",
+        ],
+    },
+    {
+        "topic": "اسپرد و اسلیپیج",
+        "lines": [
+            "قیمتی که کلیک می‌کنی، همیشه قیمتی نیست که می‌گیری.",
+            "اسپرد بالا موقع اخبار باگ نیست -- هزینه‌ی نوسانه.",
+            "اسکلپری که اسپرد رو نادیده بگیره، از همون اول با ضرر معامله می‌کنه.",
+            "اسلیپیج آروم‌آروم، تو صد تا معامله جمع می‌شه.",
+            "قبل از قضاوت درباره‌ی ستاپ، اسپرد رو چک کن.",
+        ],
+    },
+    {
+        "topic": "دمو در مقابل واقعی",
+        "lines": [
+            "چارت همونه. ولی دستات همون حس رو ندارن.",
+            "پول واقعی یه متغیر اضافه می‌کنه که هیچ دمویی نمی‌تونه شبیه‌سازیش کنه: خودت.",
+            "نظمِ دمو، معمولاً همون لحظه‌ای که ریسک واقعی می‌شه، ناپدید می‌شه.",
+            "استراتژی رو تو دمو تست کن. خودت رو با حجم کوچیک تو واقعی تست کن.",
+            "اگه معامله‌ی واقعی تصمیماتت رو عوض می‌کنه، مشکل از بازار نیست.",
+        ],
+    },
+    {
+        "topic": "تسلط روی یک استراتژی",
+        "lines": [
+            "ده تا سیستم نیمه‌بلد، از یکی که واقعاً می‌فهمیش می‌بازن.",
+            "هر استراتژی جدید، منحنی یادگیریت رو از صفر شروع می‌کنه.",
+            "تو سال‌های اول، عمق از تنوع مهم‌تره.",
+            "قبل از اضافه‌کردن یه ستاپ جدید، دقیقاً بدون چرا ستاپ فعلیت کار می‌کنه.",
+            "تسلط از بیرون، کسل‌کننده به‌نظر می‌رسه.",
+        ],
+    },
+    {
+        "topic": "ثبات مهم‌تر از پیش‌بینیه",
+        "lines": [
+            "لازم نیست بازار رو پیش‌بینی کنی. باید یک فرآیند رو تکرار کنی.",
+            "معامله‌گری که یک‌بار درست پیش‌بینی کنه، شانسی به‌نظر می‌رسه. کسی که باثباته، ماهر به‌نظر می‌رسه.",
+            "مزیت‌های کوچیک و تکرارشونده جمع می‌شن. پیش‌بینی‌های بزرگ معمولاً نه.",
+            "ثبات یک سیستمه. پیش‌بینی یک حدسِ با اعتمادبه‌نفسه.",
+            "صد بار کار درست رو انجام بده، نه یک‌بار کار کامل رو.",
+        ],
+    },
+    {
+        "topic": "تقویم اقتصادی",
+        "lines": [
+            "معامله تو NFP بدون چک کردن تقویم، جسارت نیست -- بی‌خبریه.",
+            "اخبار مهم می‌تونن طلا رو قبل از تموم‌شدن تیترش حرکت بدن.",
+            "رویدادهای پرریسک رو شب قبل علامت بزن، نه پنج دقیقه قبل.",
+            "چک‌نکردن تقویم هم خودش یک تصمیم معاملاتیه -- معمولاً بد.",
+            "بعضی از بهترین معاملات، همونایی هستن که تو روز خبر ردشون می‌کنی.",
+        ],
+    },
+    {
+        "topic": "حفظ یک معامله‌ی سودده",
+        "lines": [
+            "یک معامله‌ی سودده هم می‌تونه اگه مدیریتش نکنی، ضررده تموم بشه.",
+            "وقتی معامله درستیتو ثابت کرد، حد ضررتو به نقطه‌ی سربه‌سر ببر.",
+            "طمع، یک معامله‌ی حل‌شده رو دوباره تبدیل به ریسک باز می‌کنه.",
+            "قبل از دست‌درازی برای بیشتر، پیشرفتتو قفل کن.",
+            "حفظ یک سود، نظم بیشتری از دنبال‌کردنش می‌خواد.",
+        ],
+    },
+    {
+        "topic": "نویز شبکه‌های اجتماعی رو نادیده بگیر",
+        "lines": [
+            "هر فروشنده‌ی سیگنال آنلاین ادعا می‌کنه حرکت بعدی واضحه.",
+            "برنامه‌ت به صد تا نظر نیاز نداره، به این نیاز داره که دنبالش کنی.",
+            "تایمینگ شبکه‌های اجتماعی سرگرمیه، نه استراتژی.",
+            "اگه همه دارن یک معامله رو داد می‌زنن، بپرس کی مونده که بخره.",
+            "نویز رو خاموش کن. به فرآیندی که خودت ساختی اعتماد کن.",
+        ],
+    },
+    {
+        "topic": "مرور هفتگی عملکرد",
+        "lines": [
+            "یک هفته معامله بدون مرور، یک هفته درسِ هدررفته‌ست.",
+            "دنبال الگو تو ضررهات باش، نه فقط بهونه.",
+            "فرآیندی که جواب داد رو جشن بگیر، نه فقط معامله‌ای که جواب داد.",
+            "ده دقیقه مرور صادقانه، از یک ساعت دید زدن چارت بهتره.",
+            "این هفته چی بهتر شد؟ چی هنوز نیاز به کار داره؟",
         ],
     },
 ]
