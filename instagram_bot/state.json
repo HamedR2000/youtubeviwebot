@@ -364,6 +364,16 @@
       "date": "2026-10-28",
       "type": "feed_image",
       "ig_media_id": "18122956526514225"
+    },
+    {
+      "date": "2026-10-30",
+      "type": "reel",
+      "ig_media_id": "18108479330290778"
+    },
+    {
+      "date": "2026-10-30",
+      "type": "carousel",
+      "ig_media_id": "17899404909408073"
     }
   ],
   "comment_reply_en_cursor": 1,
