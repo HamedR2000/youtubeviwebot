@@ -403,8 +403,19 @@ def run_publish() -> None:
     # passed through from the workflow's skip_types input.
     skip_types = {t.strip() for t in os.environ.get("SKIP_TYPES", "").split(",") if t.strip()}
 
-    for item in manifest["items"]:
+    # Resume a publish run that already posted some items before failing
+    # partway through (e.g. a transient Graph API/CDN error) without
+    # reposting them -- comma-separated 0-based indices into manifest.items,
+    # passed through from the workflow's skip_item_indices input.
+    skip_item_indices = {
+        int(i.strip()) for i in os.environ.get("SKIP_ITEM_INDICES", "").split(",") if i.strip()
+    }
+
+    for idx, item in enumerate(manifest["items"]):
         kind = item["type"]
+        if idx in skip_item_indices:
+            print(f"[{today}] Skipping item {idx} ({kind}) (SKIP_ITEM_INDICES)")
+            continue
         if kind in skip_types:
             print(f"[{today}] Skipping {kind} (SKIP_TYPES)")
             continue
