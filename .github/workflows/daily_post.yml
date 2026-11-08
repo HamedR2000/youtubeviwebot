@@ -21,6 +21,10 @@ on:
         description: "Optional for mode=publish: comma-separated manifest item types to skip (e.g. 'story' or 'story,carousel'), when the account owner approves everything except one piece for that day"
         type: string
         required: false
+      skip_item_indices:
+        description: "Optional for mode=publish: comma-separated 0-based manifest item indices to skip (e.g. '0' or '0,2'), for resuming a publish run that already posted some items before failing partway through"
+        type: string
+        required: false
 
 permissions:
   contents: write   # needed to create the Release asset and (generate mode) commit state.json
@@ -48,6 +52,7 @@ jobs:
           PIPELINE_MODE: ${{ github.event.inputs.mode || 'generate' }}
           MANIFEST_URL: ${{ github.event.inputs.manifest_url }}
           SKIP_TYPES: ${{ github.event.inputs.skip_types }}
+          SKIP_ITEM_INDICES: ${{ github.event.inputs.skip_item_indices }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
