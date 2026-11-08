@@ -30,6 +30,7 @@ Run as: python main.py (from inside instagram_bot/).
 import datetime
 import json
 import os
+import re
 import sys
 import time
 
@@ -325,7 +326,7 @@ def run_generate() -> None:
     print("MANIFEST_URL:", manifest_url)
 
 
-def _get_with_retries(url: str, attempts: int = 6, backoff: float = 5.0, timeout: int = 30) -> requests.Response:
+def _get_with_retries(url: str, attempts: int = 4, backoff: float = 4.0, timeout: int = 30) -> requests.Response:
     """GitHub's release-asset CDN occasionally 504s for a few minutes at a
     time (seen repeatedly on 2026-11-08) -- retry transient 5xx/connection
     errors with exponential backoff before giving up."""
@@ -347,9 +348,48 @@ def _get_with_retries(url: str, attempts: int = 6, backoff: float = 5.0, timeout
     raise last_exc
 
 
+def _fetch_release_asset_via_api(url: str) -> requests.Response:
+    """Fallback for _get_with_retries exhausting its attempts against the
+    public releases/download CDN (objects.githubusercontent.com) -- fetch
+    the same asset through the authenticated REST API instead
+    (api.github.com/repos/.../releases/assets/{id}), a different network
+    path that isn't always down at the same time (seen 2026-11-08: the
+    public CDN flapped 504/200 for ~20 minutes while this path stayed up)."""
+    m = re.match(r"https://github\.com/([^/]+)/([^/]+)/releases/download/([^/]+)/([^/]+)$", url)
+    if not m:
+        raise ValueError(f"Can't parse owner/repo/tag/asset from {url}")
+    owner, repo, tag, asset_name = m.groups()
+    token = os.environ.get("GITHUB_TOKEN")
+    headers = {"Authorization": f"token {token}"} if token else {}
+
+    rel_resp = requests.get(
+        f"https://api.github.com/repos/{owner}/{repo}/releases/tags/{tag}",
+        headers=headers, timeout=30,
+    )
+    rel_resp.raise_for_status()
+    assets = rel_resp.json().get("assets", [])
+    asset = next((a for a in assets if a["name"] == asset_name), None)
+    if asset is None:
+        raise ValueError(f"Asset {asset_name!r} not found in release {tag!r}")
+
+    asset_resp = requests.get(
+        asset["url"], headers={**headers, "Accept": "application/octet-stream"}, timeout=30,
+    )
+    asset_resp.raise_for_status()
+    return asset_resp
+
+
+def _fetch_manifest(url: str) -> requests.Response:
+    try:
+        return _get_with_retries(url)
+    except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.Timeout) as exc:
+        print(f"[retry] public CDN exhausted ({exc}) -- falling back to GitHub API")
+        return _fetch_release_asset_via_api(url)
+
+
 def run_publish() -> None:
     manifest_url = os.environ["MANIFEST_URL"]
-    resp = _get_with_retries(manifest_url)
+    resp = _fetch_manifest(manifest_url)
     manifest = resp.json()
     today = manifest["date"]
     lang = manifest.get("lang", "en")
