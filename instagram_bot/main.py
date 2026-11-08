@@ -31,6 +31,7 @@ import datetime
 import json
 import os
 import sys
+import time
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -324,10 +325,31 @@ def run_generate() -> None:
     print("MANIFEST_URL:", manifest_url)
 
 
+def _get_with_retries(url: str, attempts: int = 6, backoff: float = 5.0, timeout: int = 30) -> requests.Response:
+    """GitHub's release-asset CDN occasionally 504s for a few minutes at a
+    time (seen repeatedly on 2026-11-08) -- retry transient 5xx/connection
+    errors with exponential backoff before giving up."""
+    last_exc = None
+    for attempt in range(1, attempts + 1):
+        try:
+            resp = requests.get(url, timeout=timeout)
+            if resp.status_code >= 500:
+                raise requests.exceptions.HTTPError(f"{resp.status_code} Server Error", response=resp)
+            resp.raise_for_status()
+            return resp
+        except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.Timeout) as exc:
+            last_exc = exc
+            if attempt == attempts:
+                break
+            wait = backoff * (2 ** (attempt - 1))
+            print(f"[retry] fetch failed (attempt {attempt}/{attempts}): {exc} -- retrying in {wait:.0f}s")
+            time.sleep(wait)
+    raise last_exc
+
+
 def run_publish() -> None:
     manifest_url = os.environ["MANIFEST_URL"]
-    resp = requests.get(manifest_url, timeout=30)
-    resp.raise_for_status()
+    resp = _get_with_retries(manifest_url)
     manifest = resp.json()
     today = manifest["date"]
     lang = manifest.get("lang", "en")
