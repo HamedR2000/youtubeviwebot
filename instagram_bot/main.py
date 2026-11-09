@@ -76,7 +76,8 @@ from instagram_publish import (
     publish_reel,
     publish_story,
 )
-from stock_media import download_video, find_unused_video
+from moviepy import VideoFileClip
+from stock_media import NoStockVideoFound, download_video, find_unused_video
 from video_composer import (
     compose_slide_videos,
     compose_story_video,
@@ -133,13 +134,32 @@ def _host(today: str, path: str) -> str:
 
 def build_reel_item(today: str, st: dict, lang: str) -> dict:
     print(f"[{today}] Reel: finding an unused stock clip...")
-    video_info = find_unused_video(
-        api_key=config.PEXELS_API_KEY,
-        search_terms=STOCK_SEARCH_TERMS,
-        used_ids=set(st["used_pexels_ids"]),
-    )
-    raw_path = os.path.join(WORKDIR, f"raw_{video_info['id']}.mp4")
-    download_video(video_info["download_url"], raw_path)
+    # Some Pexels clips (odd multi-track/timecode MP4 muxing, seen
+    # 2026-11-09) make moviepy's `ffmpeg -i` probe choke on the download
+    # step below. Rather than crash the whole day's generate run over one
+    # bad clip, try a handful of different candidates and skip past it.
+    skip_ids = set()
+    max_attempts = 5
+    for attempt in range(1, max_attempts + 1):
+        video_info = find_unused_video(
+            api_key=config.PEXELS_API_KEY,
+            search_terms=STOCK_SEARCH_TERMS,
+            used_ids=set(st["used_pexels_ids"]) | skip_ids,
+        )
+        raw_path = os.path.join(WORKDIR, f"raw_{video_info['id']}.mp4")
+        download_video(video_info["download_url"], raw_path)
+        try:
+            VideoFileClip(raw_path).close()
+            break
+        except Exception as exc:
+            os.remove(raw_path)
+            skip_ids.add(video_info["id"])
+            print(f"[{today}] Pexels clip {video_info['id']} unusable ({exc}), trying another "
+                  f"(attempt {attempt}/{max_attempts})")
+            if attempt == max_attempts:
+                raise NoStockVideoFound(
+                    f"{max_attempts} Pexels candidates in a row were unusable by moviepy"
+                ) from exc
 
     rtl = lang == "fa"
     hooks, tips, ctas, disclaimer = (HOOKS_FA, TIPS_FA, CTAS_FA, DISCLAIMER_FA) if rtl \
