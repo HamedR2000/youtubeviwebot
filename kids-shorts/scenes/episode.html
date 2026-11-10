@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  @font-face { font-family: Fredoka; font-weight: 600; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-600-normal.woff2); }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #FFF6E9; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+</style>
+<script src="../topics.js"></script>
+<script src="../characters.js"></script>
+</head>
+<body>
+<svg id="s" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FD3FF"/><stop offset="0.7" stop-color="#D4F1FF"/><stop offset="1" stop-color="#FFF1D6"/></linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE3EE"/><stop offset="1" stop-color="#FFF4E4"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#5A3A5A" flood-opacity="0.2"/></filter>
+  </defs>
+  <g id="bgSky"></g>
+  <g id="bgParty"></g>
+  <g id="draws"></g>
+  <g id="props"></g>
+  <g id="chars"></g>
+  <g id="pennyDraw"></g>
+  <g id="confetti"></g>
+  <g id="titleG" filter="url(#sh)"><rect id="titleBox" rx="44" fill="#FFFFFF"/><text id="titleT" x="960" y="118" text-anchor="middle" font-size="68" fill="#FF6B6B"></text></g>
+  <g id="subG"><rect id="subBox" rx="30" fill="#FFFFFF" opacity="0.93"/><text id="subT" x="960" y="1036" text-anchor="middle" font-size="50" font-weight="600" style="font-weight:600"></text></g>
+</svg>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeInOut = k => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const easeBack = k => { const c = 1.9; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const W = 1920, H = 1080, BASE = 990;
+const SPEAKER = { narrator: '#5B4A7A', penny: '#E08A00', ellie: '#E0457B', coco: '#8A4FD6', animal: '#2E9E5B' };
+const COLORS = ['#FF6B6B', '#FF9F1C', '#FFD23F', '#4CB944', '#4D96FF', '#9B5DE5', '#F15BB5'];
+const FACE = (mouth = true) => `<ellipse cx="-150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/><ellipse cx="150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/>
+<g transform="translate(-95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>
+<g transform="translate(95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>` + (mouth ? '<path d="M -90 70 Q 0 160 90 70" fill="none" stroke="#3B2B4F" stroke-width="18" stroke-linecap="round"/>' : '');
+const O = { stroke: '#3B2B4F', 'stroke-width': 16, 'stroke-linejoin': 'round' };
+const EXTRA_ART = {
+  cake: { back: [], fill: [['rect', { x: -280, y: -150, width: 560, height: 320, rx: 30, fill: '#FFB3C8', ...O }]],
+    front: [['path', { d: 'M -280 -110 Q -240 -40 -200 -110 Q -160 -40 -120 -110 Q -80 -40 -40 -110 Q 0 -40 40 -110 Q 80 -40 120 -110 Q 160 -40 200 -110 Q 240 -40 280 -110 L 280 -130 Q 280 -150 260 -150 L -260 -150 Q -280 -150 -280 -130 Z', fill: '#FFFFFF' }],
+      ...[[-200, 40, '#4D96FF'], [-90, 110, '#FFD23F'], [60, 60, '#4CB944'], [190, 120, '#9B5DE5'], [-10, 0, '#FF6B6B']].map(([x, y, f]) => ['rect', { x, y, width: 34, height: 14, rx: 7, fill: f, transform: `rotate(${x % 50} ${x} ${y})` }])],
+    face: { y: 70, s: 0.7 } },
+  candle: { back: [['ellipse', { cx: 0, cy: -250, rx: 42, ry: 72, fill: '#FFB627' }], ['ellipse', { cx: 0, cy: -235, rx: 20, ry: 40, fill: '#FFE873' }]],
+    fill: [['rect', { x: -38, y: -180, width: 76, height: 330, rx: 20, fill: '#4D96FF', ...O }]],
+    front: [['path', { d: 'M -38 -100 L 38 -60 M -38 0 L 38 40 M -38 100 L 38 140', stroke: '#FFFFFF', 'stroke-width': 18 }]], face: null },
+};
+const DRAW_PATHS = { 'rectangle-cake': ['M -280 -150 H 280 V 170 H -280 Z'] };
+
+let TL = null, S = null;
+function artOf(key) {
+  if (EXTRA_ART[key]) return EXTRA_ART[key];
+  const t = window.TOPICS.find(t => t.id === key);
+  if (!t) throw new Error('unknown art ' + key);
+  return t.artData || (t.art ? artOf(t.art) : t); // ABC topics may borrow another topic's drawing
+}
+function drawArt(art, parent, tint) {
+  const g = el('g', {}, parent);
+  for (const layer of ['back', 'fill', 'front']) for (const [i, [tag, attrs]] of (art[layer] || []).entries()) {
+    const e = el(tag, attrs, g); if (layer === 'fill' && i === 0) e.classList.add('tintable');
+  }
+  if (art.face) { const f = el('g', { transform: `translate(${art.face.x || 0} ${art.face.y}) scale(${art.face.s})` }, g); f.innerHTML = FACE(art.face.mouth !== false); }
+  if (art.strokes && !art.template) el('path', { d: art.strokes[0], fill: 'none', stroke: '#3B2B4F', 'stroke-width': 22, 'stroke-linejoin': 'round' }, g);
+  return g;
+}
+
+function buildBackgrounds() {
+  const cloud = (x, y, s) => `<g transform="translate(${x} ${y}) scale(${s})" fill="#fff" opacity="0.92"><circle r="50"/><circle cx="55" cy="-22" r="62"/><circle cx="115" r="48"/><circle cx="58" cy="18" r="50"/></g>`;
+  $('bgSky').innerHTML = `<rect width="${W}" height="${H}" fill="url(#sky)"/><circle cx="1720" cy="170" r="95" fill="#FFD23F"/><g id="skyClouds">${cloud(200, 170, 1.3)}${cloud(900, 120, 1)}${cloud(1350, 230, 1.1)}</g>
+    ${['#FF6B6B', '#FF9F1C', '#FFD23F', '#4CB944', '#4D96FF', '#9B5DE5'].map((c, i) => `<path d="M ${260 + i * 40} ${H} A ${700 - i * 40} ${700 - i * 40} 0 0 1 ${1660 - i * 40} ${H}" fill="none" stroke="${c}" stroke-width="40" opacity="0.55"/>`).join('')}
+    <path d="M 0 900 C 400 850 800 960 1200 900 C 1500 860 1700 930 1920 890 L 1920 1080 L 0 1080 Z" fill="#7BD389"/><path d="M 0 990 C 500 950 1000 1030 1920 980 L 1920 1080 L 0 1080 Z" fill="#4CB944"/>`;
+  const flags = Array.from({ length: 17 }, (_, i) => { const x = 40 + i * 115, y = 70 + Math.sin(i / 16 * Math.PI) * 60; return `<path d="M ${x} ${y} L ${x + 100} ${y + (i < 8 ? 7 : -7)} L ${x + 50} ${y + 85} Z" fill="${COLORS[i % 7]}"/>`; }).join('');
+  $('bgParty').innerHTML = `<rect width="${W}" height="${H}" fill="url(#wall)"/>
+    ${Array.from({ length: 13 }, (_, i) => `<rect x="${i * 160}" y="0" width="70" height="${H}" fill="#FFD6E5" opacity="0.5"/>`).join('')}
+    <path d="M 0 70 Q 960 190 1920 70" fill="none" stroke="#B57AC9" stroke-width="5"/>${flags}
+    <rect x="0" y="900" width="${W}" height="180" fill="#E9B98A"/><rect x="0" y="900" width="${W}" height="16" fill="#D49A68"/>
+    ${Array.from({ length: 10 }, (_, i) => `<rect x="${i * 200}" y="916" width="4" height="164" fill="#D49A68"/>`).join('')}
+    <rect x="1560" y="300" width="250" height="300" rx="20" fill="#BDE8FF" stroke="#FFFFFF" stroke-width="18"/><path d="M 1685 300 V 600 M 1560 450 H 1810" stroke="#FFFFFF" stroke-width="12"/>`;
+}
+
+// ---- compile the timeline into per-object schedules ----
+function setup(timeline) {
+  TL = timeline;
+  buildBackgrounds();
+  for (const id of ['draws', 'props', 'chars', 'confetti']) $(id).innerHTML = '';
+  const chars = {}, props = [], draws = [], titles = [], bgs = [], clears = [], confs = [], pulses = [], points = [], erases = [], lines = [];
+  for (const b of TL.beats) {
+    for (const l of b.lines) if (l.who !== 'pause') lines.push(l);
+    for (const a of b.do) {
+      if (a.bg) bgs.push({ t: a.t, bg: a.bg });
+      if (a.title) titles.push({ t: a.t, text: a.title });
+      if (a.clear) clears.push(a.t);
+      if (a.confetti) confs.push({ t: a.t, d: a.confetti });
+      if (a.pulse) pulses.push({ id: a.pulse, t: a.t, end: a.end });
+      if (a.erase) erases.push({ id: a.erase, t: a.t, on: true });
+      if (a.unerase) erases.push({ id: a.unerase, t: a.t, on: false });
+      if (a.point) for (const [idx, li] of a.point.items) points.push({ id: a.point.id, idx, t: b.lines[li].start, end: b.lines[li].start + 1.6 });
+      for (const k of ['enter', 'move', 'exit']) if (a[k]) (chars[a[k]] ||= []).push({ t: a.t, kind: k, x: a.x });
+      if (a.show) props.push({ id: a.id, art: a.show, x: a.x, y: a.y, s: a.s, t: a.t + 0.1, n: 0 });
+      if (a.count) { const c = a.count; for (let i = 0; i < c.n; i++) props.push({ id: c.id, art: c.art, x: c.x0 + i * c.dx, y: c.y, s: c.s, t: a.times[i], n: c.label === false ? 0 : i + 1, idx: i }); }
+      if (a.tint) a.tint.colors.forEach((col, i) => { const p = props.filter(p => p.id === a.tint.id)[i]; if (p) (p.tints ||= []).push({ t: a.times[i], col }); });
+      if (a.hide) { props.filter(p => p.id === a.hide).forEach(p => p.hideT = a.t); draws.filter(d => d.id === a.hide).forEach(d => d.hideT = a.t); }
+      if (a.draw) draws.push({ id: a.id, key: a.draw, x: a.x, y: a.y, s: a.s, t: a.t + 0.3, dur: a.dur });
+    }
+  }
+  for (const c of clears) { for (const p of props) if (p.t < c && !p.hideT) p.hideT = c; for (const d of draws) if (d.t < c && !d.hideT) d.hideT = c; }
+  // build DOM
+  for (const p of props) {
+    p.g = el('g', {}, $('props'));
+    p.inner = drawArt(artOf(p.art), p.g);
+    if (p.n) { const t = el('text', { x: 0, y: 420, 'text-anchor': 'middle', 'font-size': 150, fill: COLORS[(p.n - 1) % 7], stroke: '#fff', 'stroke-width': 18, 'paint-order': 'stroke' }, p.g); t.textContent = p.n; }
+  }
+  for (const d of draws) {
+    const paths = DRAW_PATHS[d.key] || (window.TOPICS.find(t => t.id === d.key) || {}).strokes;
+    d.g = el('g', { transform: `translate(${d.x * W} ${d.y * H}) scale(${d.s})` }, $('draws'));
+    d.paths = paths.map(pd => { const p = el('path', { d: pd, fill: 'none', stroke: '#3B2B4F', 'stroke-width': 24, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, d.g); const len = p.getTotalLength(); p.setAttribute('stroke-dasharray', len); return { p, len }; });
+    const total = d.paths.reduce((a, q) => a + q.len, 0); let acc = 0; d.paths.forEach(q => { q.a = acc / total; acc += q.len; q.b = acc / total; });
+  }
+  const conf = [];
+  for (const c of confs) for (let i = 0; i < 70; i++) conf.push({ t: c.t + (i % 10) * 0.12, d: c.d, x: (i * 137.5) % W, sp: 160 + (i * 53) % 140, rot: i * 37, col: COLORS[i % 7], g: el('rect', { width: 22, height: 12, rx: 3, fill: COLORS[i % 7] }, $('confetti')) });
+  for (const k of ['penny', 'ellie', 'coco']) (chars[k] ||= []);
+  S = { chars, props, draws, titles, bgs, conf, pulses, points, erases, lines, charG: {} };
+  for (const k of ['coco', 'ellie', 'penny']) S.charG[k] = el('g', {}, $('chars'));
+  window.DURATION = TL.duration;
+  render(0);
+}
+
+function last(list, t) { let r = null; for (const x of list) if (x.t <= t) r = x; return r; }
+
+function charState(name, t) {
+  const ev = S.chars[name]; let x = null, from = null, at = 0, visible = false, enterT = 0;
+  for (const e of ev) {
+    if (e.t > t) break;
+    if (e.kind === 'enter') { from = e.x > 0.5 ? 1.15 : -0.15; x = e.x; at = e.t; visible = true; enterT = e.t; }
+    else if (e.kind === 'move') { from = x; x = e.x; at = e.t; }
+    else if (e.kind === 'exit') { from = x; x = x > 0.5 ? 1.2 : -0.2; at = e.t; }
+  }
+  if (!visible) return null;
+  const k = easeInOut(prog(t, at, at + 0.8));
+  return { x: lerp(from ?? x, x, k), moving: k < 1 && from !== x, enterT };
+}
+
+function render(t) {
+  const bg = last(S.bgs, t);
+  $('bgSky').style.display = !bg || bg.bg === 'sky' ? '' : 'none';
+  $('bgParty').style.display = bg && bg.bg === 'party' ? '' : 'none';
+  const sc = document.getElementById('skyClouds'); if (sc) sc.setAttribute('transform', `translate(${Math.sin(t * 0.2) * 40} 0)`);
+
+  // speaking line
+  const line = S.lines.find(l => t >= l.start && t < l.start + l.dur + 0.25);
+  const speaker = line ? line.who : null;
+
+  // characters
+  const drawing = S.draws.find(d => t >= d.t - 0.6 && t < d.t + d.dur + 0.6);
+  for (const name of ['penny', 'ellie', 'coco']) {
+    const st = charState(name, t), g = S.charG[name];
+    if (!st || (name === 'penny' && drawing)) { g.style.display = 'none'; continue; }
+    g.style.display = '';
+    const talk = speaker === name;
+    const hop = st.moving ? -Math.abs(Math.sin(t * 9)) * 30 : talk ? -Math.abs(Math.sin(t * 7)) * 18 : -Math.abs(Math.sin(t * 2 + name.length)) * 4;
+    const rot = talk ? Math.sin(t * 6) * 4 : Math.sin(t * 1.5 + name.length) * 2;
+    const blink = ((t + name.length * 0.7) % 3.3) > 3.18 ? 0.15 : 1;
+    const scale = name === 'ellie' ? 1.25 : name === 'coco' ? 0.95 : 0.85;
+    g.innerHTML = window.CHARACTERS[name]({ blink });
+    g.setAttribute('transform', `translate(${st.x * W} ${BASE + hop}) rotate(${rot}) scale(${scale})`);
+  }
+
+  // drawings + Penny holding the pencil tip on the path
+  $('pennyDraw').innerHTML = '';
+  for (const d of S.draws) {
+    const vis = t >= d.t - 0.1 && !(d.hideT && t >= d.hideT);
+    d.g.style.display = vis ? '' : 'none';
+    if (!vis) continue;
+    const dk = easeInOut(prog(t, d.t, d.t + d.dur));
+    d.paths.forEach(q => q.p.setAttribute('stroke-dashoffset', q.len * (1 - clamp((dk - q.a) / (q.b - q.a)))));
+    if (drawing === d) {
+      const q = d.paths.find(q => dk <= q.b) || d.paths[d.paths.length - 1];
+      const pt = q.p.getPointAtLength(q.len * clamp((dk - q.a) / (q.b - q.a)));
+      const px = d.x * W + pt.x * d.s, py = d.y * H + pt.y * d.s;
+      const pen = el('g', { transform: `translate(${px} ${py}) rotate(${28 + Math.sin(t * 30) * 3}) scale(0.75)` }, $('pennyDraw'));
+      pen.innerHTML = window.CHARACTERS.penny({});
+    }
+  }
+
+  // props
+  for (const p of S.props) {
+    const shown = t >= p.t && !(p.hideT && t >= p.hideT);
+    p.g.style.display = shown ? '' : 'none';
+    if (!shown) continue;
+    let k = easeBack(prog(t, p.t, p.t + 0.45));
+    let hop = -Math.abs(Math.sin((t - p.t) * 2.4 + (p.idx || 0))) * 8;
+    const pulse = S.pulses.find(u => u.id === p.id && t >= u.t && t < u.end);
+    if (pulse) hop = -Math.abs(Math.sin((t - pulse.t) * 5 + (p.idx || 0) * 0.8)) * 26;
+    const pt = S.points.find(u => u.id === p.id && u.idx === p.idx && t >= u.t && t < u.end);
+    if (pt) k *= 1 + 0.25 * Math.sin(prog(t, pt.t, pt.end) * Math.PI);
+    const er = last(S.erases.filter(e => e.id === p.id), t);
+    let op = 1;
+    if (er) op = er.on ? 1 - prog(t, er.t + 0.3, er.t + 1.2) : prog(t, er.t + 1.6, er.t + 2.4);
+    p.g.style.opacity = op;
+    p.g.setAttribute('transform', `translate(${p.x * W} ${p.y * H + hop}) scale(${p.s * k})`);
+    const tint = p.tints ? last(p.tints, t) : null;
+    const tp = p.inner.querySelector('.tintable');
+    if (tp && tint) tp.setAttribute('fill', tint.col);
+  }
+
+  // confetti
+  for (const c of S.conf) {
+    const lt = t - c.t;
+    if (lt < 0 || lt > c.d) { c.g.style.display = 'none'; continue; }
+    c.g.style.display = '';
+    const y = -40 + lt * c.sp * 1.4, x = c.x + Math.sin(lt * 2 + c.rot) * 40;
+    c.g.setAttribute('transform', `translate(${x} ${y % (H + 80)}) rotate(${c.rot + lt * 200})`);
+  }
+
+  // title banner
+  const tt = last(S.titles, t);
+  if (tt) {
+    $('titleT').textContent = tt.text;
+    const k = easeBack(prog(t, tt.t, tt.t + 0.5));
+    const w = Math.max(360, tt.text.length * 38 + 120);
+    $('titleBox').setAttribute('x', 960 - w / 2); $('titleBox').setAttribute('y', 40); $('titleBox').setAttribute('width', w); $('titleBox').setAttribute('height', 104);
+    $('titleT').setAttribute('fill', COLORS[S.titles.indexOf(tt) % 7] === '#FFD23F' ? '#FF9F1C' : COLORS[S.titles.indexOf(tt) % 7]);
+    $('titleG').setAttribute('transform', `translate(960 92) scale(${k}) translate(-960 -92)`);
+    $('titleG').style.display = '';
+  } else $('titleG').style.display = 'none';
+
+  // subtitles (who is speaking + what)
+  if (line) {
+    const text = line.text, w = Math.min(1800, text.length * 26 + 100);
+    $('subT').textContent = text; $('subT').setAttribute('fill', SPEAKER[line.who] || '#3B2B4F');
+    $('subBox').setAttribute('x', 960 - w / 2); $('subBox').setAttribute('y', 982); $('subBox').setAttribute('width', w); $('subBox').setAttribute('height', 74);
+    $('subG').style.display = '';
+  } else $('subG').style.display = 'none';
+}
+window.setup = setup; window.render = render;
+</script>
+</body>
+</html>

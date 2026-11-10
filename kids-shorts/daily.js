@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const TOPICS = require('./topics');
 const { renderTopic, getTimeline } = require('./render');
+const { buildEpisode } = require('./longvideo');
 
 const a = process.argv.slice(2);
 const flag = (n, d) => (a.includes(n) ? a[a.indexOf(n) + 1] : d);
@@ -35,6 +36,24 @@ function pickTopics() {
     }
   }
   return { picked, used };
+}
+
+function episodeMetadata(ep) {
+  return {
+    title: `${ep.title} ${ep.emoji} | Doodle Pals Cartoon for Kids | Learn ${ep.learn.slice(0, 3).map(w => w[0].toUpperCase() + w.slice(1)).join(', ')}`.slice(0, 100),
+    description: [
+      `${ep.title} ${ep.emoji} — a new Doodle Pals story with Penny the Pencil, Ellie the Eraser and Coco the Crayon!`,
+      '',
+      `In this episode we learn: ${ep.learn.join(', ')}.`,
+      'Gentle, original 2D animation and songs in simple English for kids aged 2–6.',
+      'Sing along, count along and answer the questions — the friends wait for you!',
+      '',
+      '#kidscartoon #learnenglish #preschool #toddlers #kidslearning',
+    ].join('\n'),
+    tags: ['kids cartoon', 'cartoon for toddlers', 'learn english for kids', 'preschool learning', 'educational cartoon', ...ep.learn, 'Doodle Pals', 'Penny the Pencil', 'Ellie the Eraser', 'Coco the Crayon'],
+    categoryId: '27',
+    madeForKids: true,
+  };
 }
 
 function metadata(t) {
@@ -148,6 +167,21 @@ function metadata(t) {
     console.log(`[${i + 1}/${picked.length}] ${t.id} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
     batch.push({ id: t.id, file: path.basename(mp4), ...metadata(t) });
     used[t.id] = DATE;
+  }
+  // one long (16:9) episode per day: the next episode script not yet used
+  if (!a.includes('--no-episode')) {
+    const dir = path.join(__dirname, 'episodes');
+    const next = fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort().find(f => !used['episode:' + f.replace(/\.json$/, '')]);
+    if (next) {
+      const ep = JSON.parse(fs.readFileSync(path.join(dir, next), 'utf8'));
+      const mp4 = path.join(OUT, `episode-${ep.id}.mp4`);
+      const t0 = Date.now();
+      const tl = await buildEpisode(path.join(dir, next), mp4, { browser });
+      fs.rmSync(mp4.replace(/\.mp4$/, '') + '.work', { recursive: true, force: true });
+      console.log(`[episode] ${ep.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
+      batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), long: true, ...episodeMetadata(ep) });
+      used['episode:' + ep.id] = DATE;
+    } else console.log('[episode] no unused episode script left — write a new one in episodes/');
   }
   await browser.close();
   fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ date: DATE, videos: batch }, null, 2));

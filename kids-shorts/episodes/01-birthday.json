@@ -1,0 +1,799 @@
+{
+ "id": "01-birthday",
+ "title": "Penny's Birthday Party",
+ "emoji": "🎂",
+ "learn": [
+  "ovals",
+  "counting to five",
+  "colors",
+  "rectangles",
+  "squares",
+  "animal sounds"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "party"
+    },
+    {
+     "title": "Penny's Birthday!"
+    },
+    {
+     "move": "penny",
+     "x": 0.45
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Guess what? Today is my birthday!"
+    ],
+    [
+     "ellie",
+     "Hooray! Let's have a party!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Oh no!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Oh no! We have no balloons for my party!"
+    ],
+    [
+     "coco",
+     "Don't worry, Penny. Let's draw some!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Let's draw an oval!"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "oval-balloon",
+     "id": "d1",
+     "x": 0.42,
+     "y": 0.42,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw an oval. Round and long!"
+    ],
+    [
+     "penny",
+     "An oval... it's a balloon!"
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count to five!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "We need five balloons! Let's count together!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "bal",
+      "art": "oval-balloon",
+      "n": 5,
+      "x0": 0.26,
+      "dx": 0.12,
+      "y": 0.42,
+      "s": 0.32
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Five balloons!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "title": "Count with me!"
+    },
+    {
+     "pulse": "bal"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Count with me again!"
+    ],
+    [
+     "narrator",
+     "One, two, three, four, five!"
+    ],
+    [
+     "ellie",
+     "Great counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Colors!"
+    },
+    {
+     "move": "coco",
+     "x": 0.76
+    },
+    {
+     "move": "ellie",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Ooh, let me colour them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "tint": {
+      "id": "bal",
+      "colors": [
+       "#FF4D4D",
+       "#FF9F1C",
+       "#FFD23F",
+       "#4CB944",
+       "#4D96FF"
+      ]
+     }
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Red!"
+    ],
+    [
+     "coco",
+     "Orange!"
+    ],
+    [
+     "coco",
+     "Yellow!"
+    ],
+    [
+     "coco",
+     "Green!"
+    ],
+    [
+     "coco",
+     "Blue!"
+    ],
+    [
+     "narrator",
+     "Five colourful balloons!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is red?"
+    },
+    {
+     "point": {
+      "id": "bal",
+      "items": [
+       [
+        0,
+        2
+       ],
+       [
+        4,
+        5
+       ]
+      ]
+     }
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Which balloon is red?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "This one! Red!"
+    ],
+    [
+     "coco",
+     "And which balloon is blue?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "This one! Blue!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "A birthday cake!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Now we need a birthday cake!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Let's draw a rectangle!"
+    },
+    {
+     "draw": "rectangle-cake",
+     "id": "d2",
+     "x": 0.45,
+     "y": 0.5,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Two long sides, and two short sides. A rectangle!"
+    ],
+    [
+     "penny",
+     "It's a cake!"
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "show": "cake",
+     "id": "cake",
+     "x": 0.45,
+     "y": 0.5,
+     "s": 0.55
+    },
+    {
+     "hide": "d2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Yummy! But it needs candles!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "What shape?"
+    },
+    {
+     "pulse": "cake"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What shape is the cake?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "A rectangle! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "candle",
+      "art": "candle",
+      "n": 4,
+      "x0": 0.375,
+      "dx": 0.048,
+      "y": 0.395,
+      "s": 0.18,
+      "label": false
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "penny",
+     "I'm four years old today!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "move": "ellie",
+     "x": 0.62
+    },
+    {
+     "erase": "candle"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Oops! I erased the candles!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "candle"
+    },
+    {
+     "move": "ellie",
+     "x": 0.82
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "That's okay, Ellie. Everybody makes mistakes!"
+    ],
+    [
+     "ellie",
+     "Let me draw them back. There!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Presents are squares!"
+    },
+    {
+     "move": "coco",
+     "x": 0.88
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look! Presents are squares!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "gift",
+      "art": "square-present",
+      "n": 3,
+      "x0": 0.32,
+      "dx": 0.16,
+      "y": 0.5,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One present!"
+    ],
+    [
+     "narrator",
+     "Two presents!"
+    ],
+    [
+     "narrator",
+     "Three presents!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Knock, knock!"
+    },
+    {
+     "knock": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Knock, knock! Who's at the door?"
+    ],
+    [
+     "animal",
+     "Moo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cow",
+     "id": "cow",
+     "x": 0.38,
+     "y": 0.47,
+     "s": 0.4
+    },
+    {
+     "title": "It's Cow!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's Cow! Cow says moo!"
+    ],
+    [
+     "animal",
+     "Quack quack!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-duck",
+     "id": "duck",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    },
+    {
+     "title": "It's Duck!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "And Duck says quack!"
+    ],
+    [
+     "penny",
+     "My friends are here! Welcome!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Say it with me!"
+    },
+    {
+     "pulse": "cow"
+    },
+    {
+     "pulse": "duck"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Can you say moo, like Cow?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "animal",
+     "Moo!"
+    ],
+    [
+     "narrator",
+     "Can you say quack, like Duck?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "animal",
+     "Quack quack!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "bg": "party"
+    },
+    {
+     "title": "Party song!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Five balloons, so round and bright!"
+    ],
+    [
+     "narrator",
+     "Red and orange, green and blue!"
+    ],
+    [
+     "narrator",
+     "A cake with candles, one, two, three, four!"
+    ],
+    [
+     "narrator",
+     "Presents, friends, and a party for you!"
+    ],
+    [
+     "narrator",
+     "Hip, hip, hooray! It's Penny's day!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Five balloons, so round and bright!"
+    ],
+    [
+     "narrator",
+     "Red and orange, green and blue!"
+    ],
+    [
+     "narrator",
+     "A cake with candles, one, two, three, four!"
+    ],
+    [
+     "narrator",
+     "Presents, friends, and a party for you!"
+    ],
+    [
+     "narrator",
+     "Hip, hip, hooray! It's Penny's day!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Thank you, friends!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Thank you, friends! This is the best birthday ever!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,759 @@
+{
+ "id": "04-shape-hunt",
+ "title": "Shape Hunt in the Park! Shapes Song",
+ "emoji": "🔺",
+ "learn": [
+  "shapes",
+  "circle, triangle, square",
+  "heart and star"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Shape hunt!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's go on a shape hunt!"
+    ],
+    [
+     "coco",
+     "I see shapes everywhere!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw a circle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "circle-sun",
+     "id": "d0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a circle. Round and round!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "d0"
+    },
+    {
+     "show": "circle-sun",
+     "id": "s0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a sun!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The circle is a sun!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw a triangle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "triangle-tree",
+     "id": "d1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a triangle. One, two, three sides!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "d1"
+    },
+    {
+     "show": "triangle-tree",
+     "id": "s1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a tree!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The triangle is a tree!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "What shape?"
+    },
+    {
+     "pulse": "s1"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "What shape is it?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "A triangle! You're so smart!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw a heart!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "heart-strawberry",
+     "id": "d2",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a heart. Curve down, and curve up!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "d2"
+    },
+    {
+     "show": "heart-strawberry",
+     "id": "s2",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a strawberry!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The heart is a strawberry!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw a square!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "square-present",
+     "id": "d3",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a square. Four sides, all the same!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "d3"
+    },
+    {
+     "show": "square-present",
+     "id": "s3",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a present!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The square is a present!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "What shape?"
+    },
+    {
+     "pulse": "s3"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "What shape is it?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "A square! You're so smart!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw a star!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "star-starfish",
+     "id": "d4",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a star. Five pointy points!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "d4"
+    },
+    {
+     "show": "star-starfish",
+     "id": "s4",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a starfish!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The star is a starfish!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw a rectangle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "rectangle-door",
+     "id": "x0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a rectangle. Two long sides, and two short sides!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "x0"
+    },
+    {
+     "show": "rectangle-door",
+     "id": "xs0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a door!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The rectangle is a door!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw an oval!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "oval-balloon",
+     "id": "x1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw an oval. A long, round shape!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "x1"
+    },
+    {
+     "show": "oval-balloon",
+     "id": "xs1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a balloon!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The oval is a balloon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Shape quiz!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Shape quiz time!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-orange",
+     "id": "qz0",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is this?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A circle! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-pizza",
+     "id": "qz1",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is this?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A triangle! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "square-robot",
+     "id": "qz2",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is this?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A square! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Shape song!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A circle is round, like the big sun!"
+    ],
+    [
+     "narrator",
+     "A triangle tree, shapes are fun!"
+    ],
+    [
+     "narrator",
+     "A heart, a square, a star so bright!"
+    ],
+    [
+     "narrator",
+     "We found the shapes, and that's alright!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "A circle is round, like the big sun!"
+    ],
+    [
+     "narrator",
+     "A triangle tree, shapes are fun!"
+    ],
+    [
+     "narrator",
+     "A heart, a square, a star so bright!"
+    ],
+    [
+     "narrator",
+     "We found the shapes, and that's alright!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "We found so many shapes today!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}
