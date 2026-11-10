@@ -1,0 +1,17 @@
+{
+  "name": "doodle-pals-shorts",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "daily": "node daily.js",
+    "preview": "node render.js scenes/draw-shape.html circle-sun out/preview.mp4 --preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource/fredoka": "^5.1.0",
+    "playwright": "1.63.0"
+  },
+  "private": true
+}

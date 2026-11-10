@@ -1,0 +1,117 @@
+name: Kids Shorts (Doodle Pals)
+
+on:
+  # Same two-step pattern as daily_post.yml: a daily Claude scheduled task runs
+  # mode=generate, shows the owner the videos from the Release, and only after
+  # approval runs mode=publish for that date (optionally skipping some videos).
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "generate (render 5 Shorts into a Release) or publish (upload an approved date to YouTube)"
+        type: choice
+        options: [generate, publish]
+        default: generate
+      date:
+        description: "YYYY-MM-DD. generate: defaults to today (UTC). publish: required."
+        type: string
+        required: false
+      count:
+        description: "generate: how many Shorts to render"
+        type: string
+        default: "5"
+      skip:
+        description: "publish: comma-separated topic ids NOT approved (e.g. 'circle-cookie,oval-avocado')"
+        type: string
+        required: false
+      privacy:
+        description: "publish: YouTube privacy status"
+        type: choice
+        options: [public, unlisted, private]
+        default: public
+
+permissions:
+  contents: write   # create the Release and commit kids-shorts/state/used.json
+
+concurrency:
+  group: kids-shorts
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    if: inputs.mode == 'generate'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: kids-shorts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          pip install numpy
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Render batch
+        id: render
+        run: |
+          DATE="${{ inputs.date }}"; DATE="${DATE:-$(date -u +%F)}"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          node daily.js --count "${{ inputs.count }}" --date "$DATE" --out out
+      - name: Publish Release for review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE="${{ steps.render.outputs.date }}"
+          NOTES=$(node -e "const b=require('./out/$DATE/batch.json');console.log('Awaiting approval.\n\n'+b.videos.map(v=>'- **'+v.id+'** — '+v.title).join('\n'))")
+          gh release delete "shorts-$DATE" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "shorts-$DATE" out/$DATE/*.mp4 out/$DATE/batch.json \
+            --prerelease --title "Doodle Pals Shorts $DATE" --notes "$NOTES"
+          echo "Review: ${{ github.server_url }}/${{ github.repository }}/releases/tag/shorts-$DATE"
+      - name: Commit topic rotation state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/used.json
+          git diff --cached --quiet || (git commit -m "chore: kids-shorts used topics ${{ steps.render.outputs.date }} [skip ci]" && git push)
+
+  publish:
+    if: inputs.mode == 'publish'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: kids-shorts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install google-api-python-client google-auth
+      - name: Download approved batch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          test -n "${{ inputs.date }}" || { echo "date is required for publish"; exit 1; }
+          gh release download "shorts-${{ inputs.date }}" --dir batch
+      - name: Upload to YouTube
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 upload.py batch --skip "${{ inputs.skip }}" --privacy "${{ inputs.privacy }}"
+      - name: Mark Release as published
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LINKS=$(python3 -c "import json;print('\n'.join('- '+r['id']+': '+r['url'] for r in json.load(open('batch/uploaded.json'))))")
+          gh release upload "shorts-${{ inputs.date }}" batch/uploaded.json --clobber
+          gh release edit "shorts-${{ inputs.date }}" --prerelease=false --notes "Published to YouTube.
+
+          $LINKS"
