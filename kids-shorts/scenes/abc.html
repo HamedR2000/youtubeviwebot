@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #FFF6E9; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+  .pop { transform-box: fill-box; transform-origin: center; }
+</style>
+<script src="../topics.js"></script>
+</head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE8F1"/><stop offset="0.55" stop-color="#FFF4E4"/><stop offset="1" stop-color="#E3F2FF"/>
+    </linearGradient>
+    <linearGradient id="numFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF6B6B"/><stop offset="0.5" stop-color="#FF9F1C"/><stop offset="1" stop-color="#9B5DE5"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#7A5A3A" flood-opacity="0.18"/>
+    </filter>
+    <pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="3" fill="#E9D9C6"/></pattern>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <g id="clouds"></g>
+  <g filter="url(#soft)"><rect x="90" y="470" width="900" height="900" rx="64" fill="#FFFDF8"/></g>
+  <rect x="90" y="470" width="900" height="900" rx="64" fill="url(#dots)" opacity="0.55"/>
+
+  <text id="t1" x="540" y="250" text-anchor="middle" font-size="72" fill="#5B4A7A"></text>
+  <text id="t2" x="540" y="385" text-anchor="middle" font-size="150" fill="#F15BB5" stroke="#FFFFFF" stroke-width="10" paint-order="stroke"></text>
+
+  <g id="numWrap" transform="translate(540 730)">
+    <g id="num" class="pop">
+      <g id="numColor"></g>
+      <g id="numStrokes"></g>
+    </g>
+  </g>
+  <text id="lower" x="770" y="880" text-anchor="middle" font-size="420" fill="url(#numFill)" stroke="#3B2B4F" stroke-width="10" paint-order="stroke" opacity="0"></text>
+  <g id="objWrap"><g id="obj" class="pop"></g></g>
+  <g id="word"></g>
+  <text id="ask" x="540" y="1760" text-anchor="middle" font-size="76" fill="#5B4A7A" opacity="0"></text>
+  <g id="sparkles"></g>
+
+  <g id="penny"><g id="pennyInner"><g transform="rotate(28)">
+    <path d="M 0 0 L -36 -95 L 36 -95 Z" fill="#F7D2A6"/><path d="M 0 0 L -12 -32 L 12 -32 Z" fill="#3B2B4F"/>
+    <rect x="-38" y="-370" width="76" height="278" rx="8" fill="#FFC93C"/><rect x="-38" y="-370" width="22" height="278" fill="#FFB020" opacity="0.6"/>
+    <rect x="-40" y="-400" width="80" height="34" rx="6" fill="#C9CED6"/><rect x="-40" y="-452" width="80" height="58" rx="22" fill="#FF8FA3"/>
+    <ellipse id="pEyeL" cx="-14" cy="-262" rx="7" ry="10" fill="#3B2B4F"/><ellipse id="pEyeR" cx="16" cy="-262" rx="7" ry="10" fill="#3B2B4F"/>
+    <path d="M -14 -236 Q 1 -220 16 -236" fill="none" stroke="#3B2B4F" stroke-width="6" stroke-linecap="round"/>
+    <ellipse cx="-26" cy="-240" rx="8" ry="5" fill="#FF8FA3" opacity="0.8"/><ellipse cx="28" cy="-240" rx="8" ry="5" fill="#FF8FA3" opacity="0.8"/>
+  </g></g></g>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeInOut = k => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const easeOut = k => 1 - Math.pow(1 - k, 3);
+const easeBack = k => { const c = 1.9; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const COLORS = ['#FF6B6B', '#FF9F1C', '#2EC4B6', '#4D96FF', '#9B5DE5', '#F15BB5'];
+const FACE = `<ellipse cx="-150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/><ellipse cx="150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/>
+<g transform="translate(-95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>
+<g transform="translate(95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>
+<path d="M -90 70 Q 0 160 90 70" fill="none" stroke="#3B2B4F" stroke-width="18" stroke-linecap="round"/>`;
+
+const T = { titleIn: 0.2, pennyToStart: [1.4, 2.2], draw: [2.2, 5.2], pennyAway: [5.2, 6.0], color: 5.3, lower: 5.6,
+  object: 6.6, isFor: 7.0, word: 12.6, letterGap: 0.5, ask: 16.4, end: 20 };
+const NX = 330, NY = 740, NS_ = 0.62;
+let S = null;
+
+function artOf(topic) { return topic.artData || window.TOPICS.find(t => t.id === topic.art); }
+function miniArt(art, parent) {
+  const g = el('g', {}, parent);
+  for (const layer of ['back', 'fill', 'front']) for (const [tag, attrs] of (art[layer] || [])) el(tag, attrs, g);
+  if (art.face) { const f = el('g', { transform: `translate(${art.face.x || 0} ${art.face.y}) scale(${art.face.s})` }, g); f.innerHTML = FACE; }
+  if (art.strokes) el('path', { d: art.strokes[0], fill: 'none', stroke: '#3B2B4F', 'stroke-width': 22, 'stroke-linejoin': 'round' }, g);
+  return g;
+}
+
+function setup(topicId) {
+  const topic = window.TOPICS.find(t => t.id === topicId) || window.TOPICS.find(t => t.template === 'abc');
+  const letters = topic.word.replace(/[^A-Z]/g, '');
+  T.letterGap = Math.min(0.5, 3.0 / letters.length);
+  for (const id of ['numColor', 'numStrokes', 'obj', 'word', 'clouds', 'sparkles']) $(id).innerHTML = '';
+  const strokes = topic.strokes.map(d => {
+    el('path', { d, fill: 'none', stroke: 'url(#numFill)', 'stroke-width': 70, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, $('numColor'));
+    const p = el('path', { d, fill: 'none', stroke: '#3B2B4F', 'stroke-width': 26, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, $('numStrokes'));
+    const len = p.getTotalLength(); p.setAttribute('stroke-dasharray', len);
+    return { p, len };
+  });
+  const total = strokes.reduce((a, s) => a + s.len, 0); let acc = 0;
+  strokes.forEach(s => { s.a = acc / total; acc += s.len; s.b = acc / total; });
+  $('numWrap').setAttribute('transform', `translate(${NX} ${NY}) scale(${NS_})`);
+  $('lower').textContent = topic.letter.toLowerCase();
+  const art = miniArt(artOf(topic), $('obj')); art.setAttribute('transform', 'translate(540 1165) scale(0.6)');
+
+  const clouds = [[180, 140, 1.0], [880, 90, 0.8], [700, 1500, 0.7], [120, 1650, 0.9]].map(([x, y, s]) => {
+    const g = el('g', {}, $('clouds'));
+    for (const [dx, dy, r] of [[0, 0, 50], [55, -20, 62], [115, 0, 48], [58, 18, 50]]) el('circle', { cx: dx, cy: dy, r, fill: '#FFFFFF', opacity: 0.85 }, g);
+    return { g, x, y, s };
+  });
+  const chars = topic.word.split(''), L = chars.length, step = Math.min(125, 940 / L), fs = Math.min(160, step * 1.3);
+  let li = 0;
+  const spelled = chars.map((ch, i) => {
+    const x = 540 + (i - (L - 1) / 2) * step;
+    if (!/[A-Z]/.test(ch)) return null;
+    const first = li === 0;
+    const t = el('text', { x, y: 1580, 'text-anchor': 'middle', 'font-size': first ? fs * 1.15 : fs, fill: first ? '#F15BB5' : COLORS[(li + 1) % 6], stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke' }, $('word'));
+    t.textContent = ch; return { t, x, i: li++ };
+  }).filter(Boolean);
+  const sparkles = Array.from({ length: 18 }, (_, i) => {
+    const a = i * 2.39996, d = 380 + (i * 47) % 140;
+    const g = el('path', { d: 'M0 -26 L7 -7 L26 0 L7 7 L0 26 L-7 7 L-26 0 L-7 -7 Z', fill: COLORS[i % 6] }, $('sparkles'));
+    return { g, x: 540 + Math.cos(a) * d, y: 920 + Math.sin(a) * d, delay: (i % 6) * 0.12 };
+  });
+  $('ask').textContent = `What starts with ${topic.letter}?`;
+  const t2b = topic.word + '!';
+  S = { topic, strokes, spelled, clouds, sparkles, t1a: "Let's learn", t2a: `LETTER ${topic.letter}!`, t1b: `${topic.letter} is for`, t2b,
+    fs2a: 150, fs2b: Math.min(150, 980 / (t2b.length * 0.62)) };
+  window.TIMELINE = { ...T, letters: letters.length, template: 'abc' };
+  render(0);
+  return window.TIMELINE;
+}
+
+function strokePoint(dk) {
+  const s = S.strokes.find(s => dk <= s.b) || S.strokes[S.strokes.length - 1];
+  const p = s.p.getPointAtLength(s.len * clamp((dk - s.a) / (s.b - s.a)));
+  return { x: NX + p.x * NS_, y: NY + p.y * NS_ };
+}
+
+function render(t) {
+  S.clouds.forEach((c, i) => c.g.setAttribute('transform', `translate(${c.x + Math.sin(t * 0.4 + i) * 25} ${c.y}) scale(${c.s})`));
+  const showFor = t >= T.isFor && t < T.word - 0.1;
+  $('t1').textContent = showFor ? S.t1b : S.t1a;
+  $('t2').textContent = showFor ? S.t2b : S.t2a;
+  $('t2').setAttribute('font-size', showFor ? S.fs2b : S.fs2a);
+  $('t2').setAttribute('fill', showFor ? '#FF9F1C' : '#F15BB5');
+  const pop2 = showFor ? easeBack(prog(t, T.isFor, T.isFor + 0.5))
+    : t >= T.word - 0.1 ? easeBack(prog(t, T.word - 0.1, T.word + 0.4)) : easeBack(prog(t, T.titleIn + 0.25, T.titleIn + 0.95));
+  const pop1 = showFor ? easeBack(prog(t, T.isFor, T.isFor + 0.5)) : easeBack(prog(t, T.titleIn, T.titleIn + 0.7));
+  $('t1').setAttribute('transform', `translate(540 250) scale(${pop1}) translate(-540 -250)`);
+  $('t2').setAttribute('transform', `translate(0 ${Math.sin(t * 2.2) * 6}) translate(540 340) scale(${pop2}) translate(-540 -340)`);
+
+  const dk = easeInOut(prog(t, ...T.draw));
+  S.strokes.forEach(s => s.p.setAttribute('stroke-dashoffset', s.len * (1 - clamp((dk - s.a) / (s.b - s.a)))));
+  $('numColor').setAttribute('opacity', clamp(easeBack(prog(t, T.color, T.color + 0.5))));
+  $('num').style.transform = `scale(${t > T.color + 0.5 ? 1 + Math.sin((t - T.color) * 3) * 0.03 : 1})`;
+  const lk = easeBack(prog(t, T.lower, T.lower + 0.5));
+  $('lower').setAttribute('opacity', clamp(lk));
+  $('lower').setAttribute('transform', `translate(770 760) scale(${lk}) rotate(${Math.sin(t * 2.5) * 4}) translate(-770 -760)`);
+
+  const ok = easeBack(prog(t, T.object, T.object + 0.5));
+  const hop = t > T.object + 0.5 ? -Math.abs(Math.sin((t - T.object) * 3)) * 16 : 0;
+  $('obj').style.transform = `translate(0px, ${hop}px) scale(${ok})`;
+  $('obj').style.opacity = ok > 0 ? 1 : 0;
+
+  const home = { x: 830, y: 1470 }, away = { x: 900, y: 1330 }, start = strokePoint(0);
+  let px, py, wiggle = 0;
+  if (t < T.pennyToStart[0]) { px = lerp(1250, home.x, easeOut(prog(t, 0.3, 1.1))); py = home.y; wiggle = Math.sin(t * 9) * 10; }
+  else if (t < T.draw[0]) { const k = easeInOut(prog(t, ...T.pennyToStart)); px = lerp(home.x, start.x, k); py = lerp(home.y, start.y, k) - Math.sin(k * Math.PI) * 120; }
+  else if (t < T.pennyAway[0]) { ({ x: px, y: py } = strokePoint(dk)); wiggle = Math.sin(t * 30) * 3; }
+  else {
+    const end = strokePoint(1), k = easeInOut(prog(t, ...T.pennyAway));
+    px = lerp(end.x, away.x, k); py = lerp(end.y, away.y, k) - Math.sin(k * Math.PI) * 160;
+    if (t > T.pennyAway[1]) { py -= Math.abs(Math.sin((t - T.pennyAway[1]) * 4.5)) * 22; wiggle = Math.sin(t * 4.5) * 5; }
+  }
+  $('penny').setAttribute('transform', `translate(${px} ${py}) scale(0.8)`);
+  $('pennyInner').setAttribute('transform', `rotate(${wiggle})`);
+  ['pEyeL', 'pEyeR'].forEach(id => $(id).setAttribute('ry', (t % 3.1) > 3.0 ? 1.5 : 10));
+
+  S.spelled.forEach(({ t: tx, x, i }) => {
+    const s = T.word + i * T.letterGap, k = easeBack(prog(t, s, s + 0.4));
+    const h = t > s + 0.4 ? -Math.abs(Math.sin((t - s) * 3)) * 10 : 0;
+    tx.setAttribute('transform', `translate(${x} ${1580 + h}) scale(${k}) translate(${-x} -1580)`);
+    tx.setAttribute('opacity', k > 0 ? 1 : 0);
+  });
+  const ak = easeBack(prog(t, T.ask, T.ask + 0.6));
+  $('ask').setAttribute('opacity', clamp(ak));
+  $('ask').setAttribute('transform', `translate(540 1740) scale(${ak}) translate(-540 -1740)`);
+  S.sparkles.forEach(sp => {
+    const k = prog(t, T.ask + sp.delay, T.ask + sp.delay + 0.8);
+    sp.g.setAttribute('transform', `translate(${sp.x} ${sp.y}) scale(${k >= 1 ? 0.75 + Math.sin(t * 6 + sp.x) * 0.25 : easeBack(k)}) rotate(${t * 40})`);
+    sp.g.setAttribute('opacity', k > 0 ? 1 : 0);
+  });
+}
+window.setup = setup; window.render = render; window.DURATION = T.end;
+setup(new URLSearchParams(location.search).get('topic') || 'abc-a');
+</script>
+</body>
+</html>
