@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #FFF6E9; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+  .pop { transform-box: fill-box; transform-origin: center; }
+</style>
+<script src="../topics.js"></script>
+<script src="../characters.js"></script>
+</head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D9F2FF"/><stop offset="0.55" stop-color="#F1FBE8"/><stop offset="1" stop-color="#CDEFC9"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#3A5A3A" flood-opacity="0.18"/>
+    </filter>
+    <pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="3" fill="#DDE8D0"/></pattern>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <g id="clouds"></g>
+  <path d="M 0 1720 C 300 1660 700 1780 1080 1700 L 1080 1920 L 0 1920 Z" fill="#9BDB8A"/>
+  <g filter="url(#soft)"><rect x="90" y="470" width="900" height="900" rx="64" fill="#FFFDF8"/></g>
+  <rect x="90" y="470" width="900" height="900" rx="64" fill="url(#dots)" opacity="0.55"/>
+
+  <text id="t1" x="540" y="250" text-anchor="middle" font-size="72" fill="#5B4A7A"></text>
+  <text id="t2" x="540" y="385" text-anchor="middle" font-size="150" fill="#4D96FF" stroke="#FFFFFF" stroke-width="10" paint-order="stroke"></text>
+
+  <g id="animalWrap" transform="translate(540 930) scale(0.8)"><g id="animal" class="pop"></g></g>
+  <g id="scribble"></g>
+  <text id="qmark" x="540" y="990" text-anchor="middle" font-size="260" fill="#FF9F1C" stroke="#fff" stroke-width="14" paint-order="stroke">?</text>
+  <g id="bubble" class="pop">
+    <path d="M 640 520 h 300 a 40 40 0 0 1 40 40 v 110 a 40 40 0 0 1 -40 40 h -190 l -60 60 l 10 -60 h -60 a 40 40 0 0 1 -40 -40 v -110 a 40 40 0 0 1 40 -40 z" fill="#fff" stroke="#3B2B4F" stroke-width="8"/>
+    <text id="bubbleText" x="790" y="645" text-anchor="middle" font-size="76" fill="#FF6B6B"></text>
+  </g>
+  <g id="word"></g>
+  <text id="ask" x="540" y="1790" text-anchor="middle" font-size="76" fill="#5B4A7A" opacity="0"></text>
+  <g id="sparkles"></g>
+  <g id="ellie"></g>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeInOut = k => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const easeOut = k => 1 - Math.pow(1 - k, 3);
+const easeBack = k => { const c = 1.9; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const COLORS = ['#FF6B6B', '#FF9F1C', '#2EC4B6', '#4D96FF', '#9B5DE5', '#F15BB5'];
+const faceSVG = (mouth = true) => `<ellipse cx="-150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/><ellipse cx="150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/>
+<g class="eye" transform="translate(-95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>
+<g class="eye" transform="translate(95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>` +
+  (mouth ? '<path d="M -90 70 Q 0 160 90 70" fill="none" stroke="#3B2B4F" stroke-width="18" stroke-linecap="round"/>' : '');
+
+// Timeline (s). The animal's sound plays first; Ellie erases the scribbles; reveal; sound again with a speech bubble.
+const T = { titleIn: 0.2, sound1: 0.5, ellieIn: [2.6, 3.4], erase: [3.4, 6.4], ellieOut: [6.4, 7.0], reveal: 6.8, itsA: 7.0,
+  bubble: 8.8, word: 12.6, letterGap: 0.5, ask: 16.4, end: 20 };
+const BANDS = [690, 800, 910, 1020, 1130]; // scribble rows Ellie erases, alternating direction
+let S = null;
+
+function setup(topicId) {
+  const topic = window.TOPICS.find(t => t.id === topicId) || window.TOPICS.find(t => t.template === 'animal');
+  const art = topic.artData;
+  T.letterGap = Math.min(0.5, 3.0 / topic.word.length);
+  for (const id of ['animal', 'scribble', 'word', 'clouds', 'sparkles']) $(id).innerHTML = '';
+  for (const layer of ['back', 'fill', 'front']) for (const [tag, attrs] of (art[layer] || [])) el(tag, attrs, $('animal'));
+  const f = el('g', { transform: `translate(${art.face.x || 0} ${art.face.y}) scale(${art.face.s})` }, $('animal'));
+  f.innerHTML = faceSVG(art.face.mouth !== false);
+
+  // scribble cover: one zig-zag band per row
+  const bands = BANDS.map((y, r) => {
+    const pts = []; for (let x = 170, i = 0; x <= 910; x += 37, i++) pts.push(`${x} ${y + (i % 2 ? -62 : 62)}`);
+    if (r % 2) pts.reverse();
+    const p = el('path', { d: 'M ' + pts.join(' L '), fill: 'none', stroke: ['#8E8AA3', '#7C7893', '#9A96AE'][r % 3], 'stroke-width': 30, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, $('scribble'));
+    const len = p.getTotalLength(); p.setAttribute('stroke-dasharray', `${len} ${len}`);
+    return { p, len };
+  });
+
+  const clouds = [[180, 140, 1.0], [880, 90, 0.8], [760, 1540, 0.6], [100, 1600, 0.7]].map(([x, y, s]) => {
+    const g = el('g', {}, $('clouds'));
+    for (const [dx, dy, r] of [[0, 0, 50], [55, -20, 62], [115, 0, 48], [58, 18, 50]]) el('circle', { cx: dx, cy: dy, r, fill: '#FFFFFF', opacity: 0.85 }, g);
+    return { g, x, y, s };
+  });
+  const L = topic.word.length, step = Math.min(125, 940 / L), fs = Math.min(160, step * 1.3);
+  const letters = topic.word.split('').map((ch, i) => {
+    const x = 540 + (i - (L - 1) / 2) * step;
+    const t = el('text', { x, y: 1600, 'text-anchor': 'middle', 'font-size': fs, fill: COLORS[i % 6], stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke' }, $('word'));
+    t.textContent = ch; return { t, x };
+  });
+  const sparkles = Array.from({ length: 18 }, (_, i) => {
+    const a = i * 2.39996, d = 380 + (i * 47) % 140;
+    const g = el('path', { d: 'M0 -26 L7 -7 L26 0 L7 7 L0 26 L-7 7 L-26 0 L-7 -7 Z', fill: COLORS[i % 6] }, $('sparkles'));
+    return { g, x: 540 + Math.cos(a) * d, y: 920 + Math.sin(a) * d, delay: (i % 6) * 0.12 };
+  });
+  $('bubbleText').textContent = topic.soundText + '!';
+  $('bubbleText').setAttribute('font-size', Math.min(76, 330 / (topic.soundText.length * 0.6)));
+  $('ask').textContent = `Can you say "${topic.soundText.toLowerCase()}"?`;
+  const q = topic.soundText + '?', a2 = topic.word + '!';
+  S = { topic, bands, letters, clouds, sparkles, t1a: 'Who says', t2a: q, t1b: `It's ${topic.article}`, t2b: a2,
+    fs2a: Math.min(150, 980 / (q.length * 0.62)), fs2b: Math.min(150, 980 / (a2.length * 0.62)) };
+  window.TIMELINE = { ...T, letters: L, template: 'animal' };
+  render(0);
+  return window.TIMELINE;
+}
+
+function render(t) {
+  S.clouds.forEach((c, i) => c.g.setAttribute('transform', `translate(${c.x + Math.sin(t * 0.4 + i) * 25} ${c.y}) scale(${c.s})`));
+  const showIt = t >= T.itsA && t < T.word - 0.1;
+  $('t1').textContent = showIt ? S.t1b : S.t1a;
+  $('t2').textContent = showIt ? S.t2b : S.t2a;
+  $('t2').setAttribute('font-size', showIt ? S.fs2b : S.fs2a);
+  $('t2').setAttribute('fill', showIt ? '#FF9F1C' : '#4D96FF');
+  const pop = showIt ? easeBack(prog(t, T.itsA, T.itsA + 0.5)) : t >= T.word - 0.1 ? easeBack(prog(t, T.word - 0.1, T.word + 0.4)) : easeBack(prog(t, T.titleIn, T.titleIn + 0.7));
+  $('t1').setAttribute('transform', `translate(540 250) scale(${pop}) translate(-540 -250)`);
+  $('t2').setAttribute('transform', `translate(0 ${Math.sin(t * 2.2) * 6}) translate(540 340) scale(${pop}) translate(-540 -340)`);
+  if (t >= T.word - 0.1) { $('t1').textContent = S.t1b; $('t2').textContent = S.t2b; $('t2').setAttribute('font-size', S.fs2b); $('t2').setAttribute('fill', '#FF9F1C'); }
+
+  // question mark wobbles until Ellie starts erasing
+  const qk = 1 - prog(t, T.erase[0], T.erase[0] + 0.4);
+  $('qmark').setAttribute('opacity', qk);
+  $('qmark').setAttribute('transform', `rotate(${Math.sin(t * 4) * 8} 540 900) translate(540 900) scale(${easeBack(prog(t, 0.4, 1.0)) * (0.6 + 0.4 * qk)}) translate(-540 -900)`);
+
+  // erasing: total progress shared across bands; Ellie follows the erase point
+  const ek = easeInOut(prog(t, ...T.erase)) * S.bands.length;
+  let ex = 1250, ey = 1350;
+  S.bands.forEach((b, i) => {
+    const k = clamp(ek - i);
+    b.p.setAttribute('stroke-dashoffset', -b.len * k);
+    if (ek >= i && ek < i + 1) { const pt = b.p.getPointAtLength(b.len * k); ex = pt.x; ey = pt.y; }
+  });
+  let px, py, rot = 0, sc = 0.95;
+  if (t < T.ellieIn[0]) { px = 1300; py = 760; }
+  else if (t < T.erase[0]) { const k = easeOut(prog(t, ...T.ellieIn)); const st = S.bands[0].p.getPointAtLength(0); px = lerp(1300, st.x, k); py = lerp(760, st.y + 90, k) - Math.sin(k * Math.PI) * 120; }
+  else if (t < T.ellieOut[0]) { px = ex; py = ey + 90; rot = Math.sin(t * 28) * 12; }
+  else {
+    const k = easeInOut(prog(t, ...T.ellieOut)); const end = S.bands[S.bands.length - 1].p.getPointAtLength(S.bands[S.bands.length - 1].len);
+    px = lerp(end.x, 935, k); py = lerp(end.y + 90, 1450, k) - Math.sin(k * Math.PI) * 160; sc = lerp(0.95, 1.05, k);
+    if (t > T.ellieOut[1]) { py -= Math.abs(Math.sin((t - T.ellieOut[1]) * 4.2)) * 24; rot = Math.sin(t * 4.2) * 5; }
+  }
+  const blink = (t % 2.9) > 2.8 ? 0.15 : 1;
+  $('ellie').innerHTML = window.CHARACTERS.ellie({ blink });
+  $('ellie').setAttribute('transform', `translate(${px} ${py}) rotate(${rot}) scale(${sc})`);
+
+  // reveal: animal bounces, blinks
+  const rk = t >= T.reveal ? easeBack(prog(t, T.reveal, T.reveal + 0.5)) : 1;
+  const hop = t > T.reveal + 0.5 ? -Math.abs(Math.sin((t - T.reveal) * 3)) * 18 : 0;
+  $('animal').style.transform = `translate(0px, ${hop}px) scale(${t >= T.reveal ? rk : 1})`;
+  const ab = (t > 9 && ((t - 9) % 2.6) < 0.12) ? 0.12 : 1;
+  $('animal').querySelectorAll('.eye').forEach((e, i) => e.setAttribute('transform', `translate(${i ? 95 : -95} -40) scale(1 ${ab})`));
+
+  const bk = easeBack(prog(t, T.bubble, T.bubble + 0.4)) * (1 - prog(t, T.word - 0.6, T.word - 0.2));
+  $('bubble').style.transform = `scale(${bk})`; $('bubble').style.opacity = bk > 0.01 ? 1 : 0;
+
+  S.letters.forEach(({ t: tx, x }, i) => {
+    const s = T.word + i * T.letterGap, k = easeBack(prog(t, s, s + 0.4));
+    const h = t > s + 0.4 ? -Math.abs(Math.sin((t - s) * 3)) * 10 : 0;
+    tx.setAttribute('transform', `translate(${x} ${1600 + h}) scale(${k}) translate(${-x} -1600)`);
+    tx.setAttribute('opacity', k > 0 ? 1 : 0);
+  });
+  const ak = easeBack(prog(t, T.ask, T.ask + 0.6));
+  $('ask').setAttribute('opacity', clamp(ak));
+  $('ask').setAttribute('transform', `translate(540 1770) scale(${ak}) translate(-540 -1770)`);
+  S.sparkles.forEach(sp => {
+    const k = prog(t, T.reveal + sp.delay, T.reveal + sp.delay + 0.8) * (1 - prog(t, T.reveal + 2.5, T.reveal + 3));
+    sp.g.setAttribute('transform', `translate(${sp.x} ${sp.y}) scale(${easeBack(k)}) rotate(${t * 40})`);
+    sp.g.setAttribute('opacity', k > 0 ? 1 : 0);
+  });
+}
+window.setup = setup; window.render = render; window.DURATION = T.end;
+setup(new URLSearchParams(location.search).get('topic') || 'animal-cow');
+</script>
+</body>
+</html>

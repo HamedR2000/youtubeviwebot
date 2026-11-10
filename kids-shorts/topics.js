@@ -211,5 +211,53 @@
     TOPICS.push({ id: `abc-${letter.toLowerCase()}`, template: 'abc', letter, word, art, artData: ART[art] || null, emoji, strokes: LETTERS[letter] });
   }
 
+  // ---- Animals: "Who says moo?" — Ellie erases the scribbles to reveal the animal ----
+  const EO = (cx, cy, rx, ry, fill, rot = 0) => ['ellipse', { cx, cy, rx, ry, fill, transform: `rotate(${rot} ${cx} ${cy})`, ...O }];
+  const CO = (cx, cy, r, fill) => ['circle', { cx, cy, r, fill, ...O }];
+  const mirror = (d) => d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (m, x, y) => `${-x} ${y}`);
+  const MOUTH_W = (y) => line(`M -40 ${y} Q -20 ${y + 25} 0 ${y} Q 20 ${y + 25} 40 ${y}`, '#3B2B4F', 9);
+  const whiskers = (y) => line(`M -110 ${y} L -250 ${y - 30} M -110 ${y + 30} L -250 ${y + 40} M 110 ${y} L 250 ${y - 30} M 110 ${y + 30} L 250 ${y + 40}`, '#3B2B4F', 7);
+  const earL = (d, f) => [P(d, f, O), P(mirror(d), f, O)];
+  const ANIMAL_ART = {
+    cow: { back: [...earL('M -150 -230 C -190 -310 -150 -340 -110 -280 Z', '#FFF3D6'), EO(-250, -140, 85, 40, '#F6C1C9', -20), EO(250, -140, 85, 40, '#F6C1C9', 20)],
+      fill: [P(oval(230, 270), '#FFFFFF', O)],
+      front: [C(150, -170, 60, '#3B2B4F'), C(-185, 40, 40, '#3B2B4F'), EO(0, 170, 175, 100, '#F6C1C9'), E(-55, 165, 15, 24, '#3B2B4F'), E(55, 165, 15, 24, '#3B2B4F'), line('M -45 220 Q 0 245 45 220', '#3B2B4F', 9)],
+      face: { y: -60, s: 0.8, mouth: false } },
+    dog: { back: [EO(-215, -50, 70, 150, '#8B5A3C', 15), EO(215, -50, 70, 150, '#8B5A3C', -15)], fill: [CO(0, 0, 230, '#D9A066')],
+      front: [E(0, 115, 120, 85, '#F5DEC0'), E(0, 75, 38, 28, '#3B2B4F'), MOUTH_W(125)], face: { y: -50, s: 0.8, mouth: false } },
+    cat: { back: earL('M -205 -110 L -175 -320 L -60 -205 Z', '#FF9F1C'), fill: [CO(0, 0, 230, '#FFB627')],
+      front: [whiskers(80), P('M -26 60 L 26 60 L 0 88 Z', '#FF8FA3'), MOUTH_W(100)], face: { y: -60, s: 0.8, mouth: false } },
+    pig: { back: earL('M -205 -130 L -145 -295 L -70 -190 Z', '#FF8FB1'), fill: [CO(0, 0, 235, '#FFB3C8')],
+      front: [EO(0, 80, 95, 65, '#FF8FB1'), E(-30, 80, 14, 22, '#3B2B4F'), E(30, 80, 14, 22, '#3B2B4F'), line('M -50 170 Q 0 200 50 170', '#3B2B4F', 9)], face: { y: -90, s: 0.8, mouth: false } },
+    sheep: { back: ring(12, (i, a) => CO(Math.cos(a) * 225, Math.sin(a) * 225 - 10, 88, '#FFFFFF')), fill: [P(oval(150, 190), '#F5DEC0', O)],
+      front: [EO(-175, -20, 70, 32, '#F5DEC0', -20), EO(175, -20, 70, 32, '#F5DEC0', 20), CO(-60, -190, 60, '#FFFFFF'), CO(30, -205, 66, '#FFFFFF')], face: { y: 10, s: 0.62 } },
+    duck: { back: [line('M 0 -225 Q 15 -295 55 -280', '#E0B000', 14)], fill: [CO(0, 0, 230, '#FFD23F')],
+      front: [EO(0, 95, 125, 52, '#FF9F1C'), line('M -115 95 L 115 95', '#E07A00', 7)], face: { y: -80, s: 0.8, mouth: false } },
+    horse: { back: earL('M -150 -230 L -120 -345 L -60 -255 Z', '#8B5A3C'), fill: [P(oval(190, 290), '#A9744F', O)],
+      front: [P('M -70 -275 C -30 -345 60 -335 85 -260 L 40 -205 Z', '#3B2B4F'), EO(0, 180, 150, 100, '#D9A066'), E(-50, 175, 14, 22, '#3B2B4F'), E(50, 175, 14, 22, '#3B2B4F'), line('M -40 235 Q 0 260 40 235', '#3B2B4F', 9)],
+      face: { y: -90, s: 0.75, mouth: false } },
+    chicken: { back: [P('M -60 -215 C -75 -300 -10 -315 0 -250 C 10 -325 75 -305 60 -225 Z', '#E63946', O)], fill: [CO(0, 0, 230, '#FFFFFF')],
+      front: [P('M -45 65 L 45 65 L 0 135 Z', '#FF9F1C', O), EO(0, 172, 26, 38, '#E63946')], face: { y: -80, s: 0.8, mouth: false } },
+    lion: { back: [...ring(14, (i, a) => C(Math.cos(a) * 235, Math.sin(a) * 235, 92, i % 2 ? '#E07A00' : '#FF9F1C')), CO(-170, -170, 52, '#FFB627'), CO(170, -170, 52, '#FFB627')],
+      fill: [CO(0, 0, 220, '#FFD23F')], front: [E(0, 100, 115, 75, '#FFF3D6'), P('M -35 55 L 35 55 L 0 95 Z', '#8B5A3C'), MOUTH_W(120)], face: { y: -60, s: 0.8, mouth: false } },
+    frog: { back: [CO(-115, -170, 92, '#4CB944'), CO(115, -170, 92, '#4CB944')],
+      fill: [P('M -285 40 C -285 -185 285 -185 285 40 C 285 225 -285 225 -285 40 Z', '#4CB944', O)],
+      front: [line('M -150 60 Q 0 165 150 60', '#3B2B4F', 12)], face: { y: -140, s: 0.95, mouth: false } },
+    mouse: { back: [CO(-185, -165, 110, '#C9CED6'), CO(185, -165, 110, '#C9CED6'), C(-185, -165, 64, '#FFB3C8'), C(185, -165, 64, '#FFB3C8')],
+      fill: [CO(0, 20, 210, '#C9CED6')], front: [whiskers(110), C(0, 105, 26, '#FF8FA3'), MOUTH_W(140)], face: { y: -40, s: 0.75, mouth: false } },
+    owl: { back: earL('M -180 -195 L -150 -335 L -80 -245 Z', '#A9744F'), fill: [P(oval(220, 280), '#A9744F', O)],
+      front: [E(0, 145, 140, 110, '#F5DEC0'), CO(-90, -60, 88, '#FFFFFF'), CO(90, -60, 88, '#FFFFFF'), P('M -25 25 L 25 25 L 0 75 Z', '#FF9F1C', O)],
+      face: { y: -20, s: 0.95, mouth: false } },
+  };
+  const ANIMALS = [
+    ['cow', 'COW', 'a', 'Moo!', 'MOO', '🐮'], ['dog', 'DOG', 'a', 'Woof woof!', 'WOOF', '🐶'], ['cat', 'CAT', 'a', 'Meow!', 'MEOW', '🐱'],
+    ['duck', 'DUCK', 'a', 'Quack quack!', 'QUACK', '🦆'], ['pig', 'PIG', 'a', 'Oink oink!', 'OINK', '🐷'], ['sheep', 'SHEEP', 'a', 'Baa!', 'BAA', '🐑'],
+    ['lion', 'LION', 'a', 'Roar!', 'ROAR', '🦁'], ['frog', 'FROG', 'a', 'Ribbit!', 'RIBBIT', '🐸'], ['horse', 'HORSE', 'a', 'Neigh!', 'NEIGH', '🐴'],
+    ['chicken', 'CHICKEN', 'a', 'Cluck cluck!', 'CLUCK', '🐔'], ['owl', 'OWL', 'an', 'Hoo hoo!', 'HOO HOO', '🦉'], ['mouse', 'MOUSE', 'a', 'Squeak squeak!', 'SQUEAK', '🐭'],
+  ];
+  for (const [key, word, article, sound, soundText, emoji] of ANIMALS) {
+    TOPICS.push({ id: `animal-${key}`, template: 'animal', word, article, sound, soundText, emoji, artData: ANIMAL_ART[key] });
+  }
+
   if (typeof module !== 'undefined') module.exports = TOPICS; else window.TOPICS = TOPICS;
 })();

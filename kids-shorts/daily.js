@@ -38,6 +38,27 @@ function pickTopics() {
 }
 
 function metadata(t) {
+  if (t.template === 'animal') {
+    const animal = t.word[0] + t.word.slice(1).toLowerCase();
+    const snd = t.sound.split(' ')[0].replace('!', '');
+    return {
+      title: `Who Says ${snd}? ${t.emoji} It's ${t.article === 'an' ? 'an' : 'a'} ${animal}! | Animal Sounds for Toddlers #shorts`,
+      description: [
+        `Guess the animal with Ellie the Eraser! 🩷 Who says "${t.sound}"? It's ${t.article} ${animal.toLowerCase()} ${t.emoji}`,
+        '',
+        `Learn the word: ${t.word.split('').join('-')} — ${animal}!`,
+        'Animal names and sounds in English for kids aged 2–6.',
+        '',
+        `Grown-ups: make the sound together — can your little one say "${snd.toLowerCase()}"? 🐾`,
+        '',
+        '#animalsounds #animals #kidslearning #toddlers #learnenglish #preschool',
+      ].join('\n'),
+      tags: ['animal sounds for kids', `${animal.toLowerCase()} sound`, `what does the ${animal.toLowerCase()} say`, 'animals for toddlers', 'learn animals',
+        'preschool', 'english for kids', 'kids cartoon', 'Doodle Pals', 'Ellie the Eraser'],
+      categoryId: '27',
+      madeForKids: true,
+    };
+  }
   if (t.template === 'abc') {
     const cap = w => w.split(/([ -])/).map(x => x[0] ? x[0] + x.slice(1).toLowerCase() : x).join('');
     const word = cap(t.word);
@@ -116,7 +137,7 @@ function metadata(t) {
     execFileSync('python3', [path.join(__dirname, 'audio', 'music.py'), wav, tlFile, String(seed)]);
     if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
       const topicFile = path.join(OUT, `${t.id}.topic.json`);
-      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter }));
+      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound }));
       execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
         '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
       fs.rmSync(topicFile);

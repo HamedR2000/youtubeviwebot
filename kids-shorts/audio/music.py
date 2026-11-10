@@ -16,9 +16,11 @@ out = np.zeros(N)
 T = dict(draw=(2.2, 6.4), fill=7.0, face=8.0, rays=9.4, word=12.6, gap=0.5, ask=16.4, letters=6)
 if len(sys.argv) > 2:
     tl = json.load(open(sys.argv[2]))
-    T.update(draw=tuple(tl['draw']), word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
+    T.update(draw=tuple(tl.get('draw') or tl['erase']), word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
     if tl.get('template') == 'count':
         T.update(pops=tl['pops'], fill=None, face=None, rays=None, color=tl['color'])
+    elif tl.get('template') == 'animal':
+        T.update(fill=tl['reveal'], face=tl['bubble'], rays=tl['reveal'] + 0.1)
     elif tl.get('template') == 'abc':
         T.update(fill=tl['object'], face=tl['lower'], rays=None, color=tl['color'])
     else:

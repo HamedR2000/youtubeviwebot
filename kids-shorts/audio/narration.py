@@ -46,8 +46,8 @@ kdir = os.environ.get('KOKORO_DIR', '.')
 tts = Kokoro(os.path.join(kdir, 'kokoro-v1.0.onnx'), os.path.join(kdir, 'voices-v1.0.bin'))
 
 
-def say(text, speed=0.95):
-    samples, sr = tts.create(text, voice=a.voice, speed=speed, lang='en-us')
+def say(text, speed=0.95, voice=None):
+    samples, sr = tts.create(text, voice=voice or a.voice, speed=speed, lang='en-us')
     x = np.asarray(samples, dtype=np.float64)
     # trim leading/trailing silence
     idx = np.where(np.abs(x) > 0.02 * np.max(np.abs(x)))[0]
@@ -110,6 +110,24 @@ elif template == 'abc':
     end_word = tl['word'] + tl['letters'] * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"What else starts with {name}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+
+elif template == 'animal':
+    # Ellie the Eraser and the animal sounds get their own voices
+    ELLIE, ANIMAL = 'af_bella', 'am_puck'
+    w, snd, art = topic['word'].lower(), topic['sound'], topic['article']
+    snd1 = snd.split()[0].rstrip('!').lower()
+    gap = tl['letterGap']
+    place(say(snd, speed=0.85, voice=ANIMAL), tl['sound1'], 1.2)
+    place(say(f"Who says {snd1}?"), 1.6, 1.15)
+    place(say("Hi, I'm Ellie! Let's erase the scribbles!", speed=1.05, voice=ELLIE), 2.85, 3.3)
+    place(say(f"It's {art} {w}!"), tl['itsA'] + 0.05, 1.7)
+    place(say(snd, speed=0.85, voice=ANIMAL), tl['bubble'] + 0.05, 1.2)
+    place(say(f"The {w} says {snd1}!"), tl['bubble'] + 1.35, tl['word'] - tl['bubble'] - 1.45)
+    for i, ch in enumerate(topic['word']):
+        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['word']) * gap + 0.1
+    place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say(f"Can you say {snd1}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
 
 voice = voice / (np.max(np.abs(voice)) + 1e-9) * 0.9
 
