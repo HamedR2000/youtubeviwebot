@@ -96,6 +96,21 @@ elif template == 'count':
     place(say(f"{word.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"Can you count to {word}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
 
+elif template == 'abc':
+    L, word = topic['letter'], topic['word']
+    name, w = LETTER[L], word.lower()
+    gap = tl['letterGap']
+    place(say(f"Let's learn the letter {name}!"), 0.35, 1.9)
+    place(say(f"This is big {name}."), 2.7, 2.4)
+    place(say(f"And little {name}!"), tl['lower'] - 0.1, tl['object'] - tl['lower'] + 0.05)
+    place(say(f"{name.capitalize()} is for {w}!"), tl['isFor'] + 0.1, 2.3)
+    place(say(f"{name.capitalize()}, {name}, {w}!"), tl['isFor'] + 2.7, tl['word'] - tl['isFor'] - 2.8)
+    for i, ch in enumerate(c for c in word if c.isalpha()):
+        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + tl['letters'] * gap + 0.1
+    place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say(f"What else starts with {name}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+
 voice = voice / (np.max(np.abs(voice)) + 1e-9) * 0.9
 
 # read music (stereo int16) and duck it under the voice

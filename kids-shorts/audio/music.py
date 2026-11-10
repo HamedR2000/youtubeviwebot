@@ -19,6 +19,8 @@ if len(sys.argv) > 2:
     T.update(draw=tuple(tl['draw']), word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
     if tl.get('template') == 'count':
         T.update(pops=tl['pops'], fill=None, face=None, rays=None, color=tl['color'])
+    elif tl.get('template') == 'abc':
+        T.update(fill=tl['object'], face=tl['lower'], rays=None, color=tl['color'])
     else:
         T.update(fill=tl['fill'], face=tl['face'], rays=tl['extras'])
 SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 0
