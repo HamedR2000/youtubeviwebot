@@ -1,0 +1,596 @@
+{
+ "id": "03-farm-day",
+ "title": "A Day at the Farm! Animal Sounds Song",
+ "emoji": "\ud83d\ude9c",
+ "learn": [
+  "animal sounds",
+  "farm animals",
+  "counting to four"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "A day at the farm!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Today we're going to the farm!"
+    ],
+    [
+     "ellie",
+     "Hooray! I love animals!"
+    ],
+    [
+     "penny",
+     "Listen! Who is that?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says oink?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Oink oink!"
+    ],
+    [
+     "narrator",
+     "Who says oink?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-pig",
+     "id": "a0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a pig!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a pig! The pig says oink!"
+    ],
+    [
+     "animal",
+     "Oink oink!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says baa?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Baa!"
+    ],
+    [
+     "narrator",
+     "Who says baa?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-sheep",
+     "id": "a1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a sheep!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a sheep! The sheep says baa!"
+    ],
+    [
+     "animal",
+     "Baa!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says neigh?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Neigh!"
+    ],
+    [
+     "narrator",
+     "Who says neigh?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-horse",
+     "id": "a2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a horse!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a horse! The horse says neigh!"
+    ],
+    [
+     "animal",
+     "Neigh!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says quack?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Quack quack!"
+    ],
+    [
+     "narrator",
+     "Who says quack?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-duck",
+     "id": "a3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a duck!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a duck! The duck says quack!"
+    ],
+    [
+     "animal",
+     "Quack quack!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says moo?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Moo!"
+    ],
+    [
+     "narrator",
+     "Who says moo?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cow",
+     "id": "a4",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a cow!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a cow! The cow says moo!"
+    ],
+    [
+     "animal",
+     "Moo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the chickens!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Look! Baby chickens! Let's count them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "ch",
+      "art": "animal-chicken",
+      "n": 4,
+      "x0": 0.27,
+      "dx": 0.14,
+      "y": 0.47,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Four chickens!"
+    ],
+    [
+     "animal",
+     "Cluck cluck!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "title": "Count with me!"
+    },
+    {
+     "pulse": "ch"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Count with me again!"
+    ],
+    [
+     "narrator",
+     "One, two, three, four!"
+    ],
+    [
+     "coco",
+     "Wonderful!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Farm song!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The pig says oink, the sheep says baa!"
+    ],
+    [
+     "narrator",
+     "The horse says neigh, hip hip hooray!"
+    ],
+    [
+     "narrator",
+     "The duck says quack, the cow says moo!"
+    ],
+    [
+     "narrator",
+     "On the farm, we sing with you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "The pig says oink, the sheep says baa!"
+    ],
+    [
+     "narrator",
+     "The horse says neigh, hip hip hooray!"
+    ],
+    [
+     "narrator",
+     "The duck says quack, the cow says moo!"
+    ],
+    [
+     "narrator",
+     "On the farm, we sing with you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "What a fun day at the farm!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

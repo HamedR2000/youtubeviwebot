@@ -40,7 +40,7 @@ jobs:
   generate:
     if: inputs.mode == 'generate'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 75
     defaults:
       run:
         working-directory: kids-shorts

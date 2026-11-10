@@ -1,0 +1,567 @@
+{
+ "id": "02-ellies-oops",
+ "title": "Ellie's Big Oops! ABC Song",
+ "emoji": "\ud83d\udd24",
+ "learn": [
+  "the letters A to E",
+  "first words",
+  "it's okay to make mistakes"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Ellie's Big Oops!"
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Oops! I erased all the letters in our A B C book!"
+    ],
+    [
+     "penny",
+     "Oh no! Don't worry, Ellie. Let's draw them again, together!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter A!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-a",
+     "id": "da",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big ay."
+    ],
+    [
+     "penny",
+     "Big ay!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-a",
+     "id": "oa",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Ay is for apple!"
+    ],
+    [
+     "coco",
+     "Ay, ay, apple!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter B!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-b",
+     "id": "db",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big bee."
+    ],
+    [
+     "penny",
+     "Big bee!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-b",
+     "id": "ob",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Bee is for balloon!"
+    ],
+    [
+     "coco",
+     "Bee, bee, balloon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "ob"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say balloon?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Yes! Balloon! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter C!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-c",
+     "id": "dc",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big see."
+    ],
+    [
+     "penny",
+     "Big see!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-c",
+     "id": "oc",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "See is for cookie!"
+    ],
+    [
+     "coco",
+     "See, see, cookie!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter D!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-d",
+     "id": "dd",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big dee."
+    ],
+    [
+     "penny",
+     "Big dee!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-d",
+     "id": "od",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Dee is for door!"
+    ],
+    [
+     "coco",
+     "Dee, dee, door!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "od"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say door?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Yes! Door! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter E!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-e",
+     "id": "de",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big ee."
+    ],
+    [
+     "penny",
+     "Big ee!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-e",
+     "id": "oe",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Ee is for egg!"
+    ],
+    [
+     "coco",
+     "Ee, ee, egg!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "We fixed the book!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Thank you, friends! We fixed my A B C book!"
+    ],
+    [
+     "penny",
+     "Everybody makes mistakes. We fix them together!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "A B C song!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A is for apple, B is for balloon!"
+    ],
+    [
+     "narrator",
+     "C is for cookie, and D is for door!"
+    ],
+    [
+     "narrator",
+     "E is for egg, and now we know more!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "A is for apple, B is for balloon!"
+    ],
+    [
+     "narrator",
+     "C is for cookie, and D is for door!"
+    ],
+    [
+     "narrator",
+     "E is for egg, and now we know more!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "That was fun! Tomorrow we learn more letters!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}
