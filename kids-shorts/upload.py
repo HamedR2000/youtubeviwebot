@@ -63,7 +63,7 @@ for v in videos:
     resp = None
     while resp is None:
         _, resp = req.next_chunk()
-    url = f"https://youtube.com/shorts/{resp['id']}"
+    url = f"https://youtube.com/watch?v={resp['id']}" if v.get('long') else f"https://youtube.com/shorts/{resp['id']}"
     print('  uploaded', v['id'], '->', url)
     results.append({'id': v['id'], 'youtube_id': resp['id'], 'url': url})
 
