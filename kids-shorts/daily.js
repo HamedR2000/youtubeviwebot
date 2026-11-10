@@ -61,6 +61,13 @@ function metadata(t) {
     fs.writeFileSync(tlFile, JSON.stringify(await getTimeline(SCENE, t.id, browser)));
     const seed = [...(DATE + t.id)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
     execFileSync('python3', [path.join(__dirname, 'audio', 'music.py'), wav, tlFile, String(seed)]);
+    if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
+      const topicFile = path.join(OUT, `${t.id}.topic.json`);
+      fs.writeFileSync(topicFile, JSON.stringify({ shape: t.shape, becomes: t.becomes, article: t.article }));
+      execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
+        '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
+      fs.rmSync(topicFile);
+    }
     const t0 = Date.now();
     await renderTopic({ scene: SCENE, topic: t.id, out: mp4, audio: wav, browser });
     fs.rmSync(wav); fs.rmSync(tlFile);

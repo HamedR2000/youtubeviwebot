@@ -32,5 +32,6 @@ Note: until the Google API project passes YouTube's API audit, videos uploaded t
 - `scenes/draw-shape.html` — SVG scene: `setup(topicId)`, deterministic `render(t)`.
 - `render.js` — steps time with Playwright/Chromium and pipes frames into ffmpeg.
 - `audio/music.py` — numpy synth music + SFX synced to the scene timeline; seeded per video.
+- `audio/narration.py` — English narrator (Kokoro TTS, Apache-2.0, voice `af_heart`) mixed over the ducked music. Needs `KOKORO_DIR` with the model files; set `NARRATION=0` to skip.
 - `daily.js` — batch picker/renderer + YouTube metadata. `state/used.json` tracks topic rotation.
 - `upload.py` — YouTube Data API uploader.
