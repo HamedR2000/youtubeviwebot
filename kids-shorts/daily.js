@@ -29,10 +29,11 @@ function pickTopics() {
 function metadata(t) {
   const shape = t.shape[0] + t.shape.slice(1).toLowerCase();
   const thing = t.becomes[0] + t.becomes.slice(1).toLowerCase();
+  const an = w => (/^[AEIOU]/i.test(w) ? 'an' : 'a');
   return {
-    title: `Let's Draw a ${shape}! It Becomes ${t.article === 'an' ? 'an' : 'a'} ${thing} ${t.emoji} | Shapes for Toddlers #shorts`,
+    title: `Let's Draw ${an(shape)} ${shape}! It Becomes ${t.article} ${thing} ${t.emoji} | Shapes for Toddlers #shorts`,
     description: [
-      `Draw along with Penny the Pencil! ✏️ Today we draw a ${shape.toUpperCase()} and it turns into ${t.article} ${thing.toLowerCase()} ${t.emoji}`,
+      `Draw along with Penny the Pencil! ✏️ Today we draw ${an(shape)} ${shape.toUpperCase()} and it turns into ${t.article} ${thing.toLowerCase()} ${t.emoji}`,
       '',
       `Learn the word: ${t.shape.split('').join('-')} — ${shape}!`,
       'Simple English words and shapes for kids aged 2–6.',

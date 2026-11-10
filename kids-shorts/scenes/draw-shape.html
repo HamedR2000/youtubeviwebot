@@ -151,7 +151,7 @@ function setup(topicId) {
   });
 
   S = { topic, back, front, strokes, letters, clouds, sparkles,
-    t1a: "Let's draw a", t2a: shapeTitle, t1b: `${cap(topic.shape)} becomes ${topic.article}...`, t2b: thingTitle,
+    t1a: /^[AEIOU]/.test(topic.shape) ? "Let's draw an" : "Let's draw a", t2a: shapeTitle, t1b: `${cap(topic.shape)} becomes ${topic.article}...`, t2b: thingTitle,
     fs2a: fit(shapeTitle, 150, 980), fs2b: fit(thingTitle, 150, 980) };
   window.TIMELINE = { ...T, letters: n };
   render(0);
