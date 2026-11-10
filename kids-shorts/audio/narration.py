@@ -22,8 +22,11 @@ a = p.parse_args()
 SR = 44100
 tl = json.load(open(a.timeline))
 topic = json.load(open(a.topic))
-shape, thing, art = topic['shape'].lower(), topic['becomes'].lower(), topic['article']
-an = 'an' if shape[0] in 'aeiou' else 'a'
+template = topic.get('template', 'draw-shape')
+if template == 'draw-shape':
+    shape, thing, art = topic['shape'].lower(), topic['becomes'].lower(), topic['article']
+    an = 'an' if shape[0] in 'aeiou' else 'a'
+NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 
 DRAW_LINE = {
     'circle': 'Round and round we go!',
@@ -67,16 +70,31 @@ def place(clip, t, max_len=None):
     voice[i:j] += clip[: j - i]
 
 
-gap = tl['letterGap']
-place(say(f"Let's draw {an} {shape}!"), 0.35, 1.9)
-place(say(DRAW_LINE.get(shape, f"Let's draw {an} {shape}!")), 2.6, 3.6)
-place(say("Now, a happy face!"), 7.6, 1.7)
-place(say(f"Look! It's {art} {thing}!"), tl['extras'] + 0.65, 2.4)
-for i, ch in enumerate(topic['shape']):
-    place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
-end_word = tl['word'] + len(topic['shape']) * gap + 0.1
-place(say(f"{shape.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
-place(say("Can you draw one, too?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+if template == 'draw-shape':
+    gap = tl['letterGap']
+    place(say(f"Let's draw {an} {shape}!"), 0.35, 1.9)
+    place(say(DRAW_LINE.get(shape, f"Let's draw {an} {shape}!")), 2.6, 3.6)
+    place(say("Now, a happy face!"), 7.6, 1.7)
+    place(say(f"Look! It's {art} {thing}!"), tl['extras'] + 0.65, 2.4)
+    for i, ch in enumerate(topic['shape']):
+        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['shape']) * gap + 0.1
+    place(say(f"{shape.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say("Can you draw one, too?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+
+elif template == 'count':
+    n, word, things = topic['n'], topic['word'].lower(), topic['objectName'].lower()
+    gap = tl['letterGap']
+    place(say(f"Let's count to {word}!"), 0.35, 1.9)
+    place(say(f"This is the number {word}!"), 2.6, 2.4)
+    for i, tp in enumerate(tl['pops']):
+        place(say(NUMBER_WORDS[i + 1].capitalize() + '!', speed=1.05), tp + 0.05, tl['countGap'] * 0.95)
+    place(say(f"{word.capitalize()} {things}!"), tl['result'] + 0.15, tl['word'] - tl['result'] - 0.2)
+    for i, ch in enumerate(topic['word']):
+        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['word']) * gap + 0.1
+    place(say(f"{word.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say(f"Can you count to {word}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
 
 voice = voice / (np.max(np.abs(voice)) + 1e-9) * 0.9
 

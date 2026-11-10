@@ -16,8 +16,11 @@ out = np.zeros(N)
 T = dict(draw=(2.2, 6.4), fill=7.0, face=8.0, rays=9.4, word=12.6, gap=0.5, ask=16.4, letters=6)
 if len(sys.argv) > 2:
     tl = json.load(open(sys.argv[2]))
-    T.update(draw=tuple(tl['draw']), fill=tl['fill'], face=tl['face'], rays=tl['extras'],
-             word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
+    T.update(draw=tuple(tl['draw']), word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
+    if tl.get('template') == 'count':
+        T.update(pops=tl['pops'], fill=None, face=None, rays=None, color=tl['color'])
+    else:
+        T.update(fill=tl['fill'], face=tl['face'], rays=tl['extras'])
 SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 0
 vr = np.random.default_rng(SEED)
 KEY = int(vr.choice([0, 2, -3, 5, -1]))
@@ -92,16 +95,25 @@ add(0.10 * scr, a)
 # pop for the fill
 t = np.arange(int(0.25 * SR)) / SR
 pop = np.sin(2 * np.pi * (300 + 900 * np.exp(-t * 25)) * t) * np.exp(-t * 18)
-add(0.35 * pop, T['fill'])
+if T['fill'] is not None:
+    add(0.35 * pop, T['fill'])
 
 # boing for the face
 t = np.arange(int(0.45 * SR)) / SR
 boing = np.sin(2 * np.pi * (220 + 120 * np.sin(2 * np.pi * 9 * t) * np.exp(-t * 5)) * t) * np.exp(-t * 6)
-add(0.25 * boing, T['face'])
+if T['face'] is not None:
+    add(0.25 * boing, T['face'])
 
 # sparkle arpeggio for the rays
-for i, n in enumerate([84, 88, 91, 96, 100]):
-    add(marimba(n, 0.6, 0.12), T['rays'] + i * 0.07)
+if T['rays'] is not None:
+    for i, n in enumerate([84, 88, 91, 96, 100]):
+        add(marimba(n, 0.6, 0.12), T['rays'] + i * 0.07)
+for i, tp in enumerate(T.get('pops', [])):  # rising pop per counted object
+    add(0.3 * pop, tp)
+    add(marimba(scale[min(4 + i, 12)] + 12 + KEY, 0.5, 0.12), tp + 0.03)
+if T.get('color') is not None:
+    for i, n in enumerate([84, 88, 91, 96]):
+        add(marimba(n, 0.6, 0.12), T['color'] + i * 0.07)
 
 # ding per letter, rising
 for i in range(T['letters']):

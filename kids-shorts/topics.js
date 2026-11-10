@@ -106,5 +106,33 @@
     },
   ];
 
+  // ---- Numbers: Penny draws the numeral, then we count objects (art borrowed from the shape topics) ----
+  const DIGITS = {
+    0: ['M 0 -190 C -150 -190 -150 190 0 190 C 150 190 150 -190 0 -190'],
+    1: ['M -50 -130 L 20 -190 L 20 190'],
+    2: ['M -110 -110 C -100 -210 115 -215 110 -90 C 105 10 -100 100 -120 190 L 120 190'],
+    3: ['M -100 -160 C -40 -225 120 -200 100 -80 C 90 -20 30 -5 -20 0 C 60 0 120 30 115 100 C 110 215 -60 220 -110 150'],
+    4: ['M 60 190 L 60 -190 L -120 80 L 130 80'],
+    5: ['M 100 -180 L -80 -180 L -100 -20 C -20 -60 120 -40 115 70 C 110 205 -60 215 -110 140'],
+    6: ['M 80 -170 C 0 -215 -120 -150 -115 40 C -110 205 110 210 110 80 C 110 -30 -60 -40 -110 40'],
+    7: ['M -110 -180 L 110 -180 L -20 190'],
+    8: ['M 0 0 C -120 -30 -100 -190 0 -190 C 100 -190 120 -30 0 0 C -130 30 -120 190 0 190 C 120 190 130 30 0 0'],
+    9: ['M 105 -60 C 60 30 -110 20 -105 -80 C -100 -205 110 -205 105 -60 C 100 80 60 180 -80 190'],
+  };
+  const shift = (paths, dx) => paths.map(d => d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (m, x, y) => `${+x + dx} ${y}`));
+  const NUM_WORDS = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN'];
+  const COUNT_OBJECTS = [
+    ['oval-balloon', 'BALLOON', 'BALLOONS', '🎈'], ['circle-cookie', 'COOKIE', 'COOKIES', '🍪'], ['heart-strawberry', 'STRAWBERRY', 'STRAWBERRIES', '🍓'],
+    ['star-starfish', 'STARFISH', 'STARFISH', '⭐'], ['circle-orange', 'ORANGE', 'ORANGES', '🍊'], ['square-present', 'PRESENT', 'PRESENTS', '🎁'],
+    ['circle-sun', 'SUN', 'SUNS', '☀️'], ['diamond-kite', 'KITE', 'KITES', '🪁'], ['triangle-tree', 'TREE', 'TREES', '🎄'], ['oval-avocado', 'AVOCADO', 'AVOCADOS', '🥑'],
+  ];
+  for (let n = 1; n <= 10; n++) {
+    const [object, one, many, emoji] = COUNT_OBJECTS[(n * 3) % COUNT_OBJECTS.length];
+    TOPICS.push({
+      id: `count-${n}`, template: 'count', n, word: NUM_WORDS[n], object, objectName: n === 1 ? one : many, emoji,
+      strokes: n === 10 ? [...shift(DIGITS[1], -120), ...shift(DIGITS[0], 110)] : DIGITS[n],
+    });
+  }
+
   if (typeof module !== 'undefined') module.exports = TOPICS; else window.TOPICS = TOPICS;
 })();

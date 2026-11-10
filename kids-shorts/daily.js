@@ -14,19 +14,51 @@ const COUNT = Number(flag('--count', 5));
 const DATE = flag('--date', new Date().toISOString().slice(0, 10));
 const OUT = path.join(flag('--out', 'out'), DATE);
 const STATE = path.join(__dirname, 'state', 'used.json');
-const SCENE = path.join(__dirname, 'scenes', 'draw-shape.html');
+const sceneFor = t => path.join(__dirname, 'scenes', `${t.template || 'draw-shape'}.html`);
 
 function pickTopics() {
   const used = fs.existsSync(STATE) ? JSON.parse(fs.readFileSync(STATE, 'utf8')) : {};
-  // least-recently-used first; spread shapes so one day doesn't repeat a shape
-  const order = [...TOPICS].sort((x, y) => (used[x.id] || '').localeCompare(used[y.id] || '') || x.id.localeCompare(y.id));
+  const lru = (x, y) => (used[x.id] || '').localeCompare(used[y.id] || '') || x.id.localeCompare(y.id, 'en', { numeric: true });
+  // one queue per template (shapes, numbers, ...); take from each in turn so every day is a mix
+  const queues = {};
+  for (const t of [...TOPICS].sort(lru)) (queues[t.template || 'draw-shape'] ||= []).push(t);
+  const order = Object.keys(queues).sort((a, b) => lru(queues[a][0], queues[b][0]));
   const picked = [], shapes = new Set();
-  for (const t of order) if (picked.length < COUNT && !shapes.has(t.shape)) { picked.push(t); shapes.add(t.shape); }
-  for (const t of order) if (picked.length < COUNT && !picked.includes(t)) picked.push(t);
+  while (picked.length < COUNT && order.some(k => queues[k].length)) {
+    for (const k of order) {
+      if (picked.length >= COUNT) break;
+      const q = queues[k];
+      const i = q.findIndex(t => !t.shape || !shapes.has(t.shape));
+      if (i < 0) { q.length = 0; continue; }
+      const [t] = q.splice(i, 1);
+      picked.push(t); if (t.shape) shapes.add(t.shape);
+    }
+  }
   return { picked, used };
 }
 
 function metadata(t) {
+  if (t.template === 'count') {
+    const word = t.word[0] + t.word.slice(1).toLowerCase();
+    const things = t.objectName.toLowerCase();
+    return {
+      title: `Let's Count to ${word}! ${t.n} ${things[0].toUpperCase() + things.slice(1)} ${t.emoji} | Numbers for Toddlers #shorts`,
+      description: [
+        `Count along with Penny the Pencil! ✏️ Today we draw the number ${t.n} and count ${t.n} ${things} ${t.emoji}`,
+        '',
+        `Learn the word: ${t.word.split('').join('-')} — ${word}!`,
+        'Simple numbers and English words for kids aged 2–6.',
+        '',
+        `Grown-ups: count with your little one on your fingers — can they count to ${t.word.toLowerCase()}? 🖐️`,
+        '',
+        '#numbers #counting #kidslearning #toddlers #learnenglish #preschool',
+      ].join('\n'),
+      tags: ['numbers for kids', `number ${t.n}`, `count to ${t.n}`, 'counting for toddlers', 'learn numbers', 'toddler learning',
+        'preschool', 'english for kids', 'kids cartoon', 'Doodle Pals', 'Penny the Pencil'],
+      categoryId: '27',
+      madeForKids: true,
+    };
+  }
   const shape = t.shape[0] + t.shape.slice(1).toLowerCase();
   const thing = t.becomes[0] + t.becomes.slice(1).toLowerCase();
   const an = w => (/^[AEIOU]/i.test(w) ? 'an' : 'a');
@@ -58,18 +90,18 @@ function metadata(t) {
     const mp4 = path.join(OUT, `${t.id}.mp4`);
     const wav = path.join(OUT, `${t.id}.wav`);
     const tlFile = path.join(OUT, `${t.id}.timeline.json`);
-    fs.writeFileSync(tlFile, JSON.stringify(await getTimeline(SCENE, t.id, browser)));
+    fs.writeFileSync(tlFile, JSON.stringify(await getTimeline(sceneFor(t), t.id, browser)));
     const seed = [...(DATE + t.id)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
     execFileSync('python3', [path.join(__dirname, 'audio', 'music.py'), wav, tlFile, String(seed)]);
     if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
       const topicFile = path.join(OUT, `${t.id}.topic.json`);
-      fs.writeFileSync(topicFile, JSON.stringify({ shape: t.shape, becomes: t.becomes, article: t.article }));
+      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName }));
       execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
         '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
       fs.rmSync(topicFile);
     }
     const t0 = Date.now();
-    await renderTopic({ scene: SCENE, topic: t.id, out: mp4, audio: wav, browser });
+    await renderTopic({ scene: sceneFor(t), topic: t.id, out: mp4, audio: wav, browser });
     fs.rmSync(wav); fs.rmSync(tlFile);
     console.log(`[${i + 1}/${picked.length}] ${t.id} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
     batch.push({ id: t.id, file: path.basename(mp4), ...metadata(t) });
