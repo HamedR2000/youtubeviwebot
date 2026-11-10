@@ -1,7 +1,7 @@
 {
  "id": "04-shape-hunt",
  "title": "Shape Hunt in the Park! Shapes Song",
- "emoji": "\ud83d\udd3a",
+ "emoji": "🔺",
  "learn": [
   "shapes",
   "circle, triangle, square",
@@ -408,6 +408,224 @@
     [
      "penny",
      "Look! The star is a starfish!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw a rectangle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "rectangle-door",
+     "id": "x0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a rectangle. Two long sides, and two short sides!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "x0"
+    },
+    {
+     "show": "rectangle-door",
+     "id": "xs0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a door!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The rectangle is a door!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw an oval!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "oval-balloon",
+     "id": "x1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw an oval. A long, round shape!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "hide": "x1"
+    },
+    {
+     "show": "oval-balloon",
+     "id": "xs1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "It's a balloon!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The oval is a balloon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Shape quiz!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Shape quiz time!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-orange",
+     "id": "qz0",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is this?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A circle! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-pizza",
+     "id": "qz1",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is this?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A triangle! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "square-robot",
+     "id": "qz2",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is this?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A square! Well done!"
     ]
    ]
   },

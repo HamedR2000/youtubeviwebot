@@ -1,7 +1,7 @@
 {
  "id": "02-ellies-oops",
  "title": "Ellie's Big Oops! ABC Song",
- "emoji": "\ud83d\udd24",
+ "emoji": "🔤",
  "learn": [
   "the letters A to E",
   "first words",
@@ -457,6 +457,189 @@
     [
      "penny",
      "Everybody makes mistakes. We fix them together!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter quiz!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's play a letter game!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-a",
+     "id": "qa",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Apple!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does apple start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Ay! Ay is for apple!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-c",
+     "id": "qc",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Cookie!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does cookie start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "See! See is for cookie!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-e",
+     "id": "qe",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Egg!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does egg start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Ee! Ee is for egg!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-b",
+     "id": "qb",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Balloon!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does balloon start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Bee! Bee is for balloon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-d",
+     "id": "qd",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Door!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does door start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Dee! Dee is for door!"
     ]
    ]
   },

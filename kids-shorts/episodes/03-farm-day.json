@@ -1,7 +1,7 @@
 {
  "id": "03-farm-day",
  "title": "A Day at the Farm! Animal Sounds Song",
- "emoji": "\ud83d\ude9c",
+ "emoji": "🚜",
  "learn": [
   "animal sounds",
   "farm animals",
@@ -463,6 +463,202 @@
     [
      "coco",
      "Wonderful!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who's hiding?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Some animals are hiding! Listen!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says meow?"
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Meow!"
+    ],
+    [
+     "ellie",
+     "Who is it?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cat",
+     "id": "h0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a cat!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a cat! The cat says meow!"
+    ],
+    [
+     "animal",
+     "Meow!"
+    ],
+    [
+     "coco",
+     "Can you say meow?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says woof?"
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Woof woof!"
+    ],
+    [
+     "ellie",
+     "Who is it?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-dog",
+     "id": "h1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a dog!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a dog! The dog says woof!"
+    ],
+    [
+     "animal",
+     "Woof woof!"
+    ],
+    [
+     "coco",
+     "Can you say woof?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says hoo?"
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Hoo hoo!"
+    ],
+    [
+     "ellie",
+     "Who is it?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-owl",
+     "id": "h2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's an owl!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's an owl! The owl says hoo!"
+    ],
+    [
+     "animal",
+     "Hoo hoo!"
+    ],
+    [
+     "coco",
+     "Can you say hoo?"
+    ],
+    [
+     "pause",
+     "1.5"
     ]
    ]
   },
