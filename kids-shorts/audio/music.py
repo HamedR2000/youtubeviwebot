@@ -1,8 +1,9 @@
 """Synthesize a gentle, royalty-free soundtrack + SFX for the 'draw a circle' short.
 
-Usage: python3 audio/music.py out.wav
-Timings mirror the T object in scenes/draw-circle.html.
+Usage: python3 audio/music.py out.wav [timeline.json] [seed]
+timeline.json is window.TIMELINE from scenes/draw-shape.html; seed varies key/tempo/melody.
 """
+import json
 import sys
 import wave
 import numpy as np
@@ -12,7 +13,14 @@ DUR = 20.0
 N = int(SR * DUR)
 out = np.zeros(N)
 
-T = dict(draw=(2.2, 6.4), fill=7.0, face=8.0, rays=9.4, word=12.6, gap=0.5, ask=16.4)
+T = dict(draw=(2.2, 6.4), fill=7.0, face=8.0, rays=9.4, word=12.6, gap=0.5, ask=16.4, letters=6)
+if len(sys.argv) > 2:
+    tl = json.load(open(sys.argv[2]))
+    T.update(draw=tuple(tl['draw']), fill=tl['fill'], face=tl['face'], rays=tl['extras'],
+             word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
+SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 0
+vr = np.random.default_rng(SEED)
+KEY = int(vr.choice([0, 2, -3, 5, -1]))
 
 
 def note_hz(n):  # MIDI -> Hz
@@ -43,9 +51,16 @@ def pad(notes, length, vol=0.05):
 
 
 # --- music: 104 bpm, C major, I-V-vi-IV ---
-beat = 60 / 104
+beat = 60 / float(vr.choice([96, 100, 104, 108, 112]))
 chords = [[48, 52, 55], [43, 47, 50], [45, 48, 52], [41, 45, 48]]
-melody = [72, 76, 79, 76, 74, 71, 74, 79, 76, 72, 76, 81, 77, 76, 74, 72]
+if vr.random() < 0.5:
+    chords = [[48, 52, 55], [41, 45, 48], [43, 47, 50], [48, 52, 55]]
+chords = [[n + KEY for n in c] for c in chords]
+scale = [60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79, 81]
+melody, idx = [], 7
+for i in range(16):  # gentle random walk over chord-friendly steps
+    idx = int(np.clip(idx + vr.choice([-2, -1, 1, 2, 0]), 4, 12))
+    melody.append(scale[idx] + KEY)
 bar = 4 * beat
 t0 = 0.0
 k = 0
@@ -89,8 +104,8 @@ for i, n in enumerate([84, 88, 91, 96, 100]):
     add(marimba(n, 0.6, 0.12), T['rays'] + i * 0.07)
 
 # ding per letter, rising
-for i, n in enumerate([72, 74, 76, 77, 79, 84]):
-    add(marimba(n, 0.7, 0.2), T['word'] + i * T['gap'])
+for i in range(T['letters']):
+    add(marimba(scale[min(5 + i, 12)] + 12 + KEY, 0.7, 0.2), T['word'] + i * T['gap'])
 
 # final chime
 for i, n in enumerate([72, 76, 79, 84]):
