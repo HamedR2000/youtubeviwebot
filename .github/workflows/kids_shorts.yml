@@ -122,7 +122,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           LINKS=$(python3 -c "import json;print('\n'.join('- '+r['id']+': '+r['url'] for r in json.load(open('batch/uploaded.json'))))")
+          PENDING=$(cat batch/pending.txt)
           gh release upload "shorts-${{ inputs.date }}" batch/uploaded.json --clobber
-          gh release edit "shorts-${{ inputs.date }}" --prerelease=false --notes "Published to YouTube.
+          if [ -n "$PENDING" ]; then
+            gh release edit "shorts-${{ inputs.date }}" --notes "Partly published (YouTube daily upload limit). Still to upload: $PENDING
 
           $LINKS"
+          else
+            gh release edit "shorts-${{ inputs.date }}" --prerelease=false --notes "Published to YouTube.
+
+          $LINKS"
+          fi
