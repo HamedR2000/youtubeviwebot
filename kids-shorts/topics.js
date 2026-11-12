@@ -259,5 +259,22 @@
     TOPICS.push({ id: `animal-${key}`, template: 'animal', word, article, sound, soundText, emoji, artData: ANIMAL_ART[key] });
   }
 
+  // ---- Colors: Coco colours a grey object, then two more things of that colour ----
+  const COLORS_T = [
+    ['RED', '#F2454B', '🍎', ['abc-a', 'apple'], ['heart-strawberry', 'strawberry'], ['abc-h', 'heart']],
+    ['ORANGE', '#FF8A1C', '🍊', ['circle-orange', 'orange'], ['abc-j', 'juice box'], ['animal-cat', 'cat']],
+    ['YELLOW', '#FFC928', '🍋', ['abc-l', 'lemon'], ['circle-sun', 'sun'], ['animal-duck', 'duck']],
+    ['GREEN', '#3DAA3D', '🌳', ['triangle-tree', 'tree'], ['animal-frog', 'frog'], ['oval-avocado', 'avocado']],
+    ['BLUE', '#3D86F0', '☂️', ['abc-u', 'umbrella'], ['diamond-kite', 'kite'], ['square-robot', 'robot']],
+    ['PURPLE', '#8A4FD6', '🍇', ['abc-g', 'grapes'], ['abc-y', 'yo-yo'], ['star-starfish', null]],
+    ['PINK', '#FF6FA8', '🐷', ['animal-pig', 'pig'], ['oval-balloon', 'balloon'], ['abc-i', 'ice cream']],
+    ['BROWN', '#9A6338', '🚪', ['rectangle-door', 'door'], ['circle-cookie', 'cookie'], ['abc-n', 'nest']],
+    ['WHITE', '#F4F4F4', '🥚', ['abc-e', 'egg'], ['animal-sheep', 'sheep'], ['animal-cow', 'cow']],
+  ];
+  for (const [color, hex, emoji, main, x1, x2] of COLORS_T) {
+    const extras = [x1, x2].filter(x => x[1]);
+    TOPICS.push({ id: `color-${color.toLowerCase()}`, template: 'color', word: color, hex, emoji, main: main[0], mainName: main[1], extras });
+  }
+
   if (typeof module !== 'undefined') module.exports = TOPICS; else window.TOPICS = TOPICS;
 })();
