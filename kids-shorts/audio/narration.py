@@ -129,6 +129,24 @@ elif template == 'animal':
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"Can you say {snd1}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
 
+elif template == 'color':
+    COCO = 'bf_lily'
+    w, thing = topic['word'].lower(), topic['mainName']
+    a1 = 'an' if w[0] in 'aeiou' else 'a'
+    gap = tl['letterGap']
+    place(say(f"Let's learn the colour {w}!"), 0.35, 1.9)
+    place(say("Hi, I'm Coco! Let me colour it!", voice=COCO), 2.25, tl['colour'][0] - 2.2 + 0.6)
+    place(say("Colour, colour, colour...", speed=1.05, voice=COCO), tl['colour'][0] + 0.9, 2.0)
+    place(say(f"{a1.capitalize()} {w} {thing}!"), tl['aColour'] + 0.05, 1.9)
+    for i, (key, name) in enumerate(topic['extras']):
+        line = f"{w.capitalize()}, like a {name}!" if i == 0 else f"And a {w} {name}!"
+        place(say(line), tl['extras'][i] + 0.1, 1.8)
+    for i, ch in enumerate(topic['word']):
+        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['word']) * gap + 0.1
+    place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say(f"What else is {w}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+
 voice = voice / (np.max(np.abs(voice)) + 1e-9) * 0.9
 
 # read music (stereo int16) and duck it under the voice
