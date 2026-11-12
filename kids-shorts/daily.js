@@ -38,6 +38,9 @@ function pickTopics() {
   return { picked, used };
 }
 
+const tag = w => '#' + String(w).toLowerCase().replace(/[^a-z0-9]/g, '');
+const tags = (...ws) => [...new Set(ws.map(tag))].join(' ');
+
 function episodeMetadata(ep) {
   return {
     title: `${ep.title} ${ep.emoji} | Doodle Pals Cartoon for Kids | Learn ${ep.learn.slice(0, 3).map(w => w[0].toUpperCase() + w.slice(1)).join(', ')}`.slice(0, 100),
@@ -48,7 +51,7 @@ function episodeMetadata(ep) {
       'Gentle, original 2D animation and songs in simple English for kids aged 2–6.',
       'Sing along, count along and answer the questions — the friends wait for you!',
       '',
-      '#kidscartoon #learnenglish #preschool #toddlers #kidslearning',
+      tags('kidscartoon', ...(ep.hashtags || []), 'learnenglish', 'preschool', 'toddlers', 'kidslearning', 'doodlepals'),
     ].join('\n'),
     tags: ['kids cartoon', 'cartoon for toddlers', 'learn english for kids', 'preschool learning', 'educational cartoon', ...ep.learn, 'Doodle Pals', 'Penny the Pencil', 'Ellie the Eraser', 'Coco the Crayon'],
     categoryId: '27',
@@ -70,7 +73,7 @@ function metadata(t) {
         '',
         `Grown-ups: make the sound together — can your little one say "${snd.toLowerCase()}"? 🐾`,
         '',
-        '#animalsounds #animals #kidslearning #toddlers #learnenglish #preschool',
+        tags(t.word, 'animalsounds', `${t.word}sound`, 'animals', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
       ].join('\n'),
       tags: ['animal sounds for kids', `${animal.toLowerCase()} sound`, `what does the ${animal.toLowerCase()} say`, 'animals for toddlers', 'learn animals',
         'preschool', 'english for kids', 'kids cartoon', 'Doodle Pals', 'Ellie the Eraser'],
@@ -91,7 +94,7 @@ function metadata(t) {
         '',
         `Grown-ups: what else starts with ${t.letter}? Look around the room together! 🔎`,
         '',
-        '#abc #alphabet #phonics #kidslearning #toddlers #learnenglish #preschool',
+        tags(`letter${t.letter}`, 'abc', t.word, 'phonics', 'alphabet', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
       ].join('\n'),
       tags: ['abc for kids', `letter ${t.letter}`, `${t.letter} is for ${word.toLowerCase()}`, 'alphabet for toddlers', 'learn the alphabet', 'phonics',
         'preschool', 'english for kids', 'kids cartoon', 'Doodle Pals', 'Penny the Pencil'],
@@ -112,7 +115,7 @@ function metadata(t) {
         '',
         `Grown-ups: count with your little one on your fingers — can they count to ${t.word.toLowerCase()}? 🖐️`,
         '',
-        '#numbers #counting #kidslearning #toddlers #learnenglish #preschool',
+        tags(`number${t.n}`, 'counting', `countto${t.n}`, 'numbers', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
       ].join('\n'),
       tags: ['numbers for kids', `number ${t.n}`, `count to ${t.n}`, 'counting for toddlers', 'learn numbers', 'toddler learning',
         'preschool', 'english for kids', 'kids cartoon', 'Doodle Pals', 'Penny the Pencil'],
@@ -133,7 +136,7 @@ function metadata(t) {
       '',
       'Grown-ups: grab a crayon and ask your little one — can YOU draw one too? 🖍️',
       '',
-      '#shapes #kidslearning #toddlers #learnenglish #drawingforkids #preschool',
+      tags(t.shape, 'shapes', `howtodraw${t.becomes}`, 'drawingforkids', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
     ].join('\n'),
     tags: ['shapes for kids', `${shape.toLowerCase()} for kids`, `how to draw a ${thing.toLowerCase()}`, 'learn shapes', 'toddler learning',
       'preschool', 'english for kids', 'drawing for kids', 'kids cartoon', 'Doodle Pals', 'Penny the Pencil'],
