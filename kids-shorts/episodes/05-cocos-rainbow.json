@@ -1,0 +1,667 @@
+{
+ "id": "05-cocos-rainbow",
+ "title": "Coco's Rainbow! Colors Song",
+ "emoji": "\ud83c\udf08",
+ "learn": [
+  "colors",
+  "rainbow colors",
+  "counting to six"
+ ],
+ "hashtags": [
+  "colors",
+  "rainbow",
+  "colorsong"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Coco's Rainbow"
+    },
+    {
+     "move": "coco",
+     "x": 0.5
+    },
+    {
+     "move": "ellie",
+     "x": 0.75
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Oh dear! My rainbow lost all its colours!"
+    ],
+    [
+     "penny",
+     "Don't worry, Coco. Let's find the colours together!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Red!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "abc-a",
+     "id": "c0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What colour is the apple?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Red! A red apple!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Orange!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "circle-orange",
+     "id": "c1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What colour is the orange?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Orange! A orange orange!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Yellow!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "abc-l",
+     "id": "c2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What colour is the lemon?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Yellow! A yellow lemon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "c2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say yellow?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "ellie",
+     "Yellow! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Green!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "triangle-tree",
+     "id": "c3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What colour is the tree?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Green! A green tree!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Blue!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "abc-u",
+     "id": "c4",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What colour is the umbrella?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Blue! A blue umbrella!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "c4"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say blue?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "ellie",
+     "Blue! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Purple!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "abc-g",
+     "id": "c5",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What colour is the grapes?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Purple! A purple grapes!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Rainbow balloons!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Now let's make rainbow balloons!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "rb",
+      "art": "oval-balloon",
+      "n": 6,
+      "x0": 0.23,
+      "dx": 0.1,
+      "y": 0.45,
+      "s": 0.28
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Six!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "tint": {
+      "id": "rb",
+      "colors": [
+       "#F2454B",
+       "#FF8A1C",
+       "#FFC928",
+       "#3DAA3D",
+       "#3D86F0",
+       "#8A4FD6"
+      ]
+     }
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Red!"
+    ],
+    [
+     "coco",
+     "Orange!"
+    ],
+    [
+     "coco",
+     "Yellow!"
+    ],
+    [
+     "coco",
+     "Green!"
+    ],
+    [
+     "coco",
+     "Blue!"
+    ],
+    [
+     "coco",
+     "Purple!"
+    ],
+    [
+     "narrator",
+     "A rainbow of balloons!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is green?"
+    },
+    {
+     "point": {
+      "id": "rb",
+      "items": [
+       [
+        3,
+        2
+       ]
+      ]
+     }
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Which balloon is green?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "This one! Green!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Red and orange, yellow too!"
+    ],
+    [
+     "narrator",
+     "Green and blue and purple, woo!"
+    ],
+    [
+     "narrator",
+     "All the colours, shining bright!"
+    ],
+    [
+     "narrator",
+     "Coco's rainbow, what a sight!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Red and orange, yellow too!"
+    ],
+    [
+     "narrator",
+     "Green and blue and purple, woo!"
+    ],
+    [
+     "narrator",
+     "All the colours, shining bright!"
+    ],
+    [
+     "narrator",
+     "Coco's rainbow, what a sight!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Thank you for finding my colours!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "penny",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}
