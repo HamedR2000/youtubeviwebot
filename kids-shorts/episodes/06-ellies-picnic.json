@@ -1,0 +1,600 @@
+{
+ "id": "06-ellies-picnic",
+ "title": "Ellie's Picnic! Counting Song",
+ "emoji": "\ud83e\uddfa",
+ "learn": [
+  "counting to five",
+  "food words",
+  "numbers"
+ ],
+ "hashtags": [
+  "counting",
+  "numbers",
+  "countingsong"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Ellie's Picnic!"
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's have a picnic in the park!"
+    ],
+    [
+     "penny",
+     "Yay! Let's count the yummy food!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the apples!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "How many apples? Let's count!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "p0",
+      "art": "abc-a",
+      "n": 5,
+      "x0": 0.26,
+      "dx": 0.12,
+      "y": 0.45,
+      "s": 0.26
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Five apples!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "p0"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many apples?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Five! Great counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the cookies!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "How many cookies? Let's count!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "p1",
+      "art": "circle-cookie",
+      "n": 4,
+      "x0": 0.32,
+      "dx": 0.12,
+      "y": 0.45,
+      "s": 0.26
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Four cookies!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "p1"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many cookies?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Four! Great counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the strawberries!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "How many strawberries? Let's count!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "p2",
+      "art": "heart-strawberry",
+      "n": 3,
+      "x0": 0.38,
+      "dx": 0.12,
+      "y": 0.45,
+      "s": 0.26
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Three strawberries!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "p2"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many strawberries?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Three! Great counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the juice boxes!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "How many juice boxes? Let's count!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "p3",
+      "art": "abc-j",
+      "n": 2,
+      "x0": 0.44,
+      "dx": 0.12,
+      "y": 0.45,
+      "s": 0.26
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Two juice boxes!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "p3"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many juice boxes?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Two! Great counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Oops!"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    },
+    {
+     "erase": "p3"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Oops! I erased the juice boxes!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "p3"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "That's okay, Ellie! Let's draw them back."
+    ],
+    [
+     "ellie",
+     "One, two! Two juice boxes!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Five red apples, four cookies too!"
+    ],
+    [
+     "narrator",
+     "Three strawberries, just for you!"
+    ],
+    [
+     "narrator",
+     "Two juice boxes, one, two!"
+    ],
+    [
+     "narrator",
+     "A picnic party, me and you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Five red apples, four cookies too!"
+    ],
+    [
+     "narrator",
+     "Three strawberries, just for you!"
+    ],
+    [
+     "narrator",
+     "Two juice boxes, one, two!"
+    ],
+    [
+     "narrator",
+     "A picnic party, me and you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What a yummy picnic!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "penny",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}
