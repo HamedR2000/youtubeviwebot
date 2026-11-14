@@ -518,18 +518,18 @@
     "18107449259371134",
     "18134513707752485"
   ],
-  "carousel_bg_cursor": 21,
+  "carousel_bg_cursor": 23,
   "story_line_fa_cursor": 20,
   "carousel_theme_cursor": 0,
-  "story_theme_cursor": 1,
+  "story_theme_cursor": 0,
   "feed_theme_cursor": 0,
   "hook_fa_cursor": 15,
   "tip_fa_cursor": 5,
   "cta_fa_cursor": 11,
   "carousel_topic_fa_cursor": 7,
   "story_set_cursor": 16,
-  "story_set_fa_cursor": 41,
+  "story_set_fa_cursor": 42,
   "post_type_cursor": 1,
-  "music_track_cursor": 6,
+  "music_track_cursor": 11,
   "hashtag_fa_cursor": 16
 }
