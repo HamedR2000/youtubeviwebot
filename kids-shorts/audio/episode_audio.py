@@ -42,13 +42,15 @@ for b in ep['beats']:
     gap = b.get('gap', 0.35)
     lines = []
     lt = start + 0.35
-    for who, text in b['say']:
+    for item in b['say']:
+        who, text = item[0], item[1]
+        shown = item[2] if len(item) > 2 else text  # subtitle text when it differs from what is spoken (e.g. letter names)
         if who == 'pause':  # silent wait for the child to answer
             lines.append({'who': 'pause', 'text': '', 'start': round(lt, 3), 'dur': float(text)})
             lt += float(text) + gap
             continue
         c = say(who, text)
-        lines.append({'who': who, 'text': text, 'start': round(lt, 3), 'dur': round(len(c) / SR, 3)})
+        lines.append({'who': who, 'text': shown, 'start': round(lt, 3), 'dur': round(len(c) / SR, 3)})
         clips.append((lt, c))
         lt += len(c) / SR + gap
     end = max(lt + 0.4, start + b.get('min', 0))
