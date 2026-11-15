@@ -5,3 +5,6 @@
 
 ## Exam 6 — 2026-11-08 (sessions 43–49)
 1b 2d 3a 4c 5d 6a 7c 8b 9d 10a 11c 12a 13d 14b 15c 16a 17d 18b 19a 20c
+
+## Exam 7 — 2026-11-15 (sessions 50–56)
+1d 2b 3c 4a 5b 6d 7a 8c 9b 10d 11a 12c 13b 14d 15a 16c 17b 18d 19c 20a
