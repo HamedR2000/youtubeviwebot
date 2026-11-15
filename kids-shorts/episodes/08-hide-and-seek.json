@@ -1,0 +1,701 @@
+{
+ "id": "08-hide-and-seek",
+ "title": "Animal Hide and Seek! Animal Sounds Song",
+ "emoji": "\ud83d\ude48",
+ "learn": [
+  "animal sounds",
+  "animal names",
+  "counting to three"
+ ],
+ "hashtags": [
+  "animalsounds",
+  "hideandseek",
+  "animals"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Hide and Seek!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's play hide and seek with our animal friends!"
+    ],
+    [
+     "ellie",
+     "Shh! Listen carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says meow?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Meow!"
+    ],
+    [
+     "narrator",
+     "Who says meow?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cat",
+     "id": "a0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a cat!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found you! It's a cat!"
+    ],
+    [
+     "narrator",
+     "The cat says meow!"
+    ],
+    [
+     "animal",
+     "Meow!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says ribbit?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Ribbit!"
+    ],
+    [
+     "narrator",
+     "Who says ribbit?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-frog",
+     "id": "a1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a frog!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found you! It's a frog!"
+    ],
+    [
+     "narrator",
+     "The frog says ribbit!"
+    ],
+    [
+     "animal",
+     "Ribbit!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "a1"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Can you say ribbit?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Brilliant!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says roar?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Roar!"
+    ],
+    [
+     "narrator",
+     "Who says roar?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-lion",
+     "id": "a2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a lion!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found you! It's a lion!"
+    ],
+    [
+     "narrator",
+     "The lion says roar!"
+    ],
+    [
+     "animal",
+     "Roar!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says squeak?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Squeak squeak!"
+    ],
+    [
+     "narrator",
+     "Who says squeak?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-mouse",
+     "id": "a3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a mouse!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found you! It's a mouse!"
+    ],
+    [
+     "narrator",
+     "The mouse says squeak!"
+    ],
+    [
+     "animal",
+     "Squeak squeak!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says hoo?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Hoo hoo!"
+    ],
+    [
+     "narrator",
+     "Who says hoo?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-owl",
+     "id": "a4",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's an owl!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found you! It's an owl!"
+    ],
+    [
+     "narrator",
+     "The owl says hoo!"
+    ],
+    [
+     "animal",
+     "Hoo hoo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "a4"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Can you say hoo?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Brilliant!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says oink?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Oink oink!"
+    ],
+    [
+     "narrator",
+     "Who says oink?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-pig",
+     "id": "a5",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a pig!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found you! It's a pig!"
+    ],
+    [
+     "narrator",
+     "The pig says oink!"
+    ],
+    [
+     "animal",
+     "Oink oink!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the frogs!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! More frogs are hiding! Let's count them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "fr",
+      "art": "animal-frog",
+      "n": 3,
+      "x0": 0.32,
+      "dx": 0.15,
+      "y": 0.47,
+      "s": 0.32
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Three frogs!"
+    ],
+    [
+     "animal",
+     "Ribbit!"
+    ]
+   ],
+   "gap": 0.45
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The cat says meow, the frog says ribbit!"
+    ],
+    [
+     "narrator",
+     "The lion says roar, can you do it?"
+    ],
+    [
+     "narrator",
+     "The mouse says squeak, the owl says hoo!"
+    ],
+    [
+     "narrator",
+     "The pig says oink, we found you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "The cat says meow, the frog says ribbit!"
+    ],
+    [
+     "narrator",
+     "The lion says roar, can you do it?"
+    ],
+    [
+     "narrator",
+     "The mouse says squeak, the owl says hoo!"
+    ],
+    [
+     "narrator",
+     "The pig says oink, we found you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "That was the best hide and seek!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,699 @@
+{
+ "id": "07-abc-hunt",
+ "title": "ABC Hunt! Letters F to J Song",
+ "emoji": "🔤",
+ "learn": [
+  "the letters F to J",
+  "first words",
+  "phonics"
+ ],
+ "hashtags": [
+  "abc",
+  "alphabet",
+  "phonics"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "ABC Hunt!"
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "I hid five letters in the park! Can you help find them?"
+    ],
+    [
+     "penny",
+     "Let's go on an A B C hunt!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter F!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-f",
+     "id": "df",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found one!"
+    ],
+    [
+     "narrator",
+     "This is big eff.",
+     "This is big F."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-f",
+     "id": "of",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Eff is for fish!",
+     "F is for fish!"
+    ],
+    [
+     "coco",
+     "Eff, eff, fish!",
+     "F, f, fish!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter G!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-g",
+     "id": "dg",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found one!"
+    ],
+    [
+     "narrator",
+     "This is big jee.",
+     "This is big G."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-g",
+     "id": "og",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Jee is for grapes!",
+     "G is for grapes!"
+    ],
+    [
+     "coco",
+     "Jee, jee, grapes!",
+     "G, g, grapes!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "og"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Can you say grapes?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "penny",
+     "Grapes! Wonderful!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter H!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-h",
+     "id": "dh",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found one!"
+    ],
+    [
+     "narrator",
+     "This is big aitch.",
+     "This is big H."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-h",
+     "id": "oh",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Aitch is for heart!",
+     "H is for heart!"
+    ],
+    [
+     "coco",
+     "Aitch, aitch, heart!",
+     "H, h, heart!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter I!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-i",
+     "id": "di",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found one!"
+    ],
+    [
+     "narrator",
+     "This is big eye.",
+     "This is big I."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-i",
+     "id": "oi",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Eye is for ice cream!",
+     "I is for ice cream!"
+    ],
+    [
+     "coco",
+     "Eye, eye, ice cream!",
+     "I, i, ice cream!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oi"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Can you say ice cream?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "penny",
+     "Ice cream! Wonderful!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter J!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-j",
+     "id": "dj",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Found one!"
+    ],
+    [
+     "narrator",
+     "This is big jay.",
+     "This is big J."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-j",
+     "id": "oj",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Jay is for juice!",
+     "J is for juice!"
+    ],
+    [
+     "coco",
+     "Jay, jay, juice!",
+     "J, j, juice!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter quiz!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Letter quiz time!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-h",
+     "id": "qh",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Heart!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does heart start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Aitch! Aitch is for heart!",
+     "H! H is for heart!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-f",
+     "id": "qf",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Fish!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does fish start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Eff! Eff is for fish!",
+     "F! F is for fish!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-j",
+     "id": "qj",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Juice!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does juice start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Jay! Jay is for juice!",
+     "J! J is for juice!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "F is for fish, G is for grapes!"
+    ],
+    [
+     "narrator",
+     "H is for heart, so many shapes!"
+    ],
+    [
+     "narrator",
+     "I is for ice cream, J is for juice!"
+    ],
+    [
+     "narrator",
+     "We found the letters, hip hip hooray!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "F is for fish, G is for grapes!"
+    ],
+    [
+     "narrator",
+     "H is for heart, so many shapes!"
+    ],
+    [
+     "narrator",
+     "I is for ice cream, J is for juice!"
+    ],
+    [
+     "narrator",
+     "We found the letters, hip hip hooray!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Thank you for finding my letters!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}
