@@ -1,0 +1,448 @@
+{
+ "id": "24-windy-day-and-night",
+ "series": "Weather Friends",
+ "part": 2,
+ "title": "Windy Day and Good Night Moon! Weather Song",
+ "emoji": "🌙",
+ "learn": [
+  "windy weather",
+  "day and night",
+  "sun and moon"
+ ],
+ "hashtags": [
+  "weather",
+  "dayandnight",
+  "goodnight"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Windy day!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Whoosh! Can you hear the wind?"
+    ],
+    [
+     "ellie",
+     "It's a windy day! Let's fly a kite!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "diamond-kite",
+     "id": "k",
+     "x": 0.45,
+     "y": 0.3,
+     "s": 0.5
+    },
+    {
+     "title": "Windy!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "On windy days, kites fly high in the sky!"
+    ],
+    [
+     "narrator",
+     "Whoosh, whoosh!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Day and night"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "When the sun goes down, it gets dark."
+    ],
+    [
+     "narrator",
+     "It's night time!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-m",
+     "id": "m",
+     "x": 0.45,
+     "y": 0.3,
+     "s": 0.5
+    },
+    {
+     "title": "Night!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "At night, we see the moon!"
+    ],
+    [
+     "penny",
+     "Good night, moon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-sun",
+     "id": "q1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Do we see the sun in the day, or at night?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Do we see the sun in the day, or at night?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "In the day!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-m",
+     "id": "q2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "When do we see the moon?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "When do we see the moon?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "At night! Good night, moon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the kites!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's count the kites!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "ck",
+      "art": "diamond-kite",
+      "n": 3,
+      "x0": 0.37,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Three kites!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "ck"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many kites?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Three! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The wind goes whoosh, the kite flies high!"
+    ],
+    [
+     "narrator",
+     "The sun says hello in the morning sky!"
+    ],
+    [
+     "narrator",
+     "The moon comes out when it is night!"
+    ],
+    [
+     "narrator",
+     "Good night, moon, sleep tight!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "The wind goes whoosh, the kite flies high!"
+    ],
+    [
+     "narrator",
+     "The sun says hello in the morning sky!"
+    ],
+    [
+     "narrator",
+     "The moon comes out when it is night!"
+    ],
+    [
+     "narrator",
+     "Good night, moon, sleep tight!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Good night, friends! Sleep tight!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

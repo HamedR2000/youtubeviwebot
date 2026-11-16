@@ -1,0 +1,494 @@
+{
+ "id": "25-wild-animals",
+ "series": "Animal Homes",
+ "part": 2,
+ "title": "Wild Animals! Where Do Animals Live?",
+ "emoji": "🦁",
+ "learn": [
+  "wild animals",
+  "animal homes",
+  "animal sounds"
+ ],
+ "hashtags": [
+  "animals",
+  "wildanimals",
+  "animalsounds"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Wild animals!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Some animals live in the wild, in jungles, forests and ponds!"
+    ],
+    [
+     "penny",
+     "Let's listen carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says roar?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Roar!"
+    ],
+    [
+     "narrator",
+     "Who says roar?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-lion",
+     "id": "a0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a lion!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a lion! The lion says roar!"
+    ],
+    [
+     "animal",
+     "Roar!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says hoo?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Hoo hoo!"
+    ],
+    [
+     "narrator",
+     "Who says hoo?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-owl",
+     "id": "a1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's an owl!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's an owl! The owl says hoo!"
+    ],
+    [
+     "animal",
+     "Hoo hoo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says ribbit?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Ribbit!"
+    ],
+    [
+     "narrator",
+     "Who says ribbit?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-frog",
+     "id": "a2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a frog!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a frog! The frog says ribbit!"
+    ],
+    [
+     "animal",
+     "Ribbit!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Farm, pet or wild?"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's play a game! Farm, pet, or wild?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-cow",
+     "id": "g0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Where does the cow live?"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Where does the cow live?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "On the farm!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-lion",
+     "id": "g1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Where does the lion live?"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Where does the lion live?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "In the wild!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-cat",
+     "id": "g2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Where does the cat live?"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Where does the cat live?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "At home, it's a pet!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The lion roars in the jungle wide!"
+    ],
+    [
+     "narrator",
+     "The owl says hoo, the frogs hop side to side!"
+    ],
+    [
+     "narrator",
+     "Farm and pets and wild ones too!"
+    ],
+    [
+     "narrator",
+     "So many animals, me and you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "The lion roars in the jungle wide!"
+    ],
+    [
+     "narrator",
+     "The owl says hoo, the frogs hop side to side!"
+    ],
+    [
+     "narrator",
+     "Farm and pets and wild ones too!"
+    ],
+    [
+     "narrator",
+     "So many animals, me and you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Animals live in so many places!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

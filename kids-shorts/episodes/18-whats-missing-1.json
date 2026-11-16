@@ -1,0 +1,520 @@
+{
+ "id": "18-whats-missing-1",
+ "series": "What's Missing?",
+ "part": 1,
+ "title": "What's Missing? Memory Game Part 1",
+ "emoji": "🔍",
+ "learn": [
+  "memory",
+  "observation",
+  "naming objects"
+ ],
+ "hashtags": [
+  "memorygame",
+  "brainteaser",
+  "kidsgames"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "What's missing?"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's play my favourite game: What's missing!"
+    ],
+    [
+     "ellie",
+     "Look carefully. I will erase one thing!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "abc-a",
+     "id": "m00",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "circle-sun",
+     "id": "m01",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "oval-balloon",
+     "id": "m02",
+     "x": 0.65,
+     "y": 0.45,
+     "s": 0.3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "An apple, a sun, and a balloon."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m01"
+    },
+    {
+     "title": "What's missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "What's missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m01"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "title": "The sun!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The sun! You found it!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "animal-cat",
+     "id": "m10",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "animal-dog",
+     "id": "m11",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "animal-duck",
+     "id": "m12",
+     "x": 0.65,
+     "y": 0.45,
+     "s": 0.3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A cat, a dog, and a duck."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m12"
+    },
+    {
+     "title": "What's missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "What's missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m12"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "title": "The duck!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The duck! You found it!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "circle-cookie",
+     "id": "m20",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "square-present",
+     "id": "m21",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "abc-u",
+     "id": "m22",
+     "x": 0.65,
+     "y": 0.45,
+     "s": 0.3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A cookie, a present, and an umbrella."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m20"
+    },
+    {
+     "title": "What's missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "What's missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m20"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "title": "The cookie!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The cookie! You found it!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look, look, look with your eyes!"
+    ],
+    [
+     "narrator",
+     "Something's missing, what a surprise!"
+    ],
+    [
+     "narrator",
+     "Think and think, what can it be?"
+    ],
+    [
+     "narrator",
+     "You found it, one, two, three!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Look, look, look with your eyes!"
+    ],
+    [
+     "narrator",
+     "Something's missing, what a surprise!"
+    ],
+    [
+     "narrator",
+     "Think and think, what can it be?"
+    ],
+    [
+     "narrator",
+     "You found it, one, two, three!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "You have super memory!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

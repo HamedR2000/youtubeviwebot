@@ -1,0 +1,441 @@
+{
+ "id": "13-please-thank-you",
+ "series": "Kind Friends",
+ "part": 1,
+ "title": "Please and Thank You! Good Manners for Kids",
+ "emoji": "🙏",
+ "learn": [
+  "saying please",
+  "saying thank you",
+  "good manners"
+ ],
+ "hashtags": [
+  "manners",
+  "pleaseandthankyou",
+  "kindness"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Please and Thank You!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Penny, give me a cookie!"
+    ],
+    [
+     "penny",
+     "Hmm, what is the magic word, Ellie?"
+    ],
+    [
+     "ellie",
+     "Oh! Please! Can I have a cookie, please?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-cookie",
+     "id": "k1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Please!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Of course! Here you go!"
+    ],
+    [
+     "ellie",
+     "Thank you, Penny!"
+    ],
+    [
+     "narrator",
+     "When we ask for something, we say please."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-cookie",
+     "id": "k2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "What is the magic word?"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What is the magic word?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Please! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-j",
+     "id": "j1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Thank you!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Ellie, would you like some juice?"
+    ],
+    [
+     "ellie",
+     "Yes, please!"
+    ],
+    [
+     "narrator",
+     "And when someone gives us something, we say..."
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Thank you!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "oval-balloon",
+     "id": "bl",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "May I, please?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "May I have a balloon, please?"
+    ],
+    [
+     "penny",
+     "Yes, you may!"
+    ],
+    [
+     "coco",
+     "Thank you, Penny!"
+    ],
+    [
+     "narrator",
+     "What a polite friend!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "oval-balloon",
+     "id": "bq",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "What do we say when we get a present?"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What do we say when we get a present?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Thank you! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Can you say please?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Can you say thank you?"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Wonderful manners!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Please and thank you, magic words!"
+    ],
+    [
+     "narrator",
+     "Say them to your friends and birds!"
+    ],
+    [
+     "narrator",
+     "Please when asking, thank you when you get!"
+    ],
+    [
+     "narrator",
+     "The kindest words we never forget!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Please and thank you, magic words!"
+    ],
+    [
+     "narrator",
+     "Say them to your friends and birds!"
+    ],
+    [
+     "narrator",
+     "Please when asking, thank you when you get!"
+    ],
+    [
+     "narrator",
+     "The kindest words we never forget!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Please and thank you are magic words!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

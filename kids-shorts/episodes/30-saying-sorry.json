@@ -1,0 +1,378 @@
+{
+ "id": "30-saying-sorry",
+ "series": "Kind Friends",
+ "part": 3,
+ "title": "Ellie Says Sorry! Learning to Say I'm Sorry",
+ "emoji": "💗",
+ "learn": [
+  "saying sorry",
+  "forgiving",
+  "friendship"
+ ],
+ "hashtags": [
+  "kindness",
+  "sorry",
+  "friendship"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "I'm sorry!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look at my beautiful balloon picture!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "oval-balloon",
+     "id": "pic",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "It's so pretty, Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "move": "ellie",
+     "x": 0.55
+    },
+    {
+     "erase": "pic"
+    },
+    {
+     "title": "Oops!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Oops! I erased your picture by mistake!"
+    ],
+    [
+     "coco",
+     "Oh no! My picture!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Say sorry"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "I'm sorry, Coco. I didn't mean to."
+    ],
+    [
+     "coco",
+     "That's okay, Ellie. Thank you for saying sorry."
+    ],
+    [
+     "narrator",
+     "When we make a mistake, we say sorry."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "pic"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "title": "Let's fix it!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let me help you draw it again!"
+    ],
+    [
+     "coco",
+     "Look! It's even better now!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "What do we say?"
+    },
+    {
+     "pulse": "pic"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "When we make a mistake, what do we say?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "I'm sorry! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-tree",
+     "id": "pic2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Penny's tree"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look at my tree drawing!"
+    ],
+    [
+     "coco",
+     "Oops! I bumped your paper, Penny. I'm sorry!"
+    ],
+    [
+     "penny",
+     "That's okay, Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "What do we say?"
+    },
+    {
+     "pulse": "pic2"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "When a friend says sorry, what can we say?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "That's okay! Let's be friends!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Everybody makes mistakes, it's true!"
+    ],
+    [
+     "narrator",
+     "Say I'm sorry, I'll help you!"
+    ],
+    [
+     "narrator",
+     "Friends forgive and friends are kind!"
+    ],
+    [
+     "narrator",
+     "Being friends is so fine!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Everybody makes mistakes, it's true!"
+    ],
+    [
+     "narrator",
+     "Say I'm sorry, I'll help you!"
+    ],
+    [
+     "narrator",
+     "Friends forgive and friends are kind!"
+    ],
+    [
+     "narrator",
+     "Being friends is so fine!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Friends forgive each other!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}
