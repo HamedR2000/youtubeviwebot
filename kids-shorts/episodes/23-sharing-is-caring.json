@@ -1,0 +1,439 @@
+{
+ "id": "23-sharing-is-caring",
+ "series": "Kind Friends",
+ "part": 2,
+ "title": "Sharing is Caring! Kindness Song for Kids",
+ "emoji": "🤝",
+ "learn": [
+  "sharing",
+  "kindness",
+  "counting"
+ ],
+ "hashtags": [
+  "sharing",
+  "kindness",
+  "manners"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Sharing is caring!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "I have four cookies!"
+    ],
+    [
+     "ellie",
+     "Ooh, cookies! I don't have any..."
+    ],
+    [
+     "penny",
+     "Let's share! Sharing is caring!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the cookies!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's count the cookies!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "sc",
+      "art": "circle-cookie",
+      "n": 4,
+      "x0": 0.305,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Four cookies!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "sc"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many cookies?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Four! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Two for you!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Two cookies for me, and two cookies for you, Ellie!"
+    ],
+    [
+     "ellie",
+     "Thank you, Penny! You are so kind!"
+    ],
+    [
+     "narrator",
+     "When we share, everybody is happy!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the apples!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's count the apples!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "sa",
+      "art": "abc-a",
+      "n": 6,
+      "x0": 0.19,
+      "dx": 0.124,
+      "y": 0.45,
+      "s": 0.24
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Six!"
+    ],
+    [
+     "narrator",
+     "Six apples!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "sa"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many apples?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Six! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Share with friends!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Six apples for three friends. Two each!"
+    ],
+    [
+     "narrator",
+     "Can you share your toys with a friend today?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Sharing, sharing, sharing is caring!"
+    ],
+    [
+     "narrator",
+     "One for you and one for me!"
+    ],
+    [
+     "narrator",
+     "Sharing makes us happy, you'll see!"
+    ],
+    [
+     "narrator",
+     "Sharing, sharing, sharing is caring!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Sharing, sharing, sharing is caring!"
+    ],
+    [
+     "narrator",
+     "One for you and one for me!"
+    ],
+    [
+     "narrator",
+     "Sharing makes us happy, you'll see!"
+    ],
+    [
+     "narrator",
+     "Sharing, sharing, sharing is caring!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sharing with friends makes me happy!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

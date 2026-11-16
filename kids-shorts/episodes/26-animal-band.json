@@ -1,0 +1,495 @@
+{
+ "id": "26-animal-band",
+ "series": "Music Time",
+ "part": 2,
+ "title": "The Animal Band! Animal Sounds Song",
+ "emoji": "🥁",
+ "learn": [
+  "animal sounds",
+  "music",
+  "singing together"
+ ],
+ "hashtags": [
+  "music",
+  "animalsounds",
+  "kidssongs"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "party"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Animal band!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's make an animal band!"
+    ],
+    [
+     "penny",
+     "Everyone sings their own sound!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says moo?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Moo!"
+    ],
+    [
+     "narrator",
+     "Who says moo?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cow",
+     "id": "a0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a cow!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a cow! The cow says moo!"
+    ],
+    [
+     "animal",
+     "Moo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says cluck?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Cluck cluck!"
+    ],
+    [
+     "narrator",
+     "Who says cluck?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-chicken",
+     "id": "a1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a chicken!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a chicken! The chicken says cluck!"
+    ],
+    [
+     "animal",
+     "Cluck cluck!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says woof?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Woof woof!"
+    ],
+    [
+     "narrator",
+     "Who says woof?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-dog",
+     "id": "a2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a dog!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a dog! The dog says woof!"
+    ],
+    [
+     "animal",
+     "Woof woof!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says ribbit?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Ribbit!"
+    ],
+    [
+     "narrator",
+     "Who says ribbit?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-frog",
+     "id": "a3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a frog!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a frog! The frog says ribbit!"
+    ],
+    [
+     "animal",
+     "Ribbit!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Sing together!"
+    },
+    {
+     "show": "animal-cow",
+     "id": "b1",
+     "x": 0.3,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "animal-chicken",
+     "id": "b2",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "animal-dog",
+     "id": "b3",
+     "x": 0.6,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "pulse": "b1"
+    },
+    {
+     "pulse": "b2"
+    },
+    {
+     "pulse": "b3"
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Moo! Cluck cluck! Woof woof!"
+    ],
+    [
+     "narrator",
+     "What a noisy band!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Moo goes the cow in the animal band!"
+    ],
+    [
+     "narrator",
+     "Cluck goes the chicken, isn't it grand!"
+    ],
+    [
+     "narrator",
+     "Woof goes the dog, ribbit goes the frog!"
+    ],
+    [
+     "narrator",
+     "Everybody sing, sing along!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Moo goes the cow in the animal band!"
+    ],
+    [
+     "narrator",
+     "Cluck goes the chicken, isn't it grand!"
+    ],
+    [
+     "narrator",
+     "Woof goes the dog, ribbit goes the frog!"
+    ],
+    [
+     "narrator",
+     "Everybody sing, sing along!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Our animal band is the best!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

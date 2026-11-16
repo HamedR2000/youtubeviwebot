@@ -1,0 +1,490 @@
+{
+ "id": "17-circles-and-triangles",
+ "series": "Shape Sort",
+ "part": 1,
+ "title": "Circles and Triangles! Shape Sorting for Kids",
+ "emoji": "🔺",
+ "learn": [
+  "circles",
+  "triangles",
+  "sorting"
+ ],
+ "hashtags": [
+  "shapes",
+  "circle",
+  "triangle"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Shape sort!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's sort things by shape!"
+    ],
+    [
+     "penny",
+     "First, round things! Circles!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-sun",
+     "id": "c0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A circle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The sun is round. It's a circle!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-cookie",
+     "id": "c1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A circle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The cookie is round. It's a circle!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-orange",
+     "id": "c2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A circle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The orange is round. It's a circle!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-y",
+     "id": "c3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A circle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The yo-yo is round. It's a circle!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Triangles!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Now, things with three sides! Triangles!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-pizza",
+     "id": "t0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A triangle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The pizza slice has three sides. It's a triangle!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-tree",
+     "id": "t1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A triangle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The tree has three sides. It's a triangle!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-orange",
+     "id": "q1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Circle or triangle?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Circle or triangle?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A circle! It's round!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-pizza",
+     "id": "q2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Circle or triangle?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Circle or triangle?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A triangle! Three sides!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Round and round, a circle goes!"
+    ],
+    [
+     "narrator",
+     "Sun and cookies, everyone knows!"
+    ],
+    [
+     "narrator",
+     "One, two, three, a triangle!"
+    ],
+    [
+     "narrator",
+     "Pizza and trees, look and see!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Round and round, a circle goes!"
+    ],
+    [
+     "narrator",
+     "Sun and cookies, everyone knows!"
+    ],
+    [
+     "narrator",
+     "One, two, three, a triangle!"
+    ],
+    [
+     "narrator",
+     "Pizza and trees, look and see!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Circles and triangles are everywhere!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

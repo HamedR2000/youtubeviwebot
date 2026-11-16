@@ -1,0 +1,453 @@
+{
+ "id": "20-count-to-ten-2",
+ "series": "Counting to Ten",
+ "part": 2,
+ "title": "Counting to Ten! Part 2",
+ "emoji": "🔢",
+ "learn": [
+  "counting to ten",
+  "numbers",
+  "number words"
+ ],
+ "hashtags": [
+  "counting",
+  "numbers",
+  "counttoten"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Counting to Ten!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's count all the way to ten!"
+    ],
+    [
+     "ellie",
+     "Ten is a big number!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the oranges!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's count the oranges!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "c0",
+      "art": "circle-orange",
+      "n": 9,
+      "x0": 0.19,
+      "dx": 0.077,
+      "y": 0.45,
+      "s": 0.19
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Six!"
+    ],
+    [
+     "narrator",
+     "Seven!"
+    ],
+    [
+     "narrator",
+     "Eight!"
+    ],
+    [
+     "narrator",
+     "Nine!"
+    ],
+    [
+     "narrator",
+     "Nine oranges!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "c0"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many oranges?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Nine! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the stars!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's count the stars!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "c1",
+      "art": "star-starfish",
+      "n": 10,
+      "x0": 0.19,
+      "dx": 0.069,
+      "y": 0.45,
+      "s": 0.19
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Six!"
+    ],
+    [
+     "narrator",
+     "Seven!"
+    ],
+    [
+     "narrator",
+     "Eight!"
+    ],
+    [
+     "narrator",
+     "Nine!"
+    ],
+    [
+     "narrator",
+     "Ten!"
+    ],
+    [
+     "narrator",
+     "Ten stars!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "c1"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many stars?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Ten! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Count with me!"
+    },
+    {
+     "pulse": "c1"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Count with me, nice and fast!"
+    ],
+    [
+     "narrator",
+     "One, two, three, four, five, six, seven, eight, nine, ten!"
+    ],
+    [
+     "penny",
+     "Hooray!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One, two, three, four, five!"
+    ],
+    [
+     "narrator",
+     "Six, seven, eight, we feel alive!"
+    ],
+    [
+     "narrator",
+     "Nine and ten, let's count again!"
+    ],
+    [
+     "narrator",
+     "Counting is fun with all my friends!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "One, two, three, four, five!"
+    ],
+    [
+     "narrator",
+     "Six, seven, eight, we feel alive!"
+    ],
+    [
+     "narrator",
+     "Nine and ten, let's count again!"
+    ],
+    [
+     "narrator",
+     "Counting is fun with all my friends!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Now I can count to ten!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

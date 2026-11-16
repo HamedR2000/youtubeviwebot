@@ -1,0 +1,484 @@
+{
+ "id": "22-fruit-shopping",
+ "series": "Coco's Fruit Shop",
+ "part": 2,
+ "title": "Fruit Shopping! Counting and Saying Thank You",
+ "emoji": "🧺",
+ "learn": [
+  "counting fruit",
+  "fruit names",
+  "saying thank you"
+ ],
+ "hashtags": [
+  "fruits",
+  "counting",
+  "manners"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Shopping time!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Coco, I want to buy some fruit, please!"
+    ],
+    [
+     "coco",
+     "Of course! Let's count them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the apples!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's count the apples!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "c0",
+      "art": "abc-a",
+      "n": 3,
+      "x0": 0.37,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Three apples!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "c0"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many apples?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Three! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the oranges!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's count the oranges!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "c1",
+      "art": "circle-orange",
+      "n": 4,
+      "x0": 0.305,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Four oranges!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "c1"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many oranges?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Four! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the lemons!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's count the lemons!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "c2",
+      "art": "abc-l",
+      "n": 2,
+      "x0": 0.435,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Two lemons!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "c2"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many lemons?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Two! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Thank you!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Thank you, Coco!"
+    ],
+    [
+     "coco",
+     "You're welcome, Penny!"
+    ],
+    [
+     "narrator",
+     "When someone helps us, we say thank you!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Three red apples in my bag!"
+    ],
+    [
+     "narrator",
+     "Four oranges, I'm so glad!"
+    ],
+    [
+     "narrator",
+     "Two yellow lemons, one, two!"
+    ],
+    [
+     "narrator",
+     "Thank you, Coco, thank you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Three red apples in my bag!"
+    ],
+    [
+     "narrator",
+     "Four oranges, I'm so glad!"
+    ],
+    [
+     "narrator",
+     "Two yellow lemons, one, two!"
+    ],
+    [
+     "narrator",
+     "Thank you, Coco, thank you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Shopping with friends is fun!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,380 @@
+{
+ "id": "16-clap-and-sing",
+ "series": "Music Time",
+ "part": 1,
+ "title": "Music Time! Clap, Stomp and Sing",
+ "emoji": "🎶",
+ "learn": [
+  "music words",
+  "loud and quiet",
+  "clapping and counting"
+ ],
+ "hashtags": [
+  "music",
+  "kidssongs",
+  "clap"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "party"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Music time!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's make music!"
+    ],
+    [
+     "coco",
+     "I have a xylophone!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-x",
+     "id": "x",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Xylophone!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is a xylophone. Ding, ding, ding!"
+    ],
+    [
+     "coco",
+     "Each bar has a different colour!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Clap with me!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's clap! Clap, clap, clap!"
+    ],
+    [
+     "narrator",
+     "Clap three times!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Now stomp your feet! Stomp, stomp!"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the xylophones!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's count the xylophones!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "cx",
+      "art": "abc-x",
+      "n": 3,
+      "x0": 0.37,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Three xylophones!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "cx"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many xylophones?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Three! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Loud and quiet!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's sing loud! LA LA LA!"
+    ],
+    [
+     "narrator",
+     "Now quiet... la, la, la."
+    ],
+    [
+     "coco",
+     "Loud and quiet! Opposites!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Clap your hands, one, two, three!"
+    ],
+    [
+     "narrator",
+     "Stomp your feet and sing with me!"
+    ],
+    [
+     "narrator",
+     "Ding, ding, ding, the xylophone sings!"
+    ],
+    [
+     "narrator",
+     "Music is one of my favourite things!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Clap your hands, one, two, three!"
+    ],
+    [
+     "narrator",
+     "Stomp your feet and sing with me!"
+    ],
+    [
+     "narrator",
+     "Ding, ding, ding, the xylophone sings!"
+    ],
+    [
+     "narrator",
+     "Music is one of my favourite things!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Music makes me happy!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

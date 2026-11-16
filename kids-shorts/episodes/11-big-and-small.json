@@ -1,0 +1,484 @@
+{
+ "id": "11-big-and-small",
+ "series": "Opposites",
+ "part": 1,
+ "title": "Big and Small! Opposites for Kids",
+ "emoji": "🐘",
+ "learn": [
+  "big and small",
+  "opposites",
+  "describing words"
+ ],
+ "hashtags": [
+  "opposites",
+  "bigandsmall"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Big and Small!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look! Some things are big, and some things are small!"
+    ],
+    [
+     "penny",
+     "Let's find out which is which!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-sun",
+     "id": "b0",
+     "x": 0.33,
+     "y": 0.47,
+     "s": 0.6
+    },
+    {
+     "show": "circle-sun",
+     "id": "s0",
+     "x": 0.63,
+     "y": 0.55,
+     "s": 0.22
+    },
+    {
+     "title": "Big and small!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A big sun!"
+    ],
+    [
+     "narrator",
+     "And a small sun!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is big?"
+    },
+    {
+     "pulse": "b0"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Which sun is big?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "This one! The big sun!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-cow",
+     "id": "b1",
+     "x": 0.33,
+     "y": 0.47,
+     "s": 0.6
+    },
+    {
+     "show": "animal-cow",
+     "id": "s1",
+     "x": 0.63,
+     "y": 0.55,
+     "s": 0.22
+    },
+    {
+     "title": "Big and small!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A big cow!"
+    ],
+    [
+     "narrator",
+     "And a small cow!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is small?"
+    },
+    {
+     "pulse": "s1"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Which cow is small?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "This one! The small cow!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "oval-balloon",
+     "id": "b2",
+     "x": 0.33,
+     "y": 0.47,
+     "s": 0.6
+    },
+    {
+     "show": "oval-balloon",
+     "id": "s2",
+     "x": 0.63,
+     "y": 0.55,
+     "s": 0.22
+    },
+    {
+     "title": "Big and small!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A big balloon!"
+    ],
+    [
+     "narrator",
+     "And a small balloon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is big?"
+    },
+    {
+     "pulse": "b2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Which balloon is big?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "This one! The big balloon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-a",
+     "id": "b3",
+     "x": 0.33,
+     "y": 0.47,
+     "s": 0.6
+    },
+    {
+     "show": "abc-a",
+     "id": "s3",
+     "x": 0.63,
+     "y": 0.55,
+     "s": 0.22
+    },
+    {
+     "title": "Big and small!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A big apple!"
+    ],
+    [
+     "narrator",
+     "And a small apple!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is small?"
+    },
+    {
+     "pulse": "s3"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Which apple is small?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "This one! The small apple!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Big, big, big, like an elephant!"
+    ],
+    [
+     "narrator",
+     "Small, small, small, like a little ant!"
+    ],
+    [
+     "narrator",
+     "Big and small, small and big!"
+    ],
+    [
+     "narrator",
+     "Let's all dance a happy jig!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Big, big, big, like an elephant!"
+    ],
+    [
+     "narrator",
+     "Small, small, small, like a little ant!"
+    ],
+    [
+     "narrator",
+     "Big and small, small and big!"
+    ],
+    [
+     "narrator",
+     "Let's all dance a happy jig!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Big or small, we love them all!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,441 @@
+{
+ "id": "21-up-and-down",
+ "series": "Opposites",
+ "part": 2,
+ "title": "Up and Down! Opposites Song",
+ "emoji": "⬆️",
+ "learn": [
+  "up and down",
+  "opposites",
+  "position words"
+ ],
+ "hashtags": [
+  "opposites",
+  "upanddown"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Up and Down!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Some things are up high, and some things are down low!"
+    ],
+    [
+     "ellie",
+     "Let's look up, and look down!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-sun",
+     "id": "u0",
+     "x": 0.4,
+     "y": 0.2,
+     "s": 0.32
+    },
+    {
+     "title": "Up!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look up! The sun is up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-frog",
+     "id": "w0",
+     "x": 0.55,
+     "y": 0.72,
+     "s": 0.32
+    },
+    {
+     "title": "Down!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look down! The frog is down low!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Up or down?"
+    },
+    {
+     "pulse": "u0"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Is the sun up, or down?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Up! Up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "diamond-kite",
+     "id": "u1",
+     "x": 0.4,
+     "y": 0.2,
+     "s": 0.32
+    },
+    {
+     "title": "Up!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look up! The kite is up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "abc-f",
+     "id": "w1",
+     "x": 0.55,
+     "y": 0.72,
+     "s": 0.32
+    },
+    {
+     "title": "Down!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look down! The fish is down low!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Up or down?"
+    },
+    {
+     "pulse": "u1"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Is the kite up, or down?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Up! Up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-m",
+     "id": "u2",
+     "x": 0.4,
+     "y": 0.2,
+     "s": 0.32
+    },
+    {
+     "title": "Up!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look up! The moon is up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-mouse",
+     "id": "w2",
+     "x": 0.55,
+     "y": 0.72,
+     "s": 0.32
+    },
+    {
+     "title": "Down!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look down! The mouse is down low!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Up or down?"
+    },
+    {
+     "pulse": "u2"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Is the moon up, or down?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Up! Up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Up, up, up, reach for the sky!"
+    ],
+    [
+     "narrator",
+     "Down, down, down, touch your toes, oh my!"
+    ],
+    [
+     "narrator",
+     "Up and down, all around!"
+    ],
+    [
+     "narrator",
+     "Jump up high, then touch the ground!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Up, up, up, reach for the sky!"
+    ],
+    [
+     "narrator",
+     "Down, down, down, touch your toes, oh my!"
+    ],
+    [
+     "narrator",
+     "Up and down, all around!"
+    ],
+    [
+     "narrator",
+     "Jump up high, then touch the ground!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Up and down, that was fun!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

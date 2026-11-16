@@ -1,0 +1,671 @@
+{
+ "id": "09-abc-k-o",
+ "series": "ABC Adventures",
+ "part": 1,
+ "title": "ABC Adventures: Letters K to O",
+ "emoji": "🔤",
+ "learn": [
+  "the letters K to O",
+  "first words",
+  "phonics"
+ ],
+ "hashtags": [
+  "abc",
+  "alphabet",
+  "phonics"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "ABC Adventures!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's go on an A B C adventure!"
+    ],
+    [
+     "coco",
+     "Today we learn K, L, M, N and O!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter K!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-k",
+     "id": "dK",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big kay.",
+     "This is big K."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "diamond-kite",
+     "id": "oK",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Kay is for kite!",
+     "K is for kite!"
+    ],
+    [
+     "coco",
+     "Kay, kay, kite!",
+     "K, k, kite!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter L!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-l",
+     "id": "dL",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big el.",
+     "This is big L."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-l",
+     "id": "oL",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "El is for lemon!",
+     "L is for lemon!"
+    ],
+    [
+     "coco",
+     "El, el, lemon!",
+     "L, l, lemon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oL"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say lemon?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Lemon! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter M!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-m",
+     "id": "dM",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big em.",
+     "This is big M."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-m",
+     "id": "oM",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Em is for moon!",
+     "M is for moon!"
+    ],
+    [
+     "coco",
+     "Em, em, moon!",
+     "M, m, moon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter N!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-n",
+     "id": "dN",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big en.",
+     "This is big N."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-n",
+     "id": "oN",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "En is for nest!",
+     "N is for nest!"
+    ],
+    [
+     "coco",
+     "En, en, nest!",
+     "N, n, nest!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oN"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say nest?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Nest! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter O!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-o",
+     "id": "dO",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big oh.",
+     "This is big O."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "circle-orange",
+     "id": "oO",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Oh is for orange!",
+     "O is for orange!"
+    ],
+    [
+     "coco",
+     "Oh, oh, orange!",
+     "O, o, orange!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter quiz!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Letter quiz time!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "diamond-kite",
+     "id": "qK",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Kite!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does kite start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Kay! Kay is for kite!",
+     "K! K is for kite!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-m",
+     "id": "qM",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Moon!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does moon start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Em! Em is for moon!",
+     "M! M is for moon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-orange",
+     "id": "qO",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Orange!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does orange start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Oh! Oh is for orange!",
+     "O! O is for orange!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "K for kite and L for lemon!",
+     "K for kite and L for lemon!"
+    ],
+    [
+     "narrator",
+     "M for moon, N for nest!"
+    ],
+    [
+     "narrator",
+     "O for orange, we did our best!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "K for kite and L for lemon!",
+     "K for kite and L for lemon!"
+    ],
+    [
+     "narrator",
+     "M for moon, N for nest!"
+    ],
+    [
+     "narrator",
+     "O for orange, we did our best!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "We learned so many letters today!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

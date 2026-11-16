@@ -1,0 +1,677 @@
+{
+ "id": "19-abc-p-t",
+ "series": "ABC Adventures",
+ "part": 2,
+ "title": "ABC Adventures: Letters P to T",
+ "emoji": "🔤",
+ "learn": [
+  "the letters P to T",
+  "first words",
+  "phonics"
+ ],
+ "hashtags": [
+  "abc",
+  "alphabet",
+  "phonics"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "ABC Adventures!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The A B C train is back!"
+    ],
+    [
+     "penny",
+     "Today: P, Q, R, S and T!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter P!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-p",
+     "id": "dP",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big pee.",
+     "This is big P."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "triangle-pizza",
+     "id": "oP",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Pee is for pizza!",
+     "P is for pizza!"
+    ],
+    [
+     "coco",
+     "Pee, pee, pizza!",
+     "P, p, pizza!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter Q!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-q",
+     "id": "dQ",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big cue.",
+     "This is big Q."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-q",
+     "id": "oQ",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Cue is for queen!",
+     "Q is for queen!"
+    ],
+    [
+     "coco",
+     "Cue, cue, queen!",
+     "Q, q, queen!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oQ"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say queen?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Queen! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter R!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-r",
+     "id": "dR",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big are.",
+     "This is big R."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "square-robot",
+     "id": "oR",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Are is for robot!",
+     "R is for robot!"
+    ],
+    [
+     "coco",
+     "Are, are, robot!",
+     "R, r, robot!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter S!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-s",
+     "id": "dS",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big ess.",
+     "This is big S."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "circle-sun",
+     "id": "oS",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Ess is for sun!",
+     "S is for sun!"
+    ],
+    [
+     "coco",
+     "Ess, ess, sun!",
+     "S, s, sun!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oS"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say sun?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Sun! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter T!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-t",
+     "id": "dT",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big tee.",
+     "This is big T."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "triangle-tree",
+     "id": "oT",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Tee is for tree!",
+     "T is for tree!"
+    ],
+    [
+     "coco",
+     "Tee, tee, tree!",
+     "T, t, tree!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter quiz!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Letter quiz time!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-pizza",
+     "id": "qP",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Pizza!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does pizza start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Pee! Pee is for pizza!",
+     "P! P is for pizza!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "square-robot",
+     "id": "qR",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Robot!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does robot start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Are! Are is for robot!",
+     "R! R is for robot!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-tree",
+     "id": "qT",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Tree!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does tree start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Tee! Tee is for tree!",
+     "T! T is for tree!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "P for pizza, Q for queen!"
+    ],
+    [
+     "narrator",
+     "R for robot, shiny and clean!"
+    ],
+    [
+     "narrator",
+     "S for sun and T for tree!"
+    ],
+    [
+     "narrator",
+     "Learning letters, one, two, three!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "P for pizza, Q for queen!"
+    ],
+    [
+     "narrator",
+     "R for robot, shiny and clean!"
+    ],
+    [
+     "narrator",
+     "S for sun and T for tree!"
+    ],
+    [
+     "narrator",
+     "Learning letters, one, two, three!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "We learned so many letters today!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,638 @@
+{
+ "id": "15-farm-and-pets",
+ "series": "Animal Homes",
+ "part": 1,
+ "title": "Farm Animals and Pets! Animal Sounds Song",
+ "emoji": "🐄",
+ "learn": [
+  "farm animals",
+  "pets",
+  "animal sounds"
+ ],
+ "hashtags": [
+  "animals",
+  "farmanimals",
+  "pets"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Farm animals!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Where do animals live?"
+    ],
+    [
+     "coco",
+     "Some animals live on a farm!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says moo?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Moo!"
+    ],
+    [
+     "narrator",
+     "Who says moo?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cow",
+     "id": "a0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a cow!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a cow! The cow says moo!"
+    ],
+    [
+     "animal",
+     "Moo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says oink?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Oink oink!"
+    ],
+    [
+     "narrator",
+     "Who says oink?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-pig",
+     "id": "a1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a pig!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a pig! The pig says oink!"
+    ],
+    [
+     "animal",
+     "Oink oink!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says cluck?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Cluck cluck!"
+    ],
+    [
+     "narrator",
+     "Who says cluck?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-chicken",
+     "id": "a2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a chicken!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a chicken! The chicken says cluck!"
+    ],
+    [
+     "animal",
+     "Cluck cluck!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says neigh?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Neigh!"
+    ],
+    [
+     "narrator",
+     "Who says neigh?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-horse",
+     "id": "a3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a horse!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a horse! The horse says neigh!"
+    ],
+    [
+     "animal",
+     "Neigh!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Pets at home!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Some animals live at home with us. They are pets!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says meow?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Meow!"
+    ],
+    [
+     "narrator",
+     "Who says meow?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cat",
+     "id": "a10",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a cat!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a cat! The cat says meow!"
+    ],
+    [
+     "animal",
+     "Meow!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says woof?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Woof woof!"
+    ],
+    [
+     "narrator",
+     "Who says woof?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-dog",
+     "id": "a11",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a dog!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a dog! The dog says woof!"
+    ],
+    [
+     "animal",
+     "Woof woof!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says squeak?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Squeak squeak!"
+    ],
+    [
+     "narrator",
+     "Who says squeak?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-mouse",
+     "id": "a12",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "It's a mouse!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a mouse! The mouse says squeak!"
+    ],
+    [
+     "animal",
+     "Squeak squeak!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "On the farm, the cow says moo!"
+    ],
+    [
+     "narrator",
+     "The pig says oink, the horse says neigh too!"
+    ],
+    [
+     "narrator",
+     "At home, the cat says meow!"
+    ],
+    [
+     "narrator",
+     "The dog says woof, take a bow!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "On the farm, the cow says moo!"
+    ],
+    [
+     "narrator",
+     "The pig says oink, the horse says neigh too!"
+    ],
+    [
+     "narrator",
+     "At home, the cat says meow!"
+    ],
+    [
+     "narrator",
+     "The dog says woof, take a bow!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "I love all the animals!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

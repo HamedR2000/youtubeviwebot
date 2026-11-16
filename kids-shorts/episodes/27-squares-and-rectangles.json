@@ -1,0 +1,443 @@
+{
+ "id": "27-squares-and-rectangles",
+ "series": "Shape Sort",
+ "part": 2,
+ "title": "Squares and Rectangles! What's the Difference?",
+ "emoji": "🟦",
+ "learn": [
+  "squares",
+  "rectangles",
+  "comparing shapes"
+ ],
+ "hashtags": [
+  "shapes",
+  "square",
+  "rectangle"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Square or rectangle?"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Squares and rectangles both have four sides!"
+    ],
+    [
+     "coco",
+     "Let's find the difference!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "square-present",
+     "id": "s0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A square!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The present is a square. All four sides are the same!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "square-robot",
+     "id": "s1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A square!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The robot is a square. All four sides are the same!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "rectangle-door",
+     "id": "r0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A rectangle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The door is a rectangle. Two long sides, and two short sides!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-j",
+     "id": "r1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "A rectangle!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The juice box is a rectangle. Two long sides, and two short sides!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's draw!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "square-present",
+     "id": "dr",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Let's draw a square together! One, two, three, four sides!"
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "rectangle-door",
+     "id": "q1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Square or rectangle?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Square or rectangle?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A rectangle! Two long sides!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "square-present",
+     "id": "q2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Square or rectangle?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Square or rectangle?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A square! All sides the same!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A square has four sides, all the same!"
+    ],
+    [
+     "narrator",
+     "A present, a robot, that's its name!"
+    ],
+    [
+     "narrator",
+     "A rectangle is long, like a door!"
+    ],
+    [
+     "narrator",
+     "Four sides each, let's find some more!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "A square has four sides, all the same!"
+    ],
+    [
+     "narrator",
+     "A present, a robot, that's its name!"
+    ],
+    [
+     "narrator",
+     "A rectangle is long, like a door!"
+    ],
+    [
+     "narrator",
+     "Four sides each, let's find some more!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Now I know squares and rectangles!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,761 @@
+{
+ "id": "29-abc-u-z",
+ "series": "ABC Adventures",
+ "part": 3,
+ "title": "ABC Adventures: Letters U to Z",
+ "emoji": "🔤",
+ "learn": [
+  "the letters U to Z",
+  "first words",
+  "phonics"
+ ],
+ "hashtags": [
+  "abc",
+  "alphabet",
+  "phonics"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "ABC Adventures!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "These are the last letters of the alphabet!"
+    ],
+    [
+     "ellie",
+     "U, V, W, X, Y and Z!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter U!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-u",
+     "id": "dU",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big you.",
+     "This is big U."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-u",
+     "id": "oU",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "You is for umbrella!",
+     "U is for umbrella!"
+    ],
+    [
+     "coco",
+     "You, you, umbrella!",
+     "U, u, umbrella!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter V!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-v",
+     "id": "dV",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big vee.",
+     "This is big V."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-v",
+     "id": "oV",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Vee is for van!",
+     "V is for van!"
+    ],
+    [
+     "coco",
+     "Vee, vee, van!",
+     "V, v, van!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oV"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say van?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Van! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter W!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-w",
+     "id": "dW",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big double you.",
+     "This is big W."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-w",
+     "id": "oW",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Double you is for watermelon!",
+     "W is for watermelon!"
+    ],
+    [
+     "coco",
+     "Double you, double you, watermelon!",
+     "W, w, watermelon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter X!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-x",
+     "id": "dX",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big ex.",
+     "This is big X."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-x",
+     "id": "oX",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Ex is for xylophone!",
+     "X is for xylophone!"
+    ],
+    [
+     "coco",
+     "Ex, ex, xylophone!",
+     "X, x, xylophone!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oX"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say xylophone?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Xylophone! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter Y!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-y",
+     "id": "dY",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big why.",
+     "This is big Y."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-y",
+     "id": "oY",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Why is for yo-yo!",
+     "Y is for yo-yo!"
+    ],
+    [
+     "coco",
+     "Why, why, yo-yo!",
+     "Y, y, yo-yo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter Z!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "abc-z",
+     "id": "dZ",
+     "x": 0.33,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "This is big zee.",
+     "This is big Z."
+    ]
+   ],
+   "min": 4.2
+  },
+  {
+   "do": [
+    {
+     "show": "abc-z",
+     "id": "oZ",
+     "x": 0.6,
+     "y": 0.47,
+     "s": 0.4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Zee is for zebra!",
+     "Z is for zebra!"
+    ],
+    [
+     "coco",
+     "Zee, zee, zebra!",
+     "Z, z, zebra!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Your turn!"
+    },
+    {
+     "pulse": "oZ"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say zebra?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Zebra! Great job!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Letter quiz!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Letter quiz time!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-u",
+     "id": "qU",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Umbrella!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does umbrella start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "You! You is for umbrella!",
+     "U! U is for umbrella!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-w",
+     "id": "qW",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Watermelon!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does watermelon start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Double you! Double you is for watermelon!",
+     "W! W is for watermelon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-y",
+     "id": "qY",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.5
+    },
+    {
+     "title": "Yo-yo!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What letter does yo-yo start with?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Why! Why is for yo-yo!",
+     "Y! Y is for yo-yo!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Let's sing!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 12
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "U for umbrella, V for van!"
+    ],
+    [
+     "narrator",
+     "W for watermelon, catch it if you can!"
+    ],
+    [
+     "narrator",
+     "X, Y, Z, xylophone, yo-yo, zebra too!"
+    ],
+    [
+     "narrator",
+     "Now we know our A B C's, hooray for you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "Sing it again!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Sing it again!"
+    ],
+    [
+     "narrator",
+     "U for umbrella, V for van!"
+    ],
+    [
+     "narrator",
+     "W for watermelon, catch it if you can!"
+    ],
+    [
+     "narrator",
+     "X, Y, Z, xylophone, yo-yo, zebra too!"
+    ],
+    [
+     "narrator",
+     "Now we know our A B C's, hooray for you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, friends!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 5
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "We learned so many letters today!"
+    ],
+    [
+     "ellie",
+     "Bye bye!"
+    ],
+    [
+     "coco",
+     "See you tomorrow!"
+    ],
+    [
+     "narrator",
+     "Bye bye, friends!"
+    ]
+   ]
+  }
+ ]
+}
