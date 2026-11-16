@@ -319,6 +319,37 @@
      "clear": true
     },
     {
+     "show": "abc-j",
+     "id": "q3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "What shape is the juice box?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is the juice box?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A rectangle! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {

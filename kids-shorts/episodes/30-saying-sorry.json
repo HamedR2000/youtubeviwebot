@@ -199,6 +199,61 @@
      "clear": true
     },
     {
+     "show": "triangle-tree",
+     "id": "pic2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "Penny's tree"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look at my tree drawing!"
+    ],
+    [
+     "coco",
+     "Oops! I bumped your paper, Penny. I'm sorry!"
+    ],
+    [
+     "penny",
+     "That's okay, Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "What do we say?"
+    },
+    {
+     "pulse": "pic2"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "When a friend says sorry, what can we say?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "That's okay! Let's be friends!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {

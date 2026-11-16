@@ -126,7 +126,7 @@ for part, (items, story_l) in enumerate([
        ["counting to ten" if part == 2 else "counting to eight", "numbers", "number words"], ["counting", "numbers", "counttoten"], B)
 
 # ======================= 3. Big and Small (opposites) =======================
-PAIRS1 = [("circle-sun", "sun"), ("animal-cow", "cow"), ("oval-balloon", "balloon"), ("abc-a", "apple")]
+PAIRS1 = [("circle-sun", "sun"), ("animal-cow", "cow"), ("oval-balloon", "balloon"), ("abc-a", "apple"), ("animal-lion", "lion"), ("star-starfish", "star")]
 B = [intro(), story("Big and Small!", [["coco", "Look! Some things are big, and some things are small!"], ["penny", "Let's find out which is which!"]])]
 for i, (art, name) in enumerate(PAIRS1):
     B.append({"do": [{"clear": True}, {"show": art, "id": f"b{i}", "x": 0.33, "y": 0.47, "s": 0.6}, {"show": art, "id": f"s{i}", "x": 0.63, "y": 0.55, "s": 0.22}, {"title": "Big and small!"}, *SIDE],
@@ -138,7 +138,7 @@ B.append(outro('coco', "Big or small, we love them all!"))
 ep("Opposites", 1, "big-and-small", "Big and Small! Opposites for Kids", "🐘", ["big and small", "opposites", "describing words"], ["opposites", "bigandsmall"], B)
 
 B = [intro(), story("Up and Down!", [["penny", "Some things are up high, and some things are down low!"], ["ellie", "Let's look up, and look down!"]])]
-for i, (up, upn, down, downn) in enumerate([("circle-sun", "sun", "animal-frog", "frog"), ("diamond-kite", "kite", "abc-f", "fish"), ("abc-m", "moon", "animal-mouse", "mouse")]):
+for i, (up, upn, down, downn) in enumerate([("circle-sun", "sun", "animal-frog", "frog"), ("diamond-kite", "kite", "abc-f", "fish"), ("abc-m", "moon", "animal-mouse", "mouse"), ("oval-balloon", "balloon", "abc-e", "egg")]):
     B.append({"do": [{"clear": True}, {"show": up, "id": f"u{i}", "x": 0.4, "y": 0.2, "s": 0.32}, {"title": "Up!"}, *SIDE],
               "say": [["narrator", f"Look up! The {upn} is up high!"]]})
     B.append({"do": [{"show": down, "id": f"w{i}", "x": 0.55, "y": 0.72, "s": 0.32}, {"title": "Down!"}], "say": [["narrator", f"Look down! The {downn} is down low!"]]})
@@ -173,6 +173,8 @@ B = [intro(), story("Please and Thank You!", [["ellie", "Penny, give me a cookie
 B.append(show_item("circle-cookie", "k1", "Please!", [["penny", "Of course! Here you go!"], ["ellie", "Thank you, Penny!"], ["narrator", "When we ask for something, we say please."]]))
 B.append(quiz("circle-cookie", "k2", "What is the magic word?", "Please! Well done!", who='narrator'))
 B.append(show_item("abc-j", "j1", "Thank you!", [["coco", "Ellie, would you like some juice?"], ["ellie", "Yes, please!"], ["narrator", "And when someone gives us something, we say..."], ["pause", "2"], ["narrator", "Thank you!"]]))
+B.append(show_item("oval-balloon", "bl", "May I, please?", [["coco", "May I have a balloon, please?"], ["penny", "Yes, you may!"], ["coco", "Thank you, Penny!"], ["narrator", "What a polite friend!"]]))
+B.append(quiz("oval-balloon", "bq", "What do we say when we get a present?", "Thank you! Well done!", who='narrator'))
 B.append({"do": [{"title": "Your turn!"}], "say": [["coco", "Can you say please?"], ["pause", "1.5"], ["coco", "Can you say thank you?"], ["pause", "1.5"], ["coco", "Wonderful manners!"]]})
 B += songs([["narrator", "Please and thank you, magic words!"], ["narrator", "Say them to your friends and birds!"], ["narrator", "Please when asking, thank you when you get!"], ["narrator", "The kindest words we never forget!"]], 'ellie')
 B.append(outro('ellie', "Please and thank you are magic words!"))
@@ -193,6 +195,8 @@ B.append({"do": [{"move": "ellie", "x": 0.55}, {"erase": "pic"}, {"title": "Oops
 B.append(story("Say sorry", [["ellie", "I'm sorry, Coco. I didn't mean to."], ["coco", "That's okay, Ellie. Thank you for saying sorry."], ["narrator", "When we make a mistake, we say sorry."]]))
 B.append({"do": [{"unerase": "pic"}, {"move": "ellie", "x": 0.76}, {"title": "Let's fix it!"}], "say": [["ellie", "Let me help you draw it again!"], ["coco", "Look! It's even better now!"]]})
 B.append({"do": [{"title": "What do we say?"}, {"pulse": "pic"}], "say": [["narrator", "When we make a mistake, what do we say?"], ["pause", "2"], ["narrator", "I'm sorry! Great job!"]]})
+B.append({"do": [{"clear": True}, {"show": "triangle-tree", "id": "pic2", "x": 0.45, "y": 0.47, "s": 0.5}, {"title": "Penny's tree"}], "say": [["penny", "Look at my tree drawing!"], ["coco", "Oops! I bumped your paper, Penny. I'm sorry!"], ["penny", "That's okay, Coco!"]]})
+B.append({"do": [{"title": "What do we say?"}, {"pulse": "pic2"}], "say": [["narrator", "When a friend says sorry, what can we say?"], ["pause", "2"], ["narrator", "That's okay! Let's be friends!"]]})
 B += songs([["narrator", "Everybody makes mistakes, it's true!"], ["narrator", "Say I'm sorry, I'll help you!"], ["narrator", "Friends forgive and friends are kind!"], ["narrator", "Being friends is so fine!"]], 'coco')
 B.append(outro('coco', "Friends forgive each other!"))
 ep("Kind Friends", 3, "saying-sorry", "Ellie Says Sorry! Learning to Say I'm Sorry", "💗", ["saying sorry", "forgiving", "friendship"], ["kindness", "sorry", "friendship"], B)
@@ -203,6 +207,9 @@ B.append(show_item("circle-sun", "w1", "Sunny!", [["narrator", "The sun is shini
 B.append(show_item("abc-u", "w2", "Rainy!", [["narrator", "Drip, drop! It's raining! It's rainy!"], ["ellie", "On rainy days, we use an umbrella!"]]))
 B.append(quiz("circle-sun", "q1", "Is it sunny or rainy?", "Sunny! The sun is shining!"))
 B.append(quiz("abc-u", "q2", "What do we need when it rains?", "An umbrella! Great job!"))
+B.append(show_item("triangle-tree", "pk", "Picnic day!", [["penny", "It's sunny! Let's have a picnic under the tree!"], ["ellie", "Yay! Sunny days are fun!"]]))
+B += count_segment("abc-u", "umbrellas", 3, "cu", who='ellie')
+B.append(quiz("abc-u", "q3", "Sunny or rainy?", "Rainy! We need our umbrellas!"))
 B += songs([["narrator", "Sunny, sunny, sun is bright!"], ["narrator", "Rainy, rainy, umbrella tight!"], ["narrator", "What's the weather, can you say?"], ["narrator", "Let's look outside, every day!"]], 'coco')
 B.append(outro('coco', "Rain or sun, we have fun!"))
 ep("Weather Friends", 1, "sunny-and-rainy", "Sunny and Rainy! Weather Song for Kids", "☀️", ["weather words", "sunny and rainy", "umbrella"], ["weather", "sunny", "rainy"], B)
@@ -213,6 +220,7 @@ B.append(story("Day and night", [["coco", "When the sun goes down, it gets dark.
 B.append(show_item("abc-m", "m", "Night!", [["narrator", "At night, we see the moon!"], ["penny", "Good night, moon!"]], y=0.3))
 B.append(quiz("circle-sun", "q1", "Do we see the sun in the day, or at night?", "In the day!"))
 B.append(quiz("abc-m", "q2", "When do we see the moon?", "At night! Good night, moon!"))
+B += count_segment("diamond-kite", "kites", 3, "ck", who='penny')
 B += songs([["narrator", "The wind goes whoosh, the kite flies high!"], ["narrator", "The sun says hello in the morning sky!"], ["narrator", "The moon comes out when it is night!"], ["narrator", "Good night, moon, sleep tight!"]], 'penny')
 B.append(outro('penny', "Good night, friends! Sleep tight!"))
 ep("Weather Friends", 2, "windy-day-and-night", "Windy Day and Good Night Moon! Weather Song", "🌙", ["windy weather", "day and night", "sun and moon"], ["weather", "dayandnight", "goodnight"], B)
@@ -246,6 +254,7 @@ B = [intro("party"), story("Music time!", [["penny", "Let's make music!"], ["coc
 B.append(show_item("abc-x", "x", "Xylophone!", [["narrator", "This is a xylophone. Ding, ding, ding!"], ["coco", "Each bar has a different colour!"]]))
 B.append({"do": [{"title": "Clap with me!"}], "say": [["ellie", "Let's clap! Clap, clap, clap!"], ["narrator", "Clap three times!"], ["pause", "2"], ["narrator", "Now stomp your feet! Stomp, stomp!"], ["pause", "2"]]})
 B += count_segment("abc-x", "xylophones", 3, "cx", who='penny')
+B.append({"do": [{"title": "Clap five times!"}], "say": [["ellie", "Can you clap five times? Ready?"], ["narrator", "One, two, three, four, five!"], ["pause", "1.5"], ["ellie", "Now jump two times! One, two!"], ["pause", "1.5"], ["ellie", "Amazing!"]]})
 B.append({"do": [{"title": "Loud and quiet!"}], "say": [["narrator", "Let's sing loud! LA LA LA!"], ["narrator", "Now quiet... la, la, la."], ["coco", "Loud and quiet! Opposites!"]]})
 B += songs([["narrator", "Clap your hands, one, two, three!"], ["narrator", "Stomp your feet and sing with me!"], ["narrator", "Ding, ding, ding, the xylophone sings!"], ["narrator", "Music is one of my favourite things!"]], 'coco')
 B.append(outro('coco', "Music makes me happy!"))
@@ -269,6 +278,8 @@ for i, (art, name) in enumerate([("triangle-pizza", "pizza slice"), ("triangle-t
     B.append(show_item(art, f"t{i}", "A triangle!", [["narrator", f"The {name} has three sides. It's a triangle!"]]))
 B.append(quiz("circle-orange", "q1", "Circle or triangle?", "A circle! It's round!"))
 B.append(quiz("triangle-pizza", "q2", "Circle or triangle?", "A triangle! Three sides!"))
+B.append(quiz("circle-cookie", "q3", "What shape is the cookie?", "A circle! Round and yummy!"))
+B.append(quiz("triangle-tree", "q4", "What shape is the tree?", "A triangle! One, two, three sides!"))
 B += songs([["narrator", "Round and round, a circle goes!"], ["narrator", "Sun and cookies, everyone knows!"], ["narrator", "One, two, three, a triangle!"], ["narrator", "Pizza and trees, look and see!"]], 'coco')
 B.append(outro('coco', "Circles and triangles are everywhere!"))
 ep("Shape Sort", 1, "circles-and-triangles", "Circles and Triangles! Shape Sorting for Kids", "🔺", ["circles", "triangles", "sorting"], ["shapes", "circle", "triangle"], B)
@@ -281,13 +292,14 @@ for i, (art, name) in enumerate([("rectangle-door", "door"), ("abc-j", "juice bo
 B.append({"do": [{"clear": True}, {"title": "Let's draw!"}, *SIDE, {"draw": "square-present", "id": "dr", "x": 0.42, "y": 0.45, "s": 0.55}], "say": [["narrator", "Let's draw a square together! One, two, three, four sides!"]], "min": 4.2})
 B.append(quiz("rectangle-door", "q1", "Square or rectangle?", "A rectangle! Two long sides!"))
 B.append(quiz("square-present", "q2", "Square or rectangle?", "A square! All sides the same!"))
+B.append(quiz("abc-j", "q3", "What shape is the juice box?", "A rectangle! Well done!"))
 B += songs([["narrator", "A square has four sides, all the same!"], ["narrator", "A present, a robot, that's its name!"], ["narrator", "A rectangle is long, like a door!"], ["narrator", "Four sides each, let's find some more!"]], 'penny')
 B.append(outro('penny', "Now I know squares and rectangles!"))
 ep("Shape Sort", 2, "squares-and-rectangles", "Squares and Rectangles! What's the Difference?", "🟦", ["squares", "rectangles", "comparing shapes"], ["shapes", "square", "rectangle"], B)
 
 # ======================= 10. What's Missing? (memory game) =======================
 for part, sets in enumerate([
-    [[("abc-a", "apple"), ("circle-sun", "sun"), ("oval-balloon", "balloon")], [("animal-cat", "cat"), ("animal-dog", "dog"), ("animal-duck", "duck")]],
+    [[("abc-a", "apple"), ("circle-sun", "sun"), ("oval-balloon", "balloon")], [("animal-cat", "cat"), ("animal-dog", "dog"), ("animal-duck", "duck")], [("circle-cookie", "cookie"), ("square-present", "present"), ("abc-u", "umbrella")]],
     [[("abc-l", "lemon"), ("diamond-kite", "kite"), ("abc-m", "moon")], [("square-robot", "robot"), ("triangle-tree", "tree"), ("abc-e", "egg")], [("animal-pig", "pig"), ("animal-frog", "frog"), ("animal-owl", "owl")]],
 ], start=1):
     B = [intro(), story("What's missing?", [["ellie", "Let's play my favourite game: What's missing!"], ["ellie", "Look carefully. I will erase one thing!"]])]

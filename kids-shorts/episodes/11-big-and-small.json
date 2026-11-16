@@ -360,6 +360,146 @@
      "clear": true
     },
     {
+     "show": "animal-lion",
+     "id": "b4",
+     "x": 0.33,
+     "y": 0.47,
+     "s": 0.6
+    },
+    {
+     "show": "animal-lion",
+     "id": "s4",
+     "x": 0.63,
+     "y": 0.55,
+     "s": 0.22
+    },
+    {
+     "title": "Big and small!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A big lion!"
+    ],
+    [
+     "narrator",
+     "And a small lion!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is big?"
+    },
+    {
+     "pulse": "b4"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Which lion is big?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "This one! The big lion!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "star-starfish",
+     "id": "b5",
+     "x": 0.33,
+     "y": 0.47,
+     "s": 0.6
+    },
+    {
+     "show": "star-starfish",
+     "id": "s5",
+     "x": 0.63,
+     "y": 0.55,
+     "s": 0.22
+    },
+    {
+     "title": "Big and small!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A big star!"
+    ],
+    [
+     "narrator",
+     "And a small star!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Which one is small?"
+    },
+    {
+     "pulse": "s5"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Which star is small?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "This one! The small star!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {

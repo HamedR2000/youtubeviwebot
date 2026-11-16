@@ -291,6 +291,111 @@
      "clear": true
     },
     {
+     "title": "Look carefully!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "show": "circle-cookie",
+     "id": "m20",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "square-present",
+     "id": "m21",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "abc-u",
+     "id": "m22",
+     "x": 0.65,
+     "y": 0.45,
+     "s": 0.3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "A cookie, a present, and an umbrella."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m20"
+    },
+    {
+     "title": "What's missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "What's missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m20"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "title": "The cookie!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The cookie! You found it!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {

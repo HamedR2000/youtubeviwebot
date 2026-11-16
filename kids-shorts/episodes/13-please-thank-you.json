@@ -207,6 +207,84 @@
   {
    "do": [
     {
+     "clear": true
+    },
+    {
+     "show": "oval-balloon",
+     "id": "bl",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "May I, please?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "May I have a balloon, please?"
+    ],
+    [
+     "penny",
+     "Yes, you may!"
+    ],
+    [
+     "coco",
+     "Thank you, Penny!"
+    ],
+    [
+     "narrator",
+     "What a polite friend!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "oval-balloon",
+     "id": "bq",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "What do we say when we get a present?"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What do we say when we get a present?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Thank you! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
      "title": "Your turn!"
     }
    ],

@@ -317,6 +317,85 @@
      "clear": true
     },
     {
+     "show": "oval-balloon",
+     "id": "u3",
+     "x": 0.4,
+     "y": 0.2,
+     "s": 0.32
+    },
+    {
+     "title": "Up!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look up! The balloon is up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "abc-e",
+     "id": "w3",
+     "x": 0.55,
+     "y": 0.72,
+     "s": 0.32
+    },
+    {
+     "title": "Down!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look down! The egg is down low!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Up or down?"
+    },
+    {
+     "pulse": "u3"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Is the balloon up, or down?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Up! Up high!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {

@@ -366,6 +366,68 @@
      "clear": true
     },
     {
+     "show": "circle-cookie",
+     "id": "q3",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "What shape is the cookie?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is the cookie?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A circle! Round and yummy!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triangle-tree",
+     "id": "q4",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.5
+    },
+    {
+     "title": "What shape is the tree?"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What shape is the tree?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A triangle! One, two, three sides!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {

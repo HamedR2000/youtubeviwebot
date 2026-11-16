@@ -232,6 +232,39 @@
   {
    "do": [
     {
+     "title": "Clap five times!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you clap five times? Ready?"
+    ],
+    [
+     "narrator",
+     "One, two, three, four, five!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "ellie",
+     "Now jump two times! One, two!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "ellie",
+     "Amazing!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
      "title": "Loud and quiet!"
     }
    ],
