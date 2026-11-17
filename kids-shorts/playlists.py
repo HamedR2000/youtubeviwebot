@@ -5,6 +5,9 @@ and the caller just skips playlists, so uploads keep working until the token is 
 """
 import json
 import os
+import time
+
+from googleapiclient.errors import HttpError
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -58,12 +61,22 @@ class Playlists:
         return self.cache[title]
 
     def add(self, playlist_id, video_id):
-        have = self.yt.playlistItems().list(part='id', playlistId=playlist_id, videoId=video_id).execute()
-        if have.get('items'):
-            return False
-        self.yt.playlistItems().insert(part='snippet', body={'snippet': {'playlistId': playlist_id,
-                                       'resourceId': {'kind': 'youtube#video', 'videoId': video_id}}}).execute()
-        return True
+        try:
+            have = self.yt.playlistItems().list(part='id', playlistId=playlist_id, videoId=video_id).execute()
+            if have.get('items'):
+                return False
+        except HttpError as e:
+            if e.resp.status != 404:  # a playlist created seconds ago can still answer 404: it is empty anyway
+                raise
+        for attempt in range(5):  # and its first insert may need a few seconds to see it
+            try:
+                self.yt.playlistItems().insert(part='snippet', body={'snippet': {'playlistId': playlist_id,
+                                               'resourceId': {'kind': 'youtube#video', 'videoId': video_id}}}).execute()
+                return True
+            except HttpError as e:
+                if e.resp.status != 404 or attempt == 4:
+                    raise
+                time.sleep(3 * (attempt + 1))
 
     def file(self, batch_id, youtube_id):
         added = []
