@@ -360,6 +360,574 @@
      "clear": true
     },
     {
+     "title": "Dance break!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 6
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Dance break! Everybody stand up!"
+    ],
+    [
+     "penny",
+     "Jump, jump, jump!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Spin around!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Clap your hands! Clap, clap, clap!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "narrator",
+     "Now sit down. Great dancing!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Draw a square!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "square-present",
+     "id": "xd0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's draw a square together! Use your finger!"
+    ],
+    [
+     "narrator",
+     "Draw, draw, draw..."
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "hide": "xd0"
+    },
+    {
+     "show": "square-present",
+     "id": "xs0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "A present!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The square became a present!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Draw a heart!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "heart-strawberry",
+     "id": "xd1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's draw a heart together! Use your finger!"
+    ],
+    [
+     "narrator",
+     "Draw, draw, draw..."
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "hide": "xd1"
+    },
+    {
+     "show": "heart-strawberry",
+     "id": "xs1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "A strawberry!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The heart became a strawberry!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Memory game!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Memory game time! Look carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "show": "abc-a",
+     "id": "xm00",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.28
+    },
+    {
+     "show": "circle-orange",
+     "id": "xm01",
+     "x": 0.45,
+     "y": 0.45,
+     "s": 0.28
+    },
+    {
+     "show": "abc-l",
+     "id": "xm02",
+     "x": 0.65,
+     "y": 0.45,
+     "s": 0.28
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look at the pictures. Now close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "xm01"
+    },
+    {
+     "title": "What's missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "What's missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "xm01"
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "pulse": "xm01"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "This one! Did you remember?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the stars!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's count the stars!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "xc",
+      "art": "star-starfish",
+      "n": 5,
+      "x0": 0.24,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.24
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Five stars!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "xc"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many stars?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Five! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Stretch time!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Stretch time! Reach up high, like a tall tree!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Now touch your toes!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Wiggle your fingers! Wiggle, wiggle!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "narrator",
+     "Take a big breath in... and out."
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "ellie",
+     "I feel great!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "What did we learn?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's remember what we learned today!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-a",
+     "id": "xr0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.45
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Do you remember this one? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Yes! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-orange",
+     "id": "xr1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.45
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Do you remember this one? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "You remembered!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-l",
+     "id": "xr2",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.45
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Do you remember this one? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {
@@ -417,6 +985,42 @@
     [
      "penny",
      "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Three red apples in my bag!"
+    ],
+    [
+     "narrator",
+     "Four oranges, I'm so glad!"
+    ],
+    [
+     "narrator",
+     "Two yellow lemons, one, two!"
+    ],
+    [
+     "narrator",
+     "Thank you, Coco, thank you!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "One more time!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One more time, sing along with us!"
     ],
     [
      "narrator",

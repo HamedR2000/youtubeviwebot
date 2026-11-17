@@ -28,7 +28,54 @@ def outro(who, line):
 
 def songs(song, who):
     return [{"do": [{"clear": True}, {"title": "Let's sing!"}, *CENTER, {"confetti": 12}, {"song": True}], "say": song, "gap": 0.6},
-            {"do": [{"title": "Sing it again!"}, {"confetti": 10}, {"song": True}], "say": [[who, "Sing it again!"]] + song, "gap": 0.6}]
+            {"do": [{"title": "Sing it again!"}, {"confetti": 10}, {"song": True}], "say": [[who, "Sing it again!"]] + song, "gap": 0.6},
+            {"do": [{"title": "One more time!"}, {"confetti": 10}, {"song": True}], "say": [["narrator", "One more time, sing along with us!"]] + song, "gap": 0.6}]
+
+
+DRAW_ALONG = [("circle-sun", "circle", "sun"), ("triangle-tree", "triangle", "tree"), ("square-present", "square", "present"),
+              ("heart-strawberry", "heart", "strawberry"), ("star-starfish", "star", "starfish"), ("oval-balloon", "oval", "balloon")]
+REVIEW_REPLY = ["Yes! Great memory!", "You remembered!", "Well done!", "That's right!", "Super!"]
+
+
+def extend(B, k):
+    """Extra learning sections (dance break, draw-along, memory game, review) inserted before the songs."""
+    arts = []
+    for b in B:
+        for a in b["do"]:
+            art = a.get("show") or (a.get("count") or {}).get("art")
+            if art and art not in arts:
+                arts.append(art)
+    i = next(i for i, b in enumerate(B) if any(a.get("song") for a in b["do"]))
+    extra = [{"do": [{"clear": True}, {"title": "Dance break!"}, *CENTER, {"confetti": 6}],
+              "say": [["narrator", "Dance break! Everybody stand up!"], ["penny", "Jump, jump, jump!"], ["pause", "2"], ["ellie", "Spin around!"], ["pause", "2"],
+                      ["coco", "Clap your hands! Clap, clap, clap!"], ["pause", "1.5"], ["narrator", "Now sit down. Great dancing!"]]}]
+    for j in range(2):
+        tid, shape, thing = DRAW_ALONG[(k * 2 + j) % len(DRAW_ALONG)]
+        extra += [{"do": [{"clear": True}, {"title": f"Draw {an(shape)} {shape}!"}, *SIDE, {"draw": tid, "id": f"xd{j}", "x": 0.42, "y": 0.45, "s": 0.55}],
+                   "say": [["penny", f"Let's draw {an(shape)} {shape} together! Use your finger!"], ["narrator", "Draw, draw, draw..."]], "min": 4.5},
+                  {"do": [{"hide": f"xd{j}"}, {"show": tid, "id": f"xs{j}", "x": 0.42, "y": 0.45, "s": 0.55}, {"title": f"{an(thing).capitalize()} {thing}!"}],
+                   "say": [["penny", f"Look! The {shape} became {an(thing)} {thing}!"]]}]
+    rounds = [arts[r * 3:r * 3 + 3] for r in range(2) if len(arts) >= r * 3 + 3]
+    if rounds:
+        extra.append({"do": [{"clear": True}, {"title": "Memory game!"}, *SIDE], "say": [["ellie", "Memory game time! Look carefully!"]]})
+    for r, trio in enumerate(rounds):
+        ids = [f"xm{r}{q}" for q in range(3)]
+        miss = (k + r) % 3
+        extra += [{"do": [{"clear": True}, {"title": "Look carefully!"}] + [{"show": art, "id": ids[q], "x": 0.25 + q * 0.2, "y": 0.45, "s": 0.28} for q, art in enumerate(trio)],
+                   "say": [["narrator", "Look at the pictures. Now close your eyes!"], ["pause", "1.5"]]},
+                  {"do": [{"erase": ids[miss]}, {"title": "What's missing?"}, {"move": "ellie", "x": 0.6}], "say": [["ellie", "Erase, erase! Open your eyes!"], ["narrator", "What's missing?"], ["pause", "2.5"]]},
+                  {"do": [{"unerase": ids[miss]}, {"move": "ellie", "x": 0.76}, {"pulse": ids[miss]}], "say": [["ellie", "This one! Did you remember?"]]}]
+    extra += count_segment("star-starfish", "stars", 3 + k % 4, "xc", who='coco')
+    extra.append({"do": [{"clear": True}, {"title": "Stretch time!"}, *CENTER],
+                  "say": [["narrator", "Stretch time! Reach up high, like a tall tree!"], ["pause", "2"], ["narrator", "Now touch your toes!"], ["pause", "2"],
+                          ["narrator", "Wiggle your fingers! Wiggle, wiggle!"], ["pause", "1.5"], ["narrator", "Take a big breath in... and out."], ["pause", "1.5"], ["ellie", "I feel great!"]]})
+    if arts:
+        extra.append({"do": [{"clear": True}, {"title": "What did we learn?"}, *SIDE], "say": [["coco", "Let's remember what we learned today!"]]})
+        for q, art in enumerate(arts[:5]):
+            extra.append({"do": [{"clear": True}, {"show": art, "id": f"xr{q}", "x": 0.45, "y": 0.47, "s": 0.45}],
+                          "say": [["narrator", "Do you remember this one? Say its name!"], ["pause", "1.5"], ["coco", REVIEW_REPLY[q % len(REVIEW_REPLY)]]]})
+    B[i:i] = extra
+    return B
 
 
 def story(title, lines):
@@ -318,6 +365,7 @@ for part, sets in enumerate([
 start = 9
 order = sorted(EPISODES, key=lambda e: (e["part"], [s["series"] for s in EPISODES].index(e["series"])))
 for n, e in enumerate(order, start=start):
+    extend(e["beats"], n)
     eid = f"{n:02d}-{e['slug']}"
     out = {"id": eid, "series": e["series"], "part": e["part"], "title": e["title"], "emoji": e["emoji"], "learn": e["learn"], "hashtags": e["hashtags"], "beats": e["beats"]}
     json.dump(out, open(os.path.join(HERE, eid + ".json"), "w"), indent=1, ensure_ascii=False)

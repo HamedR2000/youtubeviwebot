@@ -15,6 +15,7 @@ p.add_argument('batch_dir')
 p.add_argument('--skip', default='')
 p.add_argument('--privacy', default='public', choices=['public', 'unlisted', 'private'])
 p.add_argument('--dry-run', action='store_true')
+p.add_argument('--only-playlists', action='store_true', help='just file already-uploaded videos into playlists')
 args = p.parse_args()
 
 batch = json.load(open(os.path.join(args.batch_dir, 'batch.json')))
@@ -25,6 +26,8 @@ done = json.load(open(up_file)) if os.path.exists(up_file) else []
 skip |= {d['id'] for d in done}
 # long episodes first: if YouTube's daily upload limit is hit, the most valuable video is already up
 videos = sorted((v for v in batch['videos'] if v['id'] not in skip), key=lambda v: not v.get('long'))
+if args.only_playlists:
+    videos = []
 print(f"{batch['date']}: uploading {len(videos)} video(s), skipping {sorted(skip) or 'none'}")
 
 if args.dry_run:
@@ -43,9 +46,29 @@ creds = Credentials(
     client_id=os.environ['YT_CLIENT_ID'],
     client_secret=os.environ['YT_CLIENT_SECRET'],
     token_uri='https://oauth2.googleapis.com/token',
-    scopes=['https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/youtube.readonly'],
 )
 yt = build('youtube', 'v3', credentials=creds, cache_discovery=False)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from playlists import Playlists  # noqa: E402
+pl = Playlists(yt)
+pl_ok = True
+
+
+def file_in_playlists(batch_id, youtube_id):
+    global pl_ok
+    if not pl_ok:
+        return
+    try:
+        added = pl.file(batch_id, youtube_id)
+        if added:
+            print(f'    + playlists: {", ".join(added)}')
+    except HttpError as e:
+        if e.resp.status in (401, 403):
+            pl_ok = False
+            print('  (playlists skipped: the YouTube token has no playlist permission yet; re-run get_token.py)')
+        else:
+            print(f'  (playlist error for {batch_id}: {e})')
 
 results = list(done)
 pending = []
@@ -82,6 +105,11 @@ for n, v in enumerate(videos):
     url = f"https://youtube.com/watch?v={resp['id']}" if v.get('long') else f"https://youtube.com/shorts/{resp['id']}"
     print('  uploaded', v['id'], '->', url)
     results.append({'id': v['id'], 'youtube_id': resp['id'], 'url': url})
+    file_in_playlists(v['id'], resp['id'])
+
+if args.only_playlists:
+    for d in done:
+        file_in_playlists(d['id'], d['youtube_id'])
 
 json.dump(results, open(up_file, 'w'), indent=2)
 open(os.path.join(args.batch_dir, 'pending.txt'), 'w').write('\n'.join(pending))
