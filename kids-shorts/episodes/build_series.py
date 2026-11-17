@@ -65,6 +65,10 @@ def extend(B, k):
                    "say": [["narrator", "Look at the pictures. Now close your eyes!"], ["pause", "1.5"]]},
                   {"do": [{"erase": ids[miss]}, {"title": "What's missing?"}, {"move": "ellie", "x": 0.6}], "say": [["ellie", "Erase, erase! Open your eyes!"], ["narrator", "What's missing?"], ["pause", "2.5"]]},
                   {"do": [{"unerase": ids[miss]}, {"move": "ellie", "x": 0.76}, {"pulse": ids[miss]}], "say": [["ellie", "This one! Did you remember?"]]}]
+    extra += count_segment("star-starfish", "stars", 3 + k % 4, "xc", who='coco')
+    extra.append({"do": [{"clear": True}, {"title": "Stretch time!"}, *CENTER],
+                  "say": [["narrator", "Stretch time! Reach up high, like a tall tree!"], ["pause", "2"], ["narrator", "Now touch your toes!"], ["pause", "2"],
+                          ["narrator", "Wiggle your fingers! Wiggle, wiggle!"], ["pause", "1.5"], ["narrator", "Take a big breath in... and out."], ["pause", "1.5"], ["ellie", "I feel great!"]]})
     if arts:
         extra.append({"do": [{"clear": True}, {"title": "What did we learn?"}, *SIDE], "say": [["coco", "Let's remember what we learned today!"]]})
         for q, art in enumerate(arts[:5]):

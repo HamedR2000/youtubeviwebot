@@ -738,6 +738,152 @@
      "clear": true
     },
     {
+     "title": "Count the stars!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's count the stars!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "xc",
+      "art": "star-starfish",
+      "n": 3,
+      "x0": 0.37,
+      "dx": 0.13,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Three stars!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "xc"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many stars?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Three! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Stretch time!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Stretch time! Reach up high, like a tall tree!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Now touch your toes!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Wiggle your fingers! Wiggle, wiggle!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "narrator",
+     "Take a big breath in... and out."
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "ellie",
+     "I feel great!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "What did we learn?"
     },
     {
