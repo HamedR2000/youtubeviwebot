@@ -289,6 +289,247 @@
      "clear": true
     },
     {
+     "title": "Dance break!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 6
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Dance break! Everybody stand up!"
+    ],
+    [
+     "penny",
+     "Jump, jump, jump!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Spin around!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Clap your hands! Clap, clap, clap!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "narrator",
+     "Now sit down. Great dancing!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Draw a square!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "square-present",
+     "id": "xd0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's draw a square together! Use your finger!"
+    ],
+    [
+     "narrator",
+     "Draw, draw, draw..."
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "hide": "xd0"
+    },
+    {
+     "show": "square-present",
+     "id": "xs0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "A present!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The square became a present!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Draw a heart!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "heart-strawberry",
+     "id": "xd1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's draw a heart together! Use your finger!"
+    ],
+    [
+     "narrator",
+     "Draw, draw, draw..."
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "hide": "xd1"
+    },
+    {
+     "show": "heart-strawberry",
+     "id": "xs1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "A strawberry!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The heart became a strawberry!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "What did we learn?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's remember what we learned today!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "abc-x",
+     "id": "xr0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.45
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Do you remember this one? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Yes! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {
@@ -346,6 +587,42 @@
     [
      "coco",
      "Sing it again!"
+    ],
+    [
+     "narrator",
+     "Clap your hands, one, two, three!"
+    ],
+    [
+     "narrator",
+     "Stomp your feet and sing with me!"
+    ],
+    [
+     "narrator",
+     "Ding, ding, ding, the xylophone sings!"
+    ],
+    [
+     "narrator",
+     "Music is one of my favourite things!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "One more time!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One more time, sing along with us!"
     ],
     [
      "narrator",

@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "generate (render 5 Shorts into a Release) or publish (upload an approved date to YouTube)"
+        description: "generate (render into a Release), publish (upload an approved date) or playlists (file all published videos into playlists)"
         type: choice
-        options: [generate, publish]
+        options: [generate, publish, playlists]
         default: generate
       date:
         description: "YYYY-MM-DD. generate: defaults to today (UTC). publish: required."
@@ -137,3 +137,30 @@ jobs:
 
           $LINKS"
           fi
+
+  playlists:
+    if: inputs.mode == 'playlists'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: kids-shorts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install google-api-python-client google-auth
+      - name: File every published video into its playlists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          for tag in $(gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^shorts-'); do
+            d="pl/$tag"; mkdir -p "$d"
+            gh release download "$tag" --dir "$d" -p batch.json -p uploaded.json 2>/dev/null || continue
+            [ -f "$d/uploaded.json" ] || continue
+            python3 upload.py "$d" --only-playlists
+          done

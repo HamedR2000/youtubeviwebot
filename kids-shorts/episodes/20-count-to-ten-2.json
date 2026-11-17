@@ -329,6 +329,275 @@
      "clear": true
     },
     {
+     "title": "Dance break!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 6
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Dance break! Everybody stand up!"
+    ],
+    [
+     "penny",
+     "Jump, jump, jump!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Spin around!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Clap your hands! Clap, clap, clap!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "narrator",
+     "Now sit down. Great dancing!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Draw a star!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "star-starfish",
+     "id": "xd0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's draw a star together! Use your finger!"
+    ],
+    [
+     "narrator",
+     "Draw, draw, draw..."
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "hide": "xd0"
+    },
+    {
+     "show": "star-starfish",
+     "id": "xs0",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "A starfish!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The star became a starfish!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Draw an oval!"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    },
+    {
+     "draw": "oval-balloon",
+     "id": "xd1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's draw an oval together! Use your finger!"
+    ],
+    [
+     "narrator",
+     "Draw, draw, draw..."
+    ]
+   ],
+   "min": 4.5
+  },
+  {
+   "do": [
+    {
+     "hide": "xd1"
+    },
+    {
+     "show": "oval-balloon",
+     "id": "xs1",
+     "x": 0.42,
+     "y": 0.45,
+     "s": 0.55
+    },
+    {
+     "title": "A balloon!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! The oval became a balloon!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "What did we learn?"
+    },
+    {
+     "move": "penny",
+     "x": 0.1
+    },
+    {
+     "move": "ellie",
+     "x": 0.76
+    },
+    {
+     "move": "coco",
+     "x": 0.9
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Let's remember what we learned today!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "circle-orange",
+     "id": "xr0",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.45
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Do you remember this one? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Yes! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "star-starfish",
+     "id": "xr1",
+     "x": 0.45,
+     "y": 0.47,
+     "s": 0.45
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Do you remember this one? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "You remembered!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
      "title": "Let's sing!"
     },
     {
@@ -386,6 +655,42 @@
     [
      "ellie",
      "Sing it again!"
+    ],
+    [
+     "narrator",
+     "One, two, three, four, five!"
+    ],
+    [
+     "narrator",
+     "Six, seven, eight, we feel alive!"
+    ],
+    [
+     "narrator",
+     "Nine and ten, let's count again!"
+    ],
+    [
+     "narrator",
+     "Counting is fun with all my friends!"
+    ]
+   ],
+   "gap": 0.6
+  },
+  {
+   "do": [
+    {
+     "title": "One more time!"
+    },
+    {
+     "confetti": 10
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One more time, sing along with us!"
     ],
     [
      "narrator",
