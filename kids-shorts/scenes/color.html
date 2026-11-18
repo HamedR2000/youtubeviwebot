@@ -105,7 +105,7 @@ function setup(topicId) {
   $('t2').setAttribute('fill', topic.hex);
   $('ask').textContent = `What else is ${topic.word.toLowerCase()}?`;
   const thing = `${topic.word} ${topic.mainName.toUpperCase()}!`;
-  S = { topic, extras, letters, clouds, sparkles, t1a: "Let's learn", t2a: topic.word + '!', t1b: topic.word === 'ORANGE' ? 'An orange' : 'A ' + topic.word.toLowerCase(), t2b: topic.mainName.toUpperCase() + '!',
+  S = { topic, extras, letters, clouds, sparkles, t1a: "Let's learn", t2a: topic.word + '!', t1b: /s$/.test(topic.mainName) ? topic.word[0] + topic.word.slice(1).toLowerCase() : topic.word === 'ORANGE' ? 'An orange' : 'A ' + topic.word.toLowerCase(), t2b: topic.mainName.toUpperCase() + '!',
     fs2a: Math.min(150, 980 / ((topic.word.length + 1) * 0.62)), fs2b: Math.min(150, 980 / ((topic.mainName.length + 1) * 0.62)) };
   window.TIMELINE = { ...T, letters: L, template: 'color' };
   render(0);
