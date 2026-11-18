@@ -63,11 +63,12 @@ function metadata(t) {
   if (t.template === 'color') {
     const color = t.word[0] + t.word.slice(1).toLowerCase();
     const thing = t.mainName[0].toUpperCase() + t.mainName.slice(1);
-    const a1 = /^[aeiou]/i.test(color) ? 'An' : 'A';
+    const plural = /s$/.test(t.mainName); // e.g. grapes: no article
+    const a1 = plural ? '' : /^[aeiou]/i.test(color) ? 'An' : 'A';
     return {
-      title: `Learn the Color ${color}! ${t.emoji} ${a1} ${color} ${thing} | Colors for Toddlers #shorts`,
+      title: `Learn the Color ${color}! ${t.emoji} ${a1 ? a1 + ' ' : ''}${color} ${thing} | Colors for Toddlers #shorts`,
       description: [
-        `Coco the Crayon colours ${a1.toLowerCase()} ${t.mainName} ${t.word.toLowerCase()}! 🖍️ ${t.extras.map(e => e[1]).join(', ')} — what else is ${t.word.toLowerCase()}? ${t.emoji}`,
+        `Coco the Crayon colours ${plural ? 'the' : /^[aeiou]/i.test(t.mainName) ? 'an' : 'a'} ${t.mainName} ${t.word.toLowerCase()}! 🖍️ ${t.extras.map(e => e[1]).join(', ')} — what else is ${t.word.toLowerCase()}? ${t.emoji}`,
         '',
         `Learn the word: ${t.word.split('').join('-')} — ${color}!`,
         'Colours in simple English for kids aged 2–6.',
