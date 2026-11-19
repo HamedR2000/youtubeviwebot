@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const TOPICS = require('./topics');
 const { renderTopic, getTimeline } = require('./render');
+const { renderOutro, appendOutro } = require('./outro');
 const { buildEpisode } = require('./longvideo');
 
 const a = process.argv.slice(2);
@@ -173,6 +174,10 @@ function metadata(t) {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const batch = [];
+  // end card (bye bye + like & subscribe for grown-ups), rendered once per orientation and appended to every video
+  const outro = { portrait: path.join(OUT, 'outro-portrait.tmp.mp4'), landscape: path.join(OUT, 'outro-landscape.tmp.mp4') };
+  if (!a.includes('--no-outro')) for (const o of Object.keys(outro)) await renderOutro(o, outro[o], { browser });
+  const withOutro = (mp4, o) => { if (!a.includes('--no-outro')) appendOutro(mp4, outro[o]); };
   for (const [i, t] of picked.entries()) {
     const mp4 = path.join(OUT, `${t.id}.mp4`);
     const wav = path.join(OUT, `${t.id}.wav`);
@@ -190,6 +195,7 @@ function metadata(t) {
     const t0 = Date.now();
     await renderTopic({ scene: sceneFor(t), topic: t.id, out: mp4, audio: wav, browser });
     fs.rmSync(wav); fs.rmSync(tlFile);
+    withOutro(mp4, 'portrait');
     console.log(`[${i + 1}/${picked.length}] ${t.id} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
     batch.push({ id: t.id, file: path.basename(mp4), ...metadata(t) });
     used[t.id] = DATE;
@@ -204,12 +210,14 @@ function metadata(t) {
       const t0 = Date.now();
       const tl = await buildEpisode(path.join(dir, next), mp4, { browser });
       fs.rmSync(mp4.replace(/\.mp4$/, '') + '.work', { recursive: true, force: true });
+      withOutro(mp4, 'landscape');
       console.log(`[episode] ${ep.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
       batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), long: true, ...episodeMetadata(ep) });
       used['episode:' + ep.id] = DATE;
     } else console.log('[episode] no unused episode script left — write a new one in episodes/');
   }
   await browser.close();
+  for (const f of Object.values(outro)) fs.rmSync(f, { force: true });
   fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ date: DATE, videos: batch }, null, 2));
   fs.mkdirSync(path.dirname(STATE), { recursive: true });
   fs.writeFileSync(STATE, JSON.stringify(used, null, 2) + '\n');

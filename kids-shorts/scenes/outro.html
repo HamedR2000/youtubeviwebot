@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- End card appended to every video: the pals wave goodbye, then a gentle LIKE + SUBSCRIBE reminder for grown-ups.
+     ?topic=portrait (1080x1920, Shorts) or ?topic=landscape (1920x1080, episodes). -->
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  html, body { margin: 0; overflow: hidden; background: #FFF6E9; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+</style>
+<script src="../characters.js"></script>
+</head>
+<body>
+<svg id="s"></svg>
+<script>
+const LAND = new URLSearchParams(location.search).get('topic') === 'landscape';
+const W = LAND ? 1920 : 1080, H = LAND ? 1080 : 1920;
+document.body.style.width = W + 'px'; document.body.style.height = H + 'px';
+const svg = document.getElementById('s');
+svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+// beats (s): bye bye wave -> buttons pop in -> parents line -> tap on subscribe
+window.TIMELINE = { template: 'outro', bye: 0.2, buttons: 1.6, ask: 2.0, tap: 3.6 };
+window.DURATION = 6.8;
+
+const ease = x => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+const back = x => { x = Math.min(1, Math.max(0, x)); const c = 2.2; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+
+// layout
+const L = LAND
+  ? { cy: 1010, cs: 0.95, xs: [200, 400, 1700], title: [960, 170, 120], btnY: 420, btnS: 1.0, likeX: 740, subX: 1160, msgY: 640, msg: 54 }
+  : { cy: 1640, cs: 1.1, xs: [300, 540, 780], title: [540, 330, 120], btnY: 660, btnS: 1.0, likeX: 225, subX: 640, msgY: 960, msg: 52 };
+
+function likeBtn(liked) {
+  const bg = liked ? '#3EA6FF' : '#FFFFFF';
+  const fg = liked ? '#FFFFFF' : '#0F0F0F';
+  return `<rect x="-150" y="-60" width="300" height="120" rx="60" fill="${bg}" stroke="#0F0F0F" stroke-opacity="0.12" stroke-width="4"/>
+    <g transform="translate(-78 0) scale(2.2)" fill="${fg}">
+      <path d="M -14 -2 h 7 v 16 h -7 z M -5 14 h 14 c 3 0 5 -2 5.5 -4.5 l 2.5 -11 c 0.5 -2.5 -1.5 -4.5 -4 -4.5 h -8 l 1.5 -7 c 0.5 -2.5 -1.5 -4.5 -3.5 -4.5 l -8 13 z"/>
+    </g>
+    <text x="32" y="20" text-anchor="middle" font-size="54" fill="${fg}">LIKE</text>`;
+}
+function subBtn(done) {
+  const bg = done ? '#E5E5E5' : '#FF0033';
+  const fg = done ? '#3B3B3B' : '#FFFFFF';
+  return `<rect x="-250" y="-60" width="500" height="120" rx="60" fill="${bg}"/>
+    <text x="${done ? 0 : 0}" y="20" text-anchor="middle" font-size="${done ? 50 : 54}" fill="${fg}">${done ? 'SUBSCRIBED ✓' : 'SUBSCRIBE'}</text>`;
+}
+const hand = `<g><circle r="46" fill="#FFFFFF" opacity="0.9"/><circle r="30" fill="#FFC93C"/><circle r="30" fill="none" stroke="#3B2B4F" stroke-width="6"/></g>`;
+
+function render(t) {
+  const T = window.TIMELINE;
+  let s = `<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8F4FF"/><stop offset="1" stop-color="#FFF4E4"/></linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#5A3A7A" flood-opacity="0.22"/></filter></defs>
+    <rect width="${W}" height="${H}" fill="url(#bg)"/>`;
+  // confetti dots
+  for (let i = 0; i < 40; i++) {
+    const x = (i * 263) % W, y = ((i * 397) % H + t * (40 + (i % 5) * 18)) % H;
+    s += `<circle cx="${x}" cy="${y}" r="${6 + (i % 4) * 3}" fill="${['#FF8FA3', '#FFC93C', '#4D96FF', '#9B5DE5', '#6BCB77'][i % 5]}" opacity="0.55"/>`;
+  }
+  // title
+  const [tx, ty, tf] = L.title, tp = back((t - T.bye) / 0.5);
+  s += `<g transform="translate(${tx} ${ty}) scale(${tp})"><text text-anchor="middle" font-size="${tf}" fill="#FF6B9A" stroke="#fff" stroke-width="14" paint-order="stroke">Bye bye!</text></g>`;
+  // the pals, waving (side to side) and bouncing
+  const chars = [C.ellie({ blink: 1 }), C.penny({ blink: Math.abs(Math.sin(t * 2.1)) > 0.97 ? 0.15 : 1 }), C.coco({})];
+  chars.forEach((c, i) => {
+    const enter = ease((t - i * 0.12) / 0.5);
+    const y = L.cy + (1 - enter) * 500 - Math.abs(Math.sin(t * 4 + i)) * 18;
+    const rot = Math.sin(t * 6 + i * 1.3) * 7;
+    s += `<g transform="translate(${L.xs[i]} ${y}) rotate(${rot}) scale(${L.cs})">${c}</g>`;
+  });
+  // buttons
+  const bp = back((t - T.buttons) / 0.45), pulse = 1 + 0.05 * Math.sin(Math.max(0, t - T.buttons) * 7);
+  const liked = t > T.tap - 0.9, subbed = t > T.tap + 0.25;
+  if (t > T.buttons) {
+    s += `<g filter="url(#soft)" transform="translate(${L.likeX} ${L.btnY}) scale(${L.btnS * bp * (liked ? 1 : pulse)})">${likeBtn(liked)}</g>`;
+    s += `<g filter="url(#soft)" transform="translate(${L.subX} ${L.btnY}) scale(${L.btnS * bp * (subbed ? 1 : pulse)})">${subBtn(subbed)}</g>`;
+    // bell pops after subscribing
+    if (subbed) {
+      const bb = back((t - T.tap - 0.25) / 0.4);
+      const bx = L.subX + 250 * L.btnS + 85;
+      s += `<g transform="translate(${bx} ${L.btnY}) scale(${bb * 1.3}) rotate(${Math.sin(t * 18) * 12 * Math.max(0, 1 - (t - T.tap - 0.25))})">
+        <circle r="52" fill="#FFC93C"/><path d="M -22 14 L -22 -6 Q -22 -28 0 -30 Q 22 -28 22 -6 L 22 14 L 28 20 L -28 20 Z" fill="#fff"/><circle cy="26" r="7" fill="#fff"/></g>`;
+    }
+    // a little hand taps like, then subscribe
+    const hx = t < T.tap - 0.9 ? L.likeX + 120 : t < T.tap ? L.likeX + 20 + (L.subX - L.likeX) * ease((t - T.tap + 0.9) / 0.8) : L.subX + 40;
+    const press = (Math.abs(t - (T.tap - 0.9)) < 0.12 || Math.abs(t - (T.tap + 0.25)) < 0.12) ? 0.8 : 1;
+    if (t > T.ask && t < T.tap + 1.2) s += `<g transform="translate(${hx} ${L.btnY + 60}) scale(${press})">${hand}</g>`;
+  }
+  // message for grown-ups
+  const mp = ease((t - T.ask) / 0.4);
+  const lines = LAND ? ['Grown-ups: like & subscribe for a new', 'Doodle Pals video every day! 💛'] : ['Grown-ups: like & subscribe', 'for a new Doodle Pals', 'video every day! 💛'];
+  lines.forEach((ln, i) => {
+    s += `<text x="${W / 2}" y="${L.msgY + i * L.msg * 1.3}" text-anchor="middle" font-size="${L.msg}" fill="#3B2B4F" opacity="${mp}">${ln}</text>`;
+  });
+  svg.innerHTML = s;
+}
+const C = window.CHARACTERS;
+window.setup = () => {};
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
