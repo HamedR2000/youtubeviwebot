@@ -120,17 +120,19 @@
     9: ['M 105 -60 C 60 30 -110 20 -105 -80 C -100 -205 110 -205 105 -60 C 100 80 60 180 -80 190'],
   };
   const shift = (paths, dx) => paths.map(d => d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (m, x, y) => `${+x + dx} ${y}`));
-  const NUM_WORDS = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN'];
+  const NUM_WORDS = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN',
+    'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN', 'SEVENTEEN', 'EIGHTEEN', 'NINETEEN', 'TWENTY'];
   const COUNT_OBJECTS = [
     ['oval-balloon', 'BALLOON', 'BALLOONS', '🎈'], ['circle-cookie', 'COOKIE', 'COOKIES', '🍪'], ['heart-strawberry', 'STRAWBERRY', 'STRAWBERRIES', '🍓'],
     ['star-starfish', 'STARFISH', 'STARFISH', '⭐'], ['circle-orange', 'ORANGE', 'ORANGES', '🍊'], ['square-present', 'PRESENT', 'PRESENTS', '🎁'],
     ['circle-sun', 'SUN', 'SUNS', '☀️'], ['diamond-kite', 'KITE', 'KITES', '🪁'], ['triangle-tree', 'TREE', 'TREES', '🎄'], ['oval-avocado', 'AVOCADO', 'AVOCADOS', '🥑'],
   ];
-  for (let n = 1; n <= 10; n++) {
-    const [object, one, many, emoji] = COUNT_OBJECTS[(n * 3) % COUNT_OBJECTS.length];
+  // 11-20 count on from a full "ten frame" (ten! eleven, twelve, ...)
+  for (let n = 1; n <= 20; n++) {
+    const [object, one, many, emoji] = COUNT_OBJECTS[(n * 3 + (n > 10 ? 5 : 0)) % COUNT_OBJECTS.length];
     TOPICS.push({
       id: `count-${n}`, template: 'count', n, word: NUM_WORDS[n], object, objectName: n === 1 ? one : many, emoji,
-      strokes: n === 10 ? [...shift(DIGITS[1], -120), ...shift(DIGITS[0], 110)] : DIGITS[n],
+      strokes: n < 10 ? DIGITS[n] : [...shift(DIGITS[Math.floor(n / 10)], -135), ...shift(DIGITS[n % 10], 140)],
     });
   }
 
@@ -275,6 +277,89 @@
     const extras = [x1, x2].filter(x => x[1]);
     TOPICS.push({ id: `color-${color.toLowerCase()}`, template: 'color', word: color, hex, emoji, main: main[0], mainName: main[1], extras });
   }
+
+
+  // ---- Let's Draw: step-by-step easy drawing of animals and things (Penny draws, Coco colours) ----
+  // Each step: what the narrator says, the short caption shown, and the strokes drawn (centre of the card is 0,0).
+  const circ = (cx, cy, r) => `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx - 0.01} ${cy - r}`;
+  const dot = (cx, cy) => circ(cx, cy, 9); // drawn with a thick pen: a solid dot (eyes)
+  const st = (say, show, paths, w) => ({ say, show, paths, ...(w ? { w } : {}) });
+  const DRAW_TOPICS = [
+    { word: 'CAT', article: 'a', emoji: '🐱', steps: [
+      st('Draw a big circle for the head.', 'A big circle', [circ(0, -20, 170)]),
+      st('Add two pointy ears.', 'Two pointy ears', ['M -150 -100 L -135 -265 L -45 -180', 'M 150 -100 L 135 -265 L 45 -180']),
+      st('Two eyes, and a little nose.', 'Eyes and nose', [dot(-60, -50), dot(60, -50), 'M -20 15 L 20 15 L 0 38 Z']),
+      st('A happy smile!', 'A happy smile', ['M 0 38 Q -30 80 -65 55', 'M 0 38 Q 30 80 65 55']),
+      st('And long whiskers!', 'Whiskers', ['M -95 25 L -240 0', 'M -95 50 L -240 65', 'M 95 25 L 240 0', 'M 95 50 L 240 65']),
+    ], fills: [[circ(0, -20, 170), '#FFB347'], ['M -150 -100 L -135 -265 L -45 -180 Z', '#FFB347'], ['M 150 -100 L 135 -265 L 45 -180 Z', '#FFB347'], ['M -20 15 L 20 15 L 0 38 Z', '#FF8FA3']] },
+    { word: 'FISH', article: 'a', emoji: '🐟', steps: [
+      st('Draw a long oval for the body.', 'A long oval', ['M -190 0 C -120 -150 120 -140 170 0 C 120 140 -120 150 -190 0 Z']),
+      st('Add a triangle tail.', 'A triangle tail', ['M 165 0 L 290 -110 L 290 110 Z']),
+      st('An eye, and a little mouth.', 'Eye and mouth', [dot(-95, -30), 'M -165 25 Q -140 45 -115 30']),
+      st('Draw some stripes.', 'Stripes', ['M -20 -105 Q 15 0 -20 105', 'M 60 -95 Q 95 0 60 95']),
+      st('And bubbles! Blub, blub!', 'Bubbles', [circ(-270, -120, 22), circ(-310, -215, 15)]),
+    ], fills: [['M -190 0 C -120 -150 120 -140 170 0 C 120 140 -120 150 -190 0 Z', '#4D96FF'], ['M 165 0 L 290 -110 L 290 110 Z', '#FFC93C'], [circ(-270, -120, 22), '#BDE6FF'], [circ(-310, -215, 15), '#BDE6FF']] },
+    { word: 'HOUSE', article: 'a', emoji: '🏠', steps: [
+      st('Draw a big square.', 'A big square', ['M -200 -30 L 200 -30 L 200 270 L -200 270 Z']),
+      st('Put a triangle roof on top.', 'A triangle roof', ['M -250 -30 L 0 -270 L 250 -30 Z']),
+      st('Draw a door.', 'A door', ['M -50 270 L -50 120 L 50 120 L 50 270', dot(30, 200)]),
+      st('Two square windows.', 'Two windows', ['M -165 30 L -85 30 L -85 110 L -165 110 Z', 'M 85 30 L 165 30 L 165 110 L 85 110 Z']),
+      st('And a chimney!', 'A chimney', ['M 115 -140 L 115 -240 L 175 -240 L 175 -85']),
+    ], fills: [['M -200 -30 L 200 -30 L 200 270 L -200 270 Z', '#FFD6A5'], ['M -250 -30 L 0 -270 L 250 -30 Z', '#FF6B6B'], ['M -50 270 L -50 120 L 50 120 L 50 270 Z', '#9B5DE5'],
+      ['M -165 30 L -85 30 L -85 110 L -165 110 Z', '#A0E7FF'], ['M 85 30 L 165 30 L 165 110 L 85 110 Z', '#A0E7FF'], ['M 115 -140 L 115 -240 L 175 -240 L 175 -85 Z', '#C97B4A']] },
+    { word: 'FLOWER', article: 'a', emoji: '🌸', steps: [
+      st('Draw a small circle in the middle.', 'A small circle', [circ(0, -110, 55)]),
+      st('Now draw round petals, all around.', 'Round petals', [0, 1, 2, 3, 4].map(i => circ(Math.round(118 * Math.cos(i * 1.2566 - 1.5708)), Math.round(-110 + 118 * Math.sin(i * 1.2566 - 1.5708)), 62))),
+      st('Draw a long stem.', 'A long stem', ['M 0 0 L 0 300']),
+      st('And two leaves!', 'Two leaves', ['M 0 190 C 50 120 130 130 160 150 C 120 200 50 205 0 190 Z', 'M 0 250 C -50 180 -130 190 -160 210 C -120 260 -50 265 0 250 Z']),
+    ], fills: [...[0, 1, 2, 3, 4].map(i => [circ(Math.round(118 * Math.cos(i * 1.2566 - 1.5708)), Math.round(-110 + 118 * Math.sin(i * 1.2566 - 1.5708)), 62), '#F15BB5']), [circ(0, -110, 55), '#FFC93C'],
+      ['M 0 190 C 50 120 130 130 160 150 C 120 200 50 205 0 190 Z', '#6BCB77'], ['M 0 250 C -50 180 -130 190 -160 210 C -120 260 -50 265 0 250 Z', '#6BCB77']] },
+    { word: 'SNAIL', article: 'a', emoji: '🐌', steps: [
+      st('Draw a big circle for the shell.', 'A big circle', [circ(40, -20, 150)]),
+      st('Now a swirl inside. Round and round!', 'A swirl', ['M 40 -20 C 40 -50 80 -50 80 -20 C 80 30 0 30 0 -20 C 0 -90 120 -90 120 -20 C 120 70 -40 70 -40 -20 C -40 -120 150 -130 160 -20']),
+      st('Draw a long body.', 'A long body', ['M -240 130 C -290 130 -290 40 -230 40 C -200 40 -190 110 -110 120 L 230 130 C 270 135 260 160 230 160 L -230 160 C -260 160 -260 130 -240 130']),
+      st('Two eyes on top!', 'Eyes on stalks', ['M -250 50 L -285 -50', 'M -215 45 L -205 -55', dot(-288, -60), dot(-203, -65)]),
+      st('And a smile!', 'A smile', ['M -275 95 Q -255 115 -235 100']),
+    ], fills: [['M -240 130 C -290 130 -290 40 -230 40 C -200 40 -190 110 -110 120 L 230 130 C 270 135 260 160 230 160 L -230 160 C -260 160 -260 130 -240 130 Z', '#B8E986'], [circ(40, -20, 150), '#FF9F1C']] },
+    { word: 'CAR', article: 'a', emoji: '🚗', steps: [
+      st('Draw the body of the car.', 'The body', ['M -280 100 L -280 20 Q -280 -10 -245 -10 L -150 -10 L -95 -110 L 110 -110 L 170 -10 L 250 -10 Q 290 -10 290 30 L 290 100 Z']),
+      st('Add two windows.', 'Two windows', ['M -120 -25 L -80 -90 L -15 -90 L -15 -25 Z', 'M 15 -25 L 15 -90 L 95 -90 L 135 -25 Z']),
+      st('Two round wheels.', 'Two wheels', [circ(-160, 110, 62), circ(165, 110, 62)]),
+      st('And a light. Beep, beep!', 'A light', [circ(260, 30, 16), dot(-160, 110), dot(165, 110)]),
+    ], fills: [['M -280 100 L -280 20 Q -280 -10 -245 -10 L -150 -10 L -95 -110 L 110 -110 L 170 -10 L 250 -10 Q 290 -10 290 30 L 290 100 Z', '#FF6B6B'],
+      ['M -120 -25 L -80 -90 L -15 -90 L -15 -25 Z', '#A0E7FF'], ['M 15 -25 L 15 -90 L 95 -90 L 135 -25 Z', '#A0E7FF'], [circ(-160, 110, 62), '#5B5B6B'], [circ(165, 110, 62), '#5B5B6B'], [circ(260, 30, 16), '#FFC93C']] },
+    { word: 'BIRD', article: 'a', emoji: '🐦', steps: [
+      st('Draw a big circle for the body.', 'A big circle', [circ(0, -10, 150)]),
+      st('Add a pointy beak, and an eye.', 'Beak and eye', ['M 140 -50 L 225 -15 L 140 20', dot(70, -60)]),
+      st('Draw a wing.', 'A wing', ['M -80 10 Q -10 120 90 30 Q 10 -10 -80 10 Z']),
+      st('A little tail.', 'A tail', ['M -145 -40 L -245 -100 L -235 10 Z']),
+      st('And two thin legs!', 'Two legs', ['M -35 138 L -35 230 M -65 230 L -5 230', 'M 35 138 L 35 230 M 5 230 L 65 230']),
+    ], fills: [['M -145 -40 L -245 -100 L -235 10 Z', '#4D96FF'], [circ(0, -10, 150), '#4D96FF'], ['M 140 -50 L 225 -15 L 140 20 Z', '#FF9F1C'], ['M -80 10 Q -10 120 90 30 Q 10 -10 -80 10 Z', '#A0C8FF']] },
+    { word: 'BUTTERFLY', article: 'a', emoji: '🦋', steps: [
+      st('Draw a long body in the middle.', 'A long body', ['M 0 -170 C 35 -170 35 170 0 170 C -35 170 -35 -170 0 -170 Z']),
+      st('Two big wings on top.', 'Two big wings', ['M 20 -60 C 120 -280 330 -220 260 -40 C 230 30 100 20 20 0', 'M -20 -60 C -120 -280 -330 -220 -260 -40 C -230 30 -100 20 -20 0']),
+      st('Two small wings below.', 'Two small wings', ['M 20 30 C 120 30 260 80 200 200 C 140 270 40 180 20 80', 'M -20 30 C -120 30 -260 80 -200 200 C -140 270 -40 180 -20 80']),
+      st('Add two antennae.', 'Antennae', ['M -12 -165 Q -40 -250 -90 -280', 'M 12 -165 Q 40 -250 90 -280', dot(-92, -282), dot(92, -282)]),
+      st('And pretty spots!', 'Pretty spots', [circ(170, -110, 32), circ(-170, -110, 32), circ(140, 140, 22), circ(-140, 140, 22)]),
+    ], fills: [['M 20 -60 C 120 -280 330 -220 260 -40 C 230 30 100 20 20 0 Z', '#F15BB5'], ['M -20 -60 C -120 -280 -330 -220 -260 -40 C -230 30 -100 20 -20 0 Z', '#F15BB5'],
+      ['M 20 30 C 120 30 260 80 200 200 C 140 270 40 180 20 80 Z', '#9B5DE5'], ['M -20 30 C -120 30 -260 80 -200 200 C -140 270 -40 180 -20 80 Z', '#9B5DE5'],
+      ['M 0 -170 C 35 -170 35 170 0 170 C -35 170 -35 -170 0 -170 Z', '#FFC93C'], [circ(170, -110, 32), '#FFE66D'], [circ(-170, -110, 32), '#FFE66D'], [circ(140, 140, 22), '#FFE66D'], [circ(-140, 140, 22), '#FFE66D']] },
+    { word: 'APPLE', article: 'an', emoji: '🍎', steps: [
+      st('Draw a big round apple.', 'A round apple', ['M 0 -120 C 80 -200 260 -160 250 20 C 240 200 110 280 0 230 C -110 280 -240 200 -250 20 C -260 -160 -80 -200 0 -120 Z']),
+      st('Add a little stem.', 'A stem', ['M 0 -120 Q 10 -190 40 -235']),
+      st('And a leaf!', 'A leaf', ['M 25 -185 C 80 -255 160 -240 175 -210 C 125 -165 60 -165 25 -185 Z']),
+      st('A shiny spot. So shiny!', 'A shiny spot', ['M -175 -30 Q -165 -95 -115 -115']),
+    ], fills: [['M 0 -120 C 80 -200 260 -160 250 20 C 240 200 110 280 0 230 C -110 280 -240 200 -250 20 C -260 -160 -80 -200 0 -120 Z', '#F2545B'], ['M 25 -185 C 80 -255 160 -240 175 -210 C 125 -165 60 -165 25 -185 Z', '#6BCB77']] },
+    { word: 'TURTLE', article: 'a', emoji: '🐢', steps: [
+      st('Draw a big half circle for the shell.', 'A half circle', ['M -230 80 C -230 -180 230 -180 230 80 Z']),
+      st('Add a round head.', 'A round head', [circ(290, 10, 62)]),
+      st('Draw four little legs.', 'Four legs', ['M -175 80 L -175 150 L -115 150 L -115 80', 'M 115 80 L 115 150 L 175 150 L 175 80']),
+      st('Draw a pattern on the shell.', 'A pattern', ['M -60 -20 L 0 -75 L 60 -20 L 40 50 L -40 50 Z']),
+      st('An eye, and a smile!', 'Eye and smile', [dot(305, -5), 'M 270 35 Q 295 55 320 35']),
+    ], fills: [['M -175 80 L -175 150 L -115 150 L -115 80 Z', '#B8E986'], ['M 115 80 L 115 150 L 175 150 L 175 80 Z', '#B8E986'], [circ(290, 10, 62), '#B8E986'],
+      ['M -230 80 C -230 -180 230 -180 230 80 Z', '#6BCB77'], ['M -60 -20 L 0 -75 L 60 -20 L 40 50 L -40 50 Z', '#3FA34D']] },
+  ];
+  for (const d of DRAW_TOPICS) TOPICS.push({ id: `drawalong-${d.word.toLowerCase()}`, template: 'drawalong', ...d });
 
   if (typeof module !== 'undefined') module.exports = TOPICS; else window.TOPICS = TOPICS;
 })();

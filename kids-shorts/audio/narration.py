@@ -26,7 +26,8 @@ template = topic.get('template', 'draw-shape')
 if template == 'draw-shape':
     shape, thing, art = topic['shape'].lower(), topic['becomes'].lower(), topic['article']
     an = 'an' if shape[0] in 'aeiou' else 'a'
-NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+                'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty']
 
 DRAW_LINE = {
     'circle': 'Round and round we go!',
@@ -58,7 +59,8 @@ def say(text, speed=0.95, voice=None):
     return np.interp(np.linspace(0, len(x) - 1, n), np.arange(len(x)), x)
 
 
-N = int(SR * 20.0)
+END = float(tl.get('end') or 20.0)  # Short length (some templates run longer than 20 s)
+N = int(SR * END)
 voice = np.zeros(N)
 
 
@@ -80,21 +82,23 @@ if template == 'draw-shape':
         place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['shape']) * gap + 0.1
     place(say(f"{shape.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
-    place(say("Can you draw one, too?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+    place(say("Can you draw one, too?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
 elif template == 'count':
     n, word, things = topic['n'], topic['word'].lower(), topic['objectName'].lower()
     gap = tl['letterGap']
     place(say(f"Let's count to {word}!"), 0.35, 1.9)
     place(say(f"This is the number {word}!"), 2.6, 2.4)
-    for i, tp in enumerate(tl['pops']):
-        place(say(NUMBER_WORDS[i + 1].capitalize() + '!', speed=1.05), tp + 0.05, tl['countGap'] * 0.95)
+    nums = tl.get('popNums') or list(range(1, len(tl['pops']) + 1))
+    for i, (tp, k) in enumerate(zip(tl['pops'], nums)):
+        nxt = tl['pops'][i + 1] if i + 1 < len(tl['pops']) else tl['result']
+        place(say(NUMBER_WORDS[k].capitalize() + '!', speed=1.05), tp + 0.05, (nxt - tp) * 0.95)
     place(say(f"{word.capitalize()} {things}!"), tl['result'] + 0.15, tl['word'] - tl['result'] - 0.2)
     for i, ch in enumerate(topic['word']):
         place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{word.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
-    place(say(f"Can you count to {word}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+    place(say(f"Can you count to {word}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
 elif template == 'abc':
     L, word = topic['letter'], topic['word']
@@ -109,7 +113,7 @@ elif template == 'abc':
         place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + tl['letters'] * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
-    place(say(f"What else starts with {name}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+    place(say(f"What else starts with {name}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
 elif template == 'animal':
     # Ellie the Eraser and the animal sounds get their own voices
@@ -127,7 +131,7 @@ elif template == 'animal':
         place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
-    place(say(f"Can you say {snd1}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+    place(say(f"Can you say {snd1}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
 elif template == 'color':
     COCO = 'bf_lily'
@@ -145,7 +149,23 @@ elif template == 'color':
         place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
-    place(say(f"What else is {w}?"), tl['ask'] + 0.2, 20 - tl['ask'] - 0.4)
+    place(say(f"What else is {w}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
+
+elif template == 'drawalong':
+    COCO = 'bf_lily'
+    w, art = topic['word'].lower(), topic['article']
+    gap, steps = tl['letterGap'], tl['steps']
+    place(say(f"Let's draw {art} {w}!"), 0.35, 1.9)
+    for i, stp in enumerate(topic['steps']):
+        nxt = steps[i + 1] if i + 1 < len(steps) else tl['colour'][0]
+        place(say(stp['say']), steps[i] + 0.1, nxt - steps[i] - 0.25)
+    place(say("Now, let me colour it!", voice=COCO), tl['colour'][0] - 0.3, 2.0)
+    place(say(f"Ta-da! It's {art} {w}!"), tl['done'] + 0.1, tl['word'] - tl['done'] - 0.2)
+    for i, ch in enumerate(topic['word']):
+        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['word']) * gap + 0.1
+    place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say(f"Now you draw {art} {w}! Get your crayons!"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
 voice = voice / (np.max(np.abs(voice)) + 1e-9) * 0.9
 

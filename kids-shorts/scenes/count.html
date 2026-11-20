@@ -65,7 +65,7 @@ const easeOut = k => 1 - Math.pow(1 - k, 3);
 const easeBack = k => { const c = 1.9; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
 const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
 const COLORS = ['#FF6B6B', '#FF9F1C', '#2EC4B6', '#4D96FF', '#9B5DE5', '#F15BB5'];
-const NX = 540, NY = 730, NS_ = 0.62; // numeral position and scale
+let NX = 540, NY = 730, NS_ = 0.62; // numeral position and scale (smaller and higher for 11-20)
 const FACE = `<ellipse cx="-150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/><ellipse cx="150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/>
 <g transform="translate(-95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>
 <g transform="translate(95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>
@@ -88,9 +88,17 @@ function miniArt(topic, parent) { // the shape topic's finished character, as a 
 function setup(topicId) {
   const topic = window.TOPICS.find(t => t.id === topicId) || window.TOPICS.find(t => t.template === 'count');
   const n = topic.n, obj = window.TOPICS.find(t => t.id === topic.object);
-  T.countGap = Math.min(0.9, 5.2 / n);
-  T.result = T.count + n * T.countGap + 0.2;
+  const big = n > 10;
+  [NY, NS_] = big ? [690, 0.5] : [730, 0.62];
+  T.word = 13.6; T.ask = 16.6; T.end = 20; // defaults (setup can run more than once)
+  // 11-20: a full ten frame pops in at once ("Ten!"), then we count on one by one
+  T.countGap = big ? 0.8 : Math.min(0.9, 5.2 / n);
+  const popAt = i => big ? (i < 10 ? T.count : T.count + 1.0 + (i - 10) * T.countGap) : T.count + i * T.countGap;
+  T.result = popAt(n - 1) + T.countGap + 0.2;
   T.letterGap = Math.min(0.5, 2.6 / topic.word.length);
+  if (big) { // longer Short: room for the count-on and the result
+    T.word = T.result + 2.0; T.ask = T.word + topic.word.length * T.letterGap + 1.2; T.end = T.ask + 3.4;
+  }
   for (const id of ['numColor', 'numStrokes', 'objects', 'word', 'clouds', 'sparkles']) $(id).innerHTML = '';
 
   const strokes = topic.strokes.map(d => {
@@ -104,16 +112,21 @@ function setup(topicId) {
   $('numWrap').setAttribute('transform', `translate(${NX} ${NY}) scale(${NS_})`);
 
   // objects grid
-  const rows = n <= 5 ? [n] : [Math.ceil(n / 2), Math.floor(n / 2)];
-  const ys = rows.length === 1 ? [1150] : [1060, 1245];
+  const rows = big ? [5, 5, Math.min(5, n - 10), n - 15].filter(c => c > 0) : n <= 5 ? [n] : [Math.ceil(n / 2), Math.floor(n / 2)];
+  const ys = big ? [915, 1030, 1175, 1290] : rows.length === 1 ? [1150] : [1060, 1245];
+  const dx = big ? 150 : 168, sc = big ? 0.15 : rows.length === 1 && n <= 3 ? 0.3 : 0.21;
+  let frame = null;
+  if (big) { // the ten frame
+    frame = el('rect', { class: 'pop', x: 540 - 2.5 * dx - 10, y: 850, width: 5 * dx + 20, height: 245, rx: 30, fill: '#FFF3D6', stroke: '#FFB020', 'stroke-width': 8 }, $('objects'));
+  }
   const objects = []; let k = 0;
   rows.forEach((cnt, r) => { for (let i = 0; i < cnt; i++) {
-    const x = 540 + (i - (cnt - 1) / 2) * 168, y = ys[r];
+    const x = 540 + (i - (big ? 2 : (cnt - 1) / 2)) * dx, y = ys[r];
     const g = el('g', { class: 'pop' }, $('objects'));
-    const art = miniArt(obj, g); art.setAttribute('transform', `translate(${x} ${y}) scale(${rows.length === 1 && n <= 3 ? 0.3 : 0.21})`);
-    const lab = el('text', { x: x + 48, y: y + 70, 'text-anchor': 'middle', 'font-size': 46, fill: COLORS[k % 6], stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke' }, g);
+    const art = miniArt(obj, g); art.setAttribute('transform', `translate(${x} ${y}) scale(${sc})`);
+    const lab = el('text', { x: x + (big ? 36 : 48), y: y + (big ? 52 : 70), 'text-anchor': 'middle', 'font-size': big ? 38 : 46, fill: COLORS[k % 6], stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke' }, g);
     lab.textContent = k + 1;
-    objects.push({ g, x, y }); k++;
+    objects.push({ g, x, y, at: popAt(k) }); k++;
   } });
 
   const clouds = [[180, 140, 1.0], [880, 90, 0.8], [700, 1500, 0.7], [120, 1650, 0.9]].map(([x, y, s]) => {
@@ -134,9 +147,12 @@ function setup(topicId) {
   });
   $('ask').textContent = `Can you count to ${topic.word.toLowerCase()}?`;
   const many = `${n} ${topic.objectName}!`;
-  S = { topic, strokes, objects, letters, clouds, sparkles, t1a: "Let's count to", t2a: topic.word + '!', t1b: 'We counted', t2b: many,
+  S = { frame, topic, strokes, objects, letters, clouds, sparkles, t1a: "Let's count to", t2a: topic.word + '!', t1b: 'We counted', t2b: many,
     fs2a: Math.min(150, 980 / ((topic.word.length + 1) * 0.62)), fs2b: Math.min(130, 980 / (many.length * 0.6)) };
-  window.TIMELINE = { ...T, n, letters: L, pops: objects.map((_, i) => T.count + i * T.countGap), template: 'count' };
+  // one pop (and one spoken number) per step: for 11-20 the ten frame is a single "Ten!" pop
+  const steps = big ? [[T.count, 10], ...objects.slice(10).map((o, i) => [o.at, 11 + i])] : objects.map((o, i) => [o.at, i + 1]);
+  window.TIMELINE = { ...T, n, letters: L, pops: steps.map(s => s[0]), popNums: steps.map(s => s[1]), end: T.end, template: 'count' };
+  window.DURATION = T.end;
   render(0);
   return window.TIMELINE;
 }
@@ -182,9 +198,10 @@ function render(t) {
   $('pennyInner').setAttribute('transform', `rotate(${wiggle})`);
   ['pEyeL', 'pEyeR'].forEach(id => $(id).setAttribute('ry', (t % 3.1) > 3.0 ? 1.5 : 10));
 
+  if (S.frame) { const k = easeBack(prog(t, T.count - 0.3, T.count + 0.1)); S.frame.style.transform = `scale(${k})`; S.frame.style.opacity = k > 0 ? 1 : 0; }
   // objects pop in one by one; all hop together on the result
   S.objects.forEach((o, i) => {
-    const s = T.count + i * T.countGap, k = easeBack(prog(t, s, s + 0.4));
+    const s = o.at, k = easeBack(prog(t, s, s + 0.4));
     const hop = t > T.result ? -Math.abs(Math.sin((t - T.result) * 4 + i * 0.4)) * 14 : 0;
     o.g.style.transform = `translate(0px, ${hop}px) scale(${k})`;
     o.g.style.opacity = k > 0 ? 1 : 0;

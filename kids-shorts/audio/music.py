@@ -10,8 +10,6 @@ import numpy as np
 
 SR = 44100
 DUR = 20.0
-N = int(SR * DUR)
-out = np.zeros(N)
 
 T = dict(draw=(2.2, 6.4), fill=7.0, face=8.0, rays=9.4, word=12.6, gap=0.5, ask=16.4, letters=6)
 if len(sys.argv) > 2:
@@ -23,10 +21,15 @@ if len(sys.argv) > 2:
         T.update(draw=tuple(tl['colour']), fill=tl['show'], face=None, rays=tl['done'], pops=tl['extras'])
     elif tl.get('template') == 'animal':
         T.update(fill=tl['reveal'], face=tl['bubble'], rays=tl['reveal'] + 0.1)
+    elif tl.get('template') == 'drawalong':  # a pop + ding as each new step starts, sparkle when coloured
+        T.update(fill=tl['colour'][0], face=None, rays=tl['done'], pops=tl['steps'][1:])
     elif tl.get('template') == 'abc':
         T.update(fill=tl['object'], face=tl['lower'], rays=None, color=tl['color'])
     else:
         T.update(fill=tl['fill'], face=tl['face'], rays=tl['extras'])
+    DUR = float(tl.get('end') or 20.0)  # some templates run longer than 20 s
+N = int(SR * DUR)
+out = np.zeros(N)
 SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 0
 vr = np.random.default_rng(SEED)
 KEY = int(vr.choice([0, 2, -3, 5, -1]))

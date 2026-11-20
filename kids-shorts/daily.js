@@ -20,11 +20,13 @@ const sceneFor = t => path.join(__dirname, 'scenes', `${t.template || 'draw-shap
 
 function pickTopics() {
   const used = fs.existsSync(STATE) ? JSON.parse(fs.readFileSync(STATE, 'utf8')) : {};
-  const lru = (x, y) => (used[x.id] || '').localeCompare(used[y.id] || '') || x.id.localeCompare(y.id, 'en', { numeric: true });
+  // never repeat: only topics that were never rendered before, in their natural order
+  const fresh = TOPICS.filter(t => !used[t.id]);
+  const lastUse = k => TOPICS.filter(t => (t.template || 'draw-shape') === k).map(t => used[t.id] || '').sort().pop() || '';
   // one queue per template (shapes, numbers, ...); take from each in turn so every day is a mix
   const queues = {};
-  for (const t of [...TOPICS].sort(lru)) (queues[t.template || 'draw-shape'] ||= []).push(t);
-  const order = Object.keys(queues).sort((a, b) => lru(queues[a][0], queues[b][0]));
+  for (const t of fresh) (queues[t.template || 'draw-shape'] ||= []).push(t);
+  const order = Object.keys(queues).sort((a, b) => lastUse(a).localeCompare(lastUse(b)) || a.localeCompare(b));
   const picked = [], shapes = new Set();
   while (picked.length < COUNT && order.some(k => queues[k].length)) {
     for (const k of order) {
@@ -36,7 +38,10 @@ function pickTopics() {
       picked.push(t); if (t.shape) shapes.add(t.shape);
     }
   }
-  return { picked, used };
+  // what is left after today, per template, so the daily task can warn early and ask for new topics
+  const left = {};
+  for (const t of fresh) if (!picked.includes(t)) left[t.template || 'draw-shape'] = (left[t.template || 'draw-shape'] || 0) + 1;
+  return { picked, used, left };
 }
 
 const tag = w => '#' + String(w).toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -61,6 +66,25 @@ function episodeMetadata(ep) {
 }
 
 function metadata(t) {
+  if (t.template === 'drawalong') {
+    const w = t.word[0] + t.word.slice(1).toLowerCase(), A = t.article === 'an' ? 'an' : 'a';
+    return {
+      title: `How to Draw ${A} ${w}! ${t.emoji} Easy Step by Step Drawing for Kids #shorts`,
+      description: [
+        `Let's draw ${A} ${w.toLowerCase()} ${t.emoji} with Penny the Pencil — in ${t.steps.length} easy steps! Then Coco the Crayon colours it in.`,
+        '',
+        ...t.steps.map((s, i) => `${i + 1}. ${s.show}`),
+        '',
+        `Grown-ups: grab paper and crayons and draw ${A} ${w.toLowerCase()} together with your little one! 🖍️`,
+        '',
+        tags(`howtodraw${w}`, 'drawingforkids', 'easydrawing', 'stepbystep', 'artforkids', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
+      ].join('\n'),
+      tags: [`how to draw a ${w.toLowerCase()}`, `${w.toLowerCase()} drawing`, 'easy drawing for kids', 'drawing for kids', 'step by step drawing',
+        'art for kids', 'toddler learning', 'preschool', 'english for kids', 'Doodle Pals', 'Penny the Pencil', 'Coco the Crayon'],
+      categoryId: '27',
+      madeForKids: true,
+    };
+  }
   if (t.template === 'color') {
     const color = t.word[0] + t.word.slice(1).toLowerCase();
     const thing = t.mainName[0].toUpperCase() + t.mainName.slice(1);
@@ -170,7 +194,8 @@ function metadata(t) {
 }
 
 (async () => {
-  const { picked, used } = pickTopics();
+  const { picked, used, left } = pickTopics();
+  if (picked.length < COUNT) console.log(`[topics] only ${picked.length} unused Short topics left — add new ones to topics.js`);
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const batch = [];
@@ -187,7 +212,7 @@ function metadata(t) {
     execFileSync('python3', [path.join(__dirname, 'audio', 'music.py'), wav, tlFile, String(seed)]);
     if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
       const topicFile = path.join(OUT, `${t.id}.topic.json`);
-      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras }));
+      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps }));
       execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
         '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
       fs.rmSync(topicFile);
@@ -218,7 +243,7 @@ function metadata(t) {
   }
   await browser.close();
   for (const f of Object.values(outro)) fs.rmSync(f, { force: true });
-  fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ date: DATE, videos: batch }, null, 2));
+  fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ date: DATE, videos: batch, topicsLeft: left }, null, 2));
   fs.mkdirSync(path.dirname(STATE), { recursive: true });
   fs.writeFileSync(STATE, JSON.stringify(used, null, 2) + '\n');
   console.log('batch ready:', OUT);
