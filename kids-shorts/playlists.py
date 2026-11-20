@@ -17,6 +17,7 @@ CATEGORY = {
     'animal': ('Animal Sounds 🐮', 'Guess the animal by its sound with Ellie the Eraser! Animal names and sounds in English for toddlers.'),
     'color': ('Colors with Coco 🎨', 'Coco the Crayon colours the world! Learn colours in English for kids aged 2–6.'),
     'shape': ('Shapes for Toddlers ✏️', 'Draw a shape with Penny the Pencil and watch it become something new! Learn shapes in English.'),
+    'drawalong': ("Let's Draw! Easy Drawing for Kids 🖍️", 'Step-by-step easy drawing for toddlers: draw animals and things with Penny the Pencil, then Coco colours them in!'),
     'episode': ('Doodle Pals Stories 🎬', 'Longer Doodle Pals cartoons with Penny, Ellie and Coco: stories, songs and learning for kids aged 2–6.'),
 }
 
