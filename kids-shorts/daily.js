@@ -7,7 +7,16 @@ const fs = require('fs');
 const path = require('path');
 const TOPICS = require('./topics');
 const { renderTopic, getTimeline } = require('./render');
-const { renderOutro, appendOutro } = require('./outro');
+const { renderOutro, appendOutro, OUTRO_SUBS } = require('./outro');
+
+// English captions (.srt) uploaded with each video: [{text, start, end}] in seconds
+function writeSrt(file, subs) {
+  const ts = x => { const ms = Math.round(x * 1000); const p = (n, w = 2) => String(n).padStart(w, '0');
+    return `${p(Math.floor(ms / 3600000))}:${p(Math.floor(ms / 60000) % 60)}:${p(Math.floor(ms / 1000) % 60)},${p(ms % 1000, 3)}`; };
+  const rows = subs.filter(s => s.text && s.end > s.start).sort((a, b) => a.start - b.start);
+  fs.writeFileSync(file, rows.map((s, i) => `${i + 1}\n${ts(s.start)} --> ${ts(s.end)}\n${s.text}\n`).join('\n'));
+}
+const withOutroSubs = (subs, len) => a.includes('--no-outro') ? subs : [...subs, ...OUTRO_SUBS.map(o => ({ ...o, start: o.start + len, end: o.end + len }))];
 const { buildEpisode } = require('./longvideo');
 
 const a = process.argv.slice(2);
@@ -218,11 +227,15 @@ function metadata(t) {
       fs.rmSync(topicFile);
     }
     const t0 = Date.now();
-    await renderTopic({ scene: sceneFor(t), topic: t.id, out: mp4, audio: wav, browser });
+    const { timeline: rtl } = await renderTopic({ scene: sceneFor(t), topic: t.id, out: mp4, audio: wav, browser });
+    if (fs.existsSync(wav + '.subs.json')) {
+      writeSrt(mp4.replace(/\.mp4$/, '.srt'), withOutroSubs(JSON.parse(fs.readFileSync(wav + '.subs.json', 'utf8')), rtl.end || 20));
+      fs.rmSync(wav + '.subs.json');
+    }
     fs.rmSync(wav); fs.rmSync(tlFile);
     withOutro(mp4, 'portrait');
     console.log(`[${i + 1}/${picked.length}] ${t.id} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
-    batch.push({ id: t.id, file: path.basename(mp4), ...metadata(t) });
+    batch.push({ id: t.id, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), ...metadata(t) });
     used[t.id] = DATE;
   }
   // one long (16:9) episode per day: the next episode script not yet used
@@ -234,10 +247,12 @@ function metadata(t) {
       const mp4 = path.join(OUT, `episode-${ep.id}.mp4`);
       const t0 = Date.now();
       const tl = await buildEpisode(path.join(dir, next), mp4, { browser });
+      const lines = tl.beats.flatMap(b => b.lines).filter(l => l.who !== 'pause' && l.text).map(l => ({ text: l.text, start: l.start, end: l.start + l.dur }));
+      writeSrt(mp4.replace(/\.mp4$/, '.srt'), withOutroSubs(lines, tl.duration));
       fs.rmSync(mp4.replace(/\.mp4$/, '') + '.work', { recursive: true, force: true });
       withOutro(mp4, 'landscape');
       console.log(`[episode] ${ep.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
-      batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), long: true, ...episodeMetadata(ep) });
+      batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), long: true, ...episodeMetadata(ep) });
       used['episode:' + ep.id] = DATE;
     } else console.log('[episode] no unused episode script left — write a new one in episodes/');
   }

@@ -1,19 +1,24 @@
 """Upload an approved daily batch to YouTube.
 
-Usage: python3 upload.py <batch_dir> [--skip id1,id2] [--privacy public|unlisted|private] [--dry-run]
+Usage: python3 upload.py <batch_dir> [--skip id1,id2] [--privacy public|unlisted|private] [--publish-at 17:00] [--dry-run]
+--publish-at HH:MM (Europe/Berlin): public videos are uploaded as scheduled and go public at that time today
+(immediately if that time has passed). English captions (<video>.srt) are added when the token allows it.
 Reads <batch_dir>/batch.json (written by daily.js) and uploads each video as Made-for-Kids, Education.
 
 Credentials (env): YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN  (create once with get_token.py)
 """
 import argparse
+import datetime as dt
 import json
 import os
 import sys
+from zoneinfo import ZoneInfo
 
 p = argparse.ArgumentParser()
 p.add_argument('batch_dir')
 p.add_argument('--skip', default='')
 p.add_argument('--privacy', default='public', choices=['public', 'unlisted', 'private'])
+p.add_argument('--publish-at', default='', help='HH:MM Europe/Berlin: schedule public videos for this time today')
 p.add_argument('--dry-run', action='store_true')
 p.add_argument('--only-playlists', action='store_true', help='just file already-uploaded videos into playlists')
 args = p.parse_args()
@@ -28,6 +33,15 @@ skip |= {d['id'] for d in done}
 videos = sorted((v for v in batch['videos'] if v['id'] not in skip), key=lambda v: not v.get('long'))
 if args.only_playlists:
     videos = []
+# scheduled release: upload as private with publishAt (YouTube flips it to public at that time)
+publish_at = None
+if args.publish_at and args.privacy == 'public':
+    hh, mm = map(int, args.publish_at.split(':'))
+    now = dt.datetime.now(dt.timezone.utc)
+    when = dt.datetime.now(ZoneInfo('Europe/Berlin')).replace(hour=hh, minute=mm, second=0, microsecond=0)
+    if when - now > dt.timedelta(minutes=15):
+        publish_at = when.astimezone(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        print(f'scheduled: videos go public at {args.publish_at} Berlin ({publish_at})')
 print(f"{batch['date']}: uploading {len(videos)} video(s), skipping {sorted(skip) or 'none'}")
 
 if args.dry_run:
@@ -70,6 +84,29 @@ def file_in_playlists(batch_id, youtube_id):
         else:
             print(f'  (playlist error for {batch_id}: {e})')
 
+cap_ok = True
+
+
+def add_captions(entry):
+    """Upload the English .srt for one uploaded video (once). Needs the youtube.force-ssl scope."""
+    global cap_ok
+    v = next((x for x in batch['videos'] if x['id'] == entry['id']), None)
+    srt = v and v.get('captions') and os.path.join(args.batch_dir, v['captions'])
+    if not cap_ok or entry.get('captions') or not srt or not os.path.exists(srt):
+        return
+    try:
+        yt.captions().insert(part='snippet', body={'snippet': {'videoId': entry['youtube_id'], 'language': 'en', 'name': 'English', 'isDraft': False}},
+                             media_body=MediaFileUpload(srt, mimetype='application/octet-stream')).execute()
+        entry['captions'] = True
+        print(f"    + English captions")
+    except HttpError as e:
+        if e.resp.status in (401, 403):
+            cap_ok = False
+            print(f'  (captions skipped: {"quota used up for today" if "quota" in str(e) else "token has no caption permission yet; re-run get_token.py"})')
+        else:
+            print(f"  (caption error for {entry['id']}: {e})")
+
+
 results = list(done)
 pending = []
 for n, v in enumerate(videos):
@@ -83,7 +120,8 @@ for n, v in enumerate(videos):
             'defaultAudioLanguage': 'en',
         },
         'status': {
-            'privacyStatus': args.privacy,
+            'privacyStatus': 'private' if publish_at else args.privacy,
+            **({'publishAt': publish_at} if publish_at else {}),
             'selfDeclaredMadeForKids': bool(v.get('madeForKids', True)),
             'containsSyntheticMedia': False,
         },
@@ -104,12 +142,15 @@ for n, v in enumerate(videos):
         break
     url = f"https://youtube.com/watch?v={resp['id']}" if v.get('long') else f"https://youtube.com/shorts/{resp['id']}"
     print('  uploaded', v['id'], '->', url)
-    results.append({'id': v['id'], 'youtube_id': resp['id'], 'url': url})
+    results.append({'id': v['id'], 'youtube_id': resp['id'], 'url': url, **({'publishAt': publish_at} if publish_at else {})})
     file_in_playlists(v['id'], resp['id'])
 
 if args.only_playlists:
     for d in done:
         file_in_playlists(d['id'], d['youtube_id'])
+else:  # captions last (and retried on later runs), so the videos themselves never wait for them
+    for r in results:
+        add_captions(r)
 
 json.dump(results, open(up_file, 'w'), indent=2)
 open(os.path.join(args.batch_dir, 'pending.txt'), 'w').write('\n'.join(pending))

@@ -1,0 +1,42 @@
+name: Kids Stats (Doodle Pals hourly views)
+
+# Every hour: record the public view count of every channel video, so we can see at which hours
+# people watch (YouTube Studio's "When your viewers are on YouTube" needs much more data).
+# The log lives in the 'stats' release as stats.jsonl; `python3 kids-shorts/stats.py report stats.jsonl` summarises it.
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # update the 'stats' release asset
+
+concurrency:
+  group: kids-stats
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: kids-shorts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install google-api-python-client google-auth
+      - name: Snapshot view counts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          gh release view stats >/dev/null 2>&1 || gh release create stats --prerelease --title "Doodle Pals view stats" --notes "Hourly view counts (stats.jsonl), written by kids_stats.yml."
+          gh release download stats -p stats.jsonl 2>/dev/null || touch stats.jsonl
+          python3 stats.py snapshot stats.jsonl
+          gh release upload stats stats.jsonl --clobber
+          python3 stats.py report stats.jsonl | tail -30

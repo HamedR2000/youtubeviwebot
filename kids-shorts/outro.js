@@ -52,7 +52,13 @@ function appendOutro(video, outro) {
   fs.renameSync(tmp, video);
 }
 
-module.exports = { renderOutro, appendOutro };
+// captions for the end card (times relative to its start; keep in sync with audio/outro_audio.py)
+const OUTRO_SUBS = [
+  { text: 'Bye bye, friends!', start: 0.2, end: 1.7 },
+  { text: 'Grown-ups, like and subscribe for a new Doodle Pals video every day!', start: 2.0, end: 6.0 },
+];
+
+module.exports = { renderOutro, appendOutro, OUTRO_SUBS };
 
 if (require.main === module) {
   const a = process.argv.slice(2);

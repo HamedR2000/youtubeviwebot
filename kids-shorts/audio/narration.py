@@ -47,7 +47,12 @@ kdir = os.environ.get('KOKORO_DIR', '.')
 tts = Kokoro(os.path.join(kdir, 'kokoro-v1.0.onnx'), os.path.join(kdir, 'voices-v1.0.bin'))
 
 
-def say(text, speed=0.95, voice=None):
+SUBS = []  # captions: what is said and when (written next to the output as <out>.subs.json)
+LAST = {'text': ''}
+
+
+def say(text, speed=0.95, voice=None, shown=None):
+    LAST['text'] = text if shown is None else shown
     samples, sr = tts.create(text, voice=voice or a.voice, speed=speed, lang='en-us')
     x = np.asarray(samples, dtype=np.float64)
     # trim leading/trailing silence
@@ -67,6 +72,9 @@ voice = np.zeros(N)
 def place(clip, t, max_len=None):
     if max_len is not None and len(clip) > max_len * SR:  # never run into the next cue
         clip = clip[: int(max_len * SR)] * np.minimum(1, np.linspace(8, 0, int(max_len * SR)))
+    if LAST['text']:
+        SUBS.append({'text': LAST['text'], 'start': round(t, 3), 'end': round(t + len(clip) / SR, 3)})
+        LAST['text'] = ''
     i = int(t * SR)
     j = min(N, i + len(clip))
     voice[i:j] += clip[: j - i]
@@ -79,7 +87,7 @@ if template == 'draw-shape':
     place(say("Now, a happy face!"), 7.6, 1.7)
     place(say(f"Look! It's {art} {thing}!"), tl['extras'] + 0.65, 2.4)
     for i, ch in enumerate(topic['shape']):
-        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+        place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['shape']) * gap + 0.1
     place(say(f"{shape.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say("Can you draw one, too?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
@@ -95,7 +103,7 @@ elif template == 'count':
         place(say(NUMBER_WORDS[k].capitalize() + '!', speed=1.05), tp + 0.05, (nxt - tp) * 0.95)
     place(say(f"{word.capitalize()} {things}!"), tl['result'] + 0.15, tl['word'] - tl['result'] - 0.2)
     for i, ch in enumerate(topic['word']):
-        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+        place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{word.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"Can you count to {word}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
@@ -104,16 +112,16 @@ elif template == 'abc':
     L, word = topic['letter'], topic['word']
     name, w = LETTER[L], word.lower()
     gap = tl['letterGap']
-    place(say(f"Let's learn the letter {name}!"), 0.35, 1.9)
-    place(say(f"This is big {name}."), 2.7, 2.4)
-    place(say(f"And little {name}!"), tl['lower'] - 0.1, tl['object'] - tl['lower'] + 0.05)
-    place(say(f"{name.capitalize()} is for {w}!"), tl['isFor'] + 0.1, 2.3)
-    place(say(f"{name.capitalize()}, {name}, {w}!"), tl['isFor'] + 2.7, tl['word'] - tl['isFor'] - 2.8)
+    place(say(f"Let's learn the letter {name}!", shown=f"Let's learn the letter {L}!"), 0.35, 1.9)
+    place(say(f"This is big {name}.", shown=f"This is big {L}."), 2.7, 2.4)
+    place(say(f"And little {name}!", shown=f"And little {L.lower()}!"), tl['lower'] - 0.1, tl['object'] - tl['lower'] + 0.05)
+    place(say(f"{name.capitalize()} is for {w}!", shown=f"{L} is for {w}!"), tl['isFor'] + 0.1, 2.3)
+    place(say(f"{name.capitalize()}, {name}, {w}!", shown=f"{L}, {L}, {w}!"), tl['isFor'] + 2.7, tl['word'] - tl['isFor'] - 2.8)
     for i, ch in enumerate(c for c in word if c.isalpha()):
-        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+        place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + tl['letters'] * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
-    place(say(f"What else starts with {name}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
+    place(say(f"What else starts with {name}?", shown=f"What else starts with {L}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
 elif template == 'animal':
     # Ellie the Eraser and the animal sounds get their own voices
@@ -128,7 +136,7 @@ elif template == 'animal':
     place(say(snd, speed=0.85, voice=ANIMAL), tl['bubble'] + 0.05, 1.2)
     place(say(f"The {w} says {snd1}!"), tl['bubble'] + 1.35, tl['word'] - tl['bubble'] - 1.45)
     for i, ch in enumerate(topic['word']):
-        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+        place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"Can you say {snd1}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
@@ -146,7 +154,7 @@ elif template == 'color':
         line = f"{w.capitalize()}, like a {name}!" if i == 0 else f"And a {w} {name}!"
         place(say(line), tl['extras'][i] + 0.1, 1.8)
     for i, ch in enumerate(topic['word']):
-        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+        place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"What else is {w}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
@@ -162,7 +170,7 @@ elif template == 'drawalong':
     place(say("Now, let me colour it!", voice=COCO), tl['colour'][0] - 0.3, 2.0)
     place(say(f"Ta-da! It's {art} {w}!"), tl['done'] + 0.1, tl['word'] - tl['done'] - 0.2)
     for i, ch in enumerate(topic['word']):
-        place(say(LETTER[ch], speed=1.15), tl['word'] + i * gap + 0.05, gap * 0.95)
+        place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"Now you draw {art} {w}! Get your crayons!"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
@@ -181,4 +189,5 @@ mix = mix / (np.max(np.abs(mix)) + 1e-9) * 0.92
 pcm = (np.stack([mix, mix], axis=1) * 32767).astype(np.int16)
 with wave.open(a.out, 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())
+json.dump(SUBS, open(a.out + '.subs.json', 'w'), indent=1)
 print('wrote', a.out)
