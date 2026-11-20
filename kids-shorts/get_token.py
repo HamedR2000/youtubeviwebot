@@ -17,6 +17,7 @@ from googleapiclient.discovery import build
 
 SCOPES = [
     'https://www.googleapis.com/auth/youtube',  # upload + manage playlists on your own channel
+    'https://www.googleapis.com/auth/youtube.force-ssl',  # upload English captions (subtitles)
 ]
 
 flow = InstalledAppFlow.from_client_secrets_file('client_secret.json', scopes=SCOPES)

@@ -28,6 +28,10 @@ on:
         type: choice
         options: [public, unlisted, private]
         default: public
+      publish_at:
+        description: "publish: HH:MM Berlin time when public videos go live today (empty = immediately)"
+        type: string
+        default: "17:00"
 
 permissions:
   contents: write   # create the Release and commit kids-shorts/state/used.json
@@ -82,7 +86,7 @@ jobs:
           DATE="${{ steps.render.outputs.date }}"
           NOTES=$(node -e "const b=require('./out/$DATE/batch.json');console.log('Awaiting approval.\n\n'+b.videos.map(v=>'- **'+v.id+'** — '+v.title).join('\n'))")
           gh release delete "shorts-$DATE" --yes --cleanup-tag 2>/dev/null || true
-          gh release create "shorts-$DATE" out/$DATE/*.mp4 out/$DATE/batch.json \
+          gh release create "shorts-$DATE" out/$DATE/*.mp4 out/$DATE/*.srt out/$DATE/batch.json \
             --prerelease --title "Doodle Pals Shorts $DATE" --notes "$NOTES"
           echo "Review: ${{ github.server_url }}/${{ github.repository }}/releases/tag/shorts-$DATE"
       - name: Commit topic rotation state
@@ -120,12 +124,12 @@ jobs:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
-        run: python3 upload.py batch --skip "${{ inputs.skip }}" --privacy "${{ inputs.privacy }}"
+        run: python3 upload.py batch --skip "${{ inputs.skip }}" --privacy "${{ inputs.privacy }}" --publish-at "${{ inputs.publish_at }}"
       - name: Mark Release as published
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          LINKS=$(python3 -c "import json;print('\n'.join('- '+r['id']+': '+r['url'] for r in json.load(open('batch/uploaded.json'))))")
+          LINKS=$(python3 -c "import json;print('\n'.join('- '+r['id']+': '+r['url']+(' (public at '+r['publishAt']+')' if r.get('publishAt') else '')+('' if r.get('captions') else ' [no captions yet]') for r in json.load(open('batch/uploaded.json'))))")
           PENDING=$(cat batch/pending.txt)
           gh release upload "shorts-${{ inputs.date }}" batch/uploaded.json --clobber
           if [ -n "$PENDING" ]; then
