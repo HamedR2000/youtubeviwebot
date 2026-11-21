@@ -29,9 +29,9 @@ on:
         options: [public, unlisted, private]
         default: public
       publish_at:
-        description: "publish: HH:MM Berlin time when public videos go live today (empty = immediately)"
+        description: "publish: HH:MM Berlin time when public videos go live today (empty = immediately, the owner's choice)"
         type: string
-        default: "17:00"
+        default: ""
 
 permissions:
   contents: write   # create the Release and commit kids-shorts/state/used.json
