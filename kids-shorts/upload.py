@@ -148,7 +148,15 @@ for n, v in enumerate(videos):
 if args.only_playlists:
     for d in done:
         file_in_playlists(d['id'], d['youtube_id'])
-else:  # captions last (and retried on later runs), so the videos themselves never wait for them
+else:
+    # a run without a schedule makes earlier scheduled uploads of this batch public right away
+    if args.privacy == 'public' and not publish_at:
+        for r in results:
+            if r.get('publishAt'):
+                yt.videos().update(part='status', body={'id': r['youtube_id'], 'status': {
+                    'privacyStatus': 'public', 'selfDeclaredMadeForKids': True, 'containsSyntheticMedia': False}}).execute()
+                r.pop('publishAt')
+                print(f"  made public now: {r['id']}")  # captions last (and retried on later runs), so the videos themselves never wait for them
     for r in results:
         add_captions(r)
 
