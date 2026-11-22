@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "generate (render into a Release), publish (upload an approved date) or playlists (file all published videos into playlists)"
+        description: "generate (render into a Release), publish (upload an approved date), playlists (file all published videos into playlists) or thumbnails (custom thumbnails for all published episodes)"
         type: choice
-        options: [generate, publish, playlists]
+        options: [generate, publish, playlists, thumbnails]
         default: generate
       date:
         description: "YYYY-MM-DD. generate: defaults to today (UTC). publish: required."
@@ -90,7 +90,7 @@ jobs:
           DATE="${{ steps.render.outputs.date }}"
           NOTES=$(node -e "const b=require('./out/$DATE/batch.json');console.log('Awaiting approval.\n\n'+b.videos.map(v=>'- **'+v.id+'** — '+v.title).join('\n'))")
           gh release delete "shorts-$DATE" --yes --cleanup-tag 2>/dev/null || true
-          gh release create "shorts-$DATE" out/$DATE/*.mp4 out/$DATE/*.srt out/$DATE/batch.json \
+          gh release create "shorts-$DATE" out/$DATE/*.mp4 out/$DATE/*.srt out/$DATE/*.jpg out/$DATE/batch.json \
             --prerelease --title "Doodle Pals Shorts $DATE" --notes "$NOTES"
           echo "Review: ${{ github.server_url }}/${{ github.repository }}/releases/tag/shorts-$DATE"
       - name: Commit topic rotation state
@@ -174,3 +174,42 @@ jobs:
           done
           # videos uploaded by a run that crashed before writing uploaded.json (recorded by hand)
           for d in state/backfill/*/; do python3 upload.py "$d" --only-playlists; done
+
+  thumbnails:
+    if: inputs.mode == 'thumbnails'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: kids-shorts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install google-api-python-client google-auth
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Render a thumbnail for every episode script
+        run: |
+          mkdir -p thumbs
+          for f in episodes/*.json; do id=$(basename "$f" .json); node thumbnail.js "$f" "thumbs/episode-$id.jpg"; done
+      - name: Set thumbnails on every published episode
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          for tag in $(gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^shorts-'); do
+            d="tb/$tag"; mkdir -p "$d"
+            gh release download "$tag" --dir "$d" -p batch.json -p uploaded.json 2>/dev/null || continue
+            [ -f "$d/uploaded.json" ] || continue
+            python3 upload.py "$d" --only-thumbnails --thumb-dir thumbs
+          done
+          for d in state/backfill/*/; do python3 upload.py "$d" --only-thumbnails --thumb-dir thumbs; done

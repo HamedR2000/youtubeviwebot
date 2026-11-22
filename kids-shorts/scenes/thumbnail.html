@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- 1280x720 thumbnail for a long episode: ?title=...&sub=...&hue=0..360 -->
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+</style>
+<script src="../characters.js"></script>
+</head>
+<body>
+<svg id="s" width="1280" height="720" viewBox="0 0 1280 720"></svg>
+<script>
+const q = new URLSearchParams(location.search);
+const title = q.get('title') || "Penny's Birthday Party", sub = q.get('sub') || '', hue = Number(q.get('hue') || 200);
+const C = window.CHARACTERS;
+const PAL = ['#FF6B6B', '#FF9F1C', '#FFD23F', '#2EC4B6', '#4D96FF', '#9B5DE5', '#F15BB5'];
+
+// split the headline into at most 3 lines of ~13 characters
+function wrap(s, max) {
+  const out = [];
+  for (const w of s.split(/\s+/)) {
+    const last = out[out.length - 1];
+    if (last && (last + ' ' + w).length <= max) out[out.length - 1] = last + ' ' + w; else out.push(w);
+  }
+  return out;
+}
+let lines = wrap(title, 13);
+if (lines.length > 3) lines = wrap(title, 17);
+const longest = Math.max(...lines.map(l => l.length));
+const fs = Math.min(150, 740 / (longest * 0.6), 430 / lines.length);
+
+let s = `<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${hue} 90% 72%)"/><stop offset="1" stop-color="hsl(${(hue + 50) % 360} 95% 82%)"/></linearGradient>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#2A1B3D" flood-opacity="0.35"/></filter>
+</defs>
+<rect width="1280" height="720" fill="url(#bg)"/>`;
+// sunburst
+for (let i = 0; i < 18; i++) {
+  const a = i * Math.PI / 9, b = a + Math.PI / 18;
+  s += `<path d="M 940 420 L ${940 + Math.cos(a) * 1200} ${420 + Math.sin(a) * 1200} L ${940 + Math.cos(b) * 1200} ${420 + Math.sin(b) * 1200} Z" fill="#fff" opacity="0.13"/>`;
+}
+// confetti stars
+for (let i = 0; i < 26; i++) {
+  const x = (i * 211) % 1280, y = (i * 137) % 720, r = 10 + (i % 4) * 5;
+  s += `<path transform="translate(${x} ${y}) rotate(${i * 23}) scale(${r / 26})" d="M0 -26 L7 -7 L26 0 L7 7 L0 26 L-7 7 L-26 0 L-7 -7 Z" fill="${PAL[i % 7]}" opacity="0.8"/>`;
+}
+// the pals on the right
+s += `<g filter="url(#sh)">
+  <g transform="translate(1135 700) rotate(8) scale(1.05)">${C.coco({})}</g>
+  <g transform="translate(830 705) rotate(-6) scale(0.95)">${C.ellie({})}</g>
+  <g transform="translate(985 690) rotate(3) scale(1.15)">${C.penny({})}</g>
+</g>`;
+// brand badge
+s += `<g transform="translate(40 34)" filter="url(#sh)"><rect width="300" height="64" rx="32" fill="#fff"/>
+  <text x="150" y="44" text-anchor="middle" font-size="36" fill="#FF6B9A">Doodle Pals</text></g>`;
+// headline, each word coloured
+const y0 = 360 - (lines.length * fs * 1.05) / 2 + fs * 0.8;
+lines.forEach((ln, i) => {
+  const y = y0 + i * fs * 1.08;
+  s += `<text x="60" y="${y}" font-size="${fs}" fill="${PAL[(i * 2 + 4) % 7]}" stroke="#fff" stroke-width="${fs * 0.16}" stroke-linejoin="round" paint-order="stroke" filter="url(#sh)">${ln.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text>`;
+});
+// sub line on a ribbon
+if (sub) {
+  const sw = Math.min(700, 60 + sub.length * 26);
+  s += `<g transform="translate(40 600) rotate(-2)" filter="url(#sh)"><rect width="${sw}" height="80" rx="20" fill="#3B2B4F"/>
+    <text x="${sw / 2}" y="54" text-anchor="middle" font-size="${Math.min(46, (sw - 40) / (sub.length * 0.56))}" fill="#FFD23F">${sub.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text></g>`;
+}
+document.getElementById('s').innerHTML = s;
+</script>
+</body>
+</html>
