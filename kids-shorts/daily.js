@@ -18,6 +18,7 @@ function writeSrt(file, subs) {
 }
 const withOutroSubs = (subs, len) => a.includes('--no-outro') ? subs : [...subs, ...OUTRO_SUBS.map(o => ({ ...o, start: o.start + len, end: o.end + len }))];
 const { buildEpisode } = require('./longvideo');
+const { renderThumbnail } = require('./thumbnail');
 
 const a = process.argv.slice(2);
 const flag = (n, d) => (a.includes(n) ? a[a.indexOf(n) + 1] : d);
@@ -253,8 +254,9 @@ function metadata(t) {
       writeSrt(mp4.replace(/\.mp4$/, '.srt'), withOutroSubs(lines, tl.duration));
       fs.rmSync(mp4.replace(/\.mp4$/, '') + '.work', { recursive: true, force: true });
       withOutro(mp4, 'landscape');
+      await renderThumbnail(ep, mp4.replace(/\.mp4$/, '.jpg'), browser);
       console.log(`[episode] ${ep.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
-      batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), long: true, ...episodeMetadata(ep) });
+      batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), thumbnail: path.basename(mp4).replace(/\.mp4$/, '.jpg'), long: true, ...episodeMetadata(ep) });
       used['episode:' + ep.id] = DATE;
     } else { console.log('[episode] no unused episode script left — write a new one in episodes/'); break; }
   }

@@ -21,6 +21,8 @@ p.add_argument('--privacy', default='public', choices=['public', 'unlisted', 'pr
 p.add_argument('--publish-at', default='', help='HH:MM Europe/Berlin: schedule public videos for this time today')
 p.add_argument('--dry-run', action='store_true')
 p.add_argument('--only-playlists', action='store_true', help='just file already-uploaded videos into playlists')
+p.add_argument('--only-thumbnails', action='store_true', help='just set custom thumbnails on already-uploaded videos')
+p.add_argument('--thumb-dir', default='', help='extra folder with <batch id>.jpg thumbnails (backfill)')
 args = p.parse_args()
 
 batch = json.load(open(os.path.join(args.batch_dir, 'batch.json')))
@@ -31,7 +33,7 @@ done = json.load(open(up_file)) if os.path.exists(up_file) else []
 skip |= {d['id'] for d in done}
 # long episodes first: if YouTube's daily upload limit is hit, the most valuable video is already up
 videos = sorted((v for v in batch['videos'] if v['id'] not in skip), key=lambda v: not v.get('long'))
-if args.only_playlists:
+if args.only_playlists or args.only_thumbnails:
     videos = []
 # scheduled release: upload as private with publishAt (YouTube flips it to public at that time)
 publish_at = None
@@ -107,6 +109,31 @@ def add_captions(entry):
             print(f"  (caption error for {entry['id']}: {e})")
 
 
+thumb_ok = True
+
+
+def set_thumbnail(entry):
+    """Custom thumbnail for one uploaded video (needs a phone-verified channel)."""
+    global thumb_ok
+    v = next((x for x in batch['videos'] if x['id'] == entry['id']), {})
+    cands = [os.path.join(args.batch_dir, v['thumbnail'])] if v.get('thumbnail') else []
+    if args.thumb_dir:
+        cands.append(os.path.join(args.thumb_dir, entry['id'] + '.jpg'))
+    jpg = next((c for c in cands if os.path.exists(c)), None)
+    if not thumb_ok or entry.get('thumbnail') or not jpg:
+        return
+    try:
+        yt.thumbnails().set(videoId=entry['youtube_id'], media_body=MediaFileUpload(jpg, mimetype='image/jpeg')).execute()
+        entry['thumbnail'] = True
+        print(f"    + thumbnail for {entry['id']}")
+    except HttpError as e:
+        if e.resp.status in (401, 403):
+            thumb_ok = False
+            print(f'  (thumbnails skipped: {e})')
+        else:
+            print(f"  (thumbnail error for {entry['id']}: {e})")
+
+
 results = list(done)
 pending = []
 for n, v in enumerate(videos):
@@ -145,10 +172,15 @@ for n, v in enumerate(videos):
     results.append({'id': v['id'], 'youtube_id': resp['id'], 'url': url, **({'publishAt': publish_at} if publish_at else {})})
     file_in_playlists(v['id'], resp['id'])
 
-if args.only_playlists:
+if args.only_thumbnails:
+    for d in results:
+        set_thumbnail(d)
+elif args.only_playlists:
     for d in done:
         file_in_playlists(d['id'], d['youtube_id'])
 else:
+    for r in results:
+        set_thumbnail(r)
     # a run without a schedule makes earlier scheduled uploads of this batch public right away
     if args.privacy == 'public' and not publish_at:
         for r in results:
@@ -156,7 +188,8 @@ else:
                 yt.videos().update(part='status', body={'id': r['youtube_id'], 'status': {
                     'privacyStatus': 'public', 'selfDeclaredMadeForKids': True, 'containsSyntheticMedia': False}}).execute()
                 r.pop('publishAt')
-                print(f"  made public now: {r['id']}")  # captions last (and retried on later runs), so the videos themselves never wait for them
+                print(f"  made public now: {r['id']}")
+    # captions last (and retried on later runs), so the videos themselves never wait for them
     for r in results:
         add_captions(r)
 
