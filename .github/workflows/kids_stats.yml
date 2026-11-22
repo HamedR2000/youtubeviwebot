@@ -5,7 +5,8 @@ name: Kids Stats (Doodle Pals hourly views)
 # The log lives in the 'stats' release as stats.jsonl; `python3 kids-shorts/stats.py report stats.jsonl` summarises it.
 on:
   schedule:
-    - cron: "23 * * * *"
+    # every 30 min: GitHub often skips scheduled runs, so ask twice as often (stats.py handles gaps)
+    - cron: "23,53 * * * *"
   workflow_dispatch:
 
 permissions:

@@ -21,7 +21,7 @@ const { buildEpisode } = require('./longvideo');
 
 const a = process.argv.slice(2);
 const flag = (n, d) => (a.includes(n) ? a[a.indexOf(n) + 1] : d);
-const COUNT = Number(flag('--count', 5));
+const COUNT = Number(flag('--count', 3));
 const DATE = flag('--date', new Date().toISOString().slice(0, 10));
 const OUT = path.join(flag('--out', 'out'), DATE);
 const STATE = path.join(__dirname, 'state', 'used.json');
@@ -238,9 +238,11 @@ function metadata(t) {
     batch.push({ id: t.id, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), ...metadata(t) });
     used[t.id] = DATE;
   }
-  // one long (16:9) episode per day: the next episode script not yet used
-  if (!a.includes('--no-episode')) {
-    const dir = path.join(__dirname, 'episodes');
+  // long (16:9) episodes: the next --episodes (default 2) episode scripts not yet used
+  const EPISODES = a.includes('--no-episode') ? 0 : Number(flag('--episodes', 2));
+  const epDir = path.join(__dirname, 'episodes');
+  for (let e = 0; e < EPISODES; e++) {
+    const dir = epDir;
     const next = fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort().find(f => !used['episode:' + f.replace(/\.json$/, '')]);
     if (next) {
       const ep = JSON.parse(fs.readFileSync(path.join(dir, next), 'utf8'));
@@ -254,11 +256,12 @@ function metadata(t) {
       console.log(`[episode] ${ep.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
       batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), long: true, ...episodeMetadata(ep) });
       used['episode:' + ep.id] = DATE;
-    } else console.log('[episode] no unused episode script left — write a new one in episodes/');
+    } else { console.log('[episode] no unused episode script left — write a new one in episodes/'); break; }
   }
+  const episodesLeft = fs.readdirSync(epDir).filter(f => f.endsWith('.json') && !used['episode:' + f.replace(/\.json$/, '')]).length;
   await browser.close();
   for (const f of Object.values(outro)) fs.rmSync(f, { force: true });
-  fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ date: DATE, videos: batch, topicsLeft: left }, null, 2));
+  fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ date: DATE, videos: batch, topicsLeft: left, episodesLeft }, null, 2));
   fs.mkdirSync(path.dirname(STATE), { recursive: true });
   fs.writeFileSync(STATE, JSON.stringify(used, null, 2) + '\n');
   console.log('batch ready:', OUT);
