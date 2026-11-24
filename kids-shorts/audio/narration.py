@@ -159,6 +159,22 @@ elif template == 'color':
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"What else is {w}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
+elif template == 'shadow':
+    w, art = topic['word'].lower(), topic.get('article') or ''
+    gap = tl['letterGap']
+    place(say("Who is hiding? Can you guess?"), 0.35, 2.6)
+    place(say("Look at the shadow... hmm!"), 3.1, tl['count'][0] - 3.2)
+    for k, tc in zip(['Three!', 'Two!', 'One!'], tl['count']):
+        place(say(k, speed=1.05), tc + 0.05, 0.9)
+    place(say(f"It's {art + ' ' if art else ''}{w}!"), tl['itsA'] + 0.05, tl['extra'] - tl['itsA'] - 0.1)
+    place(say(topic.get('extra') or "Yay! Did you get it right?"), tl['extra'] + 0.1, tl['word'] - tl['extra'] - 0.3)
+    for i, ch in enumerate(topic['word']):
+        if ch.isalpha():
+            place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['word']) * gap + 0.1
+    place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say("Did you guess it? Great job!"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
+
 elif template == 'drawalong':
     COCO = 'bf_lily'
     w, art = topic['word'].lower(), topic['article']

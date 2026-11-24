@@ -14,13 +14,15 @@ DUR = 20.0
 T = dict(draw=(2.2, 6.4), fill=7.0, face=8.0, rays=9.4, word=12.6, gap=0.5, ask=16.4, letters=6)
 if len(sys.argv) > 2:
     tl = json.load(open(sys.argv[2]))
-    T.update(draw=tuple(tl.get('draw') or tl.get('erase') or tl['colour']), word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
+    T.update(draw=tuple(tl.get('draw') or tl.get('erase') or tl.get('colour') or (0, 0.01)), word=tl['word'], gap=tl['letterGap'], ask=tl['ask'], letters=tl['letters'])
     if tl.get('template') == 'count':
         T.update(pops=tl['pops'], fill=None, face=None, rays=None, color=tl['color'])
     elif tl.get('template') == 'color':
         T.update(draw=tuple(tl['colour']), fill=tl['show'], face=None, rays=tl['done'], pops=tl['extras'])
     elif tl.get('template') == 'animal':
         T.update(fill=tl['reveal'], face=tl['bubble'], rays=tl['reveal'] + 0.1)
+    elif tl.get('template') == 'shadow':  # tick per countdown number, sparkle on the reveal
+        T.update(fill=tl['reveal'], face=None, rays=tl['reveal'] + 0.05, pops=tl['count'])
     elif tl.get('template') == 'drawalong':  # a pop + ding as each new step starts, sparkle when coloured
         T.update(fill=tl['colour'][0], face=None, rays=tl['done'], pops=tl['steps'][1:])
     elif tl.get('template') == 'abc':

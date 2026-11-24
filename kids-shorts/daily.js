@@ -76,6 +76,24 @@ function episodeMetadata(ep) {
 }
 
 function metadata(t) {
+  if (t.template === 'shadow') {
+    const w = t.word.split(' ').map(x => x[0] + x.slice(1).toLowerCase()).join(' ');
+    return {
+      title: `Who Is Hiding? 🔦 Guess the Shadow! It's ${t.article ? t.article + ' ' : ''}${w} ${t.emoji} | Guessing Game for Kids #shorts`.slice(0, 100),
+      description: [
+        `Who is hiding in the shadow? 🔦 Look carefully, count 3-2-1 with Penny the Pencil… and guess! It's ${t.article ? t.article + ' ' : ''}${w.toLowerCase()} ${t.emoji}`,
+        '',
+        'A fun guessing game for toddlers and preschoolers: shapes, shadows and first English words.',
+        'Grown-ups: pause before the reveal and let your little one shout the answer! 🙌',
+        '',
+        tags('guesstheshadow', 'guessinggame', w, 'kidsgames', 'firstwords', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
+      ].join('\n'),
+      tags: ['guess the shadow', 'guessing game for kids', 'who is hiding', 'shadow game', `${w.toLowerCase()} for kids`, 'first words',
+        'toddler learning', 'preschool', 'english for kids', 'Doodle Pals', 'Penny the Pencil'],
+      categoryId: '27',
+      madeForKids: true,
+    };
+  }
   if (t.template === 'drawalong') {
     const w = t.word[0] + t.word.slice(1).toLowerCase(), A = t.article === 'an' ? 'an' : 'a';
     return {
@@ -222,7 +240,7 @@ function metadata(t) {
     execFileSync('python3', [path.join(__dirname, 'audio', 'music.py'), wav, tlFile, String(seed)]);
     if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
       const topicFile = path.join(OUT, `${t.id}.topic.json`);
-      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps }));
+      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps, extra: t.extra }));
       execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
         '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
       fs.rmSync(topicFile);
