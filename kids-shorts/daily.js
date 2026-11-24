@@ -19,6 +19,7 @@ function writeSrt(file, subs) {
 const withOutroSubs = (subs, len) => a.includes('--no-outro') ? subs : [...subs, ...OUTRO_SUBS.map(o => ({ ...o, start: o.start + len, end: o.end + len }))];
 const { buildEpisode } = require('./longvideo');
 const { renderThumbnail } = require('./thumbnail');
+const { pickCompilation, buildCompilation } = require('./compile');
 
 const a = process.argv.slice(2);
 const flag = (n, d) => (a.includes(n) ? a[a.indexOf(n) + 1] : d);
@@ -231,34 +232,39 @@ function metadata(t) {
   const outro = { portrait: path.join(OUT, 'outro-portrait.tmp.mp4'), landscape: path.join(OUT, 'outro-landscape.tmp.mp4') };
   if (!a.includes('--no-outro')) for (const o of Object.keys(outro)) await renderOutro(o, outro[o], { browser });
   const withOutro = (mp4, o) => { if (!a.includes('--no-outro')) appendOutro(mp4, outro[o]); };
-  for (const [i, t] of picked.entries()) {
-    const mp4 = path.join(OUT, `${t.id}.mp4`);
-    const wav = path.join(OUT, `${t.id}.wav`);
-    const tlFile = path.join(OUT, `${t.id}.timeline.json`);
+  // one Short (portrait) with music + narration; returns its captions and length (no end card)
+  async function renderShort(t, mp4) {
+    const wav = mp4.replace(/\.mp4$/, '.wav');
+    const tlFile = mp4.replace(/\.mp4$/, '.timeline.json');
     fs.writeFileSync(tlFile, JSON.stringify(await getTimeline(sceneFor(t), t.id, browser)));
     const seed = [...(DATE + t.id)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
     execFileSync('python3', [path.join(__dirname, 'audio', 'music.py'), wav, tlFile, String(seed)]);
+    let subs = [];
     if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
-      const topicFile = path.join(OUT, `${t.id}.topic.json`);
+      const topicFile = mp4.replace(/\.mp4$/, '.topic.json');
       fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps, extra: t.extra }));
       execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
         '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
       fs.rmSync(topicFile);
+      if (fs.existsSync(wav + '.subs.json')) { subs = JSON.parse(fs.readFileSync(wav + '.subs.json', 'utf8')); fs.rmSync(wav + '.subs.json'); }
     }
-    const t0 = Date.now();
     const { timeline: rtl } = await renderTopic({ scene: sceneFor(t), topic: t.id, out: mp4, audio: wav, browser });
-    if (fs.existsSync(wav + '.subs.json')) {
-      writeSrt(mp4.replace(/\.mp4$/, '.srt'), withOutroSubs(JSON.parse(fs.readFileSync(wav + '.subs.json', 'utf8')), rtl.end || 20));
-      fs.rmSync(wav + '.subs.json');
-    }
     fs.rmSync(wav); fs.rmSync(tlFile);
+    return { subs, len: rtl.end || 20 };
+  }
+
+  for (const [i, t] of picked.entries()) {
+    const mp4 = path.join(OUT, `${t.id}.mp4`);
+    const t0 = Date.now();
+    const { subs, len } = await renderShort(t, mp4);
+    writeSrt(mp4.replace(/\.mp4$/, '.srt'), withOutroSubs(subs, len));
     withOutro(mp4, 'portrait');
     console.log(`[${i + 1}/${picked.length}] ${t.id} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
     batch.push({ id: t.id, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), ...metadata(t) });
     used[t.id] = DATE;
   }
   // long (16:9) episodes: the next --episodes (default 2) episode scripts not yet used
-  const EPISODES = a.includes('--no-episode') ? 0 : Number(flag('--episodes', 2));
+  const EPISODES = a.includes('--no-episode') ? 0 : Number(flag('--episodes', 1));
   const epDir = path.join(__dirname, 'episodes');
   for (let e = 0; e < EPISODES; e++) {
     const dir = epDir;
@@ -277,6 +283,20 @@ function metadata(t) {
       batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), thumbnail: path.basename(mp4).replace(/\.mp4$/, '.jpg'), long: true, ...episodeMetadata(ep) });
       used['episode:' + ep.id] = DATE;
     } else { console.log('[episode] no unused episode script left — write a new one in episodes/'); break; }
+  }
+  // compilation videos (16:9) made of already-published Shorts of one category
+  const COMPS = Number(flag('--compilations', 1));
+  for (let c = 0; c < COMPS; c++) {
+    const pick = pickCompilation(used, DATE);
+    if (!pick) { console.log('[mix] not enough published Shorts in any category yet'); break; }
+    const t0 = Date.now();
+    const v = await buildCompilation({ pick, DATE: c ? `${DATE}-${c + 1}` : DATE, OUT, browser, renderShort,
+      outroMp4: a.includes('--no-outro') ? null : outro.landscape, outroSubs: OUTRO_SUBS });
+    const { subs, compiled, ...meta } = v;
+    writeSrt(path.join(OUT, v.id + '.srt'), subs);
+    batch.push({ ...meta, captions: v.id + '.srt' });
+    for (const id of compiled) used['mix:' + id] = DATE;
+    console.log(`[mix] ${v.id}: ${compiled.length} segments (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
   }
   const episodesLeft = fs.readdirSync(epDir).filter(f => f.endsWith('.json') && !used['episode:' + f.replace(/\.json$/, '')]).length;
   await browser.close();
