@@ -23,6 +23,7 @@ SR = 44100
 tl = json.load(open(a.timeline))
 topic = json.load(open(a.topic))
 template = topic.get('template', 'draw-shape')
+template = {'vehicle': 'animal'}.get(template, template)  # vehicles reuse the animal scene and lines
 if template == 'draw-shape':
     shape, thing, art = topic['shape'].lower(), topic['becomes'].lower(), topic['article']
     an = 'an' if shape[0] in 'aeiou' else 'a'
@@ -127,7 +128,7 @@ elif template == 'animal':
     # Ellie the Eraser and the animal sounds get their own voices
     ELLIE, ANIMAL = 'af_bella', 'am_puck'
     w, snd, art = topic['word'].lower(), topic['sound'], topic['article']
-    snd1 = snd.split()[0].rstrip('!').lower()
+    snd1 = snd.split()[0].rstrip('!,').lower()
     gap = tl['letterGap']
     place(say(snd, speed=0.85, voice=ANIMAL), tl['sound1'], 1.2)
     place(say(f"Who says {snd1}?"), 1.6, 1.15)
@@ -136,7 +137,8 @@ elif template == 'animal':
     place(say(snd, speed=0.85, voice=ANIMAL), tl['bubble'] + 0.05, 1.2)
     place(say(f"The {w} says {snd1}!"), tl['bubble'] + 1.35, tl['word'] - tl['bubble'] - 1.45)
     for i, ch in enumerate(topic['word']):
-        place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
+        if ch.isalpha():
+            place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
     end_word = tl['word'] + len(topic['word']) * gap + 0.1
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"Can you say {snd1}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)

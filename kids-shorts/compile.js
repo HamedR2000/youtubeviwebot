@@ -25,6 +25,8 @@ const SERIES = {
     title: ts => `Learn Shapes for Kids! ✏️ Circle, Square, Triangle and More | ${ts.length} Shapes`, learn: () => ['shapes', 'drawing'], tags: ['shapes', 'drawingforkids'] },
   drawalong: { frame: "Let's Draw!", seg: 29, intro: () => "Hi friends! Get your crayons. Let's draw together!",
     title: ts => `How to Draw ${ts.length} Easy Things! ✏️ ${list(ts, 3)} and More | Drawing for Kids`, learn: () => ['drawing', 'shapes', 'first words'], tags: ['howtodraw', 'drawingforkids', 'easydrawing'] },
+  vehicle: { frame: 'Vehicle Sounds!', seg: 20, intro: () => "Hi friends! Beep beep! Choo choo! Let's learn vehicle sounds!",
+    title: ts => `Vehicle Sounds for Kids! 🚒 ${ts.slice(0, 4).map(t => cap(t.word)).join(', ')} and More | ${ts.length} Vehicles`, learn: () => ['vehicle names', 'vehicle sounds'], tags: ['vehiclesounds', 'vehicles'] },
   shadow: { frame: 'Who Is Hiding?', seg: 20, intro: () => "Hi friends! Let's play a game. Who is hiding? Can you guess?",
     title: ts => `Guess the Shadow! 🔦 Who Is Hiding? ${ts.length} Guessing Games for Kids`, learn: () => ['guessing game', 'first words', 'animal names'], tags: ['guesstheshadow', 'guessinggame'] },
 };

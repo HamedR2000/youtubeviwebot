@@ -293,6 +293,55 @@
     TOPICS.push({ id: `animal-${key}`, template: 'animal', word, article, sound, soundText, emoji, artData: ANIMAL_ART[key] });
   }
 
+  // ---- Vehicles: "Who says beep beep?" — same scene as the animals (Ellie erases the scribbles) ----
+  const RO = (x, y, w, h, fill, rx = 16) => R(x, y, w, h, fill, rx, O);
+  const wheel = (x, y, r = 60) => [CO(x, y, r, '#3B2B4F'), C(x, y, r * 0.4, '#C9CED6')];
+  const VEHICLE_ART = {
+    car: { fill: [P('M -280 80 L -280 0 Q -280 -30 -240 -30 L -160 -30 L -100 -140 L 110 -140 L 170 -30 L 250 -30 Q 290 -30 290 10 L 290 80 Z', '#FF6B6B', O)],
+      front: [P('M -80 -45 L -45 -120 L 95 -120 L 135 -45 Z', '#BDE6FF', O), C(265, 20, 16, '#FFD23F'), ...wheel(-160, 90), ...wheel(165, 90)], face: { x: 25, y: -85, s: 0.28, mouth: false } },
+    bus: { fill: [RO(-300, -200, 600, 300, '#FFD23F', 40)],
+      front: [RO(-260, -165, 95, 90, '#BDE6FF', 12), RO(-145, -165, 95, 90, '#BDE6FF', 12), RO(-30, -165, 95, 90, '#BDE6FF', 12), RO(190, -165, 80, 250, '#BDE6FF', 12),
+        R(-300, 10, 490, 24, '#FF9F1C', 0), ...wheel(-170, 110, 58), ...wheel(150, 110, 58)], face: { x: -40, y: 50, s: 0.38 } },
+    firetruck: { fill: [RO(-300, -120, 420, 200, '#E63946', 20), RO(100, -180, 200, 260, '#E63946', 24)],
+      front: [RO(150, -150, 110, 90, '#BDE6FF', 12), line('M -280 -150 L 70 -150 M -280 -190 L 70 -190 M -240 -190 L -240 -150 M -170 -190 L -170 -150 M -100 -190 L -100 -150 M -30 -190 L -30 -150 M 40 -190 L 40 -150', '#C9CED6', 12),
+        CO(200, -205, 24, '#4D96FF'), ...wheel(-190, 100), ...wheel(190, 100)], face: { x: 205, y: 20, s: 0.28, mouth: false } },
+    policecar: { fill: [P('M -280 80 L -280 0 Q -280 -30 -240 -30 L -160 -30 L -100 -140 L 110 -140 L 170 -30 L 250 -30 Q 290 -30 290 10 L 290 80 Z', '#4D96FF', O)],
+      front: [R(-280, 10, 570, 34, '#FFFFFF', 0), P('M -80 -45 L -45 -120 L 95 -120 L 135 -45 Z', '#BDE6FF', O), RO(-20, -185, 70, 40, '#FF6B6B', 10), ...wheel(-160, 90), ...wheel(165, 90)],
+      face: { x: 25, y: -85, s: 0.28, mouth: false } },
+    ambulance: { fill: [RO(-290, -180, 560, 260, '#FFFFFF', 30)],
+      front: [RO(140, -150, 110, 90, '#BDE6FF', 12), P('M -125 -110 h 50 v 50 h 50 v 50 h -50 v 50 h -50 v -50 h -50 v -50 h 50 z', '#E63946'), CO(-200, -200, 24, '#E63946'),
+        R(-290, 30, 560, 22, '#E63946', 0), ...wheel(-170, 100), ...wheel(170, 100)], face: { x: 195, y: -5, s: 0.25, mouth: false } },
+    train: { fill: [RO(-260, -60, 340, 160, '#3DAA3D', 30), RO(60, -200, 210, 300, '#E63946', 20)],
+      front: [RO(100, -165, 130, 90, '#BDE6FF', 12), P('M -210 -60 L -230 -170 L -130 -170 L -150 -60 Z', '#3B2B4F', O), ...wheel(-180, 120, 55), ...wheel(-40, 120, 55), ...wheel(165, 120, 72)],
+      face: { x: -90, y: 15, s: 0.35 } },
+    airplane: { back: [P('M -60 -20 L 30 -20 L -60 -170 L -130 -170 Z', '#4D96FF', O), P('M -250 -20 L -300 -170 L -220 -170 L -170 -40 Z', '#FF6B6B', O)],
+      fill: [EO(0, 0, 300, 90, '#FFFFFF')],
+      front: [P('M -60 10 L 40 10 L -40 210 L -120 210 Z', '#4D96FF', O), C(-120, -10, 18, '#BDE6FF'), C(-60, -10, 18, '#BDE6FF'), C(0, -10, 18, '#BDE6FF')], face: { x: 195, y: -5, s: 0.25, mouth: false } },
+    boat: { back: [RO(40, -230, 60, 110, '#FFD23F', 10)], fill: [P('M -290 20 L 290 20 L 220 160 L -220 160 Z', '#FF6B6B', O), RO(-150, -130, 260, 150, '#FFFFFF', 20)],
+      front: [CO(-60, -55, 32, '#BDE6FF'), CO(30, -55, 32, '#BDE6FF'), line('M -320 200 Q -270 170 -220 200 Q -170 230 -120 200 Q -70 170 -20 200 Q 30 230 80 200 Q 130 170 180 200 Q 230 230 280 200', '#4D96FF', 14)],
+      face: { x: 0, y: 85, s: 0.32 } },
+    tractor: { back: [RO(120, -170, 30, 110, '#3B2B4F', 8)], fill: [RO(-120, -60, 310, 140, '#3DAA3D', 20), RO(-170, -230, 180, 200, '#3DAA3D', 16)],
+      front: [RO(-140, -200, 120, 100, '#BDE6FF', 10), CO(-120, 120, 110, '#3B2B4F'), C(-120, 120, 45, '#FFD23F'), CO(200, 150, 72, '#3B2B4F'), C(200, 150, 28, '#FFD23F')],
+      face: { x: 100, y: 5, s: 0.3, mouth: false } },
+    helicopter: { back: [line('M -280 -205 L 280 -205', '#3B2B4F', 16), R(-10, -205, 20, 60, '#3B2B4F', 4), line('M -150 195 L 170 195 M -90 195 L -70 140 M 110 195 L 90 140', '#3B2B4F', 14)],
+      fill: [P('M -180 -30 L -330 -60 L -330 0 L -180 40 Z', '#FFD23F', O), EO(0, 0, 220, 150, '#FFD23F')],
+      front: [EO(105, -15, 92, 90, '#BDE6FF')], face: { x: 105, y: -20, s: 0.33 } },
+    rocket: { fill: [P('M -90 80 L -190 230 L -90 200 Z', '#E63946', O), P('M 90 80 L 190 230 L 90 200 Z', '#E63946', O), P('M -60 200 Q 0 330 60 200 Z', '#FF9F1C', O),
+      P('M 0 -320 C 120 -200 120 120 90 200 L -90 200 C -120 120 -120 -200 0 -320 Z', '#FFFFFF', O)],
+      front: [CO(0, -110, 72, '#BDE6FF')], face: { x: 0, y: -115, s: 0.3 } },
+    truck: { fill: [P('M -300 -120 L 100 -120 L 100 80 L -280 80 Z', '#FFD23F', O), RO(110, -180, 180, 260, '#FF9F1C', 20)],
+      front: [RO(150, -150, 110, 90, '#BDE6FF', 12), ...wheel(-170, 100), ...wheel(190, 100)], face: { x: 200, y: 25, s: 0.28 } },
+  };
+  const VEHICLES = [
+    ['car', 'CAR', 'a', 'Beep beep!', 'BEEP BEEP', '🚗'], ['firetruck', 'FIRE TRUCK', 'a', 'Wee-woo, wee-woo!', 'WEE-WOO', '🚒'], ['train', 'TRAIN', 'a', 'Choo choo!', 'CHOO CHOO', '🚂'],
+    ['airplane', 'AIRPLANE', 'an', 'Zoom zoom!', 'ZOOM', '✈️'], ['bus', 'BUS', 'a', 'Honk honk!', 'HONK', '🚌'], ['boat', 'BOAT', 'a', 'Toot toot!', 'TOOT', '⛵'],
+    ['policecar', 'POLICE CAR', 'a', 'Nee-naw, nee-naw!', 'NEE-NAW', '🚓'], ['tractor', 'TRACTOR', 'a', 'Chug chug!', 'CHUG', '🚜'], ['helicopter', 'HELICOPTER', 'a', 'Whirr whirr!', 'WHIRR', '🚁'],
+    ['ambulance', 'AMBULANCE', 'an', 'Wee-oo, wee-oo!', 'WEE-OO', '🚑'], ['rocket', 'ROCKET', 'a', 'Whoosh!', 'WHOOSH', '🚀'], ['truck', 'TRUCK', 'a', 'Vroom vroom!', 'VROOM', '🚚'],
+  ];
+  for (const [key, word, article, sound, soundText, emoji] of VEHICLES) {
+    TOPICS.push({ id: `vehicle-${key}`, template: 'vehicle', word, article, sound, soundText, emoji, artData: VEHICLE_ART[key] });
+  }
+
   // ---- Colors: Coco colours a grey object, then two more things of that colour ----
   const COLORS_T = [
     ['RED', '#F2454B', '🍎', ['abc-a', 'apple'], ['heart-strawberry', 'strawberry'], ['abc-h', 'heart']],

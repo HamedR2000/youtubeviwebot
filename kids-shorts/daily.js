@@ -27,7 +27,8 @@ const COUNT = Number(flag('--count', 3));
 const DATE = flag('--date', new Date().toISOString().slice(0, 10));
 const OUT = path.join(flag('--out', 'out'), DATE);
 const STATE = path.join(__dirname, 'state', 'used.json');
-const sceneFor = t => path.join(__dirname, 'scenes', `${t.template || 'draw-shape'}.html`);
+const SCENE_OF = { vehicle: 'animal' }; // templates that reuse another template's scene
+const sceneFor = t => path.join(__dirname, 'scenes', `${SCENE_OF[t.template] || t.template || 'draw-shape'}.html`);
 
 function pickTopics() {
   const used = fs.existsSync(STATE) ? JSON.parse(fs.readFileSync(STATE, 'utf8')) : {};
@@ -77,6 +78,25 @@ function episodeMetadata(ep) {
 }
 
 function metadata(t) {
+  if (t.template === 'vehicle') {
+    const w = t.word.split(' ').map(x => x[0] + x.slice(1).toLowerCase()).join(' ');
+    const snd = t.sound.replace(/[!,]/g, '').split(' ').slice(0, 2).join(' ');
+    return {
+      title: `Who Says ${snd}? ${t.emoji} It's ${t.article === 'an' ? 'an' : 'a'} ${w}! | Vehicle Sounds for Kids #shorts`.slice(0, 100),
+      description: [
+        `${t.sound} Who says ${snd.toLowerCase()}? Ellie the Eraser erases the scribbles… it's ${t.article} ${w.toLowerCase()}! ${t.emoji}`,
+        '',
+        'Learn vehicle names and sounds in simple English with the Doodle Pals — for kids aged 2–6.',
+        `Grown-ups: make the sound together — ${t.sound.toLowerCase()} 🙌`,
+        '',
+        tags(w, 'vehiclesounds', 'vehicles', 'carsforkids', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
+      ].join('\n'),
+      tags: ['vehicle sounds for kids', `${w.toLowerCase()} for kids`, `${w.toLowerCase()} sound`, 'vehicles for toddlers', 'cars and trucks', 'toddler learning',
+        'preschool', 'english for kids', 'Doodle Pals', 'Ellie the Eraser'],
+      categoryId: '27',
+      madeForKids: true,
+    };
+  }
   if (t.template === 'shadow') {
     const w = t.word.split(' ').map(x => x[0] + x.slice(1).toLowerCase()).join(' ');
     return {
