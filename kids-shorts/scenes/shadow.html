@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- "Who is hiding?" Short: a dark shadow, a 3-2-1 countdown, then the colourful reveal and the word. -->
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #FFF6E9; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+</style>
+<script src="../topics.js"></script>
+<script src="../characters.js"></script>
+</head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2B2D6E"/><stop offset="0.5" stop-color="#5B3F9E"/><stop offset="1" stop-color="#F28DB2"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF8D6"/><stop offset="1" stop-color="#FFE38A"/></radialGradient>
+    <filter id="sil" x="-10%" y="-10%" width="120%" height="120%"><feFlood flood-color="#231B3A"/><feComposite operator="in" in2="SourceAlpha"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#1A1030" flood-opacity="0.35"/></filter>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <g id="stars"></g>
+  <g filter="url(#soft)"><circle cx="540" cy="930" r="440" fill="url(#spot)"/></g>
+  <g id="rays"></g>
+  <text id="t1" x="540" y="250" text-anchor="middle" font-size="72" fill="#FFFFFF"></text>
+  <text id="t2" x="540" y="385" text-anchor="middle" font-size="150" fill="#FFD23F" stroke="#3B2B4F" stroke-width="10" paint-order="stroke"></text>
+  <g id="artWrap" transform="translate(540 930) scale(0.85)">
+    <g id="shadowArt" filter="url(#sil)"></g>
+    <g id="colorArt"></g>
+  </g>
+  <text id="count" x="540" y="1530" text-anchor="middle" font-size="200" fill="#FFFFFF" stroke="#3B2B4F" stroke-width="12" paint-order="stroke"></text>
+  <g id="word"></g>
+  <text id="ask" x="540" y="1790" text-anchor="middle" font-size="76" fill="#FFFFFF" opacity="0"></text>
+  <g id="sparkles"></g>
+  <g id="penny"></g>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOut = k => 1 - Math.pow(1 - k, 3);
+const easeBack = k => { const c = 1.9; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const COLORS = ['#FF6B6B', '#FF9F1C', '#FFD23F', '#2EC4B6', '#4D96FF', '#9B5DE5', '#F15BB5'];
+const FACE = `<ellipse cx="-150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/><ellipse cx="150" cy="60" rx="46" ry="30" fill="#FF8FA3" opacity="0.75"/>
+<g transform="translate(-95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>
+<g transform="translate(95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>`;
+const MOUTH = '<path d="M -90 70 Q 0 160 90 70" fill="none" stroke="#3B2B4F" stroke-width="18" stroke-linecap="round"/>';
+
+// Timeline (s)
+const T = { titleIn: 0.2, shadow: 0.8, count: [4.6, 5.6, 6.6], reveal: 7.6, itsA: 7.8, extra: 9.8, word: 12.6, letterGap: 0.5, ask: 16.4, end: 20 };
+let S = null;
+
+function artOf(topic) { return topic.artData || window.TOPICS.find(t => t.id === topic.art).artData || window.TOPICS.find(t => t.id === topic.art); }
+function drawArt(art, parent) {
+  for (const layer of ['back', 'fill', 'front']) for (const [tag, attrs] of (art[layer] || [])) el(tag, attrs, parent);
+  if (art.face) { const f = el('g', { transform: `translate(${art.face.x || 0} ${art.face.y}) scale(${art.face.s})` }, parent); f.innerHTML = FACE + (art.face.mouth === false ? '' : MOUTH); }
+  if (art.strokes) el('path', { d: art.strokes[0], fill: 'none', stroke: '#3B2B4F', 'stroke-width': 22, 'stroke-linejoin': 'round' }, parent);
+}
+
+function setup(topicId) {
+  const topic = window.TOPICS.find(t => t.id === topicId) || window.TOPICS.find(t => t.template === 'shadow');
+  for (const id of ['shadowArt', 'colorArt', 'word', 'stars', 'rays', 'sparkles']) $(id).innerHTML = '';
+  const art = artOf(topic);
+  drawArt(art, $('shadowArt')); drawArt(art, $('colorArt'));
+  T.letterGap = Math.min(0.5, 3.0 / topic.word.replace(/[^A-Z]/g, '').length);
+  const stars = Array.from({ length: 30 }, (_, i) => el('circle', { cx: (i * 173) % 1080, cy: (i * 97) % 1900, r: 3 + (i % 3) * 2, fill: '#fff', opacity: 0.6 }, $('stars')));
+  const rays = Array.from({ length: 16 }, (_, i) => {
+    const a = i * Math.PI / 8, b = a + Math.PI / 16;
+    return el('path', { d: `M 540 930 L ${540 + Math.cos(a) * 900} ${930 + Math.sin(a) * 900} L ${540 + Math.cos(b) * 900} ${930 + Math.sin(b) * 900} Z`, fill: '#FFE38A', opacity: 0 }, $('rays'));
+  });
+  const W = topic.word, L = W.length, step = Math.min(125, 940 / L), fs = Math.min(160, step * 1.3);
+  const letters = W.split('').map((ch, i) => {
+    const x = 540 + (i - (L - 1) / 2) * step;
+    const t = el('text', { x, y: 1600, 'text-anchor': 'middle', 'font-size': fs, fill: COLORS[i % 7], stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke' }, $('word'));
+    t.textContent = ch; return { t, x };
+  });
+  const sparkles = Array.from({ length: 18 }, (_, i) => {
+    const a = i * 2.39996, d = 380 + (i * 47) % 140;
+    const g = el('path', { d: 'M0 -26 L7 -7 L26 0 L7 7 L0 26 L-7 7 L-26 0 L-7 -7 Z', fill: COLORS[i % 7] }, $('sparkles'));
+    return { g, x: 540 + Math.cos(a) * d, y: 930 + Math.sin(a) * d, delay: (i % 6) * 0.08 };
+  });
+  $('penny').innerHTML = `<g id="pennyInner">${window.CHARACTERS.penny()}</g>`;
+  $('ask').textContent = 'Did you guess it?';
+  const a2 = `${topic.word}!`;
+  S = { topic, stars, rays, letters, sparkles, a2, fs2b: Math.min(150, 980 / (a2.length * 0.62)) };
+  window.TIMELINE = { ...T, letters: L, template: 'shadow' };
+  window.DURATION = T.end;
+  render(0);
+  return window.TIMELINE;
+}
+
+function render(t) {
+  S.stars.forEach((s, i) => s.setAttribute('opacity', 0.35 + 0.35 * Math.sin(t * 2 + i)));
+  const revealed = t >= T.itsA;
+  $('t1').textContent = revealed ? `It's ${S.topic.article}` : 'Who is';
+  $('t2').textContent = revealed ? S.a2 : 'hiding?';
+  $('t2').setAttribute('font-size', revealed ? S.fs2b : 150);
+  const pop = revealed ? easeBack(prog(t, T.itsA, T.itsA + 0.5)) : easeBack(prog(t, T.titleIn, T.titleIn + 0.7));
+  $('t1').setAttribute('transform', `translate(540 250) scale(${pop}) translate(-540 -250)`);
+  $('t2').setAttribute('transform', `translate(0 ${Math.sin(t * 2.2) * 6}) translate(540 340) scale(${pop}) translate(-540 -340)`);
+
+  // shadow pops in and wiggles; at the reveal the colours fade in with a flash of rays
+  const sp = easeBack(prog(t, T.shadow, T.shadow + 0.6));
+  const wig = t < T.reveal ? Math.sin(t * 3) * 3 : 0;
+  const rk = prog(t, T.reveal, T.reveal + 0.35);
+  const bounce = t > T.reveal ? 1 + 0.12 * Math.sin(Math.min(1, (t - T.reveal) / 0.6) * Math.PI) + (t > T.reveal + 0.6 ? Math.sin((t - T.reveal) * 3) * 0.02 : 0) : 1;
+  $('artWrap').setAttribute('transform', `translate(540 930) rotate(${wig}) scale(${0.85 * sp * bounce})`);
+  $('colorArt').setAttribute('opacity', rk);
+  $('shadowArt').setAttribute('opacity', 1 - rk);
+  S.rays.forEach((r, i) => r.setAttribute('opacity', t > T.reveal ? 0.14 * prog(t, T.reveal, T.reveal + 0.3) : 0));
+  $('rays').setAttribute('transform', `rotate(${t * 12} 540 930)`);
+
+  // countdown 3, 2, 1
+  const n = T.count.findIndex((c, i) => t >= c && t < (T.count[i + 1] || T.reveal));
+  $('count').textContent = n >= 0 ? String(3 - n) : '';
+  const ck = n >= 0 ? easeBack(prog(t, T.count[n], T.count[n] + 0.35)) : 0;
+  $('count').setAttribute('transform', `translate(540 1460) scale(${ck}) translate(-540 -1460)`);
+  $('count').setAttribute('fill', ['#FF6B6B', '#FFD23F', '#2EC4B6'][Math.max(0, n)]);
+
+  // Penny peeks in from the right, wondering
+  const px = 1250 - 330 * easeOut(prog(t, 1.4, 2.2)) + 330 * easeOut(prog(t, T.word - 0.6, T.word));
+  $('penny').setAttribute('transform', `translate(${px} 1720) scale(0.7)`);
+  $('pennyInner').setAttribute('transform', `rotate(${-12 + Math.sin(t * 3) * 6})`);
+
+  S.letters.forEach(({ t: tx, x }, i) => {
+    const s = T.word + i * T.letterGap, k = easeBack(prog(t, s, s + 0.4));
+    const hop = t > s + 0.4 ? -Math.abs(Math.sin((t - s) * 3)) * 10 : 0;
+    tx.setAttribute('transform', `translate(${x} ${1600 + hop}) scale(${k}) translate(${-x} -1600)`);
+    tx.setAttribute('opacity', k > 0 ? 1 : 0);
+  });
+  const ak = easeBack(prog(t, T.ask, T.ask + 0.6));
+  $('ask').setAttribute('opacity', clamp(ak));
+  $('ask').setAttribute('transform', `translate(540 1770) scale(${ak}) translate(-540 -1770)`);
+  S.sparkles.forEach(sp2 => {
+    const k = prog(t, T.reveal + sp2.delay, T.reveal + sp2.delay + 0.6);
+    sp2.g.setAttribute('transform', `translate(${sp2.x} ${sp2.y}) scale(${k >= 1 ? 0.75 + Math.sin(t * 6 + sp2.x) * 0.25 : easeBack(k)}) rotate(${t * 40})`);
+    sp2.g.setAttribute('opacity', k > 0 ? 1 : 0);
+  });
+}
+window.setup = setup; window.render = render;
+setup(new URLSearchParams(location.search).get('topic') || 'shadow-lion');
+</script>
+</body>
+</html>

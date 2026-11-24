@@ -393,5 +393,32 @@
   ];
   for (const d of DRAW_TOPICS) TOPICS.push({ id: `drawalong-${d.word.toLowerCase()}`, template: 'drawalong', ...d });
 
+
+  // ---- Who is hiding? A shadow, a 3-2-1 countdown, then the colourful reveal (art borrowed from other topics) ----
+  {
+    const animals = TOPICS.filter(t => t.template === 'animal');
+    const objects = [
+      ['abc-a', 'APPLE'], ['circle-sun', 'SUN'], ['abc-u', 'UMBRELLA'], ['triangle-pizza', 'PIZZA'], ['abc-m', 'MOON'], ['square-robot', 'ROBOT'],
+      ['abc-w', 'WATERMELON'], ['oval-balloon', 'BALLOON'], ['abc-i', 'ICE CREAM'], ['triangle-tree', 'TREE'], ['abc-v', 'VAN'], ['heart-strawberry', 'STRAWBERRY'],
+      ['abc-g', 'GRAPES'], ['star-starfish', 'STARFISH'], ['abc-e', 'EGG'], ['circle-cookie', 'COOKIE'], ['abc-x', 'XYLOPHONE'], ['square-present', 'PRESENT'],
+      ['abc-l', 'LEMON'], ['diamond-kite', 'KITE'], ['abc-y', 'YO-YO'], ['circle-orange', 'ORANGE'], ['abc-n', 'NEST'], ['oval-avocado', 'AVOCADO'],
+      ['abc-f', 'FISH'], ['rectangle-door', 'DOOR'], ['abc-h', 'HEART'], ['abc-z', 'ZEBRA'], ['abc-j', 'JUICE BOX'], ['abc-q', 'CROWN'],
+    ];
+    const an = w => /^[AEIOU]/.test(w) ? 'an' : 'a';
+    const SHADOW = [];
+    for (let i = 0; i < Math.max(animals.length, objects.length); i++) {
+      const a = animals[i];
+      if (a) SHADOW.push({ id: `shadow-${a.id.slice(7)}`, art: a.id, word: a.word, article: a.article, emoji: a.emoji,
+        extra: `The ${a.word.toLowerCase()} says ${a.sound.split(' ')[0].replace(/[!,]/g, '').toLowerCase()}!` });
+      const o = objects[i];
+      if (o) {
+        const src = TOPICS.find(t => t.id === o[0]);
+        const plural = o[1] === 'GRAPES';
+        SHADOW.push({ id: `shadow-${o[1].toLowerCase().replace(/[^a-z]/g, '')}`, art: o[0], word: o[1], article: plural ? '' : an(o[1]), emoji: src.emoji || '❓', plural });
+      }
+    }
+    for (const t of SHADOW) TOPICS.push({ template: 'shadow', ...t });
+  }
+
   if (typeof module !== 'undefined') module.exports = TOPICS; else window.TOPICS = TOPICS;
 })();
