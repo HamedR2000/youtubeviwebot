@@ -20,9 +20,13 @@ on:
         type: string
         default: "3"
       episodes:
-        description: "generate: how many long episodes to render"
+        description: "generate: how many long story episodes to render"
         type: string
-        default: "2"
+        default: "1"
+      compilations:
+        description: "generate: how many long compilation videos (made of published Shorts) to render"
+        type: string
+        default: "1"
       skip:
         description: "publish: comma-separated topic ids NOT approved (e.g. 'circle-cookie,oval-avocado')"
         type: string
@@ -48,7 +52,7 @@ jobs:
   generate:
     if: inputs.mode == 'generate'
     runs-on: ubuntu-latest
-    timeout-minutes: 110
+    timeout-minutes: 150
     defaults:
       run:
         working-directory: kids-shorts
@@ -82,7 +86,7 @@ jobs:
         run: |
           DATE="${{ inputs.date }}"; DATE="${DATE:-$(date -u +%F)}"
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          KOKORO_DIR=~/kokoro node daily.js --count "${{ inputs.count }}" --episodes "${{ inputs.episodes }}" --date "$DATE" --out out
+          KOKORO_DIR=~/kokoro node daily.js --count "${{ inputs.count }}" --episodes "${{ inputs.episodes }}" --compilations "${{ inputs.compilations }}" --date "$DATE" --out out
       - name: Publish Release for review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
