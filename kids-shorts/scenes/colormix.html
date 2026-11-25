@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- "Let's mix colors!" Short: two paint blobs slide into a bowl, Coco stirs, a new colour appears. -->
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #FFF6E9; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+</style>
+<script src="../topics.js"></script>
+<script src="../characters.js"></script>
+</head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFEAF4"/><stop offset="0.55" stop-color="#FFF6E4"/><stop offset="1" stop-color="#E6F1FF"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#5A3A7A" flood-opacity="0.18"/></filter>
+    <pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="3" fill="#EADCF0"/></pattern>
+    <clipPath id="bowlClip"><ellipse cx="540" cy="1100" rx="262" ry="100"/></clipPath>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#bg)"/>
+  <g id="clouds"></g>
+  <g filter="url(#soft)"><rect x="90" y="470" width="900" height="900" rx="64" fill="#FFFDF8"/></g>
+  <rect x="90" y="470" width="900" height="900" rx="64" fill="url(#dots)" opacity="0.55"/>
+  <text id="t1" x="540" y="250" text-anchor="middle" font-size="72" fill="#5B4A7A"></text>
+  <text id="t2" x="540" y="385" text-anchor="middle" font-size="140" fill="#F15BB5" stroke="#FFFFFF" stroke-width="10" paint-order="stroke"></text>
+  <!-- bowl back, paint inside (clipped), blobs, bowl front -->
+  <path d="M 262 1100 C 270 1330 810 1330 818 1100 Z" fill="#FFFFFF" stroke="#3B2B4F" stroke-width="14" stroke-linejoin="round"/>
+  <path d="M 300 1200 C 380 1262 700 1262 780 1200" fill="none" stroke="#9BD3FF" stroke-width="18" stroke-linecap="round"/>
+  <ellipse cx="540" cy="1100" rx="270" ry="108" fill="#ECE6F4"/>
+  <g clip-path="url(#bowlClip)"><g id="paint"></g></g>
+  <ellipse cx="540" cy="1100" rx="270" ry="108" fill="none" stroke="#3B2B4F" stroke-width="14"/>
+  <g id="blobs"></g>
+  <g id="obj"></g>
+  <g id="labels"></g>
+  <g id="word"></g>
+  <text id="ask" x="540" y="1790" text-anchor="middle" font-size="70" fill="#5B4A7A" opacity="0"></text>
+  <g id="sparkles"></g>
+  <g id="coco"></g>
+</svg>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeInOut = k => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const easeBack = k => { const c = 1.9; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const PAL = ['#FF6B6B', '#FF9F1C', '#2EC4B6', '#4D96FF', '#9B5DE5', '#F15BB5'];
+const FACE = `<g transform="translate(-28 -8)"><ellipse rx="11" ry="15" fill="#3B2B4F"/><circle cx="3" cy="-5" r="4" fill="#fff"/></g>
+<g transform="translate(28 -8)"><ellipse rx="11" ry="15" fill="#3B2B4F"/><circle cx="3" cy="-5" r="4" fill="#fff"/></g>
+<path d="M -18 18 Q 0 32 18 18" fill="none" stroke="#3B2B4F" stroke-width="6" stroke-linecap="round"/>`;
+const BLOB = 'M 0 -95 C 60 -100 105 -50 100 5 C 112 60 60 100 0 95 C -60 102 -108 55 -100 0 C -105 -55 -55 -92 0 -95 Z';
+
+const T = { titleIn: 0.2, a: 1.6, b: 3.0, mixSay: 4.4, slide: [4.6, 5.6], stir: [5.6, 8.2], reveal: 8.3, obj: 11.4, word: 13.4, letterGap: 0.5, ask: 17.0, end: 20.6 };
+let S = null;
+
+function artOf(r) { const t = window.TOPICS.find(x => x.id === r); return t && (t.artData || t); }
+function drawArt(art, parent) {
+  for (const layer of ['back', 'fill', 'front']) for (const [tag, attrs] of (art[layer] || [])) el(tag, attrs, parent);
+  if (art.face) { const f = el('g', { transform: `translate(${art.face.x || 0} ${art.face.y}) scale(${art.face.s})` }, parent);
+    f.innerHTML = `<g transform="translate(-95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g><g transform="translate(95 -40)"><ellipse rx="34" ry="44" fill="#3B2B4F"/><circle cx="10" cy="-14" r="11" fill="#fff"/></g>` +
+      (art.face.mouth === false ? '' : '<path d="M -90 70 Q 0 160 90 70" fill="none" stroke="#3B2B4F" stroke-width="18" stroke-linecap="round"/>'); }
+  if (art.strokes) el('path', { d: art.strokes[0], fill: 'none', stroke: '#3B2B4F', 'stroke-width': 22, 'stroke-linejoin': 'round' }, parent);
+}
+
+function setup(topicId) {
+  const topic = window.TOPICS.find(t => t.id === topicId) || window.TOPICS.find(t => t.template === 'colormix');
+  for (const id of ['paint', 'blobs', 'obj', 'labels', 'word', 'clouds', 'sparkles']) $(id).innerHTML = '';
+  const [A, B, C] = [topic.a, topic.b, topic.c];
+  const mk = (col, x, y) => { const g = el('g', {}, $('blobs')); el('path', { d: BLOB, fill: col.hex, stroke: '#3B2B4F', 'stroke-width': 10 }, g); const f = el('g', {}, g); f.innerHTML = FACE; return { g, x, y }; };
+  const blobA = mk(A, 300, 760), blobB = mk(B, 780, 760);
+  const lab = (txt, col, x, y) => { const t = el('text', { x, y, 'text-anchor': 'middle', 'font-size': 66, fill: col === '#F7F7F7' ? '#9A9AA8' : col, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke' }, $('labels')); t.textContent = txt; return t; };
+  const labA = lab(A.name, A.hex, 300, 920), labB = lab(B.name, B.hex, 780, 920), plus = lab('+', '#5B4A7A', 540, 790);
+  // paint in the bowl: the two colours as swirls, fading into the result
+  const pA = el('rect', { x: 260, y: 990, width: 280, height: 220, fill: A.hex }, $('paint'));
+  const pB = el('rect', { x: 540, y: 990, width: 280, height: 220, fill: B.hex }, $('paint'));
+  const swirl = el('path', { d: 'M 540 1100 m -40 0 a 40 18 0 1 1 80 0 a 80 34 0 1 1 -160 0 a 120 50 0 1 1 240 0 a 160 68 0 1 1 -320 0 a 200 85 0 1 1 400 0', fill: 'none', stroke: A.hex, 'stroke-width': 26, opacity: 0.9 }, $('paint'));
+  const pC = el('ellipse', { cx: 540, cy: 1100, rx: 275, ry: 112, fill: C.hex, opacity: 0 }, $('paint'));
+  const result = lab(`${C.name}!`, C.hex, 540, 900);
+  // the object of the new colour
+  const og = el('g', {}, $('obj')); const art = topic.object && artOf(topic.object); if (art) drawArt(art, og);
+  const clouds = [[180, 140, 1.0], [880, 90, 0.8], [760, 1540, 0.6], [100, 1600, 0.7]].map(([x, y, s]) => {
+    const g = el('g', {}, $('clouds')); for (const [dx, dy, r] of [[0, 0, 50], [55, -20, 62], [115, 0, 48], [58, 18, 50]]) el('circle', { cx: dx, cy: dy, r, fill: '#FFFFFF', opacity: 0.85 }, g); return { g, x, y, s };
+  });
+  const W = C.name, L = W.length;
+  T.letterGap = Math.min(0.5, 3.0 / W.replace(/[^A-Z]/g, '').length);
+  const step = Math.min(125, 940 / L), fs = Math.min(150, step * 1.3);
+  const letters = W.split('').map((ch, i) => { const x = 540 + (i - (L - 1) / 2) * step;
+    const t = el('text', { x, y: 1580, 'text-anchor': 'middle', 'font-size': fs, fill: C.hex === '#F7F7F7' ? '#9A9AA8' : C.hex, stroke: '#3B2B4F', 'stroke-width': 6, 'paint-order': 'stroke' }, $('word')); t.textContent = ch; return { t, x }; });
+  const sparkles = Array.from({ length: 18 }, (_, i) => { const a = i * 2.39996, d = 330 + (i * 47) % 140;
+    const g = el('path', { d: 'M0 -26 L7 -7 L26 0 L7 7 L0 26 L-7 7 L-26 0 L-7 -7 Z', fill: PAL[i % 6] }, $('sparkles')); return { g, x: 540 + Math.cos(a) * d, y: 960 + Math.sin(a) * d, delay: (i % 6) * 0.1 }; });
+  $('ask').textContent = `What colors make ${C.name.toLowerCase()}?`;
+  S = { topic, blobA, blobB, labA, labB, plus, pA, pB, pC, swirl, result, og, clouds, letters, sparkles, B };
+  window.TIMELINE = { ...T, letters: L, template: 'colormix' };
+  window.DURATION = T.end;
+  render(0);
+  return window.TIMELINE;
+}
+
+function render(t) {
+  S.clouds.forEach((c, i) => c.g.setAttribute('transform', `translate(${c.x + Math.sin(t * 0.4 + i) * 25} ${c.y}) scale(${c.s})`));
+  const done = t >= T.reveal;
+  $('t1').textContent = done ? `${S.topic.a.name.toLowerCase()} + ${S.topic.b.name.toLowerCase()} =` : "Let's mix";
+  $('t2').textContent = done ? `${S.topic.c.name}!` : 'COLORS!';
+  $('t2').setAttribute('fill', done ? (S.topic.c.hex === '#F7F7F7' ? '#9A9AA8' : S.topic.c.hex) : '#F15BB5');
+  $('t2').setAttribute('font-size', done ? Math.min(140, 980 / ((S.topic.c.name.length + 1) * 0.62)) : 140);
+  const pop = done ? easeBack(prog(t, T.reveal, T.reveal + 0.5)) : easeBack(prog(t, T.titleIn, T.titleIn + 0.7));
+  $('t1').setAttribute('transform', `translate(540 250) scale(${pop}) translate(-540 -250)`);
+  $('t2').setAttribute('transform', `translate(0 ${Math.sin(t * 2.2) * 6}) translate(540 340) scale(${pop}) translate(-540 -340)`);
+
+  // blobs pop in, then slide down into the bowl and vanish
+  const sl = easeInOut(prog(t, ...T.slide));
+  [[S.blobA, T.a], [S.blobB, T.b]].forEach(([b, at], i) => {
+    const k = easeBack(prog(t, at, at + 0.5)), x = lerp(b.x, 540 + (i ? 60 : -60), sl), y = lerp(b.y, 1100, sl) - Math.sin(sl * Math.PI) * 120;
+    b.g.setAttribute('transform', `translate(${x} ${y + (t < T.slide[0] ? Math.sin(t * 3 + i) * 8 : 0)}) scale(${k * (1 - 0.7 * sl)})`);
+    b.g.setAttribute('opacity', t < T.slide[1] ? (k > 0 ? 1 : 0) : 0);
+  });
+  [[S.labA, T.a], [S.labB, T.b], [S.plus, T.b + 0.3]].forEach(([l, at]) => { const k = easeBack(prog(t, at, at + 0.4)) * (1 - prog(t, T.slide[0], T.slide[0] + 0.3));
+    l.setAttribute('transform', `translate(${l.getAttribute('x')} ${l.getAttribute('y')}) scale(${k}) translate(${-l.getAttribute('x')} ${-l.getAttribute('y')})`); l.setAttribute('opacity', k > 0 ? 1 : 0); });
+
+  // paint in the bowl: halves after the slide, swirl while stirring, then the new colour
+  const inBowl = t >= T.slide[1] - 0.1 ? 1 : 0;
+  const st = prog(t, ...T.stir), mixK = easeInOut(prog(t, T.stir[0] + 1.0, T.reveal));
+  S.pA.setAttribute('opacity', inBowl); S.pB.setAttribute('opacity', inBowl);
+  S.swirl.setAttribute('opacity', inBowl * (st > 0 ? 0.9 * (1 - mixK) : 0));
+  S.swirl.setAttribute('transform', `rotate(${st * 720} 540 1100) translate(540 1100) scale(1 1) translate(-540 -1100)`);
+  S.swirl.setAttribute('stroke', Math.floor(t * 4) % 2 ? S.topic.a.hex : S.topic.b.hex);
+  S.pC.setAttribute('opacity', mixK);
+  const rk = easeBack(prog(t, T.reveal, T.reveal + 0.5)) * (1 - prog(t, T.obj - 0.3, T.obj));
+  S.result.setAttribute('transform', `translate(540 900) scale(${rk}) translate(-540 -900)`); S.result.setAttribute('opacity', rk > 0 ? 1 : 0);
+
+  // the object of the new colour pops up above the bowl
+  const ok = easeBack(prog(t, T.obj, T.obj + 0.5));
+  S.og.setAttribute('transform', `translate(540 ${760 + Math.sin(t * 2) * 6}) scale(${0.5 * ok})`);
+  S.og.setAttribute('opacity', ok > 0 ? 1 : 0);
+
+  // Coco: walks in, stirs the bowl (and turns into the new colour!)
+  const cIn = easeInOut(prog(t, 3.8, 4.6)), stirring = t >= T.stir[0] && t < T.stir[1];
+  const cx = stirring ? 540 + Math.cos(st * Math.PI * 6) * 140 : lerp(1250, 860, cIn);
+  const cy = stirring ? 1040 + Math.sin(st * Math.PI * 6) * 25 : 1520;
+  const col = t >= T.reveal ? S.topic.c.hex : '#9B5DE5';
+  $('coco').innerHTML = window.CHARACTERS.coco({ color: col === '#F7F7F7' ? '#C9CED6' : col });
+  $('coco').setAttribute('transform', `translate(${cx} ${cy}) rotate(${stirring ? 160 + Math.sin(t * 12) * 8 : Math.sin(t * 3) * 6}) scale(${stirring ? 0.75 : 0.8})`);
+
+  S.letters.forEach(({ t: tx, x }, i) => { const s = T.word + i * T.letterGap, k = easeBack(prog(t, s, s + 0.4));
+    const hop = t > s + 0.4 ? -Math.abs(Math.sin((t - s) * 3)) * 10 : 0;
+    tx.setAttribute('transform', `translate(${x} ${1580 + hop}) scale(${k}) translate(${-x} -1580)`); tx.setAttribute('opacity', k > 0 ? 1 : 0); });
+  const ak = easeBack(prog(t, T.ask, T.ask + 0.6));
+  $('ask').setAttribute('opacity', clamp(ak)); $('ask').setAttribute('transform', `translate(540 1770) scale(${ak}) translate(-540 -1770)`);
+  S.sparkles.forEach(sp => { const k = prog(t, T.reveal + sp.delay, T.reveal + sp.delay + 0.6);
+    sp.g.setAttribute('transform', `translate(${sp.x} ${sp.y}) scale(${k >= 1 ? 0.7 + Math.sin(t * 6 + sp.x) * 0.25 : easeBack(k)}) rotate(${t * 40})`); sp.g.setAttribute('opacity', k > 0 ? 1 : 0); });
+}
+window.setup = setup; window.render = render;
+setup(new URLSearchParams(location.search).get('topic') || 'colormix-red-yellow');
+</script>
+</body>
+</html>

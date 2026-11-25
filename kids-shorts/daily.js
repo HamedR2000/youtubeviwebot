@@ -78,6 +78,25 @@ function episodeMetadata(ep) {
 }
 
 function metadata(t) {
+  if (t.template === 'colormix') {
+    const cc = n => n.toLowerCase().replace(/\b[a-z]/g, x => x.toUpperCase());
+    const [A, B, C] = [cc(t.a.name), cc(t.b.name), cc(t.c.name)];
+    return {
+      title: `${A} + ${B} = ${C}! 🎨 Mixing Colors for Kids ${t.emoji} | Color Mixing with Coco #shorts`.slice(0, 100),
+      description: [
+        `What happens when we mix ${A.toLowerCase()} and ${B.toLowerCase()}? 🎨 Coco the Crayon stirs the paint… and it's ${C.toLowerCase()}, like ${t.like}! ${t.emoji}`,
+        '',
+        'Learn colors and color mixing in simple English with the Doodle Pals — for kids aged 2–6.',
+        `Grown-ups: try it at home with paint or play-dough — mix ${A.toLowerCase()} and ${B.toLowerCase()} together! 🖌️`,
+        '',
+        tags('colormixing', 'mixingcolors', `learn${C}`, 'colors', 'kidsart', 'kidslearning', 'toddlers', 'learnenglish', 'preschool'),
+      ].join('\n'),
+      tags: ['color mixing for kids', 'mixing colors', `${A.toLowerCase()} and ${B.toLowerCase()} make ${C.toLowerCase()}`, 'learn colors', 'colors for toddlers', 'toddler learning',
+        'preschool', 'english for kids', 'Doodle Pals', 'Coco the Crayon'],
+      categoryId: '27',
+      madeForKids: true,
+    };
+  }
   if (t.template === 'vehicle') {
     const w = t.word.split(' ').map(x => x[0] + x.slice(1).toLowerCase()).join(' ');
     const snd = t.sound.replace(/[!,]/g, '').split(' ').slice(0, 2).join(' ');
@@ -262,7 +281,7 @@ function metadata(t) {
     let subs = [];
     if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
       const topicFile = mp4.replace(/\.mp4$/, '.topic.json');
-      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps, extra: t.extra }));
+      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps, extra: t.extra, a: t.a, b: t.b, c: t.c, like: t.like }));
       execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
         '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
       fs.rmSync(topicFile);

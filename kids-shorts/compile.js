@@ -8,7 +8,7 @@ const TOPICS = require('./topics');
 
 const KEY = t => ({ 'draw-shape': 'shape' }[t.template || 'draw-shape'] || t.template);
 const cap = w => String(w).toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
-const name = t => t.template === 'abc' ? `${t.letter} is for ${cap(t.word)}` : t.template === 'count' ? `Number ${t.n}` : cap(t.template === 'draw-shape' || !t.template ? t.becomes : t.word);
+const name = t => t.template === 'colormix' ? `${cap(t.a.name)} + ${cap(t.b.name)} = ${cap(t.c.name)}` : t.template === 'abc' ? `${t.letter} is for ${cap(t.word)}` : t.template === 'count' ? `Number ${t.n}` : cap(t.template === 'draw-shape' || !t.template ? t.becomes : t.word);
 const list = (ts, k = 4) => ts.slice(0, k).map(name).join(', ');
 
 const SERIES = {
@@ -27,6 +27,8 @@ const SERIES = {
     title: ts => `How to Draw ${ts.length} Easy Things! ✏️ ${list(ts, 3)} and More | Drawing for Kids`, learn: () => ['drawing', 'shapes', 'first words'], tags: ['howtodraw', 'drawingforkids', 'easydrawing'] },
   vehicle: { frame: 'Vehicle Sounds!', seg: 20, intro: () => "Hi friends! Beep beep! Choo choo! Let's learn vehicle sounds!",
     title: ts => `Vehicle Sounds for Kids! 🚒 ${ts.slice(0, 4).map(t => cap(t.word)).join(', ')} and More | ${ts.length} Vehicles`, learn: () => ['vehicle names', 'vehicle sounds'], tags: ['vehiclesounds', 'vehicles'] },
+  colormix: { frame: 'Mixing Colors!', seg: 21, intro: () => "Hi friends! Let's mix colors with Coco! What will we make?",
+    title: ts => `Mixing Colors for Kids! 🎨 ${ts.length} Color Mixes with Coco the Crayon | Learn Colors`, learn: () => ['color mixing', 'colors', 'color words'], tags: ['colormixing', 'colors'] },
   shadow: { frame: 'Who Is Hiding?', seg: 20, intro: () => "Hi friends! Let's play a game. Who is hiding? Can you guess?",
     title: ts => `Guess the Shadow! 🔦 Who Is Hiding? ${ts.length} Guessing Games for Kids`, learn: () => ['guessing game', 'first words', 'animal names'], tags: ['guesstheshadow', 'guessinggame'] },
 };

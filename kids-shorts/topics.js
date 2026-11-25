@@ -342,6 +342,21 @@
     TOPICS.push({ id: `vehicle-${key}`, template: 'vehicle', word, article, sound, soundText, emoji, artData: VEHICLE_ART[key] });
   }
 
+  // ---- Color mixing: two paint blobs + Coco stirring = a new colour (and something of that colour) ----
+  {
+    const K = { RED: '#F2454B', YELLOW: '#FFC928', BLUE: '#3D86F0', WHITE: '#F7F7F7', BLACK: '#2B2B35', GREEN: '#3DAA3D',
+      ORANGE: '#FF8A1C', PURPLE: '#8A4FD6', PINK: '#FF8FB8', 'LIGHT BLUE': '#9DD3FF', GRAY: '#9A9AA8', BROWN: '#9A6338' };
+    const col = n => ({ name: n, hex: K[n] });
+    const MIXES = [
+      ['RED', 'YELLOW', 'ORANGE', 'circle-orange', 'an orange', '🍊'], ['BLUE', 'YELLOW', 'GREEN', 'triangle-tree', 'a tree', '🌳'],
+      ['RED', 'BLUE', 'PURPLE', 'abc-g', 'grapes', '🍇'], ['RED', 'WHITE', 'PINK', 'animal-pig', 'a pig', '🐷'],
+      ['BLUE', 'WHITE', 'LIGHT BLUE', 'abc-u', 'an umbrella', '☂️'], ['BLACK', 'WHITE', 'GRAY', 'animal-elephant', 'an elephant', '🐘'],
+      ['RED', 'GREEN', 'BROWN', 'animal-bear', 'a bear', '🐻'], ['YELLOW', 'RED', 'ORANGE', 'animal-lion', 'a lion', '🦁'],
+    ];
+    for (const [a, b, c, object, like, emoji] of MIXES)
+      TOPICS.push({ id: `colormix-${a.toLowerCase()}-${b.toLowerCase()}`, template: 'colormix', a: col(a), b: col(b), c: col(c), object, like, emoji, word: c });
+  }
+
   // ---- Colors: Coco colours a grey object, then two more things of that colour ----
   const COLORS_T = [
     ['RED', '#F2454B', '🍎', ['abc-a', 'apple'], ['heart-strawberry', 'strawberry'], ['abc-h', 'heart']],

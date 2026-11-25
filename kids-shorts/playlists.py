@@ -20,6 +20,7 @@ CATEGORY = {
     'drawalong': ("Let's Draw! Easy Drawing for Kids 🖍️", 'Step-by-step easy drawing for toddlers: draw animals and things with Penny the Pencil, then Coco colours them in!'),
     'shadow': ('Guess the Shadow! 🔦 Who Is Hiding?', 'A guessing game for toddlers: look at the shadow, count 3-2-1 and guess who is hiding! First English words with Penny the Pencil.'),
     'vehicle': ('Vehicle Sounds 🚒', 'Beep beep! Choo choo! Learn vehicle names and sounds with the Doodle Pals: cars, trucks, trains, planes and more.'),
+    'colormix': ('Color Mixing with Coco 🎨', 'Red and yellow make orange! Mix colors with Coco the Crayon: color mixing in simple English for toddlers.'),
     'mix': ('Doodle Pals Compilations 📺', 'Longer Doodle Pals videos for the big screen: ABC, numbers, animal sounds, colors, drawing and guessing games, many in a row.'),
     'episode': ('Doodle Pals Stories 🎬', 'Longer Doodle Pals cartoons with Penny, Ellie and Coco: stories, songs and learning for kids aged 2–6.'),
 }
