@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "generate (render into a Release), publish (upload an approved date), playlists (file all published videos into playlists) or thumbnails (custom thumbnails for all published episodes)"
+        description: "generate (render into a Release), publish (upload an approved date), playlists, thumbnails, or mega (20-30 min learning video from published Shorts, added to that date's Release)"
         type: choice
-        options: [generate, publish, playlists, thumbnails]
+        options: [generate, publish, playlists, thumbnails, mega]
         default: generate
       date:
         description: "YYYY-MM-DD. generate: defaults to today (UTC). publish: required."
@@ -217,3 +217,57 @@ jobs:
             python3 upload.py "$d" --only-thumbnails --thumb-dir thumbs
           done
           for d in state/backfill/*/; do python3 upload.py "$d" --only-thumbnails --thumb-dir thumbs; done
+
+  mega:
+    if: inputs.mode == 'mega'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: kids-shorts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          pip install numpy kokoro-onnx==0.4.9 soundfile
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Cache narrator voice model
+        uses: actions/cache@v4
+        with:
+          path: ~/kokoro
+          key: kokoro-v1.0
+      - name: Download narrator voice model (Kokoro TTS, Apache-2.0)
+        run: |
+          mkdir -p ~/kokoro && cd ~/kokoro
+          base=https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0
+          [ -f kokoro-v1.0.onnx ] || curl -sSL -o kokoro-v1.0.onnx $base/kokoro-v1.0.onnx
+          [ -f voices-v1.0.bin ] || curl -sSL -o voices-v1.0.bin $base/voices-v1.0.bin
+      - name: Download every published Short
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for tag in $(gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^shorts-'); do
+            d="rel/$tag"; mkdir -p "$d"
+            gh release download "$tag" --dir "$d" -p uploaded.json 2>/dev/null || continue
+            for id in $(python3 -c "import json;[print(u['id']) for u in json.load(open('$d/uploaded.json')) if not u['id'].startswith(('episode-','mix-','mega-'))]"); do
+              gh release download "$tag" --dir "$d" -p "$id.mp4" -p "$id.srt" 2>/dev/null || true
+            done
+          done
+      - name: Build the long learning video and add it to the day's Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE="${{ inputs.date }}"; DATE="${DATE:-$(date -u +%F)}"
+          KOKORO_DIR=~/kokoro node mega.js rel "$DATE" out
+          [ -f "out/mega-$DATE.mp4" ] || exit 0
+          gh release download "shorts-$DATE" --dir day -p batch.json
+          python3 -c "import json;b=json.load(open('day/batch.json'));m=json.load(open('out/mega-$DATE.json'));b['videos']=[v for v in b['videos'] if v['id']!=m['id']]+[m];json.dump(b,open('day/batch.json','w'),indent=2)"
+          gh release upload "shorts-$DATE" "out/mega-$DATE.mp4" "out/mega-$DATE.srt" day/batch.json --clobber
