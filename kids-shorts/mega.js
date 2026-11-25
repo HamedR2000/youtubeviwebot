@@ -31,7 +31,7 @@ function writeSrt(file, subs) {
 }
 
 (async () => {
-  const [relDir, DATE, OUT] = process.argv.slice(2);
+  const [relDir, DATE, OUT] = process.argv.slice(2).map((x, i) => i === 1 ? x : path.resolve(x)); // absolute: ffmpeg's concat list resolves paths itself
   fs.mkdirSync(OUT, { recursive: true });
   // every published Short we have the file of
   const have = {};

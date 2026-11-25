@@ -27,6 +27,10 @@ on:
         description: "generate: how many long compilation videos (made of published Shorts) to render"
         type: string
         default: "1"
+      bedtime:
+        description: "generate: how many ~30 min bedtime lullaby videos to render (they go public at 17:00 Berlin)"
+        type: string
+        default: "1"
       skip:
         description: "publish: comma-separated topic ids NOT approved (e.g. 'circle-cookie,oval-avocado')"
         type: string
@@ -52,7 +56,7 @@ jobs:
   generate:
     if: inputs.mode == 'generate'
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 180
     defaults:
       run:
         working-directory: kids-shorts
@@ -86,7 +90,7 @@ jobs:
         run: |
           DATE="${{ inputs.date }}"; DATE="${DATE:-$(date -u +%F)}"
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          KOKORO_DIR=~/kokoro node daily.js --count "${{ inputs.count }}" --episodes "${{ inputs.episodes }}" --compilations "${{ inputs.compilations }}" --date "$DATE" --out out
+          KOKORO_DIR=~/kokoro node daily.js --count "${{ inputs.count }}" --episodes "${{ inputs.episodes }}" --compilations "${{ inputs.compilations }}" --bedtime "${{ inputs.bedtime }}" --date "$DATE" --out out
       - name: Publish Release for review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

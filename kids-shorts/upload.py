@@ -36,13 +36,19 @@ videos = sorted((v for v in batch['videos'] if v['id'] not in skip), key=lambda 
 if args.only_playlists or args.only_thumbnails:
     videos = []
 # scheduled release: upload as private with publishAt (YouTube flips it to public at that time)
+def berlin_today(hhmm):
+    """UTC publishAt for HH:MM Berlin today, or None if that is less than 15 minutes away."""
+    hh, mm = map(int, hhmm.split(':'))
+    when = dt.datetime.now(ZoneInfo('Europe/Berlin')).replace(hour=hh, minute=mm, second=0, microsecond=0)
+    if when - dt.datetime.now(dt.timezone.utc) > dt.timedelta(minutes=15):
+        return when.astimezone(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    return None
+
+
 publish_at = None
 if args.publish_at and args.privacy == 'public':
-    hh, mm = map(int, args.publish_at.split(':'))
-    now = dt.datetime.now(dt.timezone.utc)
-    when = dt.datetime.now(ZoneInfo('Europe/Berlin')).replace(hour=hh, minute=mm, second=0, microsecond=0)
-    if when - now > dt.timedelta(minutes=15):
-        publish_at = when.astimezone(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    publish_at = berlin_today(args.publish_at)
+    if publish_at:
         print(f'scheduled: videos go public at {args.publish_at} Berlin ({publish_at})')
 print(f"{batch['date']}: uploading {len(videos)} video(s), skipping {sorted(skip) or 'none'}")
 
@@ -136,7 +142,11 @@ def set_thumbnail(entry):
 
 results = list(done)
 pending = []
+SCHEDULED = {v['id'] for v in batch['videos'] if v.get('schedule')}  # e.g. the bedtime video: its own evening time
 for n, v in enumerate(videos):
+    pub = berlin_today(v['schedule']) if v.get('schedule') and args.privacy == 'public' else publish_at
+    if pub and pub != publish_at:
+        print(f"  {v['id']}: goes public at {v['schedule']} Berlin ({pub})")
     body = {
         'snippet': {
             'title': v['title'][:100],
@@ -147,8 +157,8 @@ for n, v in enumerate(videos):
             'defaultAudioLanguage': 'en',
         },
         'status': {
-            'privacyStatus': 'private' if publish_at else args.privacy,
-            **({'publishAt': publish_at} if publish_at else {}),
+            'privacyStatus': 'private' if pub else args.privacy,
+            **({'publishAt': pub} if pub else {}),
             'selfDeclaredMadeForKids': bool(v.get('madeForKids', True)),
             'containsSyntheticMedia': False,
         },
@@ -169,7 +179,7 @@ for n, v in enumerate(videos):
         break
     url = f"https://youtube.com/watch?v={resp['id']}" if v.get('long') else f"https://youtube.com/shorts/{resp['id']}"
     print('  uploaded', v['id'], '->', url)
-    results.append({'id': v['id'], 'youtube_id': resp['id'], 'url': url, **({'publishAt': publish_at} if publish_at else {})})
+    results.append({'id': v['id'], 'youtube_id': resp['id'], 'url': url, **({'publishAt': pub} if pub else {})})
     file_in_playlists(v['id'], resp['id'])
 
 if args.only_thumbnails:
@@ -184,7 +194,7 @@ else:
     # a run without a schedule makes earlier scheduled uploads of this batch public right away
     if args.privacy == 'public' and not publish_at:
         for r in results:
-            if r.get('publishAt'):
+            if r.get('publishAt') and r['id'] not in SCHEDULED:
                 yt.videos().update(part='status', body={'id': r['youtube_id'], 'status': {
                     'privacyStatus': 'public', 'selfDeclaredMadeForKids': True, 'containsSyntheticMedia': False}}).execute()
                 r.pop('publishAt')

@@ -21,6 +21,7 @@ CATEGORY = {
     'shadow': ('Guess the Shadow! 🔦 Who Is Hiding?', 'A guessing game for toddlers: look at the shadow, count 3-2-1 and guess who is hiding! First English words with Penny the Pencil.'),
     'vehicle': ('Vehicle Sounds 🚒', 'Beep beep! Choo choo! Learn vehicle names and sounds with the Doodle Pals: cars, trucks, trains, planes and more.'),
     'colormix': ('Color Mixing with Coco 🎨', 'Red and yellow make orange! Mix colors with Coco the Crayon: color mixing in simple English for toddlers.'),
+    'bedtime': ('Bedtime Lullabies 🌙', 'Calm bedtime videos for babies and toddlers: say good night with the Doodle Pals, then drift off to a gentle music-box lullaby.'),
     'mix': ('Doodle Pals Compilations 📺', 'Longer Doodle Pals videos for the big screen: ABC, numbers, animal sounds, colors, drawing and guessing games, many in a row.'),
     'episode': ('Doodle Pals Stories 🎬', 'Longer Doodle Pals cartoons with Penny, Ellie and Coco: stories, songs and learning for kids aged 2–6.'),
 }
