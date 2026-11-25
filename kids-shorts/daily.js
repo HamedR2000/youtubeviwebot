@@ -20,6 +20,7 @@ const withOutroSubs = (subs, len) => a.includes('--no-outro') ? subs : [...subs,
 const { buildEpisode } = require('./longvideo');
 const { renderThumbnail } = require('./thumbnail');
 const { pickCompilation, buildCompilation } = require('./compile');
+const { buildBedtime } = require('./bedtime');
 
 const a = process.argv.slice(2);
 const flag = (n, d) => (a.includes(n) ? a[a.indexOf(n) + 1] : d);
@@ -341,6 +342,15 @@ function metadata(t) {
     batch.push({ ...meta, captions: v.id + '.srt' });
     for (const id of compiled) used['mix:' + id] = DATE;
     console.log(`[mix] ${v.id}: ${compiled.length} segments (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
+  }
+  // evening slot: a calm ~30 min bedtime lullaby video (published at 17:00 Berlin)
+  for (let k = 0; k < Number(flag('--bedtime', 1)); k++) {
+    const t0 = Date.now();
+    const { subjects, subs, video } = await buildBedtime({ used, DATE: k ? `${DATE}-${k + 1}` : DATE, OUT, browser, minutes: Number(flag('--bedtime-minutes', 30)) });
+    writeSrt(path.join(OUT, video.id + '.srt'), subs);
+    batch.push({ ...video, captions: video.id + '.srt' });
+    for (const id of subjects) used['bed:' + id] = DATE;
+    console.log(`[bedtime] ${video.id}: ${subjects.join(', ')} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
   }
   const episodesLeft = fs.readdirSync(epDir).filter(f => f.endsWith('.json') && !used['episode:' + f.replace(/\.json$/, '')]).length;
   await browser.close();
