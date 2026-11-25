@@ -21,6 +21,8 @@ if len(sys.argv) > 2:
         T.update(draw=tuple(tl['colour']), fill=tl['show'], face=None, rays=tl['done'], pops=tl['extras'])
     elif tl.get('template') == 'animal':
         T.update(fill=tl['reveal'], face=tl['bubble'], rays=tl['reveal'] + 0.1)
+    elif tl.get('template') == 'colormix':  # pop per paint blob, sparkle on the new colour
+        T.update(draw=tuple(tl['stir']), fill=tl['reveal'], face=tl['obj'], rays=tl['reveal'] + 0.05, pops=[tl['a'], tl['b']])
     elif tl.get('template') == 'shadow':  # tick per countdown number, sparkle on the reveal
         T.update(fill=tl['reveal'], face=None, rays=tl['reveal'] + 0.05, pops=tl['count'])
     elif tl.get('template') == 'drawalong':  # a pop + ding as each new step starts, sparkle when coloured

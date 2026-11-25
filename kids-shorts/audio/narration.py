@@ -161,6 +161,23 @@ elif template == 'color':
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"What else is {w}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
+elif template == 'colormix':
+    COCO = 'bf_lily'
+    A, B, Cc = (topic[k]['name'].lower() for k in ('a', 'b', 'c'))
+    gap = tl['letterGap']
+    place(say("Let's mix colors!"), 0.3, 1.25)
+    place(say(f"{A.capitalize()}!"), tl['a'] + 0.05, tl['b'] - tl['a'] - 0.1)
+    place(say(f"And {B}!"), tl['b'] + 0.05, tl['mixSay'] - tl['b'] - 0.1)
+    place(say("Let's mix them! Stir, stir, stir!", voice=COCO), tl['mixSay'] + 0.05, tl['reveal'] - tl['mixSay'] - 0.2)
+    place(say(f"{A.capitalize()} and {B} make {Cc}!"), tl['reveal'] + 0.1, tl['obj'] - tl['reveal'] - 0.2)
+    place(say(f"{Cc.capitalize()}, like {topic['like']}!"), tl['obj'] + 0.1, tl['word'] - tl['obj'] - 0.2)
+    for i, ch in enumerate(topic['c']['name']):
+        if ch.isalpha():
+            place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['c']['name']) * gap + 0.1
+    place(say(f"{Cc.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say(f"What colors make {Cc}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
+
 elif template == 'shadow':
     w, art = topic['word'].lower(), topic.get('article') or ''
     gap = tl['letterGap']
