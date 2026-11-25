@@ -28,6 +28,8 @@ CATEGORY = {
 
 def playlists_for(video_id):
     """Playlist (title, description) list for one batch video id, e.g. 'abc-a' or 'episode-12-fruit-shop'."""
+    if video_id.startswith('mega-'):  # long learning video: compilations + stories playlists
+        return [CATEGORY['mix'], CATEGORY['episode']]
     if video_id.startswith('mix-'):  # compilation: its category playlist + all compilations
         return [CATEGORY.get(video_id.split('-')[1], CATEGORY['episode']), CATEGORY['mix']]
     if video_id.startswith('episode-'):

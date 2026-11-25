@@ -27,6 +27,8 @@ const COUNT = Number(flag('--count', 3));
 const DATE = flag('--date', new Date().toISOString().slice(0, 10));
 const OUT = path.join(flag('--out', 'out'), DATE);
 const STATE = path.join(__dirname, 'state', 'used.json');
+// story episodes: order of preference by series (channel data: ABC/numbers/shapes/animals get ~10x the views)
+const SERIES_RANK = ['ABC Adventures', 'Counting to Ten', 'Shape Sort', 'Animal Homes', 'Music Time', "What's Missing?", "Coco's Fruit Shop", 'Opposites', 'Kind Friends', 'Weather Friends'];
 const SCENE_OF = { vehicle: 'animal' }; // templates that reuse another template's scene
 const sceneFor = t => path.join(__dirname, 'scenes', `${SCENE_OF[t.template] || t.template || 'draw-shape'}.html`);
 
@@ -307,7 +309,10 @@ function metadata(t) {
   const epDir = path.join(__dirname, 'episodes');
   for (let e = 0; e < EPISODES; e++) {
     const dir = epDir;
-    const next = fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort().find(f => !used['episode:' + f.replace(/\.json$/, '')]);
+    // core learning topics first (they get the views: ABC, numbers, shapes, animals); softer series wait
+    const rank = f => { const ser = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).series || ''; const k = SERIES_RANK.findIndex(r => ser.startsWith(r)); return k < 0 ? 50 : k; };
+    const next = fs.readdirSync(dir).filter(f => f.endsWith('.json') && !used['episode:' + f.replace(/\.json$/, '')])
+      .sort((x, y) => rank(x) - rank(y) || x.localeCompare(y))[0];
     if (next) {
       const ep = JSON.parse(fs.readFileSync(path.join(dir, next), 'utf8'));
       const mp4 = path.join(OUT, `episode-${ep.id}.mp4`);

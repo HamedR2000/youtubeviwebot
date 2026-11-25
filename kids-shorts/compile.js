@@ -131,4 +131,4 @@ async function buildCompilation({ pick, DATE, OUT, browser, renderShort, outroMp
   };
 }
 
-module.exports = { pickCompilation, buildCompilation, SERIES };
+module.exports = { pickCompilation, buildCompilation, SERIES, shot, ff, dur, name, KEY };
