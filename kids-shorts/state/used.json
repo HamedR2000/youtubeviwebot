@@ -97,5 +97,22 @@
   "mix:abc-l": "2026-11-24",
   "mix:abc-m": "2026-11-24",
   "mix:abc-n": "2026-11-24",
-  "mix:abc-o": "2026-11-24"
+  "mix:abc-o": "2026-11-24",
+  "vehicle-car": "2026-11-25",
+  "animal-monkey": "2026-11-25",
+  "drawalong-house": "2026-11-25",
+  "episode:18-whats-missing-1": "2026-11-25",
+  "mix:circle-sun": "2026-11-25",
+  "mix:circle-cookie": "2026-11-25",
+  "mix:circle-orange": "2026-11-25",
+  "mix:square-present": "2026-11-25",
+  "mix:square-robot": "2026-11-25",
+  "mix:triangle-pizza": "2026-11-25",
+  "mix:triangle-tree": "2026-11-25",
+  "mix:rectangle-door": "2026-11-25",
+  "mix:oval-balloon": "2026-11-25",
+  "mix:oval-avocado": "2026-11-25",
+  "mix:heart-strawberry": "2026-11-25",
+  "mix:star-starfish": "2026-11-25",
+  "mix:diamond-kite": "2026-11-25"
 }
