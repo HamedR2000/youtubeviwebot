@@ -1,0 +1,1684 @@
+{
+ "id": "trip-02-farm",
+ "title": "Let's Go to the Farm!",
+ "emoji": "\ud83d\udc2e",
+ "series": "Doodle Pals Trips",
+ "learn": [
+  "farm animals",
+  "animal sounds",
+  "where food comes from",
+  "counting",
+  "moving like animals"
+ ],
+ "hashtags": [
+  "farm",
+  "farmanimals",
+  "animalsounds",
+  "fieldtrip"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "A trip!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Guess what? Today we are going to the farm!"
+    ],
+    [
+     "ellie",
+     "Hooray! I love farm animals!"
+    ],
+    [
+     "narrator",
+     "Are you ready? Let's get on the bus!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "title": "Let's go to the farm!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The wheels on the bus go round and round, round and round, round and round!"
+    ],
+    [
+     "narrator",
+     "The wheels on the bus go round and round, all the way to the farm!"
+    ]
+   ],
+   "min": 9
+  },
+  {
+   "do": [
+    {
+     "title": "Beep beep!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Look! I can see a big red barn!"
+    ],
+    [
+     "coco",
+     "We are here!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "farm"
+    },
+    {
+     "title": "The farm!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Welcome to the farm!"
+    ],
+    [
+     "penny",
+     "Let's meet the farm animals! Listen carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says moo?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Moo!"
+    ],
+    [
+     "narrator",
+     "Who says moo?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-cow",
+     "id": "f0",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a cow!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a cow!"
+    ],
+    [
+     "animal",
+     "Moo!"
+    ],
+    [
+     "penny",
+     "Cows eat lots of grass."
+    ],
+    [
+     "coco",
+     "They give us milk!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f0"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say moo like a cow?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Moo! Great mooing!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: cow!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What do cows give us?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Milk! Cows give us milk."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says oink?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Oink oink!"
+    ],
+    [
+     "narrator",
+     "Who says oink?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-pig",
+     "id": "f1",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a pig!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a pig!"
+    ],
+    [
+     "animal",
+     "Oink oink!"
+    ],
+    [
+     "penny",
+     "Pigs love to roll in the mud."
+    ],
+    [
+     "coco",
+     "The mud keeps them cool!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f1"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you wiggle your nose like a pig?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Oink oink! So funny!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: pig!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What kind of tail does a pig have?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A curly tail! Pigs have curly tails."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says baa?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Baa!"
+    ],
+    [
+     "narrator",
+     "Who says baa?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-sheep",
+     "id": "f2",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a sheep!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a sheep!"
+    ],
+    [
+     "animal",
+     "Baa!"
+    ],
+    [
+     "penny",
+     "Sheep have soft, fluffy wool."
+    ],
+    [
+     "coco",
+     "We make warm sweaters from wool!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you say baa like a sheep?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Baa! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: sheep!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What grows on a sheep?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Wool! Soft and fluffy."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says cluck?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Cluck cluck!"
+    ],
+    [
+     "narrator",
+     "Who says cluck?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-chicken",
+     "id": "f3",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a chicken!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a chicken!"
+    ],
+    [
+     "animal",
+     "Cluck cluck!"
+    ],
+    [
+     "penny",
+     "Chickens live in a hen house."
+    ],
+    [
+     "coco",
+     "They lay eggs!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f3"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you flap your wings like a chicken?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Flap, flap! Cluck cluck!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: chicken!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What do chickens lay?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Eggs! Chickens lay eggs."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the eggs!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "The chickens laid eggs! Let's count them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "eg",
+      "art": "abc-e",
+      "n": 5,
+      "x0": 0.24,
+      "dx": 0.13,
+      "y": 0.42,
+      "s": 0.26
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Five eggs!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "More animals!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's meet more animals!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says neigh?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Neigh!"
+    ],
+    [
+     "narrator",
+     "Who says neigh?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-horse",
+     "id": "f4",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a horse!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a horse!"
+    ],
+    [
+     "animal",
+     "Neigh!"
+    ],
+    [
+     "penny",
+     "Horses are big and strong."
+    ],
+    [
+     "coco",
+     "They can run very fast!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f4"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you gallop like a horse?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Gallop, gallop! So fast!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: horse!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What do horses eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Hay and carrots! Crunch!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says quack?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Quack quack!"
+    ],
+    [
+     "narrator",
+     "Who says quack?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-duck",
+     "id": "f5",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a duck!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a duck!"
+    ],
+    [
+     "animal",
+     "Quack quack!"
+    ],
+    [
+     "penny",
+     "Ducks love to swim in the pond."
+    ],
+    [
+     "coco",
+     "They have webbed feet for paddling!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f5"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you waddle like a duck?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Waddle, waddle! Quack!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: duck!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Where do ducks swim?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "In the pond! Splash!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says maa?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Maa!"
+    ],
+    [
+     "narrator",
+     "Who says maa?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-goat",
+     "id": "f6",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a goat!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a goat!"
+    ],
+    [
+     "animal",
+     "Maa!"
+    ],
+    [
+     "penny",
+     "Goats love to climb."
+    ],
+    [
+     "coco",
+     "They have a little beard!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f6"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you climb like a goat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Up, up, up! Great climbing!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: goat!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does a goat have on its chin?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A beard! A little goat beard."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "What goes chug chug?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Chug chug!"
+    ],
+    [
+     "narrator",
+     "What goes chug chug?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "vehicle-tractor",
+     "id": "f7",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.6
+    },
+    {
+     "title": "It's a tractor!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a tractor!"
+    ],
+    [
+     "animal",
+     "Chug chug!"
+    ],
+    [
+     "penny",
+     "The farmer drives a tractor."
+    ],
+    [
+     "coco",
+     "It pulls heavy things on the farm!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "f7"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you drive like a tractor?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Chug, chug, chug! Brrrm!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: tractor!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does a tractor have?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Big wheels! Bumpy, bumpy!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Memory game!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Memory game time! Look carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "show": "animal-cow",
+     "id": "m0",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "animal-pig",
+     "id": "m1",
+     "x": 0.46,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "animal-sheep",
+     "id": "m2",
+     "x": 0.67,
+     "y": 0.45,
+     "s": 0.3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look at the cow, the pig and the sheep."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m2"
+    },
+    {
+     "title": "Who is missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "Who is missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m2"
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "pulse": "m2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The sheep! Baa! Did you remember?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the ducks!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look at the pond! Let's count the ducks!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "dk",
+      "art": "animal-duck",
+      "n": 4,
+      "x0": 0.26,
+      "dx": 0.16,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Four ducks!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "dk"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many ducks?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Four! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Farm moves!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Everybody stand up! Let's move like the farm animals!"
+    ],
+    [
+     "narrator",
+     "Gallop like a horse!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Flap like a chicken!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Roll like a pig in the mud!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Great moving!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Farm song!"
+    },
+    {
+     "song": true
+    },
+    {
+     "confetti": 6
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's sing the farm song!"
+    ],
+    [
+     "narrator",
+     "On the farm, on the farm, the cow says moo!"
+    ],
+    [
+     "narrator",
+     "The pig says oink, and the sheep says baa!"
+    ],
+    [
+     "narrator",
+     "The duck says quack, the chicken clucks too!"
+    ],
+    [
+     "narrator",
+     "We love the farm, and we love you!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Sing again!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "One more time! Sing with us!"
+    ],
+    [
+     "narrator",
+     "On the farm, on the farm, the cow says moo!"
+    ],
+    [
+     "narrator",
+     "The pig says oink, and the sheep says baa!"
+    ],
+    [
+     "narrator",
+     "The duck says quack, the chicken clucks too!"
+    ],
+    [
+     "narrator",
+     "We love the farm, and we love you!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who did we meet?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Which animals did we meet today?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-cow",
+     "id": "r0",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A cow! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-pig",
+     "id": "r1",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A pig! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-sheep",
+     "id": "r2",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A sheep! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-chicken",
+     "id": "r3",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A chicken! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, farm!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "What a fun trip!"
+    ],
+    [
+     "ellie",
+     "What was your favorite farm animal?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "I loved the ducks!"
+    ],
+    [
+     "narrator",
+     "See you on our next trip! Bye bye, friends!"
+    ]
+   ],
+   "min": 6
+  }
+ ]
+}
