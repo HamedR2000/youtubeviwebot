@@ -22,6 +22,7 @@ CATEGORY = {
     'vehicle': ('Vehicle Sounds 🚒', 'Beep beep! Choo choo! Learn vehicle names and sounds with the Doodle Pals: cars, trucks, trains, planes and more.'),
     'colormix': ('Color Mixing with Coco 🎨', 'Red and yellow make orange! Mix colors with Coco the Crayon: color mixing in simple English for toddlers.'),
     'bedtime': ('Bedtime Lullabies 🌙', 'Calm bedtime videos for babies and toddlers: say good night with the Doodle Pals, then drift off to a gentle music-box lullaby.'),
+    'trip': ('Doodle Pals Trips 🚌 Field Trips for Kids', 'Hop on the bus with the Doodle Pals! Visit the zoo, the farm, the sea and places around the world — and learn on the way.'),
     'feel': ('How Do You Feel? Feelings for Kids 😊', 'I feel happy! I feel sleepy! Learn feelings and emotions in simple English with the Doodle Pals — make the faces along.'),
     'body': ('My Body! Body Parts for Kids 👃', 'This is my nose! These are my eyes! Learn body parts in simple English with the Doodle Pals — touch, point and move along.'),
     'mix': ('Doodle Pals Compilations 📺', 'Longer Doodle Pals videos for the big screen: ABC, numbers, animal sounds, colors, drawing and guessing games, many in a row.'),
@@ -46,6 +47,8 @@ def playlists_for(video_id):
                 out.append((f'{series} — Doodle Pals', f'The "{series}" series from Doodle Pals: watch every part in order.'))
         return out
     prefix = video_id.split('-')[0]
+    if prefix == 'trip':  # trip films: trips playlist + all stories
+        return [CATEGORY['trip'], CATEGORY['episode']]
     return [CATEGORY.get(prefix, CATEGORY['shape'])]
 
 

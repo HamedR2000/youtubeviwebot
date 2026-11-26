@@ -80,6 +80,24 @@ function episodeMetadata(ep) {
   };
 }
 
+// trips (every 3 days): the Doodle Pals visit a place (zoo, farm, aquarium, countries...)
+function tripMetadata(ep) {
+  return {
+    title: `${ep.title} ${ep.emoji} Doodle Pals Trip for Kids | Learn ${ep.learn.slice(0, 2).map(w => w[0].toUpperCase() + w.slice(1)).join(' and ')}`.slice(0, 100),
+    description: [
+      `${ep.title} ${ep.emoji} Hop on the bus with Penny the Pencil, Ellie the Eraser and Coco the Crayon!`,
+      '',
+      `On this trip we learn: ${ep.learn.join(', ')}.`,
+      'Gentle, original 2D animation and songs in simple English for kids aged 2–6. Answer the questions and move along — the friends wait for you!',
+      '',
+      tags('fieldtrip', 'kidscartoon', ...(ep.hashtags || []), 'learnenglish', 'preschool', 'toddlers', 'kidslearning', 'doodlepals'),
+    ].join('\n'),
+    tags: ['field trip for kids', 'virtual field trip', 'kids cartoon', 'learn english for kids', 'preschool learning', 'educational cartoon', ...ep.learn, 'Doodle Pals'],
+    categoryId: '27',
+    madeForKids: true,
+  };
+}
+
 function metadata(t) {
   if (t.template === 'feelings') {
     const w = t.word[0] + t.word.slice(1).toLowerCase(), lw = w.toLowerCase();
@@ -362,6 +380,25 @@ function metadata(t) {
       batch.push({ id: `episode-${ep.id}`, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), thumbnail: path.basename(mp4).replace(/\.mp4$/, '.jpg'), long: true, ...episodeMetadata(ep) });
       used['episode:' + ep.id] = DATE;
     } else { console.log('[episode] no unused episode script left — write a new one in episodes/'); break; }
+  }
+  // trip film (16:9): '--trips auto' makes one when the last trip is 3+ days old (the owner's choice: every 3 days)
+  const TRIPS = flag('--trips', '0'), tripDir = path.join(__dirname, 'trips');
+  const lastTrip = Object.entries(used).filter(([k]) => k.startsWith('trip:')).map(([, d]) => d).sort().pop() || '';
+  const tripDue = TRIPS === 'auto' ? (!lastTrip || (Date.parse(DATE.slice(0, 10)) - Date.parse(lastTrip.slice(0, 10))) / 864e5 >= 3 ? 1 : 0) : Number(TRIPS) || 0;
+  for (let k = 0; k < tripDue; k++) {
+    const next = fs.existsSync(tripDir) && fs.readdirSync(tripDir).filter(f => f.endsWith('.json') && !used['trip:' + JSON.parse(fs.readFileSync(path.join(tripDir, f), 'utf8')).id]).sort()[0];
+    if (!next) { console.log('[trip] no unused trip script left — write a new one in trips/'); break; }
+    const ep = JSON.parse(fs.readFileSync(path.join(tripDir, next), 'utf8'));
+    const mp4 = path.join(OUT, `${ep.id}.mp4`), t0 = Date.now();
+    const tl = await buildEpisode(path.join(tripDir, next), mp4, { browser });
+    const lines = tl.beats.flatMap(b => b.lines).filter(l => l.who !== 'pause' && l.text).map(l => ({ text: l.text, start: l.start, end: l.start + l.dur }));
+    writeSrt(mp4.replace(/\.mp4$/, '.srt'), withOutroSubs(lines, tl.duration));
+    fs.rmSync(mp4.replace(/\.mp4$/, '') + '.work', { recursive: true, force: true });
+    withOutro(mp4, 'landscape');
+    await renderThumbnail(ep, mp4.replace(/\.mp4$/, '.jpg'), browser);
+    console.log(`[trip] ${ep.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
+    batch.push({ id: ep.id, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), thumbnail: path.basename(mp4).replace(/\.mp4$/, '.jpg'), long: true, ...tripMetadata(ep) });
+    used['trip:' + ep.id] = DATE;
   }
   // compilation videos (16:9) made of already-published Shorts of one category
   const COMPS = Number(flag('--compilations', 1));
