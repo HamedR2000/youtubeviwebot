@@ -372,6 +372,27 @@
       TOPICS.push({ id: `body-${word.toLowerCase()}`, template: 'bodyparts', word, plural, emoji, spots, action });
   }
 
+  // ---- Feelings: "I feel happy! Can you make a happy face?" (a big doodle face shows the feeling) ----
+  // face: eyes, brows, mouth, extra (see scenes/feelings.html); sad/angry/scared each come with a gentle way to feel better
+  {
+    const FEEL = [
+      ['HAPPY', '😊', 'I got a big red balloon!', 'Smile big!', '#FFD23F', 'happy', '', 'bigsmile', 'blush'],
+      ['SAD', '😢', 'I dropped my ice cream. A hug helps!', 'Give yourself a hug!', '#8EC5FF', 'open', 'up', 'frown', 'tear'],
+      ['ANGRY', '😠', 'My tower fell down! Take a big breath.', 'Breathe in... and out.', '#FF8A7A', 'open', 'down', 'angry', 'steam'],
+      ['SURPRISED', '😮', 'A present for me? Wow!', 'Say wow!', '#FFB86B', 'wide', 'high', 'bigo', ''],
+      ['SLEEPY', '😴', "It's time for bed. Yawn!", 'Stretch and yawn!', '#B8C4FF', 'closed', '', 'o', 'zzz'],
+      ['SCARED', '😨', "It's so dark! Let's turn on the light.", "Hold a friend's hand!", '#C7B8FF', 'wide', 'up', 'wavy', 'sweat'],
+      ['SILLY', '😜', 'Look at my funny face!', 'Stick out your tongue!', '#9BE89B', 'wink', '', 'tongue', ''],
+      ['EXCITED', '🤩', "We're going to the park!", 'Jump up and down!', '#FF9FD0', 'star', 'high', 'bigsmile', 'sparkle'],
+      ['PROUD', '🥳', 'I did it all by myself!', 'Give a thumbs up!', '#FFC857', 'happy', '', 'smile', 'sparkle'],
+      ['SHY', '🙈', 'Hello... hi.', 'Wave hello!', '#FFC2D1', 'down', '', 'small', 'blush'],
+      ['CALM', '😌', 'I hug my teddy. Ahh.', 'Breathe slowly.', '#A8E6CF', 'closed', '', 'smile', ''],
+      ['LOVED', '🥰', 'My family gives me a big hug!', 'Hug, hug!', '#FF8FA3', 'heart', '', 'bigsmile', 'hearts'],
+    ];
+    for (const [word, emoji, why, action, hue, eyes, brows, mouth, extra] of FEEL)
+      TOPICS.push({ id: `feel-${word.toLowerCase()}`, template: 'feelings', word, emoji, why, action, hue, face: { eyes, brows, mouth, extra } });
+  }
+
   // ---- Colors: Coco colours a grey object, then two more things of that colour ----
   const COLORS_T = [
     ['RED', '#F2454B', '🍎', ['abc-a', 'apple'], ['heart-strawberry', 'strawberry'], ['abc-h', 'heart']],

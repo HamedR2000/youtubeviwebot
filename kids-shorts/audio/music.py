@@ -23,6 +23,8 @@ if len(sys.argv) > 2:
         T.update(fill=tl['reveal'], face=tl['bubble'], rays=tl['reveal'] + 0.1)
     elif tl.get('template') == 'bodyparts':  # pop when the part lights up, sparkle on "touch your..."
         T.update(fill=tl['show'], face=None, rays=tl['touch'], pops=[tl['point'][0]])
+    elif tl.get('template') == 'feelings':  # pop as the face changes and on the reason, sparkle on "make a ... face"
+        T.update(fill=tl['show'], face=None, rays=tl['make'], pops=[tl['why']])
     elif tl.get('template') == 'colormix':  # pop per paint blob, sparkle on the new colour
         T.update(draw=tuple(tl['stir']), fill=tl['reveal'], face=tl['obj'], rays=tl['reveal'] + 0.05, pops=[tl['a'], tl['b']])
     elif tl.get('template') == 'shadow':  # tick per countdown number, sparkle on the reveal
