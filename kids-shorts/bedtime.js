@@ -1,5 +1,5 @@
 // Bedtime video (16:9, ~30 min) for the evening slot: "Good night, cow… good night, train…" with a calm narrator over a
-// music-box lullaby, then the Doodle Pals asleep under a starry sky while the lullaby plays on. Published at 17:00 Berlin.
+// music-box lullaby, then the Doodle Pals asleep under a starry sky while the lullaby plays on. Published at 12:00 Berlin (nap time; the channel's views come mostly in the European daytime, evenings are quietest).
 const { spawn, execFileSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
@@ -78,7 +78,7 @@ async function buildBedtime({ used, DATE, OUT, browser, minutes = 14 }) {
   return {
     subjects: subjects.map(t => t.id), subs,
     video: {
-      id, file: path.basename(out), long: true, schedule: '17:00', title,
+      id, file: path.basename(out), long: true, schedule: '12:00', title,
       description: [
         `A calm bedtime video 🌙 Say good night to ${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} with the Doodle Pals, then drift off to a gentle music-box lullaby under the stars ✨`,
         '',
