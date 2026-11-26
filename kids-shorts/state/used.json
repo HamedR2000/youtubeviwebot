@@ -140,5 +140,13 @@
   "bed:animal-duck": "2026-11-26",
   "bed:vehicle-firetruck": "2026-11-26",
   "bed:animal-pig": "2026-11-26",
-  "bed:animal-sheep": "2026-11-26"
+  "bed:animal-sheep": "2026-11-26",
+  "bed:animal-lion": "2026-11-26-night",
+  "bed:animal-frog": "2026-11-26-night",
+  "bed:vehicle-train": "2026-11-26-night",
+  "bed:animal-horse": "2026-11-26-night",
+  "bed:animal-chicken": "2026-11-26-night",
+  "bed:vehicle-airplane": "2026-11-26-night",
+  "bed:animal-owl": "2026-11-26-night",
+  "bed:animal-mouse": "2026-11-26-night"
 }
