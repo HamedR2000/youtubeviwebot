@@ -1,0 +1,1672 @@
+{
+ "id": "trip-01-zoo",
+ "title": "Let's Go to the Zoo!",
+ "emoji": "\ud83e\udd81",
+ "series": "Doodle Pals Trips",
+ "learn": [
+  "zoo animals",
+  "animal names",
+  "animal facts",
+  "counting",
+  "moving like animals"
+ ],
+ "hashtags": [
+  "zoo",
+  "zooanimals",
+  "animalsforkids",
+  "fieldtrip"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "A trip!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Guess what? Today we are going on a trip!"
+    ],
+    [
+     "ellie",
+     "Where are we going?"
+    ],
+    [
+     "coco",
+     "To the zoo! Let's see lots of animals!"
+    ],
+    [
+     "narrator",
+     "Are you ready? Let's go!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "title": "Let's go to the zoo!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The wheels on the bus go round and round, round and round, round and round!"
+    ],
+    [
+     "narrator",
+     "The wheels on the bus go round and round, all the way to the zoo!"
+    ]
+   ],
+   "min": 9
+  },
+  {
+   "do": [
+    {
+     "title": "Beep beep!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Beep beep! Look out of the window!"
+    ],
+    [
+     "ellie",
+     "I can see trees and hills!"
+    ],
+    [
+     "coco",
+     "We are almost there!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "zoo"
+    },
+    {
+     "title": "The zoo!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Here we are! Welcome to the zoo!"
+    ],
+    [
+     "penny",
+     "Let's find the animals! Listen carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says roar?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Roar!"
+    ],
+    [
+     "narrator",
+     "Who says roar?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-lion",
+     "id": "z0",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a lion!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a lion!"
+    ],
+    [
+     "animal",
+     "Roar!"
+    ],
+    [
+     "penny",
+     "Lions are big cats."
+    ],
+    [
+     "coco",
+     "The daddy lion has a big, fluffy mane!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z0"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you roar like a lion?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Roar! Great roaring!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: lion!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the lion eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Meat! Lions eat meat."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says pawoo?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Pawoo!"
+    ],
+    [
+     "narrator",
+     "Who says pawoo?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-elephant",
+     "id": "z1",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's an elephant!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's an elephant!"
+    ],
+    [
+     "animal",
+     "Pawoo!"
+    ],
+    [
+     "penny",
+     "Elephants are very, very big!"
+    ],
+    [
+     "coco",
+     "They have a long trunk to drink water."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z1"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you swing your arm like a trunk?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Swing, swing! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: elephant!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the elephant eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Grass and fruit! Lots and lots!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says ooh ooh, ah ah?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Ooh ooh, ah ah!"
+    ],
+    [
+     "narrator",
+     "Who says ooh ooh, ah ah?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-monkey",
+     "id": "z2",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a monkey!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a monkey!"
+    ],
+    [
+     "animal",
+     "Ooh ooh, ah ah!"
+    ],
+    [
+     "penny",
+     "Monkeys love to climb trees."
+    ],
+    [
+     "coco",
+     "And they love to eat bananas!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you jump like a monkey?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Jump, jump! Ooh ooh, ah ah!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: monkey!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the monkey eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Bananas! Yum!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who has a very long neck?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who has a very long neck?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "giraffe",
+     "id": "z3",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a giraffe!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a giraffe!"
+    ],
+    [
+     "penny",
+     "Giraffes are the tallest animals in the world!"
+    ],
+    [
+     "coco",
+     "They eat leaves from the top of the trees."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z3"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you stretch up tall like a giraffe?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "So tall! Wonderful!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: giraffe!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the giraffe eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Leaves from tall trees!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Snack time!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "I'm hungry! Snack time!"
+    ],
+    [
+     "penny",
+     "Let's count the apples!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "ap",
+      "art": "abc-a",
+      "n": 5,
+      "x0": 0.24,
+      "dx": 0.13,
+      "y": 0.42,
+      "s": 0.26
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Five apples! Yum!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "More animals!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's see more animals!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who has black and white stripes?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who has black and white stripes?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "abc-z",
+     "id": "z4",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a zebra!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a zebra!"
+    ],
+    [
+     "penny",
+     "Zebras look like horses with stripes."
+    ],
+    [
+     "coco",
+     "Every zebra has its own stripes!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z4"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "What colors are the stripes?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Black and white!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: zebra!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the zebra eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Grass! Munch, munch!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who waddles on the ice?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who waddles on the ice?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "penguin",
+     "id": "z5",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a penguin!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a penguin!"
+    ],
+    [
+     "penny",
+     "Penguins are birds, but they can't fly."
+    ],
+    [
+     "coco",
+     "They are super swimmers!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z5"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you waddle like a penguin?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Waddle, waddle! So cute!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: penguin!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the penguin eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Fish! Penguins love fish!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says grrr?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Grrr!"
+    ],
+    [
+     "narrator",
+     "Who says grrr?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-bear",
+     "id": "z6",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a bear!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a bear!"
+    ],
+    [
+     "animal",
+     "Grrr!"
+    ],
+    [
+     "penny",
+     "Bears are big and furry."
+    ],
+    [
+     "coco",
+     "They love to eat honey and berries!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z6"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you growl like a bear?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Grrr! Great growling!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: bear!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the bear eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Honey! Sweet, sweet honey!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who says hiss?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "animal",
+     "Hiss!"
+    ],
+    [
+     "narrator",
+     "Who says hiss?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "animal-snake",
+     "id": "z7",
+     "x": 0.46,
+     "y": 0.52,
+     "s": 0.72
+    },
+    {
+     "title": "It's a snake!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a snake!"
+    ],
+    [
+     "animal",
+     "Hiss!"
+    ],
+    [
+     "penny",
+     "Snakes have no legs!"
+    ],
+    [
+     "coco",
+     "They wiggle along the ground."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "z7"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you wiggle like a snake?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Wiggle, wiggle! Hiss!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: snake!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does the snake eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Eggs and little mice!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Memory game!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Memory game time! Look carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "show": "animal-lion",
+     "id": "m0",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.28
+    },
+    {
+     "show": "giraffe",
+     "id": "m1",
+     "x": 0.46,
+     "y": 0.48,
+     "s": 0.28
+    },
+    {
+     "show": "penguin",
+     "id": "m2",
+     "x": 0.67,
+     "y": 0.45,
+     "s": 0.28
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look at the lion, the giraffe and the penguin."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m1"
+    },
+    {
+     "title": "Who is missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "Who is missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m1"
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "pulse": "m1"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The giraffe! Did you remember?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the penguins!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look! Lots of penguins! Let's count them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "pg",
+      "art": "penguin",
+      "n": 4,
+      "x0": 0.26,
+      "dx": 0.16,
+      "y": 0.45,
+      "s": 0.36
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Four penguins!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "pg"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many penguins?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Four! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Animal moves!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Everybody stand up! Let's move like the animals!"
+    ],
+    [
+     "narrator",
+     "Stomp like an elephant!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Waddle like a penguin!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Jump like a monkey!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Great moving!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Zoo song!"
+    },
+    {
+     "song": true
+    },
+    {
+     "confetti": 6
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's sing the zoo song!"
+    ],
+    [
+     "narrator",
+     "We went to the zoo, the zoo, the zoo!"
+    ],
+    [
+     "narrator",
+     "We saw a lion, and a monkey too!"
+    ],
+    [
+     "narrator",
+     "A giraffe so tall, a penguin small!"
+    ],
+    [
+     "narrator",
+     "We love the zoo, we love them all!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Sing again!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "One more time! Sing with us!"
+    ],
+    [
+     "narrator",
+     "We went to the zoo, the zoo, the zoo!"
+    ],
+    [
+     "narrator",
+     "We saw a lion, and a monkey too!"
+    ],
+    [
+     "narrator",
+     "A giraffe so tall, a penguin small!"
+    ],
+    [
+     "narrator",
+     "We love the zoo, we love them all!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "What did we see?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "What animals did we see today?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-lion",
+     "id": "r0",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A lion! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-elephant",
+     "id": "r1",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "An elephant! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "animal-monkey",
+     "id": "r2",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A monkey! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "giraffe",
+     "id": "r3",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A giraffe! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, zoo!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "What a fun trip!"
+    ],
+    [
+     "ellie",
+     "What was your favorite animal?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "I loved the penguins!"
+    ],
+    [
+     "narrator",
+     "See you on our next trip! Bye bye, friends!"
+    ]
+   ],
+   "min": 6
+  }
+ ]
+}
