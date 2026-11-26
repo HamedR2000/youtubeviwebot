@@ -19,7 +19,7 @@ function writeSrt(file, subs) {
 const withOutroSubs = (subs, len) => a.includes('--no-outro') ? subs : [...subs, ...OUTRO_SUBS.map(o => ({ ...o, start: o.start + len, end: o.end + len }))];
 const { buildEpisode } = require('./longvideo');
 const { renderThumbnail } = require('./thumbnail');
-const { pickCompilation, buildCompilation } = require('./compile');
+const { pickCompilation, pickFreshCompilation, buildCompilation } = require('./compile');
 const { buildBedtime } = require('./bedtime');
 
 const a = process.argv.slice(2);
@@ -366,15 +366,16 @@ function metadata(t) {
   // compilation videos (16:9) made of already-published Shorts of one category
   const COMPS = Number(flag('--compilations', 1));
   for (let c = 0; c < COMPS; c++) {
-    const pick = pickCompilation(used, DATE);
-    if (!pick) { console.log('[mix] not enough published Shorts in any category yet'); break; }
+    const pick = pickCompilation(used, DATE) || pickFreshCompilation(used);
+    if (!pick) { console.log('[mix] no topics left for a compilation'); break; }
+    if (pick.fresh) console.log(`[mix] not enough published Shorts: ${pick.topics.length} new ${pick.key} topics go straight into the long video`);
     const t0 = Date.now();
     const v = await buildCompilation({ pick, DATE: c ? `${DATE}-${c + 1}` : DATE, OUT, browser, renderShort,
       outroMp4: a.includes('--no-outro') ? null : outro.landscape, outroSubs: OUTRO_SUBS });
     const { subs, compiled, ...meta } = v;
     writeSrt(path.join(OUT, v.id + '.srt'), subs);
     batch.push({ ...meta, captions: v.id + '.srt' });
-    for (const id of compiled) used['mix:' + id] = DATE;
+    for (const id of compiled) { used['mix:' + id] = DATE; if (pick.fresh) used[id] = DATE; } // fresh topics never become Shorts later
     console.log(`[mix] ${v.id}: ${compiled.length} segments (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
   }
   // evening slot: a calm ~14 min bedtime (15 min YouTube upload limit) lullaby video (published at 12:00 Berlin, nap time)
@@ -389,6 +390,7 @@ function metadata(t) {
   const episodesLeft = fs.readdirSync(epDir).filter(f => f.endsWith('.json') && !used['episode:' + f.replace(/\.json$/, '')]).length;
   await browser.close();
   for (const f of Object.values(outro)) fs.rmSync(f, { force: true });
+  for (const k of Object.keys(left)) left[k] = TOPICS.filter(t => (t.template || 'draw-shape') === k && !used[t.id]).length;
   fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ date: DATE, videos: batch, topicsLeft: left, episodesLeft }, null, 2));
   fs.mkdirSync(path.dirname(STATE), { recursive: true });
   fs.writeFileSync(STATE, JSON.stringify(used, null, 2) + '\n');
