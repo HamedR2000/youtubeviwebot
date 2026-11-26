@@ -161,6 +161,20 @@ elif template == 'color':
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"What else is {w}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
+elif template == 'bodyparts':
+    w = topic['word'].lower()
+    gap = tl['letterGap']
+    place(say("Let's learn about my body!"), 0.35, tl['show'] - 0.5)
+    place(say(f"{'These are' if topic['plural'] else 'This is'} my {w}!"), tl['show'] + 0.1, 2.2)
+    place(say(topic['action'], speed=1.0), tl['show'] + 2.5, tl['touch'] - tl['show'] - 2.6)
+    place(say(f"Touch your {w}! Can you touch your {w}?"), tl['touch'] + 0.1, tl['word'] - tl['touch'] - 0.3)
+    for i, ch in enumerate(topic['word']):
+        if ch.isalpha():
+            place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['word']) * gap + 0.1
+    place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say(f"Where {'are' if topic['plural'] else 'is'} your {w}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
+
 elif template == 'colormix':
     COCO = 'bf_lily'
     A, B, Cc = (topic[k]['name'].lower() for k in ('a', 'b', 'c'))
