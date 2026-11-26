@@ -262,7 +262,7 @@ jobs:
           for tag in $(gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^shorts-'); do
             d="rel/$tag"; mkdir -p "$d"
             gh release download "$tag" --dir "$d" -p uploaded.json 2>/dev/null || continue
-            for id in $(python3 -c "import json;[print(u['id']) for u in json.load(open('$d/uploaded.json')) if not u['id'].startswith(('episode-','mix-','mega-'))]"); do
+            for id in $(python3 -c "import json;[print(u['id']) for u in json.load(open('$d/uploaded.json')) if not u['id'].startswith(('episode-','mix-','mega-','bedtime-'))]"); do
               gh release download "$tag" --dir "$d" -p "$id.mp4" -p "$id.srt" 2>/dev/null || true
             done
           done

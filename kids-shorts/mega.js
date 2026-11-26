@@ -12,6 +12,7 @@ const { shot, ff, dur, name } = require('./compile');
 const { renderOutro, OUTRO_SUBS } = require('./outro');
 
 const END_CARD = 6.8; // seconds of end card at the end of every Short (outro.html DURATION)
+const CARD_SINCE = 'shorts-2026-11-20'; // first day with the end card
 const SECTIONS = [
   ['abc', 'ABC Time!', 'ABC'], ['count', "Let's Count!", 'Numbers'], ['color', 'Colors with Coco!', 'Colors'],
   ['draw-shape', 'Shapes!', 'Shapes'], ['animal', 'Animal Sounds!', 'Animals'], ['vehicle', 'Vehicle Sounds!', 'Vehicles'],
@@ -42,7 +43,7 @@ function writeSrt(file, subs) {
     if (!fs.existsSync(path.join(d, 'uploaded.json'))) continue;
     for (const u of JSON.parse(fs.readFileSync(path.join(d, 'uploaded.json'), 'utf8'))) {
       const mp4 = path.join(d, u.id + '.mp4');
-      if (fs.existsSync(mp4)) have[u.id] = { mp4, srt: path.join(d, u.id + '.srt') };
+      if (fs.existsSync(mp4)) have[u.id] = { mp4, srt: path.join(d, u.id + '.srt'), tag };
     }
   }
   const order = (a, b) => (a.n || 0) - (b.n || 0) || TOPICS.indexOf(a) - TOPICS.indexOf(b);
@@ -79,7 +80,8 @@ function writeSrt(file, subs) {
     if (at + 20 + END_CARD > HARD_LIMIT) break;
     chapters.push([at, `${sec.label}: ${name(sec.topics[0])} to ${name(sec.topics[sec.topics.length - 1])}`]);
     for (const [i, t] of sec.topics.entries()) {
-      const src = have[t.id], len = dur(src.mp4) - END_CARD;
+      // Shorts made before the end card existed (before 2026-11-20) keep their whole length
+      const src = have[t.id], len = dur(src.mp4) - (src.tag >= CARD_SINCE ? END_CARD : 0);
       if (at + len + END_CARD + 1 > HARD_LIMIT) { console.log(`  [mega] stop at ${Math.round(at)}s (15 min upload limit)`); break; }
       const png = path.join(work, `${t.id}.png`), framed = path.join(work, `${t.id}.mp4`);
       await shot(browser, { mode: 'seg', title: sec.frame, i: i + 1, n: sec.topics.length, hue: (hue + parts.length * 7) % 360 }, png);
