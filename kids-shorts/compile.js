@@ -53,6 +53,21 @@ function pickCompilation(used, today) {
   return { key: k, topics: pools[k].slice(0, n) };
 }
 
+// when no category has enough published Shorts left: new, never-used topics rendered straight into the long video
+// (the owner's choice: long videos get the views). They count as used, so they never come back as a Short.
+const FRESH_ORDER = ['abc', 'count', 'shape', 'color', 'animal', 'vehicle', 'bodyparts', 'feelings', 'colormix', 'drawalong', 'shadow'];
+function pickFreshCompilation(used) {
+  const pools = {};
+  for (const t of TOPICS) { const k = KEY(t); if (SERIES[k] && !used[t.id]) (pools[k] ||= []).push(t); }
+  const lastMix = k => Object.entries(used).filter(([id]) => id.startsWith('mix:') && KEY(TOPICS.find(t => 'mix:' + t.id === id) || {}) === k).map(([, d]) => d).sort().pop() || '';
+  // core topics first; a category compiled in the last 3 days waits so the daily mixes vary
+  const recent = k => lastMix(k) >= new Date(Date.now() - 3 * 864e5).toISOString().slice(0, 10) ? 1 : 0;
+  const ok = FRESH_ORDER.filter(k => (pools[k] || []).length >= 6).sort((x, y) => recent(x) - recent(y) || FRESH_ORDER.indexOf(x) - FRESH_ORDER.indexOf(y));
+  if (!ok.length) return null;
+  const k = ok[0];
+  return { key: k, topics: pools[k].slice(0, Math.max(6, Math.min(12, Math.round(300 / SERIES[k].seg)))), fresh: true };
+}
+
 const ff = args => execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...args], { stdio: 'inherit' });
 const dur = f => Number(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString());
 
@@ -135,4 +150,4 @@ async function buildCompilation({ pick, DATE, OUT, browser, renderShort, outroMp
   };
 }
 
-module.exports = { pickCompilation, buildCompilation, SERIES, shot, ff, dur, name, KEY };
+module.exports = { pickCompilation, pickFreshCompilation, buildCompilation, SERIES, shot, ff, dur, name, KEY };
