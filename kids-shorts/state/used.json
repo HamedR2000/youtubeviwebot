@@ -148,5 +148,6 @@
   "bed:animal-chicken": "2026-11-26-night",
   "bed:vehicle-airplane": "2026-11-26-night",
   "bed:animal-owl": "2026-11-26-night",
-  "bed:animal-mouse": "2026-11-26-night"
+  "bed:animal-mouse": "2026-11-26-night",
+  "trip:trip-01-zoo": "2026-11-26-zoo"
 }
