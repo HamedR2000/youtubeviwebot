@@ -31,6 +31,8 @@ const SERIES = {
     title: ts => `Mixing Colors for Kids! 🎨 ${ts.length} Color Mixes with Coco the Crayon | Learn Colors`, learn: () => ['color mixing', 'colors', 'color words'], tags: ['colormixing', 'colors'] },
   bodyparts: { frame: 'My Body!', seg: 20, intro: () => "Hi friends! Let's learn about our bodies! Get ready to touch and wiggle!",
     title: ts => `Body Parts for Kids! 👃 ${ts.slice(0, 4).map(t => cap(t.word)).join(', ')} and More | Touch Your Nose!`, learn: () => ['body parts', 'first words'], tags: ['bodyparts', 'bodypartsforkids'] },
+  feelings: { frame: 'How Do You Feel?', seg: 20, intro: () => "Hi friends! How do you feel today? Let's learn about feelings!",
+    title: ts => `Feelings for Kids! 😊 ${ts.slice(0, 4).map(t => cap(t.word)).join(', ')} and More | How Do You Feel?`, learn: () => ['feelings', 'emotions', 'first words'], tags: ['feelings', 'emotions', 'feelingsforkids'] },
   shadow: { frame: 'Who Is Hiding?', seg: 20, intro: () => "Hi friends! Let's play a game. Who is hiding? Can you guess?",
     title: ts => `Guess the Shadow! 🔦 Who Is Hiding? ${ts.length} Guessing Games for Kids`, learn: () => ['guessing game', 'first words', 'animal names'], tags: ['guesstheshadow', 'guessinggame'] },
 };

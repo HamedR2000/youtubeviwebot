@@ -175,6 +175,20 @@ elif template == 'bodyparts':
     place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
     place(say(f"Where {'are' if topic['plural'] else 'is'} your {w}?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
 
+elif template == 'feelings':
+    w = topic['word'].lower()
+    gap = tl['letterGap']
+    place(say("How do you feel?"), 0.35, tl['show'] - 0.5)
+    place(say(f"I feel {w}!"), tl['show'] + 0.1, tl['why'] - tl['show'] - 0.15)
+    place(say(topic['why']), tl['why'] + 0.15, tl['make'] - tl['why'] - 0.3)
+    place(say(f"Can you make a {w} face? {topic['action']}"), tl['make'] + 0.1, tl['word'] - tl['make'] - 0.3)
+    for i, ch in enumerate(topic['word']):
+        if ch.isalpha():
+            place(say(LETTER[ch], speed=1.15, shown=ch), tl['word'] + i * gap + 0.05, gap * 0.95)
+    end_word = tl['word'] + len(topic['word']) * gap + 0.1
+    place(say(f"{w.capitalize()}!"), end_word, max(0.6, tl['ask'] - end_word - 0.05))
+    place(say("How do you feel today?"), tl['ask'] + 0.2, END - tl['ask'] - 0.4)
+
 elif template == 'colormix':
     COCO = 'bf_lily'
     A, B, Cc = (topic[k]['name'].lower() for k in ('a', 'b', 'c'))
