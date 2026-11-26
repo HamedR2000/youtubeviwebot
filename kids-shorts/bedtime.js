@@ -38,7 +38,7 @@ async function renderClip(browser, opts, seconds, out) {
   await page.close();
 }
 
-async function buildBedtime({ used, DATE, OUT, browser, minutes = 30 }) {
+async function buildBedtime({ used, DATE, OUT, browser, minutes = 14 }) {
   const subjects = pickSubjects(used);
   const id = `bedtime-${DATE}`, work = path.resolve(OUT, id + '.work'); // absolute: the concat list resolves paths itself
   fs.mkdirSync(work, { recursive: true });

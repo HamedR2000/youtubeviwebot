@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "generate (render into a Release), publish (upload an approved date), playlists, thumbnails, or mega (20-30 min learning video from published Shorts, added to that date's Release)"
+        description: "generate (render into a Release), publish (upload an approved date), playlists, thumbnails, or mega (~14 min learning video from published Shorts, added to that date's Release)"
         type: choice
         options: [generate, publish, playlists, thumbnails, mega]
         default: generate
@@ -28,7 +28,7 @@ on:
         type: string
         default: "1"
       bedtime:
-        description: "generate: how many ~30 min bedtime lullaby videos to render (they go public at 17:00 Berlin)"
+        description: "generate: how many ~14 min bedtime lullaby videos to render (they go public at 17:00 Berlin)"
         type: string
         default: "1"
       skip:
@@ -98,6 +98,7 @@ jobs:
           DATE="${{ steps.render.outputs.date }}"
           NOTES=$(node -e "const b=require('./out/$DATE/batch.json');console.log('Awaiting approval.\n\n'+b.videos.map(v=>'- **'+v.id+'** — '+v.title).join('\n'))")
           gh release delete "shorts-$DATE" --yes --cleanup-tag 2>/dev/null || true
+          shopt -s nullglob  # a batch may have no thumbnails (e.g. a bedtime-only run)
           gh release create "shorts-$DATE" out/$DATE/*.mp4 out/$DATE/*.srt out/$DATE/*.jpg out/$DATE/batch.json \
             --prerelease --title "Doodle Pals Shorts $DATE" --notes "$NOTES"
           echo "Review: ${{ github.server_url }}/${{ github.repository }}/releases/tag/shorts-$DATE"

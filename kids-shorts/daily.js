@@ -377,10 +377,10 @@ function metadata(t) {
     for (const id of compiled) used['mix:' + id] = DATE;
     console.log(`[mix] ${v.id}: ${compiled.length} segments (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
   }
-  // evening slot: a calm ~30 min bedtime lullaby video (published at 17:00 Berlin)
+  // evening slot: a calm ~14 min bedtime (15 min YouTube upload limit) lullaby video (published at 17:00 Berlin)
   for (let k = 0; k < Number(flag('--bedtime', 1)); k++) {
     const t0 = Date.now();
-    const { subjects, subs, video } = await buildBedtime({ used, DATE: k ? `${DATE}-${k + 1}` : DATE, OUT, browser, minutes: Number(flag('--bedtime-minutes', 30)) });
+    const { subjects, subs, video } = await buildBedtime({ used, DATE: k ? `${DATE}-${k + 1}` : DATE, OUT, browser, minutes: Number(flag('--bedtime-minutes', 14)) });
     writeSrt(path.join(OUT, video.id + '.srt'), subs);
     batch.push({ ...video, captions: video.id + '.srt' });
     for (const id of subjects) used['bed:' + id] = DATE;

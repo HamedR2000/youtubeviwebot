@@ -1,4 +1,4 @@
-// Long learning video (about 20-30 min, 16:9) for the TV: the channel's published core-topic Shorts in sections
+// Long learning video (up to ~14 min while the channel has the 15 min upload limit, 16:9) for the TV: the channel's published core-topic Shorts in sections
 // (ABC, numbers, colors, shapes, animals), taken from the Release files (no re-render), the Shorts' end card
 // cut off, each framed like the compilations, joined behind a title card and closed with the landscape end card.
 // Usage (CI): node mega.js <releases-dir> <date> <out-dir>
@@ -16,7 +16,9 @@ const SECTIONS = [
   ['abc', 'ABC Time!', 'ABC'], ['count', "Let's Count!", 'Numbers'], ['color', 'Colors with Coco!', 'Colors'],
   ['draw-shape', 'Shapes!', 'Shapes'], ['animal', 'Animal Sounds!', 'Animals'], ['vehicle', 'Vehicle Sounds!', 'Vehicles'],
 ];
-const MAX_SECONDS = 30 * 60;
+// YouTube rejects videos over 15 min until the channel has "intermediate features" (this one does not yet)
+const MAX_SECONDS = 14 * 60;
+const HARD_LIMIT = 14.5 * 60; // the real cut-off while joining (end card included)
 
 function readSrt(f) {
   if (!fs.existsSync(f)) return [];
@@ -48,7 +50,12 @@ function writeSrt(file, subs) {
     topics: TOPICS.filter(t => (t.template || 'draw-shape') === tpl && have[t.id]).sort(order) })).filter(s => s.topics.length >= 4);
   // fill up to ~30 minutes, whole sections in order
   let est = 5, chosen = [];
-  for (const s of sections) { const add = s.topics.length * 20.5; if (est + add > MAX_SECONDS && chosen.length) break; chosen.push(s); est += add; }
+  for (const s of sections) {
+    const room = Math.floor((MAX_SECONDS - est) / 20.5); // whole section, or the part of it that still fits
+    if (room < 4) break;
+    const part = { ...s, topics: s.topics.slice(0, room) };
+    chosen.push(part); est += part.topics.length * 20.5;
+  }
   if (!chosen.length) { console.log('[mega] not enough published Shorts'); return; }
 
   const id = `mega-${DATE}`, work = path.join(OUT, id + '.work');
@@ -69,9 +76,11 @@ function writeSrt(file, subs) {
   let at = dur(introMp4);
 
   for (const sec of chosen) {
+    if (at + 20 + END_CARD > HARD_LIMIT) break;
     chapters.push([at, `${sec.label}: ${name(sec.topics[0])} to ${name(sec.topics[sec.topics.length - 1])}`]);
     for (const [i, t] of sec.topics.entries()) {
       const src = have[t.id], len = dur(src.mp4) - END_CARD;
+      if (at + len + END_CARD + 1 > HARD_LIMIT) { console.log(`  [mega] stop at ${Math.round(at)}s (15 min upload limit)`); break; }
       const png = path.join(work, `${t.id}.png`), framed = path.join(work, `${t.id}.mp4`);
       await shot(browser, { mode: 'seg', title: sec.frame, i: i + 1, n: sec.topics.length, hue: (hue + parts.length * 7) % 360 }, png);
       ff(['-loop', '1', '-framerate', '30', '-i', png, '-t', String(len), '-i', src.mp4, '-filter_complex',
