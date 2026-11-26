@@ -32,7 +32,7 @@ on:
         type: string
         default: "auto"
       bedtime:
-        description: "generate: how many ~14 min bedtime lullaby videos to render (they go public at 12:00 Berlin)"
+        description: "generate: how many ~14 min bedtime lullaby videos to render (published with the morning batch)"
         type: string
         default: "1"
       skip:
