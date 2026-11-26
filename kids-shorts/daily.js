@@ -415,7 +415,7 @@ function metadata(t) {
     for (const id of compiled) { used['mix:' + id] = DATE; if (pick.fresh) used[id] = DATE; } // fresh topics never become Shorts later
     console.log(`[mix] ${v.id}: ${compiled.length} segments (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
   }
-  // evening slot: a calm ~14 min bedtime (15 min YouTube upload limit) lullaby video (published at 12:00 Berlin, nap time)
+  // evening slot: a calm ~14 min bedtime (15 min YouTube upload limit) lullaby video (published with the morning batch)
   for (let k = 0; k < Number(flag('--bedtime', 1)); k++) {
     const t0 = Date.now();
     const { subjects, subs, video } = await buildBedtime({ used, DATE: k ? `${DATE}-${k + 1}` : DATE, OUT, browser, minutes: Number(flag('--bedtime-minutes', 14)) });
