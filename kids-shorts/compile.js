@@ -29,6 +29,8 @@ const SERIES = {
     title: ts => `Vehicle Sounds for Kids! 🚒 ${ts.slice(0, 4).map(t => cap(t.word)).join(', ')} and More | ${ts.length} Vehicles`, learn: () => ['vehicle names', 'vehicle sounds'], tags: ['vehiclesounds', 'vehicles'] },
   colormix: { frame: 'Mixing Colors!', seg: 21, intro: () => "Hi friends! Let's mix colors with Coco! What will we make?",
     title: ts => `Mixing Colors for Kids! 🎨 ${ts.length} Color Mixes with Coco the Crayon | Learn Colors`, learn: () => ['color mixing', 'colors', 'color words'], tags: ['colormixing', 'colors'] },
+  bodyparts: { frame: 'My Body!', seg: 20, intro: () => "Hi friends! Let's learn about our bodies! Get ready to touch and wiggle!",
+    title: ts => `Body Parts for Kids! 👃 ${ts.slice(0, 4).map(t => cap(t.word)).join(', ')} and More | Touch Your Nose!`, learn: () => ['body parts', 'first words'], tags: ['bodyparts', 'bodypartsforkids'] },
   shadow: { frame: 'Who Is Hiding?', seg: 20, intro: () => "Hi friends! Let's play a game. Who is hiding? Can you guess?",
     title: ts => `Guess the Shadow! 🔦 Who Is Hiding? ${ts.length} Guessing Games for Kids`, learn: () => ['guessing game', 'first words', 'animal names'], tags: ['guesstheshadow', 'guessinggame'] },
 };

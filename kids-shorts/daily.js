@@ -81,6 +81,23 @@ function episodeMetadata(ep) {
 }
 
 function metadata(t) {
+  if (t.template === 'bodyparts') {
+    const w = t.word[0] + t.word.slice(1).toLowerCase(), lw = w.toLowerCase();
+    return {
+      title: `${t.plural ? 'These Are My' : 'This Is My'} ${w}! ${t.emoji} Body Parts for Kids | Touch Your ${w}! #shorts`.slice(0, 100),
+      description: [
+        `${t.plural ? 'These are my' : 'This is my'} ${lw}! ${t.emoji} ${t.action} Can you touch your ${lw}? Learn body parts in simple English with the Doodle Pals.`,
+        '',
+        `Grown-ups: point to your own ${lw} together and say the word — little ones learn best by moving! 🙌`,
+        '',
+        tags(`my${lw}`, 'bodyparts', 'bodypartsforkids', 'learnenglish', 'kidslearning', 'toddlers', 'preschool', 'firstwords'),
+      ].join('\n'),
+      tags: ['body parts for kids', `${lw} for kids`, 'learn body parts', 'my body', 'body parts song', 'toddler learning', 'first words',
+        'preschool', 'english for kids', 'Doodle Pals'],
+      categoryId: '27',
+      madeForKids: true,
+    };
+  }
   if (t.template === 'colormix') {
     const cc = n => n.toLowerCase().replace(/\b[a-z]/g, x => x.toUpperCase());
     const [A, B, C] = [cc(t.a.name), cc(t.b.name), cc(t.c.name)];
@@ -284,7 +301,7 @@ function metadata(t) {
     let subs = [];
     if (process.env.NARRATION !== '0') { // friendly narrator over the music (Kokoro TTS)
       const topicFile = mp4.replace(/\.mp4$/, '.topic.json');
-      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps, extra: t.extra, a: t.a, b: t.b, c: t.c, like: t.like }));
+      fs.writeFileSync(topicFile, JSON.stringify({ template: t.template || 'draw-shape', shape: t.shape, becomes: t.becomes, article: t.article, n: t.n, word: t.word, objectName: t.objectName, letter: t.letter, sound: t.sound, mainName: t.mainName, extras: t.extras, steps: t.steps, extra: t.extra, a: t.a, b: t.b, c: t.c, like: t.like, plural: t.plural, action: t.action }));
       execFileSync('python3', [path.join(__dirname, 'audio', 'narration.py'), wav, tlFile, topicFile, wav,
         '--voice', process.env.NARRATOR_VOICE || 'af_heart'], { stdio: 'inherit' });
       fs.rmSync(topicFile);

@@ -357,6 +357,21 @@
       TOPICS.push({ id: `colormix-${a.toLowerCase()}-${b.toLowerCase()}`, template: 'colormix', a: col(a), b: col(b), c: col(c), object, like, emoji, word: c });
   }
 
+  // ---- Body parts: "This is my nose! Touch your nose!" (spots are in the doodle kid's coordinates) ----
+  {
+    const BODY = [
+      ['NOSE', false, '👃', [[0, -190, 40]], 'Sniff, sniff!'], ['EYES', true, '👀', [[-75, -250, 50], [75, -250, 50]], 'Blink, blink!'],
+      ['HANDS', true, '👐', [[-240, 260, 70], [240, 260, 70]], 'Clap, clap!'], ['EARS', true, '👂', [[-215, -250, 55], [215, -250, 55]], 'Listen!'],
+      ['MOUTH', false, '👄', [[0, -110, 70]], 'Yum, yum!'], ['FEET', true, '🦶', [[-80, 465, 70], [80, 465, 70]], 'Stomp, stomp!'],
+      ['TUMMY', false, '🍽️', [[0, 200, 90]], 'Rub your tummy!'], ['HAIR', false, '💇', [[0, -400, 110]], 'Brush, brush!'],
+      ['ARMS', true, '💪', [[-215, 150, 80], [215, 150, 80]], 'Wave your arms!'], ['LEGS', true, '🦵', [[-70, 390, 70], [70, 390, 70]], 'Jump, jump!'],
+      ['CHEEKS', true, '😊', [[-130, -180, 45], [130, -180, 45]], 'Puff, puff!'], ['FINGERS', true, '🖐️', [[-240, 220, 50], [240, 220, 50]], 'Wiggle, wiggle!'],
+      ['HEAD', false, '🙂', [[0, -260, 200]], 'Nod your head!'], ['TEETH', true, '🦷', [[0, -122, 40]], 'Brush your teeth!'],
+    ];
+    for (const [word, plural, emoji, spots, action] of BODY)
+      TOPICS.push({ id: `body-${word.toLowerCase()}`, template: 'bodyparts', word, plural, emoji, spots, action });
+  }
+
   // ---- Colors: Coco colours a grey object, then two more things of that colour ----
   const COLORS_T = [
     ['RED', '#F2454B', '🍎', ['abc-a', 'apple'], ['heart-strawberry', 'strawberry'], ['abc-h', 'heart']],
