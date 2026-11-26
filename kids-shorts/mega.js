@@ -1,4 +1,4 @@
-// Long learning video (up to ~14 min while the channel has the 15 min upload limit, 16:9) for the TV: the channel's published core-topic Shorts in sections
+// Daily long learning video (up to ~14 min while the channel has the 15 min upload limit, 16:9), a new mix every day for the TV: the channel's published core-topic Shorts in sections
 // (ABC, numbers, colors, shapes, animals), taken from the Release files (no re-render), the Shorts' end card
 // cut off, each framed like the compilations, joined behind a title card and closed with the landscape end card.
 // Usage (CI): node mega.js <releases-dir> <date> <out-dir>
@@ -13,9 +13,12 @@ const { renderOutro, OUTRO_SUBS } = require('./outro');
 
 const END_CARD = 6.8; // seconds of end card at the end of every Short (outro.html DURATION)
 const CARD_SINCE = 'shorts-2026-11-20'; // first day with the end card
+// every Shorts category can be a section; core topics (the channel's best performers) first when equally fresh
 const SECTIONS = [
   ['abc', 'ABC Time!', 'ABC'], ['count', "Let's Count!", 'Numbers'], ['color', 'Colors with Coco!', 'Colors'],
   ['draw-shape', 'Shapes!', 'Shapes'], ['animal', 'Animal Sounds!', 'Animals'], ['vehicle', 'Vehicle Sounds!', 'Vehicles'],
+  ['bodyparts', 'My Body!', 'Body Parts'], ['feelings', 'How Do You Feel?', 'Feelings'], ['colormix', 'Mixing Colors!', 'Color Mixing'],
+  ['drawalong', "Let's Draw!", 'Drawing'], ['shadow', 'Who Is Hiding?', 'Guess Who'],
 ];
 // YouTube rejects videos over 15 min until the channel has "intermediate features" (this one does not yet)
 const MAX_SECONDS = 14 * 60;
@@ -46,24 +49,48 @@ function writeSrt(file, subs) {
       if (fs.existsSync(mp4)) have[u.id] = { mp4, srt: path.join(d, u.id + '.srt'), tag };
     }
   }
+  // what earlier long learning videos used (their batch.json lists the lessons), so each day's video is a new mix
+  const lastUsed = {}, sectionLast = {};
+  const later = (a, b) => [a || '', b].sort().pop();
+  for (const tag of fs.readdirSync(relDir)) {
+    const f = path.join(relDir, tag, 'batch.json');
+    if (!fs.existsSync(f)) continue;
+    for (const v of JSON.parse(fs.readFileSync(f, 'utf8')).videos || []) {
+      if (!v.id.startsWith('mega-') || v.id === `mega-${DATE}`) continue;
+      const day = v.id.slice(5);
+      for (const id of v.compiled || []) {
+        lastUsed[id] = later(lastUsed[id], day);
+        const t = TOPICS.find(x => x.id === id); if (t) sectionLast[t.template || 'draw-shape'] = later(sectionLast[t.template || 'draw-shape'], day);
+      }
+      // the first videos did not list their lessons: their title names the sections
+      if (!v.compiled) for (const [tpl, , label] of SECTIONS) if (new RegExp(`\\b${label}\\b`).test(v.title)) sectionLast[tpl] = later(sectionLast[tpl], day);
+    }
+  }
   const order = (a, b) => (a.n || 0) - (b.n || 0) || TOPICS.indexOf(a) - TOPICS.indexOf(b);
-  const sections = SECTIONS.map(([tpl, frame, label]) => ({ frame, label,
-    topics: TOPICS.filter(t => (t.template || 'draw-shape') === tpl && have[t.id]).sort(order) })).filter(s => s.topics.length >= 4);
-  // fill up to ~30 minutes, whole sections in order
+  const fresh = (a, b) => (lastUsed[a.id] || '').localeCompare(lastUsed[b.id] || '') || order(a, b);
+  const sections = SECTIONS.map(([tpl, frame, label], rank) => {
+    const all = TOPICS.filter(t => (t.template || 'draw-shape') === tpl && have[t.id]);
+    // least recently used lessons of this section, then shown in their natural order (A, B, C... / 1, 2, 3...)
+    return { frame, label, rank, all, last: sectionLast[tpl] || '' }; // when this section was last in a video
+  }).filter(s => s.all.length >= 4)
+    .sort((a, b) => a.last.localeCompare(b.last) || a.rank - b.rank);
+  // fill up to ~14 minutes: the freshest sections first, each with its least recently used lessons
   let est = 5, chosen = [];
   for (const s of sections) {
-    const room = Math.floor((MAX_SECONDS - est) / 20.5); // whole section, or the part of it that still fits
+    if (chosen.length >= 3) break; // 2-3 topics per video keeps it focused
+    const room = Math.min(Math.floor((MAX_SECONDS - est) / 20.5), chosen.length < 2 ? 18 : 99); // leave room for a 2nd section
     if (room < 4) break;
-    const part = { ...s, topics: s.topics.slice(0, room) };
+    const part = { ...s, topics: [...s.all].sort(fresh).slice(0, room).sort(order) };
     chosen.push(part); est += part.topics.length * 20.5;
   }
   if (!chosen.length) { console.log('[mega] not enough published Shorts'); return; }
+  if (process.env.MEGA_DRY) { for (const c of chosen) console.log(`[mega] ${c.label}: ${c.topics.map(t => t.id).join(' ')}`); return; } // check the pick only
 
   const id = `mega-${DATE}`, work = path.join(OUT, id + '.work');
   fs.mkdirSync(work, { recursive: true });
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const hue = 190;
-  const parts = [], subs = [], chapters = [];
+  const parts = [], subs = [], chapters = [], used = [];
   const total = chosen.reduce((a, s) => a + s.topics.length, 0);
   const minutes = Math.round(est / 60);
 
@@ -89,7 +116,7 @@ function writeSrt(file, subs) {
         `[1:v]trim=0:${len},setpts=PTS-STARTPTS,scale=-2:1080,setsar=1[p];[0:v][p]overlay=(W-w)/2:0:shortest=1,format=yuv420p[v];[1:a]atrim=0:${len},asetpts=PTS-STARTPTS,afade=t=out:st=${Math.max(0, len - 0.6)}:d=0.6[a]`,
         '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'medium', '-crf', '21', '-c:a', 'aac', '-ar', '44100', '-ac', '2', framed]);
       fs.rmSync(png);
-      parts.push(framed);
+      parts.push(framed); used.push(t.id);
       for (const s of readSrt(src.srt)) if (s.start < len) subs.push({ text: s.text, start: s.start + at, end: Math.min(s.end, len) + at });
       at += dur(framed);
       console.log(`  [mega] ${sec.label} ${i + 1}/${sec.topics.length} ${t.id}`);
@@ -114,7 +141,7 @@ function writeSrt(file, subs) {
   const labels = chosen.map(s => s.label);
   const title = `Toddler Learning Video 📚 ${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]} | ${realMin} Minutes with Doodle Pals`.slice(0, 100);
   const meta = {
-    id, file: path.basename(out), captions: `${id}.srt`, long: true, title,
+    id, file: path.basename(out), captions: `${id}.srt`, long: true, title, compiled: used,
     description: [
       `${realMin} minutes of learning with Penny the Pencil, Ellie the Eraser and Coco the Crayon! ${total} lessons in one video: ${labels.join(', ').toLowerCase()}.`,
       '',

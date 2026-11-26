@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "generate (render into a Release), publish (upload an approved date), playlists, thumbnails, or mega (~14 min learning video from published Shorts, added to that date's Release)"
+        description: "generate (render into a Release), publish (upload an approved date), playlists, thumbnails, or mega (daily ~14 min learning video, a new mix of sections each day, from published Shorts, added to that date's Release)"
         type: choice
         options: [generate, publish, playlists, thumbnails, mega]
         default: generate
@@ -261,6 +261,7 @@ jobs:
         run: |
           for tag in $(gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^shorts-'); do
             d="rel/$tag"; mkdir -p "$d"
+            gh release download "$tag" --dir "$d" -p batch.json 2>/dev/null || true  # earlier long videos: which lessons they used
             gh release download "$tag" --dir "$d" -p uploaded.json 2>/dev/null || continue
             for id in $(python3 -c "import json;[print(u['id']) for u in json.load(open('$d/uploaded.json')) if not u['id'].startswith(('episode-','mix-','mega-','bedtime-'))]"); do
               gh release download "$tag" --dir "$d" -p "$id.mp4" -p "$id.srt" 2>/dev/null || true
