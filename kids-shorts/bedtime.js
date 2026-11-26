@@ -40,7 +40,7 @@ async function renderClip(browser, opts, seconds, out) {
 
 async function buildBedtime({ used, DATE, OUT, browser, minutes = 30 }) {
   const subjects = pickSubjects(used);
-  const id = `bedtime-${DATE}`, work = path.join(OUT, id + '.work');
+  const id = `bedtime-${DATE}`, work = path.resolve(OUT, id + '.work'); // absolute: the concat list resolves paths itself
   fs.mkdirSync(work, { recursive: true });
   const total = minutes * 60;
   const names = subjects.map(t => t.word.toLowerCase());
