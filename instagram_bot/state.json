@@ -65,7 +65,8 @@
     7580287,
     13801277,
     7247828,
-    7579567
+    7579567,
+    6799753
   ],
   "used_pexels_photo_ids": [
     6770770,
@@ -77,10 +78,10 @@
     7948070,
     17977098
   ],
-  "hashtag_cursor": 10,
-  "hook_cursor": 7,
-  "tip_cursor": 9,
-  "cta_cursor": 11,
+  "hashtag_cursor": 26,
+  "hook_cursor": 8,
+  "tip_cursor": 10,
+  "cta_cursor": 0,
   "story_line_cursor": 22,
   "carousel_topic_cursor": 12,
   "posts": [
@@ -575,18 +576,18 @@
     "18098460176440464",
     "18095330390543596"
   ],
-  "carousel_bg_cursor": 16,
+  "carousel_bg_cursor": 19,
   "story_line_fa_cursor": 20,
   "carousel_theme_cursor": 1,
-  "story_theme_cursor": 0,
+  "story_theme_cursor": 1,
   "feed_theme_cursor": 1,
   "hook_fa_cursor": 10,
   "tip_fa_cursor": 2,
   "cta_fa_cursor": 10,
   "carousel_topic_fa_cursor": 8,
-  "story_set_cursor": 17,
+  "story_set_cursor": 18,
   "story_set_fa_cursor": 51,
   "post_type_cursor": 1,
-  "music_track_cursor": 14,
+  "music_track_cursor": 20,
   "hashtag_fa_cursor": 0
 }
