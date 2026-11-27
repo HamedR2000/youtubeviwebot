@@ -18,7 +18,7 @@ on:
       count:
         description: "generate: how many Shorts to render"
         type: string
-        default: "3"
+        default: "1"
       episodes:
         description: "generate: how many long story episodes to render"
         type: string
@@ -28,13 +28,13 @@ on:
         type: string
         default: "1"
       trips:
-        description: "generate: trip film (zoo, farm, countries...) — auto = one every 3 days, or a number"
+        description: "generate: trip film (zoo, farm, countries...) — auto = one every 2 days, or a number"
         type: string
         default: "auto"
       bedtime:
         description: "generate: how many ~14 min bedtime lullaby videos to render (published with the morning batch)"
         type: string
-        default: "1"
+        default: "0"
       skip:
         description: "publish: comma-separated topic ids NOT approved (e.g. 'circle-cookie,oval-avocado')"
         type: string
