@@ -1,0 +1,1616 @@
+{
+ "id": "trip-03-ocean",
+ "title": "Let's Explore the Ocean!",
+ "emoji": "\ud83d\udc19",
+ "series": "Doodle Pals Trips",
+ "learn": [
+  "sea animals",
+  "animal names",
+  "ocean facts",
+  "counting",
+  "moving like animals"
+ ],
+ "hashtags": [
+  "ocean",
+  "seaanimals",
+  "underthesea",
+  "fieldtrip"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "A trip!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Guess what? Today we are going to the ocean!"
+    ],
+    [
+     "penny",
+     "We will dive and see the sea animals!"
+    ],
+    [
+     "narrator",
+     "Are you ready? Let's get on the bus!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "title": "Let's go to the ocean!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The wheels on the bus go round and round, round and round, round and round!"
+    ],
+    [
+     "narrator",
+     "The wheels on the bus go round and round, all the way to the sea!"
+    ]
+   ],
+   "min": 9
+  },
+  {
+   "do": [
+    {
+     "title": "Beep beep!"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "I can smell the sea!"
+    ],
+    [
+     "ellie",
+     "Let's put on our diving masks!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "sea"
+    },
+    {
+     "title": "Splash!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Splash! We are under the water!"
+    ],
+    [
+     "penny",
+     "Look at all the bubbles! Let's find the sea animals!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who swims with fins and a tail?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who swims with fins and a tail?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "abc-f",
+     "id": "s0",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a fish!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a fish!"
+    ],
+    [
+     "penny",
+     "Fish live in the water."
+    ],
+    [
+     "coco",
+     "They breathe with gills!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s0"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you swim like a fish?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Swish, swish! Great swimming!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: fish!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What do fish use to swim?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Fins and a tail!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who has eight arms?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who has eight arms?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "octopus",
+     "id": "s1",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's an octopus!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's an octopus!"
+    ],
+    [
+     "penny",
+     "An octopus has eight long arms!"
+    ],
+    [
+     "coco",
+     "It can change color to hide."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s1"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you wiggle your arms like an octopus?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Wiggle, wiggle! So silly!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: octopus!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "How many arms does an octopus have?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Eight! Eight arms!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who has a hard shell?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who has a hard shell?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "turtle",
+     "id": "s2",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a sea turtle!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a sea turtle!"
+    ],
+    [
+     "penny",
+     "Sea turtles have a hard shell."
+    ],
+    [
+     "coco",
+     "They swim a long, long way!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you swim slowly like a turtle?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Slow and steady! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: sea turtle!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What is on a turtle's back?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A hard shell!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who is the biggest?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is the biggest?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "whale",
+     "id": "s3",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a whale!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a whale!"
+    ],
+    [
+     "penny",
+     "Whales are the biggest animals in the ocean!"
+    ],
+    [
+     "coco",
+     "They breathe air through a hole on top."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s3"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you spray water like a whale? Pssssh!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Pssssh! Great spraying!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: whale!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Is a whale big or small?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Very, very big!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the fish!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look! A group of fish! Let's count them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "fc",
+      "art": "abc-f",
+      "n": 5,
+      "x0": 0.24,
+      "dx": 0.13,
+      "y": 0.42,
+      "s": 0.26
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Five!"
+    ],
+    [
+     "narrator",
+     "Five fish!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "More sea animals!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's swim deeper!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who walks sideways?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who walks sideways?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "crab",
+     "id": "s4",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a crab!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a crab!"
+    ],
+    [
+     "penny",
+     "Crabs walk sideways!"
+    ],
+    [
+     "coco",
+     "They have two big claws."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s4"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you walk sideways like a crab?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Snip, snap! Sideways!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: crab!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does a crab have?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Two big claws!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who is soft and wobbly?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is soft and wobbly?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "jellyfish",
+     "id": "s5",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a jellyfish!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a jellyfish!"
+    ],
+    [
+     "penny",
+     "Jellyfish are soft and wobbly."
+    ],
+    [
+     "coco",
+     "Don't touch! They can sting."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s5"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you wobble like a jellyfish?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Wobble, wobble! So wobbly!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: jellyfish!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Should we touch a jellyfish?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "No! We just look."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who looks like a little horse?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who looks like a little horse?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "seahorse",
+     "id": "s6",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a seahorse!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a seahorse!"
+    ],
+    [
+     "penny",
+     "A seahorse is a tiny fish."
+    ],
+    [
+     "coco",
+     "It holds on to plants with its curly tail."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s6"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you curl like a seahorse?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Curly, curly! Beautiful!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: seahorse!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What does a seahorse look like?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A little horse!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who looks like a star?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who looks like a star?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "star-starfish",
+     "id": "s7",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.55
+    },
+    {
+     "title": "It's a starfish!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a starfish!"
+    ],
+    [
+     "penny",
+     "Starfish have five arms."
+    ],
+    [
+     "coco",
+     "They live on the ocean floor."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "s7"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you make a star with your body? Arms and legs out!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "What a big star!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: starfish!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What shape is a starfish?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A star!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Memory game!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Memory game time! Look carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "show": "octopus",
+     "id": "m0",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "crab",
+     "id": "m1",
+     "x": 0.46,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "turtle",
+     "id": "m2",
+     "x": 0.67,
+     "y": 0.45,
+     "s": 0.3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look at the octopus, the crab and the turtle."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m0"
+    },
+    {
+     "title": "Who is missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "Who is missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m0"
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "pulse": "m0"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The octopus! Did you remember?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the starfish!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look on the sand! Let's count the starfish!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "st",
+      "art": "star-starfish",
+      "n": 3,
+      "x0": 0.3,
+      "dx": 0.16,
+      "y": 0.45,
+      "s": 0.3
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Three starfish!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "title": "How many?"
+    },
+    {
+     "pulse": "st"
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "How many starfish?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Three! Super counting!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Ocean moves!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Everybody stand up! Let's move like the sea animals!"
+    ],
+    [
+     "narrator",
+     "Swim like a fish!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Walk sideways like a crab!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Wobble like a jellyfish!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Great moving!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Ocean song!"
+    },
+    {
+     "song": true
+    },
+    {
+     "confetti": 6
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's sing the ocean song!"
+    ],
+    [
+     "narrator",
+     "Splash, splash, in the ocean blue!"
+    ],
+    [
+     "narrator",
+     "A fish, a crab, and a turtle too!"
+    ],
+    [
+     "narrator",
+     "The octopus waves, the whale says hi!"
+    ],
+    [
+     "narrator",
+     "We love the ocean, oh my, oh my!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Sing again!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "One more time! Sing with us!"
+    ],
+    [
+     "narrator",
+     "Splash, splash, in the ocean blue!"
+    ],
+    [
+     "narrator",
+     "A fish, a crab, and a turtle too!"
+    ],
+    [
+     "narrator",
+     "The octopus waves, the whale says hi!"
+    ],
+    [
+     "narrator",
+     "We love the ocean, oh my, oh my!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who did we see?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Which sea animals did we see today?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "octopus",
+     "id": "r0",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "An octopus! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "turtle",
+     "id": "r1",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A sea turtle! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "whale",
+     "id": "r2",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A whale! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "crab",
+     "id": "r3",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A crab! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, ocean!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "What a fun trip!"
+    ],
+    [
+     "ellie",
+     "What was your favorite sea animal?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "I loved the octopus!"
+    ],
+    [
+     "narrator",
+     "See you on our next trip! Bye bye, friends!"
+    ]
+   ],
+   "min": 6
+  }
+ ]
+}
