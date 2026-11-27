@@ -64,15 +64,17 @@ const tags = (...ws) => [...new Set(ws.map(tag))].join(' ');
 
 function episodeMetadata(ep) {
   return {
-    title: `${ep.title} ${ep.emoji} | Doodle Pals Cartoon for Kids | Learn ${ep.learn.slice(0, 3).map(w => w[0].toUpperCase() + w.slice(1)).join(', ')}`.slice(0, 100),
+    title: `${ep.title} ${ep.emoji} | Doodle Pals Cartoon for Kids`.slice(0, 100), // short and natural (YouTube Kids quality principles)
     description: [
       `${ep.title} ${ep.emoji} — a new Doodle Pals story with Penny the Pencil, Ellie the Eraser and Coco the Crayon!`,
       '',
-      `In this episode we learn: ${ep.learn.join(', ')}.`,
+      `🎯 What your child learns: ${ep.learn.join(', ')}.`,
       'Gentle, original 2D animation and songs in simple English for kids aged 2–6.',
       'Sing along, count along and answer the questions — the friends wait for you!',
       '',
-      tags('kidscartoon', ...(ep.hashtags || []), 'learnenglish', 'preschool', 'toddlers', 'kidslearning', 'doodlepals'),
+      'Grown-ups: watch together and pause to answer the questions out loud. 💛',
+      '',
+      tags(...(ep.hashtags || []).slice(0, 2), 'doodlepals'),
     ].join('\n'),
     tags: ['kids cartoon', 'cartoon for toddlers', 'learn english for kids', 'preschool learning', 'educational cartoon', ...ep.learn, 'Doodle Pals', 'Penny the Pencil', 'Ellie the Eraser', 'Coco the Crayon'],
     categoryId: '27',
@@ -83,14 +85,16 @@ function episodeMetadata(ep) {
 // trips (every 2 days): the Doodle Pals visit a place (zoo, farm, aquarium, countries...)
 function tripMetadata(ep) {
   return {
-    title: `${ep.title} ${ep.emoji} Doodle Pals Trip for Kids | Learn ${ep.learn.slice(0, 2).map(w => w[0].toUpperCase() + w.slice(1)).join(' and ')}`.slice(0, 100),
+    title: `${ep.title} ${ep.emoji} ${ep.learn[0].replace(/\b[a-z]/g, c => c.toUpperCase())} for Kids | Doodle Pals`.slice(0, 100),
     description: [
       `${ep.title} ${ep.emoji} Hop on the bus with Penny the Pencil, Ellie the Eraser and Coco the Crayon!`,
       '',
-      `On this trip we learn: ${ep.learn.join(', ')}.`,
+      `🎯 What your child learns: ${ep.learn.join(', ')}.`,
       'Gentle, original 2D animation and songs in simple English for kids aged 2–6. Answer the questions and move along — the friends wait for you!',
       '',
-      tags('fieldtrip', 'kidscartoon', ...(ep.hashtags || []), 'learnenglish', 'preschool', 'toddlers', 'kidslearning', 'doodlepals'),
+      'Grown-ups: move along together — roar, waddle and count with your little one! 💛',
+      '',
+      tags(...(ep.hashtags || []).slice(0, 2), 'doodlepals'),
     ].join('\n'),
     tags: ['field trip for kids', 'virtual field trip', 'kids cartoon', 'learn english for kids', 'preschool learning', 'educational cartoon', ...ep.learn, 'Doodle Pals'],
     categoryId: '27',

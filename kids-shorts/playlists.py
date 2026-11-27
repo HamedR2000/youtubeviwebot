@@ -25,6 +25,7 @@ CATEGORY = {
     'trip': ('Doodle Pals Trips 🚌 Field Trips for Kids', 'Hop on the bus with the Doodle Pals! Visit the zoo, the farm, the sea and places around the world — and learn on the way.'),
     'feel': ('How Do You Feel? Feelings for Kids 😊', 'I feel happy! I feel sleepy! Learn feelings and emotions in simple English with the Doodle Pals — make the faces along.'),
     'body': ('My Body! Body Parts for Kids 👃', 'This is my nose! These are my eyes! Learn body parts in simple English with the Doodle Pals — touch, point and move along.'),
+    'mega': ('Learning Videos for Toddlers 📚', 'Longer Doodle Pals learning videos for the big screen: ABC, numbers, colors, shapes, animals and more, with chapters.'),
     'mix': ('Doodle Pals Compilations 📺', 'Longer Doodle Pals videos for the big screen: ABC, numbers, animal sounds, colors, drawing and guessing games, many in a row.'),
     'episode': ('Doodle Pals Stories 🎬', 'Longer Doodle Pals cartoons with Penny, Ellie and Coco: stories, songs and learning for kids aged 2–6.'),
 }
@@ -35,7 +36,7 @@ CATEGORY.update(bodyparts=CATEGORY['body'], feelings=CATEGORY['feel'])
 def playlists_for(video_id):
     """Playlist (title, description) list for one batch video id, e.g. 'abc-a' or 'episode-12-fruit-shop'."""
     if video_id.startswith('mega-'):  # long learning video: compilations + stories playlists
-        return [CATEGORY['mix'], CATEGORY['episode']]
+        return [CATEGORY['mega'], CATEGORY['mix']]
     if video_id.startswith('mix-'):  # compilation: its category playlist + all compilations
         return [CATEGORY.get(video_id.split('-')[1], CATEGORY['episode']), CATEGORY['mix']]
     if video_id.startswith('episode-'):
