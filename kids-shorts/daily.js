@@ -24,7 +24,7 @@ const { buildBedtime } = require('./bedtime');
 
 const a = process.argv.slice(2);
 const flag = (n, d) => (a.includes(n) ? a[a.indexOf(n) + 1] : d);
-const COUNT = Number(flag('--count', 1));
+const COUNT = Number(flag('--count', 0));
 const DATE = flag('--date', new Date().toISOString().slice(0, 10));
 const OUT = path.join(flag('--out', 'out'), DATE);
 const STATE = path.join(__dirname, 'state', 'used.json');

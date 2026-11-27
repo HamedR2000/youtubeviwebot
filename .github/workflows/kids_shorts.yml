@@ -16,9 +16,9 @@ on:
         type: string
         required: false
       count:
-        description: "generate: how many Shorts to render"
+        description: "generate: how many Shorts to render (0 since 2026-11-27: the channel focuses on long videos)"
         type: string
-        default: "1"
+        default: "0"
       episodes:
         description: "generate: how many long story episodes to render"
         type: string
