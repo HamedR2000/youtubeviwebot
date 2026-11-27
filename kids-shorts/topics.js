@@ -104,6 +104,73 @@
       back: [line('M 0 300 C 80 340 140 330 200 400', '#5B4A7A', 7), P('M 90 335 l 30 -26 l 6 40 Z', '#FFC93C'), P('M 170 375 l 30 -26 l 6 40 Z', '#FF6B6B')],
       front: [line('M 0 -320 V 300', '#FFF3D6', 10), line('M -230 -60 H 230', '#FFF3D6', 10)],
     },
+    // ---- shapes, round 2 (added 2026-11-27 when the first 13 were used up) ----
+    {
+      id: 'circle-ball', shape: 'CIRCLE', becomes: 'BALL', article: 'a', emoji: '⚽',
+      strokes: [circle(280)], fill: [P(circle(280), '#FFFFFF')], face: { y: 30, s: 0.9 },
+      back: [],
+      front: [P('M 0 -280 A 280 280 0 0 1 242 -140 L 0 0 Z', '#FF6B6B'), P('M 242 140 A 280 280 0 0 1 0 280 L 0 0 Z', '#4D96FF'),
+        P('M -242 140 A 280 280 0 0 1 -242 -140 L 0 0 Z', '#FFD23F'), C(0, 0, 70, '#FFFFFF')],
+    },
+    {
+      id: 'circle-clock', shape: 'CIRCLE', becomes: 'CLOCK', article: 'a', emoji: '⏰',
+      strokes: [circle(280)], fill: [P(circle(280), '#9AD1F5')], face: { y: 40, s: 0.75 },
+      back: [C(-200, -250, 70, '#FF6B6B'), C(200, -250, 70, '#FF6B6B'), line('M -180 260 L -230 330 M 180 260 L 230 330', '#3B2B4F', 22)],
+      front: [C(0, 0, 220, '#FFFFFF'), ...ring(12, (i, a) => C(Math.sin(a) * 185, -Math.cos(a) * 185, i % 3 ? 10 : 18, '#3B2B4F')),
+        line('M 0 -105 L 0 -160', '#3B2B4F', 16), line('M 0 -105 L 45 -140', '#FF6B6B', 12), C(0, -105, 12, '#3B2B4F')],
+    },
+    {
+      id: 'circle-donut', shape: 'CIRCLE', becomes: 'DONUT', article: 'a', emoji: '🍩',
+      strokes: [circle(280)], fill: [P(circle(280), '#E3A869')], face: { y: 150, s: 0.55 },
+      back: [],
+      front: [P('M 0 -255 C 150 -265 270 -140 250 20 C 240 90 180 60 150 110 C 120 160 60 120 0 150 C -60 120 -120 170 -160 110 C -200 60 -250 90 -255 20 C -270 -140 -150 -265 0 -255 Z', '#FF8FB8'),
+        C(0, -20, 85, '#FFF6E9'), ...[[-150, -130, 20], [120, -170, -30], [190, -40, 60], [-190, -10, -60], [60, -200, 10], [-80, 60, 40]].map(([x, y, r], i) => R(x - 20, y - 7, 40, 14, ['#FFD23F', '#4D96FF', '#4CB944', '#FFFFFF'][i % 4], 7, { transform: `rotate(${r} ${x} ${y})` }))],
+    },
+    {
+      id: 'square-window', shape: 'SQUARE', becomes: 'WINDOW', article: 'a', emoji: '🪟',
+      strokes: ['M -250 -250 H 250 V 250 H -250 Z'], fill: [R(-250, -250, 500, 500, '#9AD1F5', 0)], face: { y: 130, s: 0.55 },
+      back: [R(-300, 250, 600, 50, '#C68B59', 10)],
+      front: [C(120, -120, 60, '#FFD23F'), C(-120, -150, 40, '#FFFFFF'), C(-80, -160, 50, '#FFFFFF'), C(-40, -150, 40, '#FFFFFF'),
+        R(-18, -250, 36, 500, '#FFFFFF', 0), R(-250, -18, 500, 36, '#FFFFFF', 0),
+        P('M -250 -250 C -170 -100 -220 100 -250 250 Z', '#FF8FB8'), P('M 250 -250 C 170 -100 220 100 250 250 Z', '#FF8FB8')],
+    },
+    {
+      id: 'square-tv', shape: 'SQUARE', becomes: 'TV', article: 'a', emoji: '📺',
+      strokes: ['M -260 -220 H 260 V 260 H -260 Z'], fill: [R(-260, -220, 520, 480, '#2B2B35', 0)], face: { x: -55, y: 30, s: 0.7 },
+      back: [line('M -40 -220 L -140 -330 M 40 -220 L 140 -330', '#2B2B35', 16), R(-140, 260, 50, 50, '#2B2B35', 8), R(90, 260, 50, 50, '#2B2B35', 8)],
+      front: [R(-220, -180, 330, 400, '#7FD3FF', 30), C(185, -100, 26, '#FF6B6B'), C(185, -10, 26, '#FFD23F'), R(160, 80, 50, 120, '#5B6B7F', 10)],
+    },
+    {
+      id: 'rectangle-book', shape: 'RECTANGLE', becomes: 'BOOK', article: 'a', emoji: '📕',
+      strokes: ['M -220 -290 H 220 V 290 H -220 Z'], fill: [R(-220, -290, 440, 580, '#E63946', 0)], face: { y: 40, s: 0.85 },
+      back: [R(-200, -270, 440, 580, '#FFF6E9', 0)],
+      front: [R(-220, -290, 60, 580, '#B5222D', 0), R(-120, -230, 280, 80, '#FFD23F', 16)],
+    },
+    {
+      id: 'rectangle-phone', shape: 'RECTANGLE', becomes: 'PHONE', article: 'a', emoji: '📱',
+      strokes: ['M -170 -300 H 170 V 300 H -170 Z'], fill: [R(-170, -300, 340, 600, '#2B2B35', 0)], face: { y: -20, s: 0.7 },
+      back: [],
+      front: [R(-140, -250, 280, 470, '#9AD1F5', 20), C(0, 260, 22, '#5B6B7F'), R(-40, -282, 80, 14, '#5B6B7F', 7)],
+    },
+    {
+      id: 'triangle-icecream', shape: 'TRIANGLE', becomes: 'ICE CREAM', article: 'an', emoji: '🍦',
+      strokes: ['M -200 -60 L 200 -60 L 0 320 Z'], fill: [P('M -200 -60 L 200 -60 L 0 320 Z', '#E3A869')], face: { y: -170, s: 0.55 },
+      back: [C(-90, -130, 120, '#FF8FB8'), C(90, -130, 120, '#FFF3D6'), C(0, -250, 120, '#9B5DE5'), C(30, -380, 26, '#E63946')],
+      front: [line('M -130 30 L 60 180 M -60 -60 L 120 80 M 120 -50 L -60 160', '#C68B59', 10)],
+    },
+    {
+      id: 'triangle-sailboat', shape: 'TRIANGLE', becomes: 'SAILBOAT', article: 'a', emoji: '⛵',
+      strokes: ['M 0 -320 L 0 120 L 260 120 Z'], fill: [P('M 0 -320 L 0 120 L 260 120 Z', '#FFFFFF')], face: { x: 90, y: 30, s: 0.55 },
+      back: [P('M -10 -280 L -10 120 L -220 120 Z', '#FF6B6B'), line('M 0 -330 V 150', '#8B5A3C', 18)],
+      front: [P('M -300 150 L 300 150 L 220 290 L -220 290 Z', '#4D96FF'), line('M -330 320 Q -260 290 -190 320 T -50 320 T 90 320 T 230 320', '#4D96FF', 12)],
+    },
+    {
+      id: 'oval-ladybug', shape: 'OVAL', becomes: 'LADYBUG', article: 'a', emoji: '🐞',
+      strokes: [oval(240, 290)], fill: [P(oval(240, 290), '#E63946')], face: { y: -255, s: 0.42 },
+      back: [C(0, -270, 120, '#2B2B35'), line('M -50 -360 L -100 -440 M 50 -360 L 100 -440', '#2B2B35', 12), C(-100, -445, 16, '#2B2B35'), C(100, -445, 16, '#2B2B35'),
+        ...[-1, 1].flatMap(sx => [-120, 0, 120].map(y => line(`M ${sx * 200} ${y} L ${sx * 300} ${y + 40}`, '#2B2B35', 14)))],
+      front: [line('M 0 -290 V 290', '#2B2B35', 12), ...[[-110, -120, 45], [110, -120, 45], [-130, 60, 50], [130, 60, 50], [-70, 200, 35], [70, 200, 35]].map(([x, y, r]) => C(x, y, r, '#2B2B35'))],
+    },
   ];
 
   // ---- Numbers: Penny draws the numeral, then we count objects (art borrowed from the shape topics) ----
@@ -404,10 +471,22 @@
     ['PINK', '#FF6FA8', '🐷', ['animal-pig', 'pig'], ['oval-balloon', 'balloon'], ['abc-i', 'ice cream']],
     ['BROWN', '#9A6338', '🚪', ['rectangle-door', 'door'], ['circle-cookie', 'cookie'], ['abc-n', 'nest']],
     ['WHITE', '#F4F4F4', '🥚', ['abc-e', 'egg'], ['animal-sheep', 'sheep'], ['animal-cow', 'cow']],
+    // round 2 (2026-11-27): the last new colours, then more things of the favourite colours
+    ['GRAY', '#9AA3B5', '🐭', ['animal-mouse', 'mouse'], ['animal-elephant', 'elephant'], ['animal-wolf', 'wolf']],
+    ['BLACK', '#2B2B35', '📱', ['rectangle-phone', 'phone'], ['square-tv', 'TV'], ['abc-z', null]],
+    ['RED', '#E63946', '🚒', ['vehicle-firetruck', 'fire truck'], ['vehicle-car', 'car'], ['oval-ladybug', 'ladybug']],
+    ['YELLOW', '#FFD23F', '🚌', ['vehicle-bus', 'bus'], ['animal-bee', 'bee'], ['vehicle-truck', 'truck']],
+    ['GREEN', '#3DAA3D', '🚂', ['vehicle-train', 'train'], ['vehicle-tractor', 'tractor'], ['animal-snake', 'snake']],
+    ['BLUE', '#4D96FF', '🚓', ['vehicle-policecar', 'police car'], ['animal-bird', 'bird'], ['square-window', 'window']],
+    ['ORANGE', '#FF9F1C', '🐠', ['abc-f', 'fish'], ['animal-rooster', 'rooster'], ['abc-j', null]],
+    ['BROWN', '#8B5A3C', '🐻', ['animal-bear', 'bear'], ['animal-monkey', 'monkey'], ['animal-horse', 'horse']],
+    ['PINK', '#FF8FB8', '🍩', ['circle-donut', 'donut'], ['abc-h', 'heart'], ['abc-i', null]],
+    ['WHITE', '#F4F4F4', '✈️', ['vehicle-airplane', 'airplane'], ['vehicle-ambulance', 'ambulance'], ['animal-chicken', 'chicken']],
   ];
   for (const [color, hex, emoji, main, x1, x2] of COLORS_T) {
     const extras = [x1, x2].filter(x => x[1]);
-    TOPICS.push({ id: `color-${color.toLowerCase()}`, template: 'color', word: color, hex, emoji, main: main[0], mainName: main[1], extras });
+    const id = `color-${color.toLowerCase()}`, round2 = TOPICS.some(t => t.id === id); // second time: color-red-2 ...
+    TOPICS.push({ id: round2 ? `${id}-2` : id, template: 'color', word: color, hex, emoji, main: main[0], mainName: main[1], extras });
   }
 
 
