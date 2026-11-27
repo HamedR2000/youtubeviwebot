@@ -24,7 +24,7 @@ const { buildBedtime } = require('./bedtime');
 
 const a = process.argv.slice(2);
 const flag = (n, d) => (a.includes(n) ? a[a.indexOf(n) + 1] : d);
-const COUNT = Number(flag('--count', 3));
+const COUNT = Number(flag('--count', 1));
 const DATE = flag('--date', new Date().toISOString().slice(0, 10));
 const OUT = path.join(flag('--out', 'out'), DATE);
 const STATE = path.join(__dirname, 'state', 'used.json');
@@ -80,7 +80,7 @@ function episodeMetadata(ep) {
   };
 }
 
-// trips (every 3 days): the Doodle Pals visit a place (zoo, farm, aquarium, countries...)
+// trips (every 2 days): the Doodle Pals visit a place (zoo, farm, aquarium, countries...)
 function tripMetadata(ep) {
   return {
     title: `${ep.title} ${ep.emoji} Doodle Pals Trip for Kids | Learn ${ep.learn.slice(0, 2).map(w => w[0].toUpperCase() + w.slice(1)).join(' and ')}`.slice(0, 100),
@@ -381,10 +381,10 @@ function metadata(t) {
       used['episode:' + ep.id] = DATE;
     } else { console.log('[episode] no unused episode script left — write a new one in episodes/'); break; }
   }
-  // trip film (16:9): '--trips auto' makes one when the last trip is 3+ days old (the owner's choice: every 3 days)
+  // trip film (16:9): '--trips auto' makes one when the last trip is 2+ days old (the owner's choice since 2026-11-27: every 2 days)
   const TRIPS = flag('--trips', '0'), tripDir = path.join(__dirname, 'trips');
   const lastTrip = Object.entries(used).filter(([k]) => k.startsWith('trip:')).map(([, d]) => d).sort().pop() || '';
-  const tripDue = TRIPS === 'auto' ? (!lastTrip || (Date.parse(DATE.slice(0, 10)) - Date.parse(lastTrip.slice(0, 10))) / 864e5 >= 3 ? 1 : 0) : Number(TRIPS) || 0;
+  const tripDue = TRIPS === 'auto' ? (!lastTrip || (Date.parse(DATE.slice(0, 10)) - Date.parse(lastTrip.slice(0, 10))) / 864e5 >= 2 ? 1 : 0) : Number(TRIPS) || 0;
   for (let k = 0; k < tripDue; k++) {
     const next = fs.existsSync(tripDir) && fs.readdirSync(tripDir).filter(f => f.endsWith('.json') && !used['trip:' + JSON.parse(fs.readFileSync(path.join(tripDir, f), 'utf8')).id]).sort()[0];
     if (!next) { console.log('[trip] no unused trip script left — write a new one in trips/'); break; }
@@ -416,7 +416,7 @@ function metadata(t) {
     console.log(`[mix] ${v.id}: ${compiled.length} segments (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
   }
   // evening slot: a calm ~14 min bedtime (15 min YouTube upload limit) lullaby video (published with the morning batch)
-  for (let k = 0; k < Number(flag('--bedtime', 1)); k++) {
+  for (let k = 0; k < Number(flag('--bedtime', 0)); k++) {
     const t0 = Date.now();
     const { subjects, subs, video } = await buildBedtime({ used, DATE: k ? `${DATE}-${k + 1}` : DATE, OUT, browser, minutes: Number(flag('--bedtime-minutes', 14)) });
     writeSrt(path.join(OUT, video.id + '.srt'), subs);
