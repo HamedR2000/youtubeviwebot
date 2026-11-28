@@ -31,6 +31,10 @@ on:
         description: "generate: trip film (zoo, farm, countries...) — auto = one every 2 days, or a number"
         type: string
         default: "auto"
+      songs:
+        description: "generate: kids song video — auto = one every 2 days on the days without a trip, or a number"
+        type: string
+        default: "auto"
       bedtime:
         description: "generate: how many ~14 min bedtime lullaby videos to render (published with the morning batch)"
         type: string
@@ -94,7 +98,7 @@ jobs:
         run: |
           DATE="${{ inputs.date }}"; DATE="${DATE:-$(date -u +%F)}"
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          KOKORO_DIR=~/kokoro node daily.js --count "${{ inputs.count }}" --episodes "${{ inputs.episodes }}" --compilations "${{ inputs.compilations }}" --trips "${{ inputs.trips }}" --bedtime "${{ inputs.bedtime }}" --date "$DATE" --out out
+          KOKORO_DIR=~/kokoro node daily.js --count "${{ inputs.count }}" --episodes "${{ inputs.episodes }}" --compilations "${{ inputs.compilations }}" --trips "${{ inputs.trips }}" --songs "${{ inputs.songs }}" --bedtime "${{ inputs.bedtime }}" --date "$DATE" --out out
       - name: Publish Release for review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
