@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Doodle Pals song video (1920x1080): a place (the bathroom for "Bath Time"), the pals dancing on the beat,
+     karaoke lyrics (each word lights up as it is sung; in "your turn" the child sings the missing word),
+     the action of each verse as a banner. window.setup(timeline from audio/song_audio.py); window.render(t) -->
+<style>
+  @font-face { font-family: Fredoka; font-weight: 700; src: url(../node_modules/@fontsource/fredoka/files/fredoka-latin-700-normal.woff2); }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #DFF3FF; }
+  svg { display: block; }
+  text { font-family: Fredoka, sans-serif; font-weight: 700; }
+</style>
+<script src="../characters.js"></script>
+</head>
+<body>
+<svg id="s" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <pattern id="tiles" width="120" height="120" patternUnits="userSpaceOnUse"><rect width="120" height="120" fill="#CDEBFF"/><rect x="4" y="4" width="112" height="112" rx="14" fill="#E2F4FF"/></pattern>
+    <radialGradient id="bub" cx="0.35" cy="0.3" r="0.7"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/><stop offset="0.6" stop-color="#E8F7FF" stop-opacity="0.55"/><stop offset="1" stop-color="#B9E4FF" stop-opacity="0.35"/></radialGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#2A4A6A" flood-opacity="0.2"/></filter>
+  </defs>
+  <g id="bg"></g>
+  <g id="tub"></g>
+  <g id="chars"></g>
+  <g id="bubbles"></g>
+  <g id="titleG" filter="url(#sh)"><rect id="titleBox" rx="44" fill="#FFFFFF"/><text id="titleT" x="960" y="118" text-anchor="middle" font-size="70" fill="#4D96FF"></text></g>
+  <rect id="lyrPanel" x="160" y="185" width="1600" height="150" rx="50" fill="#FFFFFF" opacity="0.94" filter="url(#sh)"/>
+  <g id="lyrics"></g>
+  <g id="subG"><rect id="subBox" rx="30" fill="#FFFFFF" opacity="0.93"/><text id="subT" x="960" y="1036" text-anchor="middle" font-size="50"></text></g>
+</svg>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeBack = k => { const c = 1.9; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const W = 1920, H = 1080;
+const COLORS = ['#FF6B6B', '#FF9F1C', '#4CB944', '#4D96FF', '#9B5DE5', '#F15BB5'];
+const SPEAKER = { narrator: '#5B4A7A', penny: '#E08A00', ellie: '#E0457B', coco: '#8A4FD6' };
+const O = 'stroke="#3B2B4F" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"';
+const DUCK = `<g ${O}><ellipse cx="0" cy="20" rx="95" ry="62" fill="#FFD23F"/><circle cx="50" cy="-45" r="52" fill="#FFD23F"/>
+  <path d="M 95 -50 Q 140 -40 100 -22 Z" fill="#FF9F1C"/><path d="M -95 0 Q -130 -30 -110 30 Z" fill="#FFD23F"/></g>
+  <circle cx="62" cy="-58" r="9" fill="#3B2B4F"/><circle cx="65" cy="-61" r="3" fill="#fff"/><ellipse cx="35" cy="-30" rx="12" ry="7" fill="#FF8FA3" opacity="0.8"/>`;
+let TL = null, S = null;
+
+function buildBath() {
+  $('bg').innerHTML = `<rect width="${W}" height="${H}" fill="url(#tiles)"/>
+    <rect x="0" y="880" width="${W}" height="200" fill="#B9DDF5"/><rect x="0" y="880" width="${W}" height="14" fill="#9ACBEA"/>
+    <g transform="translate(1700 380)"><rect x="-20" y="0" width="40" height="160" fill="#C9CED6" ${O}/><path d="M -110 160 L 110 160 L 70 210 L -70 210 Z" fill="#C9CED6" ${O}/>
+      ${[-50, 0, 50].map(x => `<circle cx="${x}" cy="225" r="7" fill="#7FD3FF"/>`).join('')}</g>
+    <g transform="translate(400 520)"><rect x="-120" y="-150" width="240" height="300" rx="120" fill="#BDE8FF" stroke="#FFFFFF" stroke-width="20"/>
+      <path d="M -70 -60 Q -40 -110 0 -90" fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" opacity="0.8"/></g>
+    <g transform="translate(1810 820) scale(0.8)"><rect x="-26" y="-40" width="52" height="180" rx="14" fill="#FF8FB8" ${O}/><rect x="-40" y="-70" width="80" height="40" rx="10" fill="#FFFFFF" ${O}/></g>
+    <g transform="translate(1880 850) scale(0.7)"><rect x="-40" y="-10" width="80" height="130" rx="20" fill="#9B5DE5" ${O}/><rect x="-14" y="-50" width="28" height="44" fill="#FFFFFF" ${O}/></g>`;
+  // the tub with foam and the duck (duck and foam move in render)
+  $('tub').innerHTML = `<g transform="translate(1280 760)">
+      <rect x="-470" y="-20" width="940" height="250" rx="110" fill="#FFFFFF" ${O}/>
+      <rect x="-380" y="200" width="60" height="80" rx="20" fill="#C9CED6" ${O}/><rect x="320" y="200" width="60" height="80" rx="20" fill="#C9CED6" ${O}/>
+      <path d="M -440 20 H 440" stroke="#9AD1F5" stroke-width="16" stroke-linecap="round"/>
+      <g id="foam">${Array.from({ length: 16 }, (_, i) => `<circle cx="${-420 + i * 56}" cy="${-20 - (i % 3) * 14}" r="${46 + (i % 4) * 8}" fill="url(#bub)" stroke="#B9E4FF" stroke-width="4"/>`).join('')}</g>
+      <g id="duck" transform="translate(180 -90)">${DUCK}</g></g>`;
+}
+
+function setup(timeline) {
+  TL = timeline;
+  buildBath();
+  // the pals stand on the left and dance on the beat
+  S = { charG: {}, bubbles: [], lines: [] };
+  for (const [k, name] of ['penny', 'ellie', 'coco'].entries()) S.charG[name] = el('g', {}, $('chars'));
+  S.bubbles = Array.from({ length: 26 }, (_, i) => ({ g: el('circle', { r: 16 + (i * 7) % 30, fill: 'url(#bub)', stroke: '#B9E4FF', 'stroke-width': 3 }, $('bubbles')),
+    x: 820 + (i * 137) % 1000, sp: 60 + (i * 31) % 70, ph: (i * 0.37) % 1 }));
+  // lyric lines: group the words by (section, line)
+  const map = new Map();
+  for (const w of TL.words) { const k = `${w.section}:${w.line}`; if (!map.has(k)) map.set(k, []); map.get(k).push(w); }
+  for (const ws of map.values()) {
+    const g = el('g', {}, $('lyrics')), total = ws.reduce((a, w) => a + w.text.length + 1, 0), fs = Math.min(92, 1600 / (total * 0.56));
+    let x = 0; const items = [];
+    for (const [i, w] of ws.entries()) {
+      const tx = el('text', { 'font-size': fs, 'text-anchor': 'start', fill: '#C3CCDA' }, g);
+      tx.textContent = w.gap ? '____' : w.text;
+      items.push({ tx, w, x, col: COLORS[i % COLORS.length] });
+      x += (w.gap ? 4 : w.text.length) * fs * 0.56 + fs * 0.35;
+    }
+    const width = x - fs * 0.35;
+    items.forEach(it => it.tx.setAttribute('x', 960 - width / 2 + it.x));
+    S.lines.push({ g, items, start: ws[0].start - 0.6, end: ws[ws.length - 1].start + ws[ws.length - 1].dur, fs });
+  }
+  window.DURATION = TL.duration;
+  render(0);
+}
+
+function render(t) {
+  const beat = TL.beat, bt = t / beat, onBeat = Math.pow(1 - (bt % 1), 3);
+  const sec = TL.sections.find(s => t >= s.start && t < s.end) || TL.sections[TL.sections.length - 1];
+  const singing = sec.kind !== 'intro';
+  // pals: hop on every beat while the music plays, lean side to side
+  for (const [k, name] of ['penny', 'ellie', 'coco'].entries()) {
+    const g = S.charG[name], x = [170, 400, 610][k], sc = [0.85, 1.25, 0.95][k];
+    const hop = -onBeat * (singing ? 34 : 14), lean = Math.sin(bt * Math.PI + k) * 6;
+    const blink = ((t + k * 0.7) % 3.3) > 3.18 ? 0.15 : 1;
+    g.innerHTML = window.CHARACTERS[name]({ blink });
+    g.setAttribute('transform', `translate(${x} ${990 + hop}) rotate(${lean}) scale(${sc})`);
+  }
+  $('foam').setAttribute('transform', `translate(0 ${Math.sin(t * 2) * 4}) scale(${1 + onBeat * 0.03} 1)`);
+  $('duck').setAttribute('transform', `translate(${180 + Math.sin(t * 0.8) * 160} ${-90 - onBeat * 18}) rotate(${Math.sin(t * 1.6) * 10})`);
+  S.bubbles.forEach(b => { const k = (t * b.sp / 700 + b.ph) % 1; b.g.setAttribute('cx', b.x + Math.sin(t * 2 + b.x) * 30); b.g.setAttribute('cy', 720 - k * 760);
+    b.g.setAttribute('opacity', Math.sin(k * Math.PI) * 0.9); });
+
+  // title / action banner
+  const banner = sec.kind === 'intro' ? `${TL.title} 🛁` : sec.kind === 'verse' ? sec.action : sec.gaps ? 'Your turn! Sing along!' : 'Splish, splash!';
+  const verseStart = TL.sections.filter(s => s.start <= t).pop();
+  const k = easeBack(prog(t, verseStart.start - (sec.kind === 'verse' ? 2.4 : 0), verseStart.start - (sec.kind === 'verse' ? 1.9 : -0.5)));
+  // during the bar before a verse, the action banner already shows
+  const next = TL.sections.find(s => s.start > t);
+  const pre = next && next.kind === 'verse' && next.start - t < 2.4;
+  $('titleT').textContent = pre ? next.action : banner;
+  const tw = Math.max(420, $('titleT').textContent.length * 40 + 140);
+  $('titleBox').setAttribute('x', 960 - tw / 2); $('titleBox').setAttribute('y', 40); $('titleBox').setAttribute('width', tw); $('titleBox').setAttribute('height', 104);
+  $('titleT').setAttribute('fill', pre || sec.kind === 'verse' ? '#F15BB5' : sec.gaps ? '#FF9F1C' : '#4D96FF');
+  $('titleG').setAttribute('transform', `translate(960 92) scale(${1 + onBeat * 0.04}) translate(-960 -92)`);
+
+  // karaoke: the current line, each word lights up and pops as it is sung
+  const line = S.lines.find(l => t >= l.start && t < l.end + 0.4);
+  for (const l of S.lines) l.g.style.display = l === line ? '' : 'none';
+  $('lyrPanel').style.display = line ? '' : 'none';
+  if (line) {
+    const y = 292 + 20 * (1 - easeBack(prog(t, line.start, line.start + 0.4)));
+    for (const it of line.items) {
+      const on = t >= it.w.start - 0.02, now = on && t < it.w.start + it.w.dur;
+      if (it.w.gap) it.tx.textContent = t >= it.w.start + it.w.dur * 0.6 ? it.w.text : '____';
+      it.tx.setAttribute('fill', on ? it.col : '#C3CCDA');
+      const pop = now ? 1 + 0.18 * (1 - prog(t, it.w.start, it.w.start + 0.35)) : 1;
+      const xx = +it.tx.getAttribute('x');
+      it.tx.setAttribute('y', y); it.tx.setAttribute('transform', `translate(${xx} ${y}) scale(${pop}) translate(${-xx} ${-y})`);
+    }
+  }
+  // talk subtitles (intro, calls, "your turn", goodbye)
+  const tk = TL.talks.find(l => t >= l.start && t < l.start + l.dur + 0.3);
+  if (tk && !line) {
+    const w = Math.min(1800, tk.text.length * 26 + 100);
+    $('subT').textContent = tk.text; $('subT').setAttribute('fill', SPEAKER[tk.who] || '#3B2B4F');
+    $('subBox').setAttribute('x', 960 - w / 2); $('subBox').setAttribute('y', 982); $('subBox').setAttribute('width', w); $('subBox').setAttribute('height', 74);
+    $('subG').style.display = '';
+  } else $('subG').style.display = 'none';
+}
+window.setup = setup; window.render = render;
+</script>
+</body>
+</html>
