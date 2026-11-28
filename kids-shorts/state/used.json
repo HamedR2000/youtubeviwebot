@@ -174,5 +174,16 @@
   "bed:animal-bee": "2026-11-27",
   "bed:vehicle-boat": "2026-11-27",
   "bed:animal-snake": "2026-11-27",
-  "bed:animal-goat": "2026-11-27"
+  "bed:animal-goat": "2026-11-27",
+  "episode:20-count-to-ten-2": "2026-11-28",
+  "trip:trip-02-farm": "2026-11-28",
+  "mix:color-red": "2026-11-28",
+  "mix:color-orange": "2026-11-28",
+  "mix:color-yellow": "2026-11-28",
+  "mix:color-green": "2026-11-28",
+  "mix:color-blue": "2026-11-28",
+  "mix:color-purple": "2026-11-28",
+  "mix:color-pink": "2026-11-28",
+  "mix:color-brown": "2026-11-28",
+  "mix:color-white": "2026-11-28"
 }
