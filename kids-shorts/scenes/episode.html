@@ -29,6 +29,7 @@
   <g id="bgZoo"></g>
   <g id="bgSea"></g>
   <g id="bgFarm"></g>
+  <g id="bgMuseum"></g>
   <g id="bus"></g>
   <g id="draws"></g>
   <g id="props"></g>
@@ -102,6 +103,48 @@ const EXTRA_ART = {
   seahorse: { back: [['path', { d: 'M -40 -120 L -150 -150 L -60 -60 Z', fill: '#FFC93C', ...O }], ['path', { d: 'M 60 -200 L 110 -170 L 70 -110 L 120 -80 L 80 -20 L 130 20', fill: 'none', stroke: '#FF9F1C', 'stroke-width': 24, 'stroke-linejoin': 'round' }]],
     fill: [['path', { d: 'M -60 -280 C 60 -320 120 -230 80 -160 C 40 -100 120 -40 100 60 C 80 160 -20 180 -40 260 C -50 310 20 330 40 300 C 50 330 -30 360 -70 320 C -110 280 -70 200 -50 150 C -40 100 -120 60 -100 -40 C -90 -100 -20 -120 -40 -170 C -60 -200 -150 -190 -170 -230 C -150 -270 -110 -270 -60 -280 Z', fill: '#FFC93C', ...O }]],
     front: [[0, 0], [-20, 80], [10, 150]].map(([cx, cy]) => ['ellipse', { cx, cy, rx: 40, ry: 12, fill: '#FF9F1C' }]), face: { x: -10, y: -220, s: 0.42 } },
+  // ---- trips: dinosaur museum ----
+  trex: { back: [['path', { d: 'M -150 40 C -280 60 -330 150 -340 220 C -290 170 -230 140 -160 130 Z', fill: '#4CB944', ...O }],
+      ['path', { d: 'M -60 160 L -90 290 L -20 290 L 0 170 M 60 160 L 50 290 L 120 290 L 120 160', fill: '#4CB944', ...O }]],
+    fill: [['path', { d: 'M -170 60 C -170 -60 -40 -120 60 -120 L 60 -260 C 60 -330 300 -330 300 -250 L 300 -170 C 300 -130 260 -120 220 -120 L 140 -110 C 160 -20 150 120 40 180 C -60 230 -170 170 -170 60 Z', fill: '#4CB944', ...O }]],
+    front: [['path', { d: 'M 180 -150 L 290 -150', stroke: '#3B2B4F', 'stroke-width': 10, 'stroke-linecap': 'round' }], ['path', { d: 'M 200 -150 L 208 -132 L 216 -150 M 240 -150 L 248 -132 L 256 -150', fill: '#FFFFFF', stroke: '#3B2B4F', 'stroke-width': 4 }],
+      ['path', { d: 'M 100 -40 L 150 0 M 100 -40 L 140 -60', stroke: '#3B2B4F', 'stroke-width': 18, 'stroke-linecap': 'round' }], ['path', { d: 'M -110 0 C -60 60 40 70 90 20', fill: 'none', stroke: '#8BD97E', 'stroke-width': 26, 'stroke-linecap': 'round' }],
+      ...[[-60, -70], [0, -95], [-120, -20]].map(([cx, cy]) => ['circle', { cx, cy, r: 16, fill: '#3DAA3D' }])],
+    face: { x: 170, y: -235, s: 0.45, mouth: false } },
+  triceratops: { back: [['path', { d: 'M -200 60 C -300 80 -330 150 -330 200 C -280 160 -240 140 -200 140 Z', fill: '#FF9F1C', ...O }],
+      ...[-150, -60, 60, 150].map(x => ['rect', { x: x - 30, y: 120, width: 60, height: 150, rx: 22, fill: '#FF9F1C', ...O }])],
+    fill: [['ellipse', { cx: -20, cy: 60, rx: 230, ry: 140, fill: '#FF9F1C', ...O }], ['path', { d: 'M 130 -170 C 300 -230 330 0 250 60 C 200 100 130 60 120 -20 Z', fill: '#FFC26B', ...O }],
+      ['ellipse', { cx: 210, cy: 20, rx: 110, ry: 80, fill: '#FF9F1C', ...O }]],
+    front: [['path', { d: 'M 230 -40 L 290 -150 L 260 -30 Z M 170 -50 L 200 -170 L 200 -40 Z M 300 30 L 360 0 L 310 50 Z', fill: '#FFF3D6', ...O, 'stroke-width': 8 }],
+      ...[[-100, 0], [0, -30], [60, 60], [-160, 70]].map(([cx, cy]) => ['circle', { cx, cy, r: 18, fill: '#E07A00' }])],
+    face: { x: 220, y: 20, s: 0.4, mouth: true } },
+  stegosaurus: { back: [-180, -90, 0, 90, 170].map((x, i) => ['path', { d: `M ${x - 45} ${-60 - (i === 2 ? 30 : 0)} L ${x} ${-170 - (i === 2 ? 40 : i % 2 * 20)} L ${x + 45} ${-60 - (i === 2 ? 30 : 0)} Z`, fill: '#FF6B6B', ...O }])
+      .concat([-150, -60, 60, 150].map(x => ['rect', { x: x - 28, y: 90, width: 56, height: 150, rx: 22, fill: '#9B5DE5', ...O }]))
+      .concat([['path', { d: 'M -230 40 C -300 60 -340 120 -350 170 L -300 150 L -330 200 C -290 170 -250 140 -220 120 Z', fill: '#9B5DE5', ...O }]]),
+    fill: [['path', { d: 'M -240 60 C -240 -80 200 -100 250 20 C 290 80 330 60 340 100 C 300 150 200 140 160 130 C 60 160 -180 170 -240 60 Z', fill: '#9B5DE5', ...O }]],
+    front: [['path', { d: 'M -150 90 C -60 120 60 120 140 100', fill: 'none', stroke: '#C4A3FF', 'stroke-width': 22, 'stroke-linecap': 'round' }]],
+    face: { x: 280, y: 85, s: 0.32, mouth: true } },
+  longneck: { back: [-150, -60, 70, 160].map(x => ['rect', { x: x - 32, y: 110, width: 64, height: 160, rx: 24, fill: '#4D96FF', ...O }])
+      .concat([['path', { d: 'M -200 60 C -300 100 -360 180 -350 220 C -300 180 -240 150 -190 140 Z', fill: '#4D96FF', ...O }]]),
+    fill: [['path', { d: 'M -220 70 C -220 -40 120 -60 160 0 C 180 -120 170 -260 210 -320 C 240 -360 330 -350 330 -300 C 330 -260 280 -260 260 -250 C 240 -180 250 -60 220 60 C 180 160 -220 180 -220 70 Z', fill: '#4D96FF', ...O }]],
+    front: [['path', { d: 'M -150 70 C -60 120 80 120 160 70', fill: 'none', stroke: '#9AD1F5', 'stroke-width': 26, 'stroke-linecap': 'round' }]],
+    face: { x: 285, y: -305, s: 0.3, mouth: true } },
+  pterodactyl: { back: [['path', { d: 'M -20 -20 L -330 -160 L -260 40 Z', fill: '#FFB3C8', ...O }], ['path', { d: 'M 40 -20 L 330 -160 L 260 40 Z', fill: '#FFB3C8', ...O }]],
+    fill: [['ellipse', { cx: 10, cy: 20, rx: 90, ry: 130, fill: '#FF8FB8', ...O }], ['path', { d: 'M -30 -110 C -60 -220 120 -250 160 -170 L 260 -150 L 140 -120 C 100 -80 0 -60 -30 -110 Z', fill: '#FF8FB8', ...O }],
+      ['path', { d: 'M -40 -170 L -140 -220 L -30 -140 Z', fill: '#FF8FB8', ...O }]],
+    front: [['path', { d: 'M -10 150 L -40 220 M 30 150 L 50 220', stroke: '#3B2B4F', 'stroke-width': 14, 'stroke-linecap': 'round' }]],
+    face: { x: 50, y: -150, s: 0.3, mouth: false } },
+  dinoegg: { back: [['ellipse', { cx: 0, cy: 230, rx: 260, ry: 50, fill: '#D9B47A', ...O }]],
+    fill: [['path', { d: 'M 0 -270 C 160 -270 230 0 210 110 C 190 230 -190 230 -210 110 C -230 0 -160 -270 0 -270 Z', fill: '#FFF3D6', ...O }]],
+    front: [[-90, -100, 30], [80, -160, 24], [100, 40, 36], [-70, 90, 26], [10, -20, 18]].map(([cx, cy, r]) => ['circle', { cx, cy, r, fill: '#9BE89B' }])
+      .concat([['path', { d: 'M -150 -40 L -90 -10 L -40 -60 L 20 -20 L 70 -70 L 140 -30', fill: 'none', stroke: '#3B2B4F', 'stroke-width': 10, 'stroke-linejoin': 'round' }]]),
+    face: { y: 80, s: 0.55, mouth: true } },
+  fossil: { back: [['rect', { x: -320, y: -220, width: 640, height: 440, rx: 40, fill: '#E9C98A', ...O }]],
+    fill: [['path', { d: 'M -230 80 C -150 -40 0 -60 120 -40 C 160 -120 200 -160 260 -150', fill: 'none', stroke: '#FFFFFF', 'stroke-width': 34, 'stroke-linecap': 'round' }]],
+    front: [...[-170, -110, -50, 10, 70].map(x => ['path', { d: `M ${x} ${-40 + (x + 170) * -0.04} L ${x - 10} ${60} M ${x} ${-40} L ${x + 10} ${-120}`, stroke: '#FFFFFF', 'stroke-width': 18, 'stroke-linecap': 'round' }]),
+      ['ellipse', { cx: 270, cy: -150, rx: 55, ry: 35, fill: '#FFFFFF', stroke: '#C9A060', 'stroke-width': 6 }], ['circle', { cx: 285, cy: -158, r: 10, fill: '#3B2B4F' }],
+      ['path', { d: 'M -80 70 L -110 170 M 40 60 L 60 170', stroke: '#FFFFFF', 'stroke-width': 20, 'stroke-linecap': 'round' }]],
+    face: null },
 };
 const DRAW_PATHS = { 'rectangle-cake': ['M -280 -150 H 280 V 170 H -280 Z'] };
 
@@ -151,6 +194,13 @@ function buildBackgrounds() {
     <g id="seaBubbles">${Array.from({ length: 18 }, (_, i) => `<circle cx="${(i * 233) % W}" cy="0" r="${8 + (i % 4) * 5}" fill="none" stroke="#DFF6FF" stroke-width="4" opacity="0.7"/>`).join('')}</g>
     ${[[160, 1], [380, 0.8], [1600, 1.1], [1780, 0.7]].map(([x, s2]) => `<path transform="translate(${x} 1000) scale(${s2})" d="M 0 0 C -40 -100 40 -160 0 -260 C -40 -340 30 -400 0 -460" fill="none" stroke="#2EAA6A" stroke-width="30" stroke-linecap="round"/>`).join('')}
     <path d="M 0 960 C 500 920 1300 990 1920 950 L 1920 1080 L 0 1080 Z" fill="#F3D9A4"/>`;
+  $('bgMuseum').innerHTML = `<rect width="${W}" height="${H}" fill="#F6EBD9"/>
+    ${[200, 760, 1320].map(x => `<g transform="translate(${x} 0)"><rect x="0" y="120" width="400" height="300" rx="20" fill="#FFF9EE" stroke="#C9A060" stroke-width="14"/>
+      <path d="M 40 380 L 140 260 L 210 330 L 280 230 L 360 380 Z" fill="#B9E0A5"/><circle cx="300" cy="190" r="34" fill="#FFD23F"/></g>`).join('')}
+    ${[100, 700, 1260, 1820].map(x => `<rect x="${x - 26}" y="60" width="52" height="840" fill="#EAD9BC" stroke="#C9A060" stroke-width="8"/>`).join('')}
+    <rect x="0" y="40" width="${W}" height="40" fill="#C9A060"/>
+    <rect x="0" y="880" width="${W}" height="200" fill="#C68B59"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${i * 170}" y="880" width="6" height="200" fill="#A9744F"/>`).join('')}
+    <rect x="560" y="820" width="800" height="70" rx="16" fill="#9A6338" stroke="#3B2B4F" stroke-width="10"/>`;
   $('bgFarm').innerHTML = `<rect width="${W}" height="${H}" fill="url(#sky)"/><circle cx="1720" cy="170" r="95" fill="#FFD23F"/>${cloud(300, 150, 1.1)}${cloud(1000, 120, 1)}
     <g transform="translate(380 820)"><rect x="-200" y="-300" width="400" height="300" fill="#E63946" stroke="#3B2B4F" stroke-width="12"/><path d="M -230 -290 L 0 -460 L 230 -290 Z" fill="#B5222D" stroke="#3B2B4F" stroke-width="12" stroke-linejoin="round"/>
       <rect x="-80" y="-170" width="160" height="170" fill="#FFFFFF" stroke="#3B2B4F" stroke-width="10"/><path d="M -80 -170 L 80 0 M 80 -170 L -80 0" stroke="#3B2B4F" stroke-width="8"/></g>
@@ -237,7 +287,7 @@ function charState(name, t) {
 
 function render(t) {
   const bg = last(S.bgs, t);
-  const BG = { sky: 'bgSky', party: 'bgParty', road: 'bgRoad', zoo: 'bgZoo', sea: 'bgSea', farm: 'bgFarm' }, cur = bg ? bg.bg : 'sky';
+  const BG = { sky: 'bgSky', party: 'bgParty', road: 'bgRoad', zoo: 'bgZoo', sea: 'bgSea', farm: 'bgFarm', museum: 'bgMuseum' }, cur = bg ? bg.bg : 'sky';
   for (const [k, id] of Object.entries(BG)) $(id).style.display = k === cur ? '' : 'none';
   const onRoad = cur === 'road';
   if (onRoad) { // scrolling scenery, the bus bounces along in the middle

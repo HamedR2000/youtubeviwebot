@@ -1,0 +1,1423 @@
+{
+ "id": "trip-04-dinosaurs",
+ "title": "Let's Visit the Dinosaur Museum!",
+ "emoji": "\ud83e\udd96",
+ "series": "Doodle Pals Trips",
+ "learn": [
+  "dinosaurs",
+  "dinosaur names",
+  "dinosaur facts",
+  "counting",
+  "moving like dinosaurs"
+ ],
+ "hashtags": [
+  "dinosaurs",
+  "dinosaursforkids",
+  "fieldtrip"
+ ],
+ "beats": [
+  {
+   "do": [
+    {
+     "bg": "sky"
+    },
+    {
+     "title": "Doodle Pals!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 4
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Hello, friends! Welcome to Doodle Pals!"
+    ],
+    [
+     "penny",
+     "Hi! I'm Penny!"
+    ],
+    [
+     "ellie",
+     "I'm Ellie!"
+    ],
+    [
+     "coco",
+     "And I'm Coco!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "A trip!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Guess what? Today we are going to a museum!"
+    ],
+    [
+     "coco",
+     "A dinosaur museum! Roar!"
+    ],
+    [
+     "narrator",
+     "Are you ready? Let's get on the bus!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "title": "Let's go to the museum!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "The wheels on the bus go round and round, round and round, round and round!"
+    ],
+    [
+     "narrator",
+     "The wheels on the bus go round and round, all the way to the museum!"
+    ]
+   ],
+   "min": 9
+  },
+  {
+   "do": [
+    {
+     "title": "Beep beep!"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Look! A big building!"
+    ],
+    [
+     "penny",
+     "We are here!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "museum"
+    },
+    {
+     "title": "The dinosaur museum!"
+    },
+    {
+     "enter": "penny",
+     "x": 0.3
+    },
+    {
+     "enter": "ellie",
+     "x": 0.5
+    },
+    {
+     "enter": "coco",
+     "x": 0.7
+    },
+    {
+     "confetti": 3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Welcome to the dinosaur museum!"
+    ],
+    [
+     "narrator",
+     "Dinosaurs lived a long, long time ago."
+    ],
+    [
+     "penny",
+     "Let's meet them! Shh, walk quietly!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who was the king of the dinosaurs?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who was the king of the dinosaurs?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "trex",
+     "id": "d0",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a T. rex!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a T. rex!"
+    ],
+    [
+     "penny",
+     "T. rex had big, sharp teeth!"
+    ],
+    [
+     "coco",
+     "It walked on two strong legs."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "d0"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you stomp and roar like a T. rex?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Stomp, stomp, roar! So loud!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: T. rex!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Did T. rex have big teeth or small teeth?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Big teeth!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who had three horns?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who had three horns?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "triceratops",
+     "id": "d1",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a triceratops!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a triceratops!"
+    ],
+    [
+     "penny",
+     "Triceratops had three horns on its face."
+    ],
+    [
+     "coco",
+     "It ate lots of plants."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "d1"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you make horns with your fingers?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Great horns!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: triceratops!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "How many horns did it have?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Three! One, two, three!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who had big plates on its back?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who had big plates on its back?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "stegosaurus",
+     "id": "d2",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a stegosaurus!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a stegosaurus!"
+    ],
+    [
+     "penny",
+     "Stegosaurus had big plates on its back."
+    ],
+    [
+     "coco",
+     "And spikes on its tail!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "d2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you swing your tail like a stegosaurus?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Swish, swish! Well done!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: stegosaurus!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What was on its back?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Big plates!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who had a very long neck?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who had a very long neck?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "longneck",
+     "id": "d3",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a long neck dinosaur!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a long neck dinosaur!"
+    ],
+    [
+     "penny",
+     "This dinosaur had a very, very long neck."
+    ],
+    [
+     "coco",
+     "It ate leaves from the top of tall trees."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "d3"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you stretch your neck up tall?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "So tall! Wonderful!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: long neck dinosaur!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What did it eat?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Leaves!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Count the eggs!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Look! A nest of dinosaur eggs! Let's count them!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "count": {
+      "id": "eg",
+      "art": "dinoegg",
+      "n": 4,
+      "x0": 0.26,
+      "dx": 0.16,
+      "y": 0.45,
+      "s": 0.28
+     }
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "One!"
+    ],
+    [
+     "narrator",
+     "Two!"
+    ],
+    [
+     "narrator",
+     "Three!"
+    ],
+    [
+     "narrator",
+     "Four!"
+    ],
+    [
+     "narrator",
+     "Four eggs!"
+    ]
+   ],
+   "gap": 0.4
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "More dinosaurs!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Let's see more!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who could fly in the sky?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who could fly in the sky?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "pterodactyl",
+     "id": "d4",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a pterodactyl!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a pterodactyl!"
+    ],
+    [
+     "penny",
+     "Pterodactyls had big wings."
+    ],
+    [
+     "coco",
+     "They flew in the sky long, long ago."
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "d4"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you flap your wings and fly?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Flap, flap! You're flying!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: pterodactyl!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Could a pterodactyl fly?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Yes! It could fly!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "What is round and has a baby inside?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What is round and has a baby inside?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "dinoegg",
+     "id": "d5",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a dinosaur egg!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a dinosaur egg!"
+    ],
+    [
+     "penny",
+     "Baby dinosaurs came out of eggs."
+    ],
+    [
+     "coco",
+     "Just like baby chicks!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "d5"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you curl up small, then hatch out? Crack!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Crack! Hello, baby dino!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: dinosaur egg!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "Where do baby dinosaurs come from?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "Eggs!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "What is made of very old bones?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "What is made of very old bones?"
+    ],
+    [
+     "pause",
+     "2"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "show": "fossil",
+     "id": "d6",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.72
+    },
+    {
+     "title": "It's a fossil!"
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "It's a fossil!"
+    ],
+    [
+     "penny",
+     "A fossil is a very old bone in a rock."
+    ],
+    [
+     "coco",
+     "Fossils help us learn about dinosaurs!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "pulse": "d6"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Can you dig like a scientist? Dig, dig, dig!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "ellie",
+     "Great digging!"
+    ]
+   ]
+  },
+  {
+   "do": [],
+   "say": [
+    [
+     "narrator",
+     "Say it with me: fossil!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "What is a fossil?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "A very old bone!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Memory game!"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Memory game time! Look carefully!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Look carefully!"
+    },
+    {
+     "show": "trex",
+     "id": "m0",
+     "x": 0.25,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "stegosaurus",
+     "id": "m1",
+     "x": 0.46,
+     "y": 0.45,
+     "s": 0.3
+    },
+    {
+     "show": "triceratops",
+     "id": "m2",
+     "x": 0.67,
+     "y": 0.45,
+     "s": 0.3
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Look at the T. rex, the stegosaurus and the triceratops."
+    ],
+    [
+     "narrator",
+     "Close your eyes!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "erase": "m2"
+    },
+    {
+     "title": "Who is missing?"
+    },
+    {
+     "move": "ellie",
+     "x": 0.6
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "Erase, erase! Open your eyes!"
+    ],
+    [
+     "narrator",
+     "Who is missing?"
+    ],
+    [
+     "pause",
+     "2.5"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "unerase": "m2"
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "pulse": "m2"
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "The triceratops! Did you remember?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Dino moves!"
+    },
+    {
+     "move": "penny",
+     "x": 0.3
+    },
+    {
+     "move": "ellie",
+     "x": 0.5
+    },
+    {
+     "move": "coco",
+     "x": 0.7
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Everybody stand up! Let's move like dinosaurs!"
+    ],
+    [
+     "narrator",
+     "Stomp like a T. rex!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Stretch up like a long neck dinosaur!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Fly like a pterodactyl!"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "narrator",
+     "Great moving!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Dino song!"
+    },
+    {
+     "song": true
+    },
+    {
+     "confetti": 6
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "Let's sing the dino song!"
+    ],
+    [
+     "narrator",
+     "Stomp, stomp, dinosaur!"
+    ],
+    [
+     "narrator",
+     "Roar, roar, hear them roar!"
+    ],
+    [
+     "narrator",
+     "Long ago, they walked the land!"
+    ],
+    [
+     "narrator",
+     "Big and small, the dinos were grand!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "title": "Sing again!"
+    },
+    {
+     "song": true
+    }
+   ],
+   "say": [
+    [
+     "ellie",
+     "One more time! Sing with us!"
+    ],
+    [
+     "narrator",
+     "Stomp, stomp, dinosaur!"
+    ],
+    [
+     "narrator",
+     "Roar, roar, hear them roar!"
+    ],
+    [
+     "narrator",
+     "Long ago, they walked the land!"
+    ],
+    [
+     "narrator",
+     "Big and small, the dinos were grand!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "title": "Who did we see?"
+    },
+    {
+     "move": "penny",
+     "x": 0.12
+    },
+    {
+     "move": "ellie",
+     "x": 0.8
+    },
+    {
+     "move": "coco",
+     "x": 0.92
+    }
+   ],
+   "say": [
+    [
+     "coco",
+     "Which dinosaurs did we see today?"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "trex",
+     "id": "r0",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A T. rex! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "triceratops",
+     "id": "r1",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A triceratops! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "stegosaurus",
+     "id": "r2",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A stegosaurus! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "clear": true
+    },
+    {
+     "show": "longneck",
+     "id": "r3",
+     "x": 0.46,
+     "y": 0.5,
+     "s": 0.62
+    }
+   ],
+   "say": [
+    [
+     "narrator",
+     "Who is this? Say its name!"
+    ],
+    [
+     "pause",
+     "1.5"
+    ],
+    [
+     "coco",
+     "A long neck dinosaur! Great memory!"
+    ]
+   ]
+  },
+  {
+   "do": [
+    {
+     "bg": "road"
+    },
+    {
+     "clear": true
+    },
+    {
+     "title": "Bye bye, dinosaurs!"
+    }
+   ],
+   "say": [
+    [
+     "penny",
+     "What a fun trip!"
+    ],
+    [
+     "ellie",
+     "What was your favorite dinosaur?"
+    ],
+    [
+     "pause",
+     "2"
+    ],
+    [
+     "coco",
+     "I loved the triceratops!"
+    ],
+    [
+     "narrator",
+     "See you on our next trip! Bye bye, friends!"
+    ]
+   ],
+   "min": 6
+  }
+ ]
+}
