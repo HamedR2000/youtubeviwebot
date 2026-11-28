@@ -1,21 +1,17 @@
 // Build a Doodle Pals song video (16:9): audio/song_audio.py makes the soundtrack and the timeline,
 // scenes/song.html draws it frame by frame.
-// Usage: node song.js songs/01-bath-time.json out.mp4 [--style chant|sing] [--preview t1,t2]   (needs KOKORO_DIR)
+// Usage: node song.js songs/01-bath-time.json out.mp4 [--preview t1,t2]   (needs KOKORO_DIR)
 const { chromium } = require('playwright');
 const { spawn, execFileSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-async function buildSong(songFile, outFile, { style = 'sing', fps = 30, preview = null, browser = null, video = null } = {}) {
+async function buildSong(songFile, outFile, { fps = 30, preview = null, browser = null } = {}) {
   const work = outFile.replace(/\.mp4$/, '') + '.work';
   fs.mkdirSync(work, { recursive: true });
-  execFileSync('python3', [path.join(__dirname, 'audio', 'song_audio.py'), songFile, work, style], { stdio: 'inherit' });
+  execFileSync('python3', [path.join(__dirname, 'audio', 'song_audio.py'), songFile, work], { stdio: 'inherit' });
   const timeline = JSON.parse(fs.readFileSync(path.join(work, 'timeline.json'), 'utf8'));
   const wav = path.join(work, 'audio.wav');
-  if (video) { // same picture, other voice: just put the new soundtrack under it
-    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', wav, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', outFile]);
-    return timeline;
-  }
   const own = !browser;
   browser = browser || await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
@@ -47,6 +43,6 @@ module.exports = { buildSong };
 if (require.main === module) {
   const a = process.argv.slice(2), flag = (k, d) => a.includes(k) ? a[a.indexOf(k) + 1] : d;
   const pv = flag('--preview', null);
-  buildSong(a[0], a[1], { style: flag('--style', 'sing'), preview: pv && pv.split(',').map(Number), video: flag('--video', null) })
+  buildSong(a[0], a[1], { preview: pv && pv.split(',').map(Number) })
     .then(tl => console.log(`done: ${tl.title} (${tl.duration.toFixed(1)}s)`)).catch(e => { console.error(e); process.exit(1); });
 }

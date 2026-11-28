@@ -1,10 +1,11 @@
 """Soundtrack and timeline of a Doodle Pals song video (16:9, about 3 minutes).
 
-Usage: python3 audio/song_audio.py <song.json> <out_dir> [chant|sing]   (needs KOKORO_DIR)
+Usage: python3 audio/song_audio.py <song.json> <out_dir>   (needs KOKORO_DIR)
 Writes <out_dir>/audio.wav and <out_dir>/timeline.json (sections, every sung word with its time, talk lines).
 Structure: intro talk, chorus, then each verse followed by the chorus, then "your turn": the chorus again with
 the last word of each line left for the child, and a goodbye.
-Vocal styles: chant = each word spoken on its beat; sing = each word pitch-shifted and held on its melody note.
+Vocals: each word spoken in a natural voice exactly on its beat (the owner chose this over a pitch-shifted 'sung' voice);
+a soft bell plays the tune.
 """
 import json
 import os
@@ -17,7 +18,6 @@ from kokoro_onnx import Kokoro
 
 song = json.load(open(sys.argv[1]))
 out_dir = sys.argv[2]
-STYLE = sys.argv[3] if len(sys.argv) > 3 else 'chant'
 os.makedirs(out_dir, exist_ok=True)
 SR = 44100
 BEAT = 60 / song.get('bpm', 100)
@@ -39,50 +39,6 @@ def say(text, voice, speed=1.0):
         x = np.interp(np.linspace(0, len(x) - 1, int(len(x) * SR / sr)), np.arange(len(x)), x)
         _cache[k] = x / (np.max(np.abs(x)) + 1e-9)
     return _cache[k]
-
-
-def f0_of(x):
-    """median pitch of a spoken word (autocorrelation over voiced frames)"""
-    fr, hop, out = int(0.04 * SR), int(0.01 * SR), []
-    for i in range(0, len(x) - fr, hop):
-        w = x[i:i + fr] * np.hanning(fr)
-        if np.sqrt(np.mean(w ** 2)) < 0.05:
-            continue
-        ac = np.correlate(w, w, 'full')[fr - 1:]
-        lo, hi = int(SR / 450), int(SR / 120)
-        lag = lo + np.argmax(ac[lo:hi])
-        if ac[lag] > 0.3 * ac[0]:
-            out.append(SR / lag)
-    return float(np.median(out)) if out else 220.0
-
-
-def stretch(x, factor, n=2048, hop=512):
-    """phase-vocoder time stretch (factor > 1 = longer), pitch unchanged"""
-    win = np.hanning(n)
-    frames = [np.fft.rfft(win * np.pad(x, (0, n))[i:i + n]) for i in range(0, len(x), hop)]
-    if len(frames) < 2:
-        return x
-    S = np.array(frames)
-    steps = np.arange(0, len(S) - 1, 1 / factor)
-    phase = np.angle(S[0]); omega = 2 * np.pi * hop * np.arange(n // 2 + 1) / n
-    out = np.zeros(int(len(steps) * hop + n))
-    for k, t in enumerate(steps):
-        i = int(t); a = t - i
-        mag = (1 - a) * np.abs(S[i]) + a * np.abs(S[i + 1])
-        dp = np.angle(S[i + 1]) - np.angle(S[i]) - omega
-        dp -= 2 * np.pi * np.round(dp / (2 * np.pi))
-        out[k * hop:k * hop + n] += win * np.fft.irfft(mag * np.exp(1j * phase))
-        phase += omega + dp
-    return out / (np.max(np.abs(out)) + 1e-9)
-
-
-def sing(word, voice, note, length):
-    x = say(word, voice)
-    r = hz(note) / f0_of(x)
-    y = stretch(x, max(0.6, length / (len(x) / SR)) * r)           # longer by the pitch ratio, then resampled back
-    y = np.interp(np.arange(0, len(y) - 1, r), np.arange(len(y)), y)  # -> pitch * r, length = target
-    env = np.minimum(1, np.arange(len(y)) / (0.01 * SR)) * np.minimum(1, (len(y) - np.arange(len(y))) / (0.06 * SR))
-    return y * env
 
 
 def chant(word, voice, length):
@@ -120,8 +76,7 @@ def block(kind, lines, melody, voices, gaps=False, action=None):
             if not gap:
                 text = re.sub(r'[^A-Za-z\']', '', w)
                 for v in voices:
-                    # sung an octave below the written tune: close to the voices' own pitch
-                    y = sing(text, VOICE[v], note - 12, length * 0.92) if STYLE == 'sing' else chant(text, VOICE[v], length)
+                    y = chant(text, VOICE[v], length)
                     clips.append((bt + 0.02, 0.8 * y / len(voices) ** 0.5))
             bt += length
         t = bt
@@ -132,7 +87,7 @@ def block(kind, lines, melody, voices, gaps=False, action=None):
 BAR = 4 * BEAT
 # intro: 4 bars, the pals say what we do
 intro_end = 4 * BAR
-talk('penny', f"It's bath time! Let's sing the {song['title'].lower()}!", 0.6)
+talk('penny', song.get('hello', f"Let's sing the {song['title'].lower()}!"), 0.6)
 talk('ellie', "Clap along with us!", 0.6 + 3.6)
 sections.append({'kind': 'intro', 'start': 0, 'end': round(intro_end, 3)})
 t = intro_end
@@ -148,7 +103,7 @@ for k, v in enumerate(song['verses']):
 talk('penny', "Now you sing! Fill in the words!", t + 0.3)
 t += 2 * BAR
 block('chorus', CH, MEL['chorus'], ('penny', 'ellie', 'coco'), gaps=True)
-talk('coco', "Great singing! Bye bye, bubbles! See you next time!", t + 0.3)
+talk('coco', song.get('bye', "Great singing! See you next time!"), t + 0.3)
 t += 3 * BAR
 DUR = t + 1.0
 
@@ -197,6 +152,6 @@ mix = mix / (np.max(np.abs(mix)) + 1e-9) * 0.92
 with wave.open(os.path.join(out_dir, 'audio.wav'), 'wb') as wv:
     wv.setnchannels(2); wv.setsampwidth(2); wv.setframerate(SR)
     wv.writeframes((np.stack([mix, mix], 1) * 32767).astype(np.int16).tobytes())
-json.dump({'id': song['id'], 'title': song['title'], 'bg': song.get('bg', 'bath'), 'duration': round(DUR, 3), 'beat': BEAT,
+json.dump({'id': song['id'], 'title': song['title'], 'emoji': song.get('emoji', '🎵'), 'banner': song.get('banner', 'Sing along!'), 'bg': song.get('bg', 'bath'), 'duration': round(DUR, 3), 'beat': BEAT,
            'sections': sections, 'words': words, 'talks': talks}, open(os.path.join(out_dir, 'timeline.json'), 'w'), indent=1)
-print(f"{song['id']} [{STYLE}]: {DUR:.1f}s, {len(words)} words")
+print(f"{song['id']}: {DUR:.1f}s, {len(words)} words")

@@ -18,6 +18,7 @@ function writeSrt(file, subs) {
 }
 const withOutroSubs = (subs, len) => a.includes('--no-outro') ? subs : [...subs, ...OUTRO_SUBS.map(o => ({ ...o, start: o.start + len, end: o.end + len }))];
 const { buildEpisode } = require('./longvideo');
+const { buildSong } = require('./song');
 const { renderThumbnail } = require('./thumbnail');
 const { pickCompilation, pickFreshCompilation, buildCompilation } = require('./compile');
 const { buildBedtime } = require('./bedtime');
@@ -98,6 +99,26 @@ function tripMetadata(ep) {
     ].join('\n'),
     tags: ['field trip for kids', 'virtual field trip', 'kids cartoon', 'learn english for kids', 'preschool learning', 'educational cartoon', ...ep.learn, 'Doodle Pals'],
     categoryId: '27',
+    madeForKids: true,
+  };
+}
+
+// songs (every 2 days, on the days without a trip): routines, home, drawing, places
+function songMetadata(sg) {
+  return {
+    title: `${sg.title} ${sg.emoji} | Doodle Pals Songs for Kids`.slice(0, 100),
+    description: [
+      `${sg.title} ${sg.emoji} Sing and move along with Penny the Pencil, Ellie the Eraser and Coco the Crayon!`,
+      '',
+      `🎯 What your child learns: ${sg.learn.join(', ')}.`,
+      'An original Doodle Pals song in simple English for kids aged 2–6, with the words on screen. At the end it is your turn — sing the missing words!',
+      '',
+      'Grown-ups: sing it together at the right moment of the day (bath time, tooth brushing, ...) — routines are easier with a song! 💛',
+      '',
+      tags(...(sg.hashtags || []).slice(0, 2), 'doodlepals'),
+    ].join('\n'),
+    tags: ['kids songs', 'songs for toddlers', 'nursery rhymes', 'sing along', 'routine songs for kids', ...sg.learn, 'Doodle Pals'],
+    categoryId: '10',
     madeForKids: true,
   };
 }
@@ -403,6 +424,31 @@ function metadata(t) {
     console.log(`[trip] ${ep.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
     batch.push({ id: ep.id, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), thumbnail: path.basename(mp4).replace(/\.mp4$/, '.jpg'), long: true, ...tripMetadata(ep) });
     used['trip:' + ep.id] = DATE;
+  }
+  // song (16:9): '--songs auto' makes one every 2 days, on the days without a trip film (the owner's choice)
+  const SONGS = flag('--songs', '0'), songDir = path.join(__dirname, 'songs');
+  const lastSong = Object.entries(used).filter(([k]) => k.startsWith('song:')).map(([, d]) => d).sort().pop() || '';
+  const songDue = SONGS === 'auto' ? (!tripDue && (!lastSong || (Date.parse(DATE.slice(0, 10)) - Date.parse(lastSong.slice(0, 10))) / 864e5 >= 2) ? 1 : 0) : Number(SONGS) || 0;
+  for (let k = 0; k < songDue; k++) {
+    const next = fs.existsSync(songDir) && fs.readdirSync(songDir).filter(f => f.endsWith('.json') && !used['song:' + JSON.parse(fs.readFileSync(path.join(songDir, f), 'utf8')).id]).sort()[0];
+    if (!next) { console.log('[song] no unused song left — write a new one in songs/'); break; }
+    const sg = JSON.parse(fs.readFileSync(path.join(songDir, next), 'utf8'));
+    const mp4 = path.join(OUT, `${sg.id}.mp4`), t0 = Date.now();
+    const tl = await buildSong(path.join(songDir, next), mp4, { browser });
+    // captions: one per sung line (the child's missing words included) and the spoken lines
+    const lines = [];
+    for (const sec of tl.sections) for (let li = 0; li < (sec.lines || []).length; li++) {
+      const ws = tl.words.filter(w => w.section === tl.sections.indexOf(sec) && w.line === tl.sections.indexOf(sec) * 10 + li);
+      if (ws.length) lines.push({ text: ws.map(w => w.text).join(' '), start: ws[0].start, end: ws[ws.length - 1].start + ws[ws.length - 1].dur });
+    }
+    for (const t of tl.talks) lines.push({ text: t.text, start: t.start, end: t.start + t.dur });
+    writeSrt(mp4.replace(/\.mp4$/, '.srt'), withOutroSubs(lines.sort((a, b) => a.start - b.start), tl.duration));
+    fs.rmSync(mp4.replace(/\.mp4$/, '') + '.work', { recursive: true, force: true });
+    withOutro(mp4, 'landscape');
+    await renderThumbnail(sg, mp4.replace(/\.mp4$/, '.jpg'), browser);
+    console.log(`[song] ${sg.id} ${tl.duration.toFixed(0)}s (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
+    batch.push({ id: sg.id, file: path.basename(mp4), captions: path.basename(mp4).replace(/\.mp4$/, '.srt'), thumbnail: path.basename(mp4).replace(/\.mp4$/, '.jpg'), long: true, ...songMetadata(sg) });
+    used['song:' + sg.id] = DATE;
   }
   // compilation videos (16:9) made of already-published Shorts of one category
   const COMPS = Number(flag('--compilations', 1));

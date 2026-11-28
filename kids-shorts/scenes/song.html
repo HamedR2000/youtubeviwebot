@@ -109,7 +109,7 @@ function render(t) {
     b.g.setAttribute('opacity', Math.sin(k * Math.PI) * 0.9); });
 
   // title / action banner
-  const banner = sec.kind === 'intro' ? `${TL.title} 🛁` : sec.kind === 'verse' ? sec.action : sec.gaps ? 'Your turn! Sing along!' : 'Splish, splash!';
+  const banner = sec.kind === 'intro' ? `${TL.title} ${TL.emoji}` : sec.kind === 'verse' ? sec.action : sec.gaps ? 'Your turn! Sing along!' : TL.banner;
   const verseStart = TL.sections.filter(s => s.start <= t).pop();
   const k = easeBack(prog(t, verseStart.start - (sec.kind === 'verse' ? 2.4 : 0), verseStart.start - (sec.kind === 'verse' ? 1.9 : -0.5)));
   // during the bar before a verse, the action banner already shows
