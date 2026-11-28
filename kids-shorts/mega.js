@@ -50,7 +50,7 @@ function writeSrt(file, subs) {
     }
   }
   // what earlier long learning videos used (their batch.json lists the lessons), so each day's video is a new mix
-  const lastUsed = {}, sectionLast = {};
+  const lastUsed = {}, sectionLast = {}, sectionUses = {};
   const later = (a, b) => [a || '', b].sort().pop();
   for (const tag of fs.readdirSync(relDir)) {
     const f = path.join(relDir, tag, 'batch.json');
@@ -62,8 +62,9 @@ function writeSrt(file, subs) {
         lastUsed[id] = later(lastUsed[id], day);
         const t = TOPICS.find(x => x.id === id); if (t) sectionLast[t.template || 'draw-shape'] = later(sectionLast[t.template || 'draw-shape'], day);
       }
+      for (const tpl of new Set((v.compiled || []).map(id => (TOPICS.find(x => x.id === id) || {}).template || 'draw-shape'))) sectionUses[tpl] = (sectionUses[tpl] || 0) + 1;
       // the first videos did not list their lessons: their title names the sections
-      if (!v.compiled) for (const [tpl, , label] of SECTIONS) if (new RegExp(`\\b${label}\\b`).test(v.title)) sectionLast[tpl] = later(sectionLast[tpl], day);
+      if (!v.compiled) for (const [tpl, , label] of SECTIONS) if (new RegExp(`\\b${label}\\b`).test(v.title)) { sectionLast[tpl] = later(sectionLast[tpl], day); sectionUses[tpl] = (sectionUses[tpl] || 0) + 1; }
     }
   }
   const order = (a, b) => (a.n || 0) - (b.n || 0) || TOPICS.indexOf(a) - TOPICS.indexOf(b);
@@ -71,9 +72,9 @@ function writeSrt(file, subs) {
   const sections = SECTIONS.map(([tpl, frame, label], rank) => {
     const all = TOPICS.filter(t => (t.template || 'draw-shape') === tpl && have[t.id]);
     // least recently used lessons of this section, then shown in their natural order (A, B, C... / 1, 2, 3...)
-    return { frame, label, rank, all, last: sectionLast[tpl] || '' }; // when this section was last in a video
+    return { tpl, frame, label, rank, all, last: sectionLast[tpl] || '' }; // when this section was last in a video
   }).filter(s => s.all.length >= 4)
-    .sort((a, b) => a.last.localeCompare(b.last) || a.rank - b.rank);
+    .sort((a, b) => a.last.localeCompare(b.last) || (sectionUses[a.tpl] || 0) - (sectionUses[b.tpl] || 0) || a.rank - b.rank); // ties: the section used least so far
   // fill up to ~14 minutes: the freshest sections first, each with its least recently used lessons
   let est = 5, chosen = [];
   for (const s of sections) {
